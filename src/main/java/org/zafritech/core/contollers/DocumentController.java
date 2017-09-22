@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.zafritech.core.data.domain.Document;
 import org.zafritech.core.data.repositories.DocumentRepository;
-import org.zafritech.requirements.services.PrintService;
 import org.zafritech.requirements.services.ItemPDFService;
 
 /**
@@ -28,9 +27,6 @@ public class DocumentController {
   
     @Autowired
     private DocumentRepository documentRepository;
-      
-    @Autowired
-    private PrintService printService;
       
     @Autowired
     private ItemPDFService itextService;
