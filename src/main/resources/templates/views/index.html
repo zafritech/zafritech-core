@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+      layout:decorator="layouts/zid-menu-detail">
+
+    <head>
+        <title>Zidingo RMS Home</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="UTF-8" />
+    </head>
+
+    <body>
+
+        <div layout:fragment="content">
+
+            <div class="content-heading bg-white">
+                <div class="row">
+                    <div class="col-sm-9">
+                        <h4 class="m0">My Zidingo Home Page</h4>
+                        <small>Configure this view and build your own Zidingo dashboard</small>
+                    </div>
+                    <div class="col-sm-3 text-right hidden-xs">
+                        <button type="button" class="mt-sm btn btn-labeled btn-default ripple">Configure<span class="btn-label btn-label-right"><i class="ion-settings"></i></span></button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="container container-lg">
+                <div class="card">
+                    <div class="card-heading bg-teal-500">
+                        <div class="card-title">Getting Started</div>
+                    </div>
+                    <div class="card-body pt0">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h5 style="margin-left: 90px;">Zidingo RMS</h5>
+                                <div class="mda-list">
+                                    <div class="mda-list-item">
+                                        <img src="images/logo.png" alt="List user" class="mda-list-item-img" />
+                                        <div class="mda-list-item-text">
+                                            <h3><a href="#">Demostration</a></h3>
+                                            <p>Watch videos on how to use Zidingo RMS.</p>
+                                        </div>
+                                    </div>
+                                    <div class="mda-list-item">
+                                        <img src="images/logo.png" alt="List user" class="mda-list-item-img" />
+                                        <div class="mda-list-item-text">
+                                            <h3><a href="#">Features Tour</a></h3>
+                                            <p>Take a tour of some of the key features in Zidingo RMS.</p>
+                                        </div>
+                                    </div>
+                                    <div class="mda-list-item">
+                                        <div class="mda-list-item-icon"><em class="ion-help-buoy icon-4x"></em></div>
+                                        <div class="mda-list-item-text">
+                                            <h3><a href="/docs/references/help">Online Help</a></h3>
+                                            <p>Click the Help icon to access Zidingo RMS Help topics.</p>
+                                        </div>
+                                    </div>
+                                    <div class="mda-list-item">
+                                        <div class="mda-list-item-icon bg-primary"><em class="ion-help icon-lg"></em></div>
+                                        <div class="mda-list-item-text">
+                                            <h3><a href="#">FAQ</a></h3>
+                                            <p>Click the Help icon to access Zidingo RMS Help topics.</p>
+                                        </div>
+                                    </div>
+                                    <div class="mda-list-item">
+                                        <div class="mda-list-item-icon bg-success"><em class="ion-link icon-lg"></em></div>
+                                        <div class="mda-list-item-text">
+                                            <h3><a href="/docs/references/links">Reference Links</a></h3>
+                                            <p>Usefull reference links on requirements management.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <h5 style="margin-left: 90px;">Common Tasks</h5>
+                                <div class="mda-list">
+                                    <div class="mda-list-item">
+                                        <div class="mda-list-item-icon bg-success"><em class="ion-ios-compose-outline icon-lg"></em></div>
+                                        <div class="mda-list-item-text">
+                                            <h3><a href="#">Create a new document.</a></h3>
+                                            <p>Cleck the Help icon to access Zidingo RMS Help topics.</p>
+                                        </div>
+                                    </div>
+                                    <div class="mda-list-item">
+                                        <div class="mda-list-item-icon bg-danger"><em class="ion-wrench icon-lg"></em></div>
+                                        <div class="mda-list-item-text">
+                                            <h3><a href="#">Go to your active tasks.</a></h3>
+                                            <p>Cleck the Help icon to access Zidingo RMS Help topics.</p>
+                                        </div>
+                                    </div>
+                                    <div class="mda-list-item">
+                                        <div class="mda-list-item-icon bg-warning"><em class="ion-ios-list-outline icon-lg"></em></div>
+                                        <div class="mda-list-item-text">
+                                            <h3><a href="#">Browse items in your workspace.</a></h3>
+                                            <p>Cleck the Help icon to access Zidingo RMS Help topics.</p>
+                                        </div>
+                                    </div>
+                                    <div class="mda-list-item">
+                                        <div class="mda-list-item-icon bg-info"><em class="ion-ios-search-strong icon-lg"></em></div>
+                                        <div class="mda-list-item-text">
+                                            <h3><a href="#">Search for specific items.</a></h3>
+                                            <p>Cleck the Help icon to access Zidingo RMS Help topics.</p>
+                                        </div>
+                                    </div>
+                                    <div class="mda-list-item">
+                                        <div class="mda-list-item-icon bg-blue-grey-400"><em class="ion-arrow-graph-up-right icon-lg"></em></div>
+                                        <div class="mda-list-item-text">
+                                            <h3><a href="#">View statistics.</a></h3>
+                                            <p>Cleck the Help icon to access Zidingo RMS Help topics.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+<!--                    <div class="card-footer">
+                        <button type="button" class="btn btn-flat btn-primary">Read More</button>
+                    </div>-->
+                </div>
+                
+                
+            </div>
+        </div>
+
+    </body>
+
+    <th:block layout:fragment="scripts"></th:block>
+
+</html>

@@ -1,0 +1,70 @@
+<form id="createItem" action="/api/items/save" method="post">
+
+    <input type="hidden" name="itemId" id="itemId" value="" />
+    <input type="hidden" name="documentId" id="documentId" value="" />
+    <input type="hidden" name="parentId" id="parentId" value="" />
+    <input type="hidden" name="itemLevel" id="itemLevel" value="" />
+    <input type="hidden" name="itemEdit" id="itemEdit" value="" />
+    <input type="hidden" name="metadataValue" id="metadataValue" value="" />
+
+    <div class="row">
+        <div class="col-sm-3">
+            <div class="form-group">
+                <label for="itemClass">Item class:</label>
+                <select class="form-control" id="itemClass" name="itemClass" onchange="onRequirementClassChange();"></select>
+            </div>
+        </div>
+        <div class="col-sm-3">
+            <div class="form-group">
+                <label for="mediaType">Media type:</label>
+                <select class="form-control" id="mediaType" name="mediaType" onchange="onRequirementMediaTypeChange();"></select>
+            </div>
+        </div>
+        <div class="col-sm-3" id="referenceTypeInput">
+            <div class="form-group">
+                <label for="referenceType">Reference type:</label>
+                <select class="form-control" id="referenceType" name="referenceType"></select>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row" id="requirementRow">
+        <div class="col-sm-4">
+            <div class="form-group">
+                <label for="itemTypeId">Requirement type:</label>
+                <select class="form-control" id="itemTypeId" name="itemTypeId"></select>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="form-group">
+                <label for="identTemplate">Identifier prefix:</label>
+                <select class="form-control" id="identTemplate" name="identTemplate" onchange="onRequirementIdentTemplateChange();"></select>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="form-group">
+                <label for="identifier">Identifier:</label>
+                <input type="text" class="form-control" id="identifier" name="identifier" />
+            </div>
+        </div>
+    </div>
+
+    <div class="row" id="textRow">
+        <div class="col-sm-12">
+            <div class="form-group">
+                <label>Item details:</label>
+                <input type="text" class="form-control" id="itemValue" name="itemValue" />
+            </div>
+        </div>
+    </div>
+
+    <div class="row" id="summernoteRow">
+        <div class="col-sm-12">
+            <div class="form-group">
+                <label>Item details:</label>
+                <div id="summernote" class="summernote"></div>
+            </div>
+        </div>
+    </div>
+
+</form>

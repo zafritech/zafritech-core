@@ -1,0 +1,32 @@
+<form action="/api/user/update" method="POST">
+
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="text" class="form-control" id="email" placeholder="Email address" disabled="disabled" />
+            </div>
+            <div class="form-group">
+                <label for="firstName">First name</label>
+                <input type="text" class="form-control" id="firstName" placeholder="First name" />
+            </div>
+            <div class="form-group">
+                <label for="lastName">Last name</label>
+                <input type="text" class="form-control" id="lastName" name="lastName" placeholder="Last name" />
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <img class="pull-right" src="/images/profile.png" alt="Profile Image" style="max-width: 230px; max-height: 230px;"/>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="form-group">
+                <label for="userJobTitle">Job title</label>
+                <input type="text" class="form-control" id="userJobTitle" name="userJobTitle"  placeholder="Job/role title"/>
+            </div>
+        </div>
+    </div>
+
+</form>

@@ -1,0 +1,31 @@
+<form action="/api/project/document/actions" method="POST">
+    
+    <div id="documentName" style="font-size: 14px; font-weight: 500; margin: 0 0 5px 0;"></div>
+    <input type="hidden" id="documentId" value="" />
+    
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="radio c-radio">
+                <label>
+                    <input type="radio" name="documentMenuOption" value="rename" checked=""><span class="ion-record"></span> Rename document
+                </label>
+            </div>
+            <div class="radio c-radio">
+                <label>
+                    <input type="radio" name="documentMenuOption" value="duplicate"><span class="ion-record"></span> Duplicate document
+                </label>
+            </div>
+            <div class="radio c-radio">
+                <label>
+                    <input type="radio" name="documentMenuOption" value="edit"><span class="ion-record"></span> Edit document properties
+                </label>
+            </div>
+            <div class="radio c-radio">
+                <label>
+                    <input type="radio" name="documentMenuOption" value="delete"><span class="ion-record"></span> Delete document
+                </label>
+            </div>
+        </div>
+    </div>
+    
+</form>

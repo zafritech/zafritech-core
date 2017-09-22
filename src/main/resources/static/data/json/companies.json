@@ -1,0 +1,163 @@
+[
+  {
+    "id": 1,
+    "companyCode": "TIT",
+    "companyLogo": null,
+    "companyName": "Titima Group (Pty) Ltd.",
+    "companyRole": "CLIENT_ORGANISATION",
+    "companyRoleDescription": null,
+    "companyShortName": "Titima Group",
+	"country" : "ZAF",
+    "contact": {
+      "email": "info@titima.com",
+      "firstName": "Sandile",
+      "lastName": "Ngozwana",
+      "address": "No. 3 Veronia crescent, Pomona Extension 2, Kemption Park",
+      "city": "Johannesburg",
+      "state": "Gauteng",
+      "country": null,
+      "postCode": "1619",
+      "phone": "+27 53 546 1298",
+      "mobile": "+27 52 454 8044",
+      "website": "www.titima.com"
+    }
+  },
+  {
+    "id": 2,
+    "companyCode": "ACM",
+    "companyLogo": null,
+    "companyName": "Acme Corporation LLC",
+    "companyRole": "CLIENT_ORGANISATION",
+    "companyRoleDescription": null,
+    "companyShortName": "Acme",
+	"country" : "USA",
+    "contact": {
+      "email": "info@acme.com",
+      "firstName": "Lizwe",
+      "lastName": "Kunene",
+      "address": "No. 3 Veronia crescent, Pomona Extension 2, Kemption Park",
+      "city": "Wilmington",
+      "state": "Delaware",
+      "country": null,
+      "postCode": "1619",
+      "phone": "+27 53 546 1298",
+      "mobile": "+27 52 454 8044",
+      "website": "www.acme.com"
+    }
+  },
+  {
+    "id": 3,
+    "companyCode": "ALK",
+    "companyLogo": null,
+    "companyName": "Al Khafaji Enterprise WLL.",
+    "companyRole": "CLIENT_ORGANISATION",
+    "companyRoleDescription": null,
+    "companyShortName": "Al Khafaji",
+	"country" : "QAT",
+    "contact": {
+      "email": "info@alkhafaji.qa",
+      "firstName": "Mohamed",
+      "lastName": "Moola",
+      "address": "No. 3 Veronia crescent, Pomona Extension 2, Kemption Park",
+      "city": "Doha",
+      "state": "Doha",
+      "country": null,
+      "postCode": "1000",
+      "phone": "+27 53 546 1298",
+      "mobile": "+27 52 454 8044",
+      "website": "www.alkhafaji.qa"
+    }
+  },
+  {
+    "id": 4,
+    "companyCode": "MAD",
+    "companyLogo": null,
+    "companyName": "Madad LLC",
+    "companyRole": "SUBCONTRATOR_ORGANISATION",
+    "companyRoleDescription": null,
+    "companyShortName": "Madad",
+	"country" : "CAN",
+    "contact": {
+      "email": "info@madad.ca",
+      "firstName": "James",
+      "lastName": "Smith",
+      "address": "No. 3 Veronia crescent, Pomona Extension 2, Kemption Park",
+      "city": "Toronto",
+      "state": "Gauteng",
+      "country": null,
+      "postCode": "1619",
+      "phone": "+27 53 546 1298",
+      "mobile": "+27 52 454 8044",
+      "website": "www.madad.ca"
+    }
+  },
+  {
+    "id": 5,
+    "companyCode": "LIN",
+    "companyLogo": null,
+    "companyName": "Linus Systems",
+    "companyRole": "SUBSIDIARY_ORGANISATION",
+    "companyRoleDescription": null,
+    "companyShortName": "Linsys",
+	"country" : "ZAF",
+    "contact": {
+      "email": "info@linsys.co.za",
+      "firstName": "Ndumiso",
+      "lastName": "Sibisi",
+      "address": "No. 3 Veronia crescent, Pomona Extension 2, Kemption Park",
+      "city": "Pretoria",
+      "state": "Gauteng",
+      "country": null,
+      "postCode": "1619",
+      "phone": "+27 53 546 1298",
+      "mobile": "+27 52 454 8044",
+      "website": "www.linsys.co.za"
+    }
+  },
+  {
+    "id": 6,
+    "companyCode": "ZAF",
+    "companyLogo": null,
+    "companyName": "Zafritech (Pty) Ltd",
+    "companyRole": "PRIMARY_ORGANISATION",
+    "companyRoleDescription": null,
+    "companyShortName": "Zafritech",
+	"country" : "ZAF",
+    "contact": {
+      "email": "info@zafritech.org",
+      "firstName": "Luke",
+      "lastName": "Sibisi",
+      "address": "No. 3 Veronia crescent, Pomona Extension 2, Kemption Park",
+      "city": "Johannesburg",
+      "state": "Gauteng",
+      "country": null,
+      "postCode": "1619",
+      "phone": "+27 53 546 1298",
+      "mobile": "+27 52 454 8044",
+      "website": "www.zafritech.com"
+    }
+  },
+  {
+    "id": 7,
+    "companyCode": "ZID",
+    "companyLogo": null,
+    "companyName": "Zidingo Systems Engineering Tools",
+    "companyRole": "SUBCONTRATOR_ORGANISATION",
+    "companyRoleDescription": null,
+    "companyShortName": "Zidingo ORG",
+	"country" : "ZAF",
+    "contact": {
+      "email": "info@zidingo.org",
+      "firstName": "Mbali",
+      "lastName": "Sibisi",
+      "address": "No. 3 Veronia crescent, Pomona Extension 2, Kemption Park",
+      "city": "Johannesburg",
+      "state": "Gauteng",
+      "country": null,
+      "postCode": "1619",
+      "phone": "+27 53 546 1298",
+      "mobile": "+27 52 454 8044",
+      "website": "www.zidingo.org"
+    }
+  }
+]

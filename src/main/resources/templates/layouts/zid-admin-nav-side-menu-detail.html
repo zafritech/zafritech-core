@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+
+    <body>
+        
+        <div th:fragment="menu-side-nav">
+            
+            <!-- sidebar-->
+            <aside class="sidebar-menu-container">
+                <div class="sidebar-menu">
+                    <nav class="sidebar-nav">
+                        <ul>
+                            <li><a href="/" class="ripple"><span class="pull-right nav-label"></span><span class="nav-icon"><em class="ion-home"></em><img src="" data-svg-replace="images/icons/radio-waves.svg" alt="MenuItem" class="hidden" /></span><span>Zidingo Home</span></a></li>
+                            <li><a href="/admin/system/monitor" class="ripple"><span class="pull-right nav-label"></span><span class="nav-icon"><em class="ion-android-options"></em><img src="" data-svg-replace="images/icons/levels.svg" alt="MenuItem" class="hidden" /></span><span>Application Configuration</span></a></li>             
+                            <li><a href="/admin/companies" class="ripple"><span class="pull-right nav-label"></span><span class="nav-icon"><em class="ion-ios-briefcase"></em><img src="" data-svg-replace="images/icons/connection-bars.svg" alt="MenuItem" class="hidden" /></span><span>Organisations</span></a></li>
+                            <li><a href="/admin/users" class="ripple"><span class="pull-right nav-label"></span><span class="nav-icon"><em class="ion-person-stalker"></em><img src="" data-svg-replace="images/icons/connection-bars.svg" alt="MenuItem" class="hidden" /></span><span>Application Users</span></a></li>
+                            <li><a href="/admin/projects" class="ripple"><span class="pull-right nav-label"></span><span class="nav-icon"><em class="ion-ios-folder"></em><img src="" data-svg-replace="images/icons/clipboard.svg" alt="MenuItem" class="hidden" /></span><span>Projects</span></a></li>
+                            <li><a href="/admin/tasks" class="ripple"><span class="pull-right nav-label"></span><span class="nav-icon"><em class="ion-wrench"></em><img src="" data-svg-replace="images/icons/navicon.svg" alt="MenuItem" class="hidden" /></span><span>User Tasks</span></a></li>
+                            <li><a href="/admin/messages" class="ripple"><span class="pull-right nav-label"></span><span class="nav-icon"><em class="ion-android-mail"></em><img src="" data-svg-replace="images/icons/grid.svg" alt="MenuItem" class="hidden" /></span><span>Messaging</span></a></li>
+                            <li><a href="/admin/reports" class="ripple"><span class="pull-right nav-label"></span><span class="nav-icon"><em class="ion-stats-bars"></em><img src="" data-svg-replace="images/icons/levels.svg" alt="MenuItem" class="hidden" /></span><span>Reporting</span></a></li>             
+                            <li><a href="/admin/system/monitor" class="ripple"><span class="pull-right nav-label"></span><span class="nav-icon"><em class="ion-ios-pulse-strong"></em><img src="" data-svg-replace="images/icons/levels.svg" alt="MenuItem" class="hidden" /></span><span>System Monitoring</span></a></li>             
+                        </ul>
+                    </nav>
+                </div>
+            </aside>
+            
+        </div>
+       
+    </body>
+    
+</html>

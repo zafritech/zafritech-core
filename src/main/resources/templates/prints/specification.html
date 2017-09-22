@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <style>
+        /* Requirements Items Styles*/
+        .item-header-1, .item-header-2,
+        .item-header-3, .item-header-4,
+        .item-header-5, .item-header-6 {
+            font-weight: bold;
+        }
+
+        .item-level-none-first {
+            font-size: 12px; 
+            padding: 11px 5px;
+        }
+
+        .item-level-none {
+            font-size: 12px; 
+            padding: 11px 5px;
+        }
+
+        .item-level-0 {
+            font-size: 12px;
+        }
+
+        .item-header-1 {
+            font-size: 30px; 
+            padding: 11px 5px 0px;
+        }
+
+        .item-header-2 {
+
+            font-size: 26px; 
+        }
+
+        .item-header-3 {
+
+            font-size: 20px; 
+        }
+
+        .item-header-4 {
+
+            font-size: 18px; 
+        }
+
+        .item-header-5 {
+
+            font-size: 16px; 
+        }
+
+        .item-header-6 {
+
+            font-size: 16px; 
+            font-style: italic;
+        }
+
+        .item-header-2, .item-header-3, .item-header-4,
+        .item-header-5, .item-header-6 {
+
+            padding: 10px 5px;
+        }
+
+        .item-level-2, .item-level-3, .item-level-4, 
+        .item-level-5, .item-level-6, .item-level-7,
+        .item-level-8, .item-level-9, .item-level-10 {
+            font-size: 14px; 
+            padding: 10px 5px;
+        }
+
+        .header-number {
+
+            display: inline-block; 
+            width: 40px;
+        }
+
+        .requirement-notices {
+
+            display: inline-block; 
+            color: #F44336;
+        }
+
+        .incoming-link {
+
+            color: #F44336;
+        }
+
+        .outgoing-link {
+
+            color: #4CAF50;
+        }
+
+        .chat-box {
+
+            color: #2196F3;
+        }
+
+        .header-value-numbered {
+
+            display: inline-block; 
+            margin-left: 40px;
+        }
+
+        .header-value-nonumber {
+
+            display: inline-block; 
+            margin-left: 62px;
+        }
+
+        .plain-text-nonumber {
+
+            display: inline-block; 
+            margin-left: 87px;
+            display: block;
+        }
+
+        .requirement-container {
+
+            margin-left: 89px; 
+            border-left: 8px solid #2ECC71;
+        }
+
+        .requirement-container-created {
+
+            margin-left: 89px; 
+            border-left: 8px solid #FFC107;
+        }
+
+        .requirement-container-approved {
+
+            margin-left: 89px; 
+            border-left: 8px solid #2ECC71;
+        }
+
+        .requirement-container-changed {
+
+            margin-left: 89px; 
+            border-left: 8px solid #F44336;
+        }
+
+        .requirement-text {
+
+            display: inline-block; 
+            margin-left: 10px;
+        }
+
+        .requirement-comments {
+
+            display: inline-block; 
+            margin-left: 40px;
+        }
+
+        .requirement-identifier {
+
+            font-weight: bold;
+            color: #C62828;
+            display: inline-block; 
+            margin-left: 10px;
+        }
+
+        .requirement-comment-date {
+
+            font-weight: bold;
+            color: #263238;
+            display: inline-block; 
+        }
+
+        .requirement-comments-header {
+
+            color: #2196F3;
+            font-weight: bold;
+        }
+
+        .template {
+
+            font-style: italic;
+            color: red;
+        }
+
+        .normal-text {
+
+            font-style: normal;
+        }
+
+        .item-toolbar-ul {
+
+            list-style: none; 
+            padding: 0 15px; 
+            margin-right: -20px;
+        }
+
+        .item-toolbar-li {
+
+            display: inline-block; 
+            font-size: 18px;
+            width: 28px;
+            float: left; 
+            margin: 2px -5px 4px 2px;
+        }
+
+        .icon-comment {
+
+            color: #00aced;
+        }
+
+        .icon-link {
+
+            color: #00B83F;
+        }
+
+        .icon-link-changed {
+
+            color: red;
+        }
+
+        .link-display-container {
+
+            margin-top: 5px; 
+            border-top: 1px solid #E3E3E3; 
+            padding: 4px;
+        }
+
+        .link-display-ident {
+
+            border-right: 1px solid #E3E3E3;
+        }
+
+        .link-display-ident-changed {
+
+            border-right: 1px solid #E3E3E3;
+            color: red;
+        }
+
+        .link-display-value {
+
+            border-right: 1px solid #E3E3E3;
+        }
+
+        .link-display-value-changed {
+
+            text-decoration: line-through;
+            color: red;
+            margin-bottom: 10px;
+        }
+
+        .link-display-value-new {
+
+            border-right: 1px solid #E3E3E3;
+            color: #2ECC71;
+        }
+
+        .choices-multiselect-list-1 > select,
+        .choices-multiselect-list-2 > select {
+
+            height: 200px;
+            padding: 10px;
+
+        }
+
+        .choices-info-arrows {
+
+            float: left;
+            width: 12%;
+        }
+
+        .choices-info-arrows > input {
+
+            width: 100%;
+            margin-bottom: 2px;
+        }
+
+        /* Form number spinner control */
+        .spinner input{
+
+            text-align: right;
+        }
+
+        .input-group-btn-vertical {
+
+            position: relative;
+            white-space: nowrap;
+            width: 2%;
+            vertical-align: middle;
+            display: table-cell;
+        }
+
+        .input-group-btn-vertical > .btn{
+
+            display: block;
+            float: none;
+            width: 100%;
+            max-width: 100%;
+            padding: 8px 8px;
+            margin-left: -1px;
+            position: relative;
+            border-radius: 0;
+        }
+
+        .input-group-btn-vertical > .btn:first-child {
+            border-top-right-radius: 4px;
+        }
+
+        .input-group-btn-vertical > .btn:last-child {
+            margin-top: -2px;
+            border-bottom-right-radius: 4px;
+        }
+
+        .input-group-btn-vertical i {
+            position: absolute;
+            top: 0;
+            left: 4px;
+        }
+
+        /* Modal boxes and Bootbox */
+        .btn-fixed-width-100 {
+            width: 100px !important;
+        }
+
+        .btn-fixed-width-120 {
+            width: 120px !important;
+        }
+
+        /* Modal dialog with Scrollbar body */
+        .modal-body{
+          max-height: 450px;
+          overflow-y: auto;
+        }
+
+        /* Glyphicons toolbar buttons */
+        .btn-circle {
+
+            width: 30px;
+            height: 30px;
+            text-align: center;
+            padding: 6px 0;
+            font-size: 12px;
+            line-height: 1.428571429;
+            border-radius: 15px;
+        }
+
+        .btn-circle.btn-lg {
+
+            width: 50px;
+            height: 50px;
+            padding: 10px 16px;
+            font-size: 18px;
+            line-height: 1.33;
+            border-radius: 25px;
+        }
+
+        .btn-circle.btn-xl {
+
+            width: 70px;
+            height: 70px;
+            padding: 10px 16px;
+            font-size: 24px;
+            line-height: 1.33;
+            border-radius: 35px;
+        }
+
+        .links-list-header {
+
+            padding: 10px; 
+            border-bottom: 1px solid #E3E3E3; 
+            font-weight: bold;
+        }
+
+        .links-list-row {
+
+            margin: 2px; 
+            padding: 2px 0 10px 0; 
+            border-bottom: 1px solid #E3E3E3;
+        }
+
+        .badge-hitcount {
+
+            font-size: 10px; 
+            background-color: #F44336; 
+            color: #FFF; 
+            margin-left: -30px; 
+            margin-top: -10px;
+        }
+
+        /* Alerts - simple cards alerts */
+        .notice {
+
+            padding: 15px;
+            background-color: #fafafa;
+            border-left: 6px solid #7f7f84;
+            margin-bottom: 10px;
+            cursor: pointer;
+            -webkit-box-shadow: 0 5px 8px -6px rgba(0,0,0,.2);
+               -moz-box-shadow: 0 5px 8px -6px rgba(0,0,0,.2);
+                    box-shadow: 0 5px 8px -6px rgba(0,0,0,.2);
+        }
+        .notice-sm {
+
+            padding: 10px;
+            font-size: 80%;
+        }
+        .notice-lg {
+
+            padding: 35px;
+            font-size: large;
+        }
+        .notice-success {
+
+            border-color: #80D651;
+        }
+        .notice-success>strong {
+
+            color: #80D651;
+        }
+        .notice-info {
+
+            border-color: #45ABCD;
+        }
+        .notice-info>strong {
+
+            color: #45ABCD;
+        }
+        .notice-warning {
+
+            border-color: #FEAF20;
+        }
+        .notice-warning>strong {
+
+            color: #FEAF20;
+        }
+        .notice-danger {
+
+            border-color: #d73814;
+        }
+        .notice-danger>strong {
+
+            color: #d73814;
+        }
+
+        .progress {
+
+            height: 8px !important;
+        }
+    </style>
+</head>
+<body>
+    
+    <div class="card-heading bg-white" style="border-bottom: 2px solid #607d8b; padding-bottom: 5px;">
+        <table style="width: 100%">
+            <tbody>
+                <tr>
+                    <td style="width:50%;" colspan="2" th:text="${document.documentLongName} + ' (' + ${document.documentType.typeCode} + ')'"></td>
+                    <td style="width:50%; text-align: right;" colspan="2" th:text="${document.identifier}"></td>
+                </tr>
+                <tr>
+                    <td style="width:30%;" th:text="'Project ' + ${document.project.projectShortName}"></td>
+                    <td style="width:20%;" th:text="${document.project.projectNumber}"></td>
+                    <td style="width:20%;" th:text="${document.status} + ' ' + ${document.documentIssue}"></td>
+                    <td style="width:30%; text-align: right;" th:text="${#dates.format(document.creationDate, 'MMMM dd, yyyy')}"></td>
+                </tr>
+                <tr>
+                    <td style="width:30%;" th:text="${document.project.projectSponsor.companyName}"></td>
+                    <td style="width:20%;" th:text="${document.project.projectSponsor.contact.city}"></td>
+                    <td style="width:20%;" th:text="${document.infoClass.className}"></td>
+                    <td style="width:30%; text-align: right;" th:text="${document.owner.firstName} + ' ' + ${document.owner.lastName}"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    
+    <div th:if="${!items.isEmpty()}">
+        <div th:each="item : ${items}"
+             th:attr="id=${item.systemId}"
+             th:classappend="${item.itemClass == 'HEADER'} ? 'row item-header-' + ${item.itemLevel} : 'row item-level-' + ${item.itemLevel} + ' ' + ${#strings.toLowerCase(item.itemClass)}">
+
+            <div th:if="${item.itemClass == 'HEADER'}" class="col-md-12">
+                <div th:if="${item.itemNumber != null}">
+                    <div th:utext="${item.itemNumber}" class="header-number"></div>
+                    <div th:attr="id=${'header' + item.id}" th:utext="${item.itemValue}" class="header-value-numbered"></div>
+                </div>
+                <div th:if="${item.itemNumber == null}">
+                    <div th:attr="id=${'header' + item.id}" th:utext="${item.itemValue}" class="header-value-nonumber"></div>
+                </div>
+            </div>
+
+            <div th:if="${item.itemClass == 'REQUIREMENT'}" class="col-md-12">
+                <div th:classappend="'requirement-container-' + ${#strings.toLowerCase(#strings.replace(item.itemStatus, 'ITEM_STATUS_', ''))}">
+                    <div th:attr="id=${'identifier' + item.id}" th:utext="${item.identifier}" class="requirement-identifier"></div>
+                    <div th:attr="id=${'requirement' + item.id}" class="requirement-text" th:utext="${#strings.replace(item.itemValue, '&lt;br&gt;', '&lt;br/&gt;')}"></div>
+                    <div th:if="${item.document.status.name() == 'REVIEW'} and ${!item.comments.isEmpty()}" class="requirement-comments">
+                        <div class="requirement-comments-header">Comments:</div>
+                        <div th:each="comment : ${item.comments}" style="margin-top: 10px;">
+                            <div class="requirement-comment-date" th:text="${#dates.format(comment.creationDate, 'yyyy-MM-dd HH:mm:ss')}"></div>
+                            <div style="margin-left: 15px; display: inline-block;" th:text="${comment.author.firstName} + ' ' + ${comment.author.lastName}"></div>
+                            <div style="color: #d84315;" th:utext="${comment.comment}"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div th:if="${item.itemClass != 'HEADER' and item.itemClass != 'REQUIREMENT'}" class="col-md-12">
+                <div class="plain-text-nonumber">
+                    <div th:attr="id=${'text' + item.id}" th:utext="${#strings.replace(item.itemValue, '&lt;br&gt;', '&lt;br/&gt;')}"></div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <!-- END Document detailed data-->
+    
+</body>
+</html>

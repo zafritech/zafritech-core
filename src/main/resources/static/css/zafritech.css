@@ -1,0 +1,61 @@
+/* 
+    Created on : 10 Jun 2017, 8:42:27 AM
+    Author     : LukeS
+*/
+
+/* Modal boxes and Bootbox */
+.btn-fixed-width-100 {
+    width: 100px !important;
+}
+
+.btn-fixed-width-120 {
+    width: 120px !important;
+}
+
+.btn-fixed-width-140 {
+    width: 140px !important;
+}
+
+.table-mailbox tr.received{
+    background:#f7f9fa;
+}
+
+.table-mailbox tr.received td a{
+    font-weight:600;
+}
+
+.dropdown-messages,
+.dropdown-tasks,
+.dropdown-alerts {
+    
+  width: 340px;
+  min-width: 0;
+}
+.dropdown-messages {
+  margin-left: 5px;
+}
+.dropdown-tasks {
+  margin-left: -59px;
+}
+.dropdown-alerts {
+  margin-left: -123px;
+}
+.dropdown-user {
+  right: 0;
+  left: auto;
+}
+.dropdown-messages,
+.dropdown-alerts {
+  padding: 10px 10px 10px 10px;
+}
+.dropdown-messages li a,
+.dropdown-alerts li a {
+  font-size: 12px;
+}
+.dropdown-messages li em,
+.dropdown-alerts li em {
+  font-size: 10px;
+}
+.dropdown-alerts a {
+  font-size: 12px;
+}

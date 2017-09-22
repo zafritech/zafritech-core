@@ -1,0 +1,26 @@
+<form name="user" action="/api/admin/users/new}" method="post">
+
+    <div class="form-group">
+        <label for="email" class="sr-only">Email</label>
+        <div class="input-group">
+            <div class="input-group-addon"><i class="ion-email"></i></div>
+            <input class="form-control" type="text" id="email" name="email" placeholder="Email address" />
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="password" class="sr-only">Password</label>
+        <div class="input-group">
+            <div class="input-group-addon"><i class="ion-locked"></i></div>
+            <input type="password" id="password" name="password" class="form-control" placeholder="Password" />
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="confirmPassword" class="sr-only">Confirm Password</label>
+        <div class="input-group">
+            <div class="input-group-addon"><i class="ion-checkmark"></i></div>
+            <input type="password" id="confirmPassword" name="confirmPassword" class="form-control" placeholder="Confirm password" />
+        </div>
+    </div>
+</form>

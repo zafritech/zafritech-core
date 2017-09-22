@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+
+    <body>
+        
+        <div th:fragment="master-side-nav">
+            
+            <!-- sidebar-->
+            <aside class="sidebar-master-container">
+                <div class="sidebar-content">
+                    
+                    <div class="zid-master-detail-nav-title">
+                        <span>Project Documents</span>
+                    </div>
+                    <div>
+                        <ul id="folder-tree" class="ztree"></ul>
+                    </div>
+                    
+                    <div class="zid-master-detail-nav-title">
+                        <span>Document Table of Contents</span>
+                    </div>
+                    <div>
+                        <ul id="document-tree" class="ztree"></ul>
+                    </div>
+                    
+                </div>
+            </aside>
+            <div class="sidebar-layout-obfuscator"></div>
+            
+        </div>
+       
+    </body>
+    
+</html>

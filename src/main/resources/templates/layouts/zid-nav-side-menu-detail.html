@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+
+    <body>
+        
+        <div th:fragment="menu-side-nav">
+            
+            <!-- sidebar-->
+            <aside class="sidebar-menu-container">
+                <div class="sidebar-menu">
+                    <nav class="sidebar-nav">
+                        <ul>
+                            <li><a href="/" class="ripple"><span class="pull-right nav-label"></span><span class="nav-icon"><em class="ion-home"></em><img src="" data-svg-replace="images/icons/radio-waves.svg" alt="MenuItem" class="hidden" /></span><span>Zidingo Home</span></a></li>
+                            <li sec:authorize="hasRole('ROLE_ADMIN')">
+                                <a href="/admin" class="ripple"><span class="pull-right nav-label"></span><span class="nav-icon"><em class="ion-settings"></em><img src="" data-svg-replace="images/icons/radio-waves.svg" alt="MenuItem" class="hidden" /></span><span>Administration</span></a>
+                            </li>
+                            <li><a href="/dashboard" class="ripple"><span class="pull-right nav-label"></span><span class="nav-icon"><em class="ion-speedometer"></em><img src="" data-svg-replace="images/icons/connection-bars.svg" alt="MenuItem" class="hidden" /></span><span>My Dashboard</span></a></li>
+                            <li><a href="/projects" class="ripple"><span class="pull-right nav-label"></span><span class="nav-icon"><em class="ion-ios-folder"></em><img src="" data-svg-replace="images/icons/connection-bars.svg" alt="MenuItem" class="hidden" /></span><span>My Projects</span></a></li>
+                            <li><a href="/tasks" class="ripple"><span class="pull-right nav-label"></span><span class="nav-icon"><em class="ion-wrench"></em><img src="" data-svg-replace="images/icons/clipboard.svg" alt="MenuItem" class="hidden" /></span><span>My Tasks</span></a></li>
+                            <li><a href="/messages" class="ripple"><span class="pull-right nav-label"><span class="badge bg-success">7</span></span><span class="nav-icon"><em class="ion-android-mail"></em><img src="" data-svg-replace="images/icons/navicon.svg" alt="MenuItem" class="hidden" /></span><span>Messages</span></a></li>
+                            <li><a href="/messages" class="ripple"><span class="pull-right nav-label"><span class="badge bg-danger">10+</span></span><span class="nav-icon"><em class="ion-android-notifications"></em><img src="" data-svg-replace="images/icons/grid.svg" alt="MenuItem" class="hidden" /></span><span>Alerts</span></a></li>
+                            <li><a href="/" class="ripple"><span class="pull-right nav-label"></span><span class="nav-icon"><em class="ion-help-circled"></em><img src="" data-svg-replace="images/icons/levels.svg" alt="MenuItem" class="hidden" /></span><span>Online Help</span></a></li>             
+                        </ul>
+                    </nav>
+                </div>
+            </aside>
+            
+        </div>
+       
+    </body>
+    
+</html>

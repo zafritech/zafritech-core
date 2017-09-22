@@ -1,0 +1,31 @@
+<form>
+
+    <div class="row">
+        <div class="col-md-5 choices-multiselect-list-1">
+            <label>Project Members</label>
+            <select id='availableUsersList' name='availableUsersList' multiple="multiple" class="form-control" style="height: 200px;"></select>
+        </div>
+        
+        <div class="col-md-2 text-sm choices-info-arrows text-center" style="padding-top: 25px;">
+            <button type="button" class="btn btn-default" title="Move Selected" onclick="javascript:AddRemoveUsers('RoleToRight');" style="width: 60px; margin-bottom: 5px;">
+                <em class="ion-chevron-right"></em>
+            </button>
+            <button type="button" class="btn btn-default" title="Move All Right" onclick="javascript:AddRemoveUsers('RolesAllToRight');" style="width: 60px; margin-bottom: 5px;">
+                <em class="ion-chevron-right"></em><em class="ion-chevron-right"></em>
+            </button>
+            <button type="button" class="btn btn-default" title="Move All Left" onclick="javascript:AddRemoveUsers('RoleToLeft');" style="width: 60px; margin-bottom: 5px;">
+                <em class="ion-chevron-left"></em>
+            </button>
+            <button type="button" class="btn btn-default" title="Move Selected" onclick="javascript:AddRemoveUsers('RolesAllToLeft');" style="width: 60px; margin-bottom: 5px;">
+                <em class="ion-chevron-left"></em><em class="ion-chevron-left"></em>
+            </button>
+        </div>
+
+        <div class="col-md-5 choices-multiselect-list-2">
+            <label>Document Editors</label>
+            <select id='selectedUsersList' name='selectedUsersList' multiple="multiple" class="form-control" style="height: 200px;"></select>
+        </div>
+        
+    </div>
+
+</form>

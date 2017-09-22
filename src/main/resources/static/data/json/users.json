@@ -1,0 +1,402 @@
+[
+  {
+    "id": 1,
+    "firstName": "Administrator",
+    "lastName": "System",
+    "email": "admin@zidingo.org",
+    "mainRole": "System Administrator",
+    "contact": {
+      "email": "admin@zidingo.org",
+      "firstName": "Administrator",
+      "lastName": "System",
+      "address": "No. 3 Veronia crescent, Pomona Extension 2, Kemption Park",
+      "city": "Johannesburg",
+      "state": "Gauteng",
+      "country": "ZAF",
+      "postCode": "1619",
+      "phone": "+27 53 546 1298",
+      "mobile": "+27 52 454 8044",
+      "website": "www.zidingo.org"
+    }
+  },
+  {
+    "id": 2,
+    "firstName": "Superuser",
+    "lastName": "System",
+    "email": "superuser@zidingo.org",
+    "mainRole": "System Super User",
+    "contact": {
+      "email": "superuser@zidingo.org",
+      "firstName": "Superuser",
+      "lastName": "System",
+      "address": "No. 3 Veronia crescent, Pomona Extension 2, Kemption Park",
+      "city": "Johannesburg",
+      "state": "Gauteng",
+      "country": "ZAF",
+      "postCode": "2090",
+      "phone": "+27 53 546 1298",
+      "mobile": "+27 52 454 8044",
+      "website": "www.zidingo.org"
+    }
+  },
+  {
+    "id": 3,
+    "firstName": "Guest",
+    "lastName": "System",
+    "email": "guest@zidingo.org",
+    "mainRole": "System Guest User",
+    "contact": {
+      "email": "guest@zidingo.org",
+      "firstName": "Guest",
+      "lastName": "System",
+      "address": "No. 3 Veronia crescent, Pomona Extension 2, Kemption Park",
+      "city": "Johannesburg",
+      "state": "Gauteng",
+      "country": "ZAF",
+      "postCode": "2090",
+      "phone": "+27 53 546 1298",
+      "mobile": "+27 52 454 8044",
+      "website": "www.zidingo.org"
+    }
+  },
+  {
+    "id": 4,
+    "firstName": "Dumisani",
+    "lastName": "Khumalo",
+    "email": "dumisanik@zidingo.org",
+    "mainRole": "Application User",
+    "contact": {
+      "email": "dumisanik@zidingo.org",
+      "firstName": "Dumisani",
+      "lastName": "Khumalo",
+      "address": "No. 3 Veronia crescent, Pomona Extension 2, Kemption Park",
+      "city": "Johannesburg",
+      "state": "Gauteng",
+      "country": "ZAF",
+      "postCode": "2090",
+      "phone": "+27 53 546 1298",
+      "mobile": "+27 52 454 8044",
+      "website": "www.zidingo.org"
+    }
+  },
+  {
+    "id": 5,
+    "firstName": "Emeka",
+    "lastName": "Adeyemi",
+    "email": "emekaa@zidingo.org",
+    "mainRole": "Application User",
+    "contact": {
+      "email": "emekaa@zidingo.org",
+      "firstName": "Emeka",
+      "lastName": "Adeyemi",
+      "address": "No. 3 Veronia crescent, Pomona Extension 2, Kemption Park",
+      "city": "Abuja",
+      "state": "Gauteng",
+      "country": "NGA",
+      "postCode": "2090",
+      "phone": "+27 53 546 1298",
+      "mobile": "+27 52 454 8044",
+      "website": "www.zidingo.org"
+    }
+  },
+  {
+    "id": 6,
+    "firstName": "Hakan",
+    "lastName": "Karlsson",
+    "email": "hakank@zidingo.org",
+    "mainRole": "Application User",
+    "contact": {
+      "email": "hakank@zidingo.org",
+      "firstName": "Hakan",
+      "lastName": "Karlsson",
+      "address": "No. 3 Veronia crescent, Pomona Extension 2, Kemption Park",
+      "city": "Linkoping",
+      "state": "Gauteng",
+      "country": "SWE",
+      "postCode": "2090",
+      "phone": "+27 53 546 1298",
+      "mobile": "+27 52 454 8044",
+      "website": "www.zidingo.org"
+    }
+  },
+  {
+    "id": 7,
+    "firstName": "Jaco",
+    "lastName": "Viljoen",
+    "email": "jacov@zidingo.org",
+    "mainRole": "Application User",
+    "contact": {
+      "email": "jacov@zidingo.org",
+      "firstName": "Jaco",
+      "lastName": "Viljoen",
+      "address": "No. 3 Veronia crescent, Pomona Extension 2, Kemption Park",
+      "city": "Bloemfontein",
+      "state": "Free State",
+      "country": "ZAF",
+      "postCode": "2090",
+      "phone": "+27 53 546 1298",
+      "mobile": "+27 52 454 8044",
+      "website": "www.zidingo.org"
+    }
+  },
+  {
+    "id": 8,
+    "firstName": "Kelvin",
+    "lastName": "Banda",
+    "email": "kelvinb@zidingo.org",
+    "mainRole": "Application User",
+    "contact": {
+      "email": "kelvinb@zidingo.org",
+      "firstName": "Kelvin",
+      "lastName": "Banda",
+      "address": "No. 3 Veronia crescent, Pomona Extension 2, Kemption Park",
+      "city": "Lilingwe",
+      "state": "Lilogwe",
+      "country": "MWI",
+      "postCode": "2090",
+      "phone": "+27 53 546 1298",
+      "mobile": "+27 52 454 8044",
+      "website": "www.zidingo.org"
+    }
+  },
+  {
+    "id": 9,
+    "firstName": "Leonid",
+    "lastName": "Peshkov",
+    "email": "leonidp@zidingo.org",
+    "mainRole": "Application User",
+    "contact": {
+      "email": "leonidp@zidingo.org",
+      "firstName": "Leonid",
+      "lastName": "Peshkov",
+      "address": "No. 3 Veronia crescent, Pomona Extension 2, Kemption Park",
+      "city": "Moscow",
+      "state": "Moscow",
+      "country": "RUS",
+      "postCode": "2090",
+      "phone": "+27 53 546 1298",
+      "mobile": "+27 52 454 8044",
+      "website": "www.zidingo.org"
+    }
+  },
+  {
+    "id": 10,
+    "firstName": "Lufuno",
+    "lastName": "Mukwevho",
+    "email": "lufonom@zidingo.org",
+    "mainRole": "Application User",
+    "contact": {
+      "email": "lufonom@zidingo.org",
+      "firstName": "Lufuno",
+      "lastName": "Mukwevho",
+      "address": "No. 3 Veronia crescent, Pomona Extension 2, Kemption Park",
+      "city": "Louis Trichardt",
+      "state": "Limpopo",
+      "country": "ZAF",
+      "postCode": "2090",
+      "phone": "+27 53 546 1298",
+      "mobile": "+27 52 454 8044",
+      "website": "www.zidingo.org"
+    }
+  },
+  {
+    "id": 11,
+    "firstName": "Michael",
+    "lastName": "Robinson",
+    "email": "michaelr@zidingo.org",
+    "mainRole": "Application User",
+    "contact": {
+      "email": "michaelr@zidingo.org",
+      "firstName": "Michael",
+      "lastName": "Robinson",
+      "address": "No. 3 Veronia crescent, Pomona Extension 2, Kemption Park",
+      "city": "London",
+      "state": "London",
+      "country": "GBR",
+      "postCode": "2090",
+      "phone": "+27 53 546 1298",
+      "mobile": "+27 52 454 8044",
+      "website": "www.zidingo.org"
+    }
+  },
+  {
+    "id": 12,
+    "firstName": "Nobahle",
+    "lastName": "Veleko",
+    "email": "nobahlev@zidingo.org",
+    "mainRole": "Application User",
+    "contact": {
+      "email": "nobahlev@zidingo.org",
+      "firstName": "Nobahle",
+      "lastName": "Veleko",
+      "address": "No. 3 Veronia crescent, Pomona Extension 2, Kemption Park",
+      "city": "East London",
+      "state": "Eastern London",
+      "country": "ZAF",
+      "postCode": "2090",
+      "phone": "+27 53 546 1298",
+      "mobile": "+27 52 454 8044",
+      "website": "www.zidingo.org"
+    }
+  },
+  {
+    "id": 13,
+    "firstName": "Paul",
+    "lastName": "Caningham",
+    "email": "paulc@zidingo.org",
+    "mainRole": "Application User",
+    "contact": {
+      "email": "paulc@zidingo.org",
+      "firstName": "Paul",
+      "lastName": "Caningham",
+      "address": "No. 3 Veronia crescent, Pomona Extension 2, Kemption Park",
+      "city": "Hull",
+      "state": "Hull",
+      "country": "GBR",
+      "postCode": "2090",
+      "phone": "+27 53 546 1298",
+      "mobile": "+27 52 454 8044",
+      "website": "www.zidingo.org"
+    }
+  },
+  {
+    "id": 14,
+    "firstName": "Rodrigo",
+    "lastName": "Fernández",
+    "email": "rodrigof@zidingo.org",
+    "mainRole": "Application User",
+    "contact": {
+      "email": "rodrigof@zidingo.org",
+      "firstName": "Rodrigo",
+      "lastName": "Fernández",
+      "address": "No. 3 Veronia crescent, Pomona Extension 2, Kemption Park",
+      "city": "Manila",
+      "state": "Manila",
+      "country": "PHL",
+      "postCode": "2090",
+      "phone": "+27 53 546 1298",
+      "mobile": "+27 52 454 8044",
+      "website": "www.zidingo.org"
+    }
+  },
+  {
+    "id": 15,
+    "firstName": "Chipo",
+    "lastName": "Chihera",
+    "email": "chipoc@zidingo.org",
+    "mainRole": "Application User",
+    "contact": {
+      "email": "chipoc@zidingo.org",
+      "firstName": "Chipo",
+      "lastName": "Chihera",
+      "address": "No. 3 Veronia crescent, Pomona Extension 2, Kemption Park",
+      "city": "Harare",
+      "state": "Harare",
+      "country": "ZWE",
+      "postCode": "2090",
+      "phone": "+27 53 546 1298",
+      "mobile": "+27 52 454 8044",
+      "website": "www.zidingo.org"
+    }
+  },
+  {
+    "id": 16,
+    "firstName": "Sipho",
+    "lastName": "Sibanda",
+    "email": "siphos@zidingo.org",
+    "mainRole": "Application User",
+    "contact": {
+      "email": "siphos@zidingo.org",
+      "firstName": "Sipho",
+      "lastName": "Sibanda",
+      "address": "No. 3 Veronia crescent, Pomona Extension 2, Kemption Park",
+      "city": "Bulawayo",
+      "state": "Bulawayo",
+      "country": "ZWE",
+      "postCode": "2090",
+      "phone": "+27 53 546 1298",
+      "mobile": "+27 52 454 8044",
+      "website": "www.zidingo.org"
+    }
+  },
+  {
+    "id": 17,
+    "firstName": "Tebogo",
+    "lastName": "Mahumapelo",
+    "email": "tebogom@zidingo.org",
+    "mainRole": "Application User",
+    "contact": {
+      "email": "tebogom@zidingo.org",
+      "firstName": "Tebogo",
+      "lastName": "Mahumapelo",
+      "address": "No. 3 Veronia crescent, Pomona Extension 2, Kemption Park",
+      "city": "Mafikeng",
+      "state": "North West",
+      "country": "ZAF",
+      "postCode": "2090",
+      "phone": "+27 53 546 1298",
+      "mobile": "+27 52 454 8044",
+      "website": "www.zidingo.org"
+    }
+  },
+  {
+    "id": 18,
+    "firstName": "Vish",
+    "lastName": "Pillay",
+    "email": "vishp@zidingo.org",
+    "mainRole": "Application User",
+    "contact": {
+      "email": "vishp@zidingo.org",
+      "firstName": "Vish",
+      "lastName": "Pillay",
+      "address": "No. 3 Veronia crescent, Pomona Extension 2, Kemption Park",
+      "city": "Durban",
+      "state": "KwaZulu-Natal",
+      "country": "ZAF",
+      "postCode": "2090",
+      "phone": "+27 53 546 1298",
+      "mobile": "+27 52 454 8044",
+      "website": "www.zidingo.org"
+    }
+  },
+  {
+    "id": 19,
+    "firstName": "Mohamed",
+    "lastName": "El Masery",
+    "email": "mohamede@zidingo.org",
+    "mainRole": "Application User",
+    "contact": {
+      "email": "mohamede@zidingo.org",
+      "firstName": "Mohamed",
+      "lastName": "El Masery",
+      "address": "No. 3 Veronia crescent, Pomona Extension 2, Kemption Park",
+      "city": "Cairo",
+      "state": "Cairo",
+      "country": "EGY",
+      "postCode": "2090",
+      "phone": "+27 53 546 1298",
+      "mobile": "+27 52 454 8044",
+      "website": "www.zidingo.org"
+    }
+  },
+  {
+    "id": 20,
+    "firstName": "Chen",
+    "lastName": "Leong",
+    "email": "chenl@zidingo.org",
+    "mainRole": "Application User",
+    "contact": {
+      "email": "chenl@zidingo.org",
+      "firstName": "Chen",
+      "lastName": "Lee",
+      "address": "No. 3 Veronia crescent, Pomona Extension 2, Kemption Park",
+      "city": "Beijing",
+      "state": "Beijing",
+      "country": "CHN",
+      "postCode": "2090",
+      "phone": "+27 53 546 1298",
+      "mobile": "+27 52 454 8044",
+      "website": "www.zidingo.org"
+    }
+  }
+]

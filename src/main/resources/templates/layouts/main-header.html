@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+      layout:decorator="layouts/main">
+
+    <body>
+
+        <div th:fragment="header">
+            
+            <div id="header">
+                <div class="color-line">
+                </div>
+                <div id="logo" class="light-version">
+                    <span>ZIDINGO RMS</span>
+                </div>
+                <nav role="navigation">
+                    <div class="header-link hide-menu"><i class="fa fa-bars"></i></div>
+                    <div class="small-logo">
+                        <span class="text-primary">ZIDINGO RMS</span>
+                    </div>
+                    <form role="search" class="navbar-form-custom" method="post" action="#">
+                        <div class="form-group">
+                            <input type="text" placeholder="Type your search terms here ..." class="form-control" name="search" />
+                        </div>
+                    </form>
+                    <div class="mobile-menu">
+                        <button type="button" class="navbar-toggle mobile-menu-toggle" data-toggle="collapse" data-target="#mobile-collapse">
+                            <i class="fa fa-chevron-down"></i>
+                        </button>
+                        <div class="collapse mobile-navbar" id="mobile-collapse">
+                            <ul class="nav navbar-nav">
+                                <li>
+                                    <a class="" href="#">Link</a>
+                                </li>
+                                <li>
+                                    <a class="" href="#">Link</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="navbar-right">
+                        <ul class="nav navbar-nav no-borders">
+
+                            <li class="dropdown">
+                                <a class="dropdown-toggle" href="#" data-toggle="dropdown">
+                                    <i class="pe-7s-tools"></i>
+                                </a>
+
+                                <div class="dropdown-menu hdropdown bigmenu animated flipInX">
+                                    <table>
+                                        <tbody>
+                                        <tr>
+                                            <td>
+                                                <a href="/admin/users">
+                                                    <i class="pe pe-7s-users text-success"></i>
+                                                    <h5>Users</h5>
+                                                </a>
+                                            </td>
+                                            <td>
+                                                <a href="javascript:void(0);" th:onclick="'javascript:SendMessage();'">
+                                                    <i class="pe pe-7s-mail text-warning"></i>
+                                                    <h5>Send Message</h5>
+                                                </a>
+                                            </td>
+                                            <td>
+                                                <a href="/messages/template/editor">
+                                                    <i class="pe pe-7s-mail-open-file text-info"></i>
+                                                    <h5>Template</h5>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <a href="file_manager.html">
+                                                    <i class="pe pe-7s-box1 text-success"></i>
+                                                    <h5>Files</h5>
+                                                </a>
+                                            </td>
+                                            <td>
+                                                <a href="analytics.html">
+                                                    <i class="pe pe-7s-graph1 text-danger"></i>
+                                                    <h5>Analytics</h5>
+                                                </a>
+                                            </td>
+                                            <td>
+                                                <a href="forum.html">
+                                                    <i class="pe pe-7s-server text-info"></i>
+                                                    <h5>Server</h5>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <a href="javascript:void(0);" th:onclick="'javascript:CountryDataUpdate();'">
+                                                    <i class="pe pe-7s-global text-danger"></i>
+                                                    <h5>Country Data</h5>
+                                                </a>
+                                            </td>
+                                            <td>
+                                                <a href="javascript:void(0);" th:onclick="'javascript:DemoUsersUpload();'">
+                                                    <i class="pe pe-7s-cloud-upload text-warning"></i>
+                                                    <h5>Demo Users</h5>
+                                                </a>
+                                            </td>
+                                            <td>
+                                                <a href="forum.html">
+                                                    <i class="pe pe-7s-file text-primary-2"></i>
+                                                    <h5>Spare</h5>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </li>
+
+                            <li class="dropdown">
+                                <a class="dropdown-toggle" href="#" data-toggle="dropdown">
+                                    <i class="pe-7s-keypad"></i>
+                                </a>
+
+                                <div class="dropdown-menu hdropdown bigmenu animated flipInX">
+                                    <table>
+                                        <tbody>
+                                        <tr>
+                                            <td>
+                                                <a href="projects.html">
+                                                    <i class="pe pe-7s-portfolio text-info"></i>
+                                                    <h5>Projects</h5>
+                                                </a>
+                                            </td>
+                                            <td>
+                                                <a href="/messages/mailbox">
+                                                    <i class="pe pe-7s-mail text-warning"></i>
+                                                    <h5>Messages</h5>
+                                                </a>
+                                            </td>
+                                            <td>
+                                                <a href="/user/profile">
+                                                    <i class="pe pe-7s-user text-success"></i>
+                                                    <h5>Profile</h5>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <a href="forum.html">
+                                                    <i class="pe pe-7s-comment text-info"></i>
+                                                    <h5>Forum</h5>
+                                                </a>
+                                            </td>
+                                            <td>
+                                                <a href="analytics.html">
+                                                    <i class="pe pe-7s-graph1 text-danger"></i>
+                                                    <h5>Analytics</h5>
+                                                </a>
+                                            </td>
+                                            <td>
+                                                <a href="file_manager.html">
+                                                    <i class="pe pe-7s-box1 text-success"></i>
+                                                    <h5>Files</h5>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </li>
+
+                            <li class="dropdown">
+                                <a class="dropdown-toggle label-menu-corner" href="#" data-toggle="dropdown">
+                                    <i class="pe-7s-bell"></i>
+                                    <span class="label label-warning">3</span>
+                                </a>
+                                <ul class="dropdown-menu hdropdown notification animated flipInX" style="width: 310px;">
+                                    <li>
+                                        <span class="label label-success">NEW</span> It is a long established.
+                                        <a href="javascript:void(0);" class="pull-right">
+                                            <i class="fa fa-check text-warning"></i>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a>
+                                            <span class="label label-warning">WAR</span> There are many variations.
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a>
+                                            <span class="label label-danger">ERR</span> Contrary to popular belief.
+                                        </a>
+                                    </li>
+                                    <li class="summary"><a href="#">See all notifications</a></li>
+                                </ul>
+                            </li>
+
+                            <li id="userMessages" class="dropdown">
+                                <a class="dropdown-toggle label-menu-corner" href="#" data-toggle="dropdown">
+                                    <i class="pe-7s-mail"></i>
+                                    <span id="userMessageCount" class="label label-success">0</span>
+                                </a>
+                                <ul id="userMessageSummaries" class="dropdown-menu hdropdown animated flipInX dropdown-messages">
+                                    <div class="title" style="font-weight: bold;">
+                                        You have 4 new messages
+                                    </div>
+                                    <li>
+                                        <a>
+                                            Administrator
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a>
+                                            There are many variations.
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a>
+                                            Lorem Ipsum is simply dummy.
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a>
+                                            Contrary to popular belief.
+                                        </a>
+                                    </li>
+                                    <li class="summary"><a href="#">See All Messages</a></li>
+                                </ul>
+                            </li>
+
+                            <li>
+                                <a href="/logout">
+                                    <i class="pe-7s-upload pe-rotate-90"></i>
+                                </a>
+                            </li>
+
+                        </ul>
+                    </div>
+                </nav>
+            </div>
+            
+        </div>
+        
+    </body>
+</html>

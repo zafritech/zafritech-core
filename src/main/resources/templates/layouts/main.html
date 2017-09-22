@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+    
+<head>
+    
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <!-- Page title -->
+    <title>ZIDINGO RMS | Requirements Management System</title>
+
+    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+    <link rel="shortcut icon" type="image/ico" href="/zafritech.ico" />
+
+    <!-- Vendor styles -->
+    <link rel="stylesheet" href="/css/fontawesome/css/font-awesome.css" />
+    <link rel="stylesheet" href="/css/metisMenu/dist/metisMenu.css" />
+    <link rel="stylesheet" href="/css/animate.css/animate.css" />
+    <link rel="stylesheet" href="/css/bootstrap/dist/css/bootstrap.css" />
+    <link rel="stylesheet" href="/js/toastr/build/toastr.min.css" />
+    <link rel="stylesheet" href="/js/sweetalert/lib/sweet-alert.css" />
+    <link rel="stylesheet" href="/js/summernote/dist/summernote.css" />
+    <link rel="stylesheet" href="/js/duallistbox/dist/bootstrap-duallistbox.min.css" />
+
+    <!-- App styles -->
+    <link rel="stylesheet" href="/css/pe-icon-7-stroke/css/pe-icon-7-stroke.css" />
+    <link rel="stylesheet" href="/css/pe-icon-7-stroke/css/helper.css" />
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/zafritech.css" />
+    
+</head>
+
+<body class="fixed-navbar sidebar-scroll fixed-navbar">
+
+    <!-- Simple splash screen-->
+    <div class="splash"> 
+        <div class="color-line"></div>
+        <div class="splash-title">
+            <h1>ZIDINGO RMS - Requirements Management System</h1>
+            <p>Special AngularJS Admin Theme for small and medium webapp with very clean and aesthetic style and feel.</p>
+            <div class="spinner"> 
+                <div class="rect1"></div> 
+                <div class="rect2"></div> 
+                <div class="rect3"></div> 
+                <div class="rect4"></div> 
+                <div class="rect5"></div> 
+            </div> 
+        </div> 
+    </div>
+    <!--[if lt IE 7]>
+    <p class="alert alert-danger">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+    <![endif]-->
+
+    <!-- Header -->
+    <div th:replace="layouts/main-header :: header"></div>
+
+    <!-- Navigation -->
+    <div th:replace="layouts/main-nav :: nav"></div>
+
+    <!-- Main Wrapper -->
+    <div id="wrapper">
+
+        <div layout:fragment="content" class="animate-panel">
+
+            <p>Content goes here!</p>
+
+        </div>
+
+        <!-- Footer-->
+        <div th:replace="layouts/main-footer :: footer"></div>
+        
+    </div>
+
+    <!-- Modal Busy Box -->
+    <div th:replace="layouts/main-modalbusy :: modalbusy"></div>
+    
+    <!-- Vendor scripts -->
+    <script src="/js/jquery/dist/jquery.min.js"></script>
+    <script src="/js/jquery-ui/jquery-ui.min.js"></script>
+    <script src="/js/slimScroll/jquery.slimscroll.min.js"></script>
+    <script src="/js/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="/js/bootbox/bootbox.min.js"></script>
+    <script src="/js/metisMenu/dist/metisMenu.min.js"></script>
+    <script src="/js/iCheck/icheck.min.js"></script>
+    <script src="/js/sparkline/index.js"></script>
+    <script src="/js/toastr/build/toastr.min.js"></script>
+    <script src="/js/sweetalert/lib/sweet-alert.min.js"></script>
+    <script src="/js/summernote/dist/summernote.min.js"></script>
+    <script src="/js/moment/moment.js"></script>
+
+    <!-- App scripts -->
+    <script src="/js/homer.js"></script>
+    
+    <!-- Zafritech scripts -->
+    <script src="/js/zafritech/utils.js"></script>
+    <script src="/js/zafritech/main.js"></script>
+    <script src="/js/zafritech/ui-updates.js"></script>
+    <script src="/js/zafritech/messages.js"></script>
+    <script src="/js/zafritech/user.js"></script>
+    <script src="/js/zafritech/contacts.js"></script>
+    <script src="/js/zafritech/editor-settings.js"></script>
+
+    <!-- Page specific scripts attach here -->
+    <th:block layout:fragment="scripts"></th:block>
+
+</body>
+</html>

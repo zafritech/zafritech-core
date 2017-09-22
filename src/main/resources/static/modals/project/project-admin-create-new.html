@@ -1,0 +1,61 @@
+<form action="/api/project/create" method="POST">
+    
+    <div class="row">
+        <div class="col-sm-8">
+            <div class="form-group">
+                <label for="projectName">Project Name</label>
+                <input type="text" class="form-control" id="projectName" name="projectName" placeholder="Project name" />
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="form-group">
+                <label for="projectShortName">Project Short Name</label>
+                <input type="text" class="form-control" id="projectShortName" name="projectShortName" placeholder="Project short name" />
+            </div>
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="form-group">
+                <label for="companyId">Project Organisation</label>
+                <select class="form-control" id="companyId" name="companyId"></select>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="form-group">
+                <label for="projectTypeId">Project Type</label>
+                <select class="form-control" id="projectTypeId" name="projectTypeId"></select>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="form-group">
+                <label for="infoClassId">Classification</label>
+                <select class="form-control" id="infoClassId" name="infoClassId"></select>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="form-group">
+                <label for="projectNumber">Project Nummber</label>
+                <input type="text" class="form-control" id="projectNumber" name="projectNumber" placeholder="Project number (alphanumeric)" />
+            </div>
+        </div>
+        <div class="col-sm-6"></div>
+    </div>
+    
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="form-group">
+                <label for="projectDescription">Project Description</label>
+                <textarea class="form-control"  rows="3" cols="50" id="projectDescription" name="projectDescription"></textarea>
+            </div>
+        </div>
+    </div>
+    
+</form>

@@ -1,0 +1,36 @@
+<form action="/api/project/folder/actions" method="POST">
+    
+    <div id="folderName" style="font-size: 14px; font-weight: 500; margin: 0 0 5px 0;">Folder</div>
+    <input type="hidden" id="folderId" value="" />
+    
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="radio c-radio">
+                <label>
+                    <input type="radio" name="folderMenuOption" value="rename" checked=""><span class="ion-record"></span> Rename folder
+                </label>
+            </div>
+            <div class="radio c-radio">
+                <label>
+                    <input type="radio" name="folderMenuOption" value="duplicate"><span class="ion-record"></span> Duplicate with contects
+                </label>
+            </div>
+            <div class="radio c-radio">
+                <label>
+                    <input type="radio" name="folderMenuOption" value="subfolder"><span class="ion-record"></span> Create new subfolder
+                </label>
+            </div>
+            <div class="radio c-radio">
+                <label>
+                    <input type="radio" name="folderMenuOption" value="document"><span class="ion-record"></span> Create new document
+                </label>
+            </div>
+            <div class="radio c-radio">
+                <label>
+                    <input type="radio" name="folderMenuOption" value="delete"><span class="ion-record"></span> Delete folder
+                </label>
+            </div>
+        </div>
+    </div>
+    
+</form>

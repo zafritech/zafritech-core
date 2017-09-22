@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+
+    <body>
+        
+        <div th:fragment="header-nav">
+            
+            <header class="header-container">
+                <nav>
+                    <ul class="visible-xs visible-sm">
+                        <li><a id="sidebar-toggler" href="#" class="menu-link menu-link-slide"><span><em></em></span></a></li>
+                    </ul>
+                    <ul class="hidden-xs">
+                        <li><a id="offcanvas-toggler" href="#" class="menu-link menu-link-slide"><span><em></em></span></a></li>
+                    </ul>
+                    <a href="/" class="header-logo" style="text-decoration: none;">
+                        <img src="/images/logo.png" data-svg-replace="/images/logo.svg" alt="Logo" />
+                        <span class="header-logo-text">Zidingo RMS</span>
+                    </a>		  
+                    <ul class="pull-right" style="margin-right: 10px;">
+                        <li><a id="header-search" href="#" class="ripple"><em class="ion-ios-search-strong"></em></a></li>
+                        <li sec:authorize="hasRole('ROLE_ADMIN')" class="dropdown"><a href="#" data-toggle="dropdown" class="dropdown-toggle has-badge ripple"><em class="ion-settings"></em></a>
+                            <ul class="dropdown-menu dropdown-menu-right md-dropdown-menu">
+                                <li><a href="/admin"><em class="ion-settings icon-fw zid-header-menu"></em>Administration</a></li>
+                                <li><a href="/admin/companies"><em class="ion-ios-briefcase icon-fw zid-header-menu"></em>Organisations</a></li>
+                                <li><a href="/admin/projects"><em class="ion-stats-bars icon-fw zid-header-menu"></em>Projects</a></li>
+                                <li><a href="/admin/users"><em class="ion-person-stalker icon-fw zid-header-menu"></em>Users</a></li>
+                                <li><a href="javascript:void(0);" th:onclick="'javascript:SendMessage();'"><em class="ion-android-mail icon-fw zid-header-menu"></em>Send Message</a></li>
+                                <li><a href="/admin/messages/template/editor"><em class="ion-android-drafts icon-fw zid-header-menu"></em>Message Templates</a></li>
+                            </ul>
+                        </li>
+                        <li id="userMessages" class="dropdown"><a href="#" data-toggle="dropdown" class="dropdown-toggle has-badge ripple"><em class="ion-ios-bell"></em><sup class="badge bg-danger">10+</sup></a>
+                            <ul class="dropdown-menu dropdown-menu-right md-dropdown-menu">
+                                <li><a href="/messages"><em class="ion-android-mail icon-fw zid-header-menu"></em>Messages</a></li>
+                                <li><a href="/messages"><em class="ion-ios-bell icon-fw zid-header-menu"></em>Alerts</a></li>
+                                <li><a href="/messages"><em class="ion-android-chat icon-fw zid-header-menu"></em>Comments</a></li>
+                                <li><a href="/messages"><em class="ion-wrench icon-fw zid-header-menu"></em>Tasks</a></li>
+                            </ul>
+                        </li>
+                        <li class="dropdown"><a href="#" data-toggle="dropdown" class="dropdown-toggle has-badge ripple"><em class="ion-person"></em></a>
+                            <ul class="dropdown-menu dropdown-menu-right md-dropdown-menu">
+                                <li><a href="/profile"><em class="ion-person icon-fw zid-header-menu"></em>My Profile</a></li>
+                                <li><a href="/dashboard"><em class="ion-ios-speedometer icon-fw zid-header-menu"></em>My Dashboard</a></li>
+                                <li><a href="/tasks"><em class="ion-wrench icon-fw zid-header-menu"></em>My Tasks</a></li>
+                                <li><a href="/messages"><em class="ion-ios-bell icon-fw zid-header-menu"></em>Alerts</a></li>
+                                <li role="presentation" class="divider"></li>
+                                <li><a href="/logout"><em class="ion-log-out icon-fw zid-header-menu"></em>Logout</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </nav>
+            </header>
+            
+        </div>
+       
+    </body>
+    
+</html>

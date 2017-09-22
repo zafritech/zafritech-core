@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+      layout:decorator="layouts/zid-mail-master-detail">
+
+    <head>
+        <title>Zidingo PMS - Mailbox</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="UTF-8" />
+    </head>
+
+    <body>
+
+        <div layout:fragment="content">
+
+            <div class="row content">
+                
+                <div class="container container-fluid">
+
+                    <div class="zid-container-maillist">
+                        
+                        <div class="card">
+                            
+                            <div class="card-heading bg-blue-grey-400">
+                                                                   
+                                <div class="card-title" th:text="'Messages - ' + ${#strings.toUpperCase(msgBox)}">Messages - Inbox</div>
+                                <div class="pull-right" style="margin-top: -30px;">
+                                    <form class="form-inline pull-right">
+                                        <div class="form-group">
+                                            <input type="search" placeholder="Find message in inbox ..." class="form-control btn-sm" style="width: 250px; height: 32px;" />
+                                        </div>
+                                        <button type="button" class="btn btn-labeled btn-inverse ripple"><span class="btn-label"><i class="ion-ios-search"></i></span>Search<span class="md-ripple"></span></button>
+                                    </form>
+                                </div>
+                            </div>
+                            
+                            <div class="card-body">
+
+                                <div th:if="${!messages.isEmpty()}" class="row">
+                                    <div class="table-responsive" style="border-top: 1px solid #e6e6e6;">
+                                        <table class="table table-hover table-fixed va-middle" style="font-size: 14px;">
+                                            <tbody>
+                                                <tr th:each="message : ${messages}" th:classappend="${#strings.toLowerCase(message.status)}">
+                                                    <td class="wd-xxs" style="text-align: center;">
+                                                        <div class="checkbox checkbox-single checkbox-success">
+                                                            <div class="checkbox c-checkbox">
+                                                                <label>
+                                                                    <input type="checkbox" value="" />
+                                                                    <span class="ion-checkmark-round"></span>
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td style="width:180px;">
+                                                        <a th:href="@{'/messages/' + ${message.uuId}}" th:text="${message.sender}">Sender</a>
+                                                    </td>
+                                                    <td>
+                                                        <a th:href="@{'/messages/' + ${message.uuId}}" th:text="${message.subject}">Message</a>
+                                                    </td>
+                                                    <td class="text-right mail-date" style="width: 185px; text-align: left;" th:text="${#dates.format(message.statusDate, 'MMM dd, yyyy HH:mm:ss')}">Date</td>
+                                                    <td style="width: 20px; text-align: center;"><em class="ion-paperclip icon-18"></em></td>
+                                                    <td class="wd-xxs">
+                                                        <!-- START dropdown-->
+                                                        <div class="pull-right dropdown">
+                                                            <button type="button" data-toggle="dropdown" class="btn btn-default btn-flat btn-flat-icon"><em class="ion-android-more-vertical"></em></button>
+                                                            <ul role="menu" class="dropdown-menu md-dropdown-menu dropdown-menu-right">
+                                                                <li><a href="#"><em class="ion-reply icon-fw"></em>Reply</a></li>
+                                                                <li><a href="#"><em class="ion-forward icon-fw"></em>Forward</a></li>
+                                                                <li><a href="#"><em class="ion-android-mail icon-fw"></em>Mark as Unread</a></li>
+                                                                <li><a href="#"><em class="ion-trash-a icon-fw"></em>Delete</a></li>
+                                                            </ul>
+                                                        </div>
+                                                        <!-- END dropdown-->
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                
+                                <div th:if="${messages.isEmpty()}">
+                                    
+                                    <div style="color: #E91E63; padding: 20px 0;" th:text="'No messages found in the ' + ${#strings.capitalize(msgBox) + ' box.'}">Message</div>
+                                    
+                                </div>
+
+                            </div>
+
+                            <div class="card-footer" style="padding-bottom: 26px;">
+                                <span th:utext="'&lt;strong&gt;' + ${msgCount} + '&lt;/strong&gt; Messages, Page &lt;strong&gt;' + ${page} + '&lt;/strong&gt; of &lt;strong&gt;' + ${count} + '&lt;/strong&gt;'">Page # of ##</span>     
+                                <span class="pull-right">
+                                    <ul class="pagination pagination-sm" style="margin-top: 0px;">
+                                        <li th:class="${page == 1} ? 'disabled' : ''">
+                                            <span th:if="${page == 1}">First</span>
+                                            <a th:if="${page != 1}" th:href="@{'/admin/messages?s=' + ${size} + '&amp;p=1'}">First</a>
+                                        </li>
+                                        <li th:class="${page != 1} ? '' : 'disabled'">
+                                            <span th:if="${page == 1}">«</span>
+                                            <a th:if="${page != 1}" th:href="@{'/admin/messages?s=' + ${size} + '&amp;p=' + ${page - 1}}"><span>«</span></a>
+                                        </li>
+
+                                        <li th:each="p : ${list}" th:class="${p == page ? 'active' : ''}">
+                                            <span th:if="${p == page}" th:text="${page}">1</span>
+                                            <a th:if="${p != page}" th:href="@{'/admin/messages?s=' + ${size} + '&amp;p=' + ${p}}" th:text="${p}">1</a>
+                                        </li>
+
+                                        <li th:if="${count > last}" class="disabled"><span>...</span></li>
+
+                                        <li th:class="${page == count} ? 'disabled' : ''">
+                                            <span th:if="${page == count}">»</span>
+                                            <a th:if="${page != count}" th:href="@{'/admin/messages?s=' + ${size} + '&amp;p=' + ${page + 1}}">»</a>
+                                        </li>
+                                        <li th:class="${page == count} ? 'disabled' : ''">
+                                            <span th:if="${page == count}">Last</span>
+                                            <a th:if="${page != count}" th:href="@{'/admin/messages?s=' + ${size} + '&amp;p=' + ${count}}">Last</a>
+                                        </li>
+                                    </ul>
+                                </span>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+                
+            </div>
+            
+        </div>
+
+    </body>
+
+    <th:block layout:fragment="scripts"></th:block>
+
+</html>

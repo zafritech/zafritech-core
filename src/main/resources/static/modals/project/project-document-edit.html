@@ -1,0 +1,91 @@
+<form action="/api/user/update" method="POST">
+
+    <input type="hidden" id="projectId" name="projectId" value="" />
+    <input type="hidden" id="folderId" name="folderId" value="" />
+    <input type="hidden" id="docCodeRoot" name="docCodeRoot" value="" />
+    
+<!--    <div class="row">
+        <div class="col-sm-8">
+            <div class="form-group">
+                <label for="documentProject">Project</label>
+                <input type="text" class="form-control" id="documentProject" name="documentProject" placeholder="Project" disabled="disabled" />
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="form-group">
+                <label for="documentFolder">Folder</label>
+                <input type="text" class="form-control" id="documentFolder" name="documentFolder" placeholder="Document folder" disabled="disabled" />
+            </div>
+        </div>
+    </div>-->
+    
+    <div class="row">
+        <div class="col-sm-8">
+            <div class="form-group">
+                <label for="documentType">Document Type</label>
+                <select class="form-control" id="documentType" name="documentType" onchange="onDocumentTypeChange();"></select>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="form-group">
+                <label for="infoClassId">Information Class</label>
+                <select class="form-control" id="infoClassId" name="infoClassId"></select>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="form-group">
+                <label for="documentNumber">Document Number</label>
+                <input type="text" class="form-control" id="documentNumber" name="documentNumber"  placeholder="Document number"/>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="form-group">
+                <label for="documentName">Document Title</label>
+                <input type="text" class="form-control" id="documentName" name="documentName"  placeholder="Document title"/>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="form-group">
+                <label for="ownerId">Author</label>
+                <select class="form-control" id="ownerId" name="ownerId"></select>
+            </div>
+        </div>
+        <div class="col-sm-3">
+            <div class="form-group">
+                <label for="status">Status</label>
+                <select class="form-control" id="status" name="status"></select>
+            </div>
+        </div>
+        <div class="col-sm-3">
+            <div class="form-group">
+                <label for="documentIssue">Issue Number</label>
+                <input type="text" class="form-control" id="documentIssue" name="documentIssue"  placeholder="Document title"/>
+            </div>
+        </div>
+    </div>
+  
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="form-group">
+                <label for="documentLongName">Document Full Title</label>
+                <input type="text" class="form-control" id="documentLongName" name="documentLongName"  placeholder="Document full title"/>
+            </div>
+        </div>
+    </div>
+  
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="form-group">
+                <label for="documentDescription">Document Description</label>
+                <textarea class="form-control"  rows="3" cols="50" id="documentDescription" name="documentDescription"></textarea>
+            </div>
+        </div>
+    </div>
+
+</form>

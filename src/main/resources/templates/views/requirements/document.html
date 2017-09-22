@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+      layout:decorator="layouts/zid-master-detail">
+
+    <head>
+        <title>Zidingo PMS - Document</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="UTF-8" />
+    </head>
+
+    <body>
+
+        <div layout:fragment="content">
+            
+            <div class="row content">
+                
+                <div class="container container-fluid">
+                   
+                    <div class="col-md-12">
+
+                        <div class="card">
+   
+                            <!-- zTree navigation tags START-->
+                            <input type="hidden" id="treeValid" th:value="${document.project.Id}" />
+                            <input type="hidden" id="projectId" th:value="${document.project.Id}" />
+                            <input type="hidden" id="nodeId" th:value="${document.folder.Id}" />
+                            
+                            <input type="hidden" id="docTreeValid" th:value="${document.Id}" />
+                            <input type="hidden" id="documentId" th:value="${document.Id}" />
+                            <input type="hidden" id="documentNodeId" th:value="${document.Id}" />
+                            <!-- zTree navigation tags END-->
+                            
+                            <input type="hidden" id="contentDescriptorCode" th:value="${descriptor}" />
+                            
+                            <div class="card-heading bg-white" style="border-bottom: 2px solid #607d8b;">
+                                <div class="card-title">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <span th:text="${document.identifier}"></span>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <span th:text="${document.documentLongName} + ' (' + ${document.documentType.typeCode} + ')'"></span>
+                                        </div>
+                                        <div class="col-md-1">
+                                            <div class="pull-right dropdown">
+                                              <button type="button" data-toggle="dropdown" class="btn btn-default btn-flat btn-flat-icon"><em class="ion-android-more-vertical"></em></button>
+                                              <ul role="menu" class="dropdown-menu md-dropdown-menu dropdown-menu-right">
+                                                <li><a href="javascript:void(0);" th:onclick="'javascript:EditDocumentProperties(\'' + ${document.id} + '\');'"><em class="ion-edit icon-fw"></em> Edit Properties</a></li>
+                                                <li><a href="javascript:void(0);" th:onclick="'javascript:UserDocumentItemsFixSortIndices(\'' + ${document.id} + '\');'"><em class="ion-navicon-round icon-fw"></em> Auto Number</a></li>
+                                                <li><a href="javascript:void(0);" th:onclick="'javascript:UserDocumentItemsFixSortIndices(\'' + ${document.id} + '\');'"><em class="ion-ios-skipforward icon-fw"></em> Create Baseline</a></li>
+                                                <li><a th:href="'/requirements/document/pdf/' + ${document.project.uuId}"><em class="ion-archive icon-fw"></em> Download As PDF</a></li>
+                                                <li role="presentation" class="divider"></li>
+                                                <li sec:authorize="hasRole('ROLE_ADMIN')">
+                                                    <a href="javascript:void(0);" th:onclick="'javascript:UserAdminChangeDocumentOwner(\'' + ${document.project.uuId} + '\', \'' + ${document.uuId} + '\');'"><em class="ion-android-person icon-fw"></em> Change Author</a>
+                                                </li>
+                                                <li><a href="javascript:void(0);" th:onclick="'javascript:UserAddDocumentEditors(\'' + ${document.project.uuId} + '\', \'' + ${document.uuId} + '\');'"><em class="ion-edit icon-fw"></em> Add Editors</a></li>
+                                                <li><a href="javascript:void(0);" th:onclick="'javascript:UserAddDocumentReviewers(\'' + ${document.project.uuId} + '\', \'' + ${document.uuId} + '\');'"><em class="ion-chatbox icon-fw"></em> Add Reviers</a></li>
+                                                <li><a href="javascript:void(0);" th:onclick="'javascript:UserAddDocumentApprover(\'' + ${document.project.uuId} + '\', \'' + ${document.uuId} + '\');'"><em class="ion-checkmark icon-fw"></em> Add Approver</a></li>
+                                                <li role="presentation" class="divider"></li>
+                                                <li><a th:href="'/admin/projects/' + ${document.project.uuId}"><em class="ion-close icon-fw"></em> Close</a></li>
+                                              </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <span th:text="'Project ' + ${document.project.projectShortName}"></span>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <span th:text="${document.project.projectNumber}"></span>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <span th:text="${document.status} + ' ' + ${document.documentIssue}"></span>
+                                        </div>
+                                        <div class="col-md-3" style="text-align: right;">
+                                            <span th:text="${#dates.format(document.creationDate, 'MMMM dd, yyyy')}"></span>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <span th:text="${document.project.projectSponsor.companyName}"></span>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <span th:text="${document.project.projectSponsor.contact.city}"></span>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <span th:text="${document.infoClass.className}"></span>
+                                        </div>
+                                        <div class="col-md-3" style="text-align: right;">
+                                            <span th:text="${document.owner.firstName} + ' ' + ${document.owner.lastName}"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="card-body">
+
+                                <div th:if="${items.isEmpty()}">
+                                    <!-- START dropdown-->
+                                    <div class="pull-right dropdown">
+                                      <button type="button" data-toggle="dropdown" class="btn btn-default btn-flat btn-flat-icon"><em class="ion-android-more-vertical"></em></button>
+                                      <ul role="menu" class="dropdown-menu md-dropdown-menu dropdown-menu-right">
+                                        <li><a href="javascript:void(0);" th:onclick="'javascript:RequirementItemInsertNewItem(\'' + ${document.id} + '\');'"><em class="ion-plus icon-fw"></em>New Item</a></li>
+                                      </ul>
+                                    </div>
+                                    <!-- END dropdown-->
+                                    <div class="card-title">This document is empty.</div>
+                                </div>
+                                
+                                <div th:if="${!items.isEmpty()}">
+                                    <div th:each="item : ${items}"
+                                         th:attr="id=${item.systemId}"
+                                         th:classappend="${item.itemClass == 'HEADER'} ? 'row item-header-' + ${item.itemLevel} : 'row item-level-' + ${item.itemLevel} + ' ' + ${#strings.toLowerCase(item.itemClass)}">
+                                        
+                                        <a th:if="${item.itemClass == 'HEADER'}" th:attr="name=${'anchor' + item.id}" />
+                                        
+                                        <div th:if="${item.itemClass == 'HEADER'}" class="col-md-11">
+                                            <div th:if="${item.itemNumber != null}">
+                                                <div th:utext="${item.itemNumber}" class="header-number"></div>
+                                                <span th:utext="${item.itemValue}" class="header-value-numbered"></span>
+                                            </div>
+                                            <div th:if="${item.itemNumber == null}">
+                                                <span th:utext="${item.itemValue}" class="header-value-nonumber"></span>
+                                            </div>
+                                        </div>
+                                        
+                                        <div th:if="${item.itemClass == 'REQUIREMENT'}" class="col-md-11">
+                                            <div th:classappend="'requirement-container-' + ${#strings.toLowerCase(#strings.replace(item.itemStatus, 'ITEM_STATUS_', ''))}">
+                                                <p th:utext="${item.identifier}" class="requirement-identifier"></p>
+                                                <div class="requirement-notices">
+                                                    <em class="ion-arrow-left-b icon-fw incoming-link"></em>
+                                                    <em class="ion-arrow-right-b icon-fw outgoing-link"></em>
+                                                    <em class="ion-android-chat icon-fw chat-box"></em>
+                                                </div>
+                                                <span class="requirement-text" th:utext="${item.itemValue}"></span>
+                                            </div>
+                                        </div>
+                                        
+                                        <div th:if="${item.itemClass != 'HEADER' and item.itemClass != 'REQUIREMENT'}" class="col-md-11">
+                                            <div class="plain-text-nonumber">
+                                                <div th:utext="${item.itemValue}"></div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="col-md-1">
+                                            
+                                            <div class="pull-right dropdown">
+                                              <button type="button" data-toggle="dropdown" class="btn btn-default btn-flat btn-flat-icon"><em class="ion-android-more-vertical"></em></button>
+                                              <ul role="menu" class="dropdown-menu md-dropdown-menu dropdown-menu-right">
+                                                <li th:if="${item.itemClass} == 'HEADER'">
+                                                    <a href="javascript:void(0);" th:onclick="'javascript:RequirementItemCreateItem(\'' + ${item.document.id} + '\',\'' + ${item.parent != null ? item.parent.id : ''} + '\',\'' + ${item.itemLevel} + '\');'">
+                                                        <em class="ion-plus icon-fw"></em>Insert Sibling Item
+                                                    </a>
+                                                </li>
+                                                <li th:if="${item.itemClass} == 'HEADER'">
+                                                    <a href="javascript:void(0);" th:onclick="'javascript:RequirementItemCreateItem(\'' + ${item.document.id} + '\',\'' + ${item.id} + '\',\'' + ${item.itemLevel + 1} + '\');'">
+                                                        <em class="ion-plus icon-fw"></em>Insert Child Item
+                                                    </a>
+                                                </li>
+                                                <li><a href="javascript:void(0);" th:onclick="'javascript:RequirementItemEditItem(\'' + ${item.id} + '\');'"><em class="ion-edit icon-fw"></em>Edit Item</a></li>
+                                                <li><a href="javascript:void(0);" th:onclick="'javascript:RequirementItemMoveItem(\'' + ${item.id} + '\',\'UP\');'"><em class="ion-arrow-up-a icon-fw"></em>Move Item Up</a></li>
+                                                <li><a href="javascript:void(0);" th:onclick="'javascript:RequirementItemMoveItem(\'' + ${item.id} + '\',\'DOWN\');'"><em class="ion-arrow-down-a icon-fw"></em>Move Item Down</a></li>
+                                                <li th:if="${item.itemClass} == 'REQUIREMENT'">
+                                                    <a href="javascript:void(0);" th:onclick="'javascript:RequirementItemLinkCreate(\'' + ${item.id} + '\');'">
+                                                        <em class="ion-link icon-fw"></em>Start Link</a>
+                                                </li>
+                                                <li th:if="${item.itemClass} == 'REQUIREMENT'">
+                                                    <a href="javascript:void(0);" th:onclick="'javascript:RequirementItemMakeComment(\'' + ${item.id} + '\');'">
+                                                        <em class="ion-chatbox icon-fw"></em>Make Comment
+                                                    </a>
+                                                </li>
+                                                <li><a href="javascript:void(0);" th:onclick="'javascript:RequirementItemDelete(\'' + ${item.id} + '\',\'' + ${item.systemId} + '\');'"><em class="ion-trash-a icon-fw"></em>Delete Item</a></li>
+                                              </ul>
+                                            </div>
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+
+                            </div>
+                            
+                        </div>
+
+                    </div>
+                    
+                </div>
+                
+            </div>
+            
+        </div>
+        
+        <th:block layout:fragment="scripts">
+            <script src="/js/vendor/ztree/jquery.ztree.core.js"></script>
+            <script src="/js/zafritech/project.js"></script>
+            <script src="/js/zafritech/document.js"></script>
+            <script src="/js/zafritech/requirements.js"></script>
+        </th:block>
+
+    </body>
+
+</html>

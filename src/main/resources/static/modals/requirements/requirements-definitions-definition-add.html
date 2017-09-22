@@ -1,0 +1,34 @@
+<form id="createItem" action="#" method="post">
+
+    <input type="hidden" name="documentId" id="documentId" value="" />
+    <input type="hidden" name="itemId" id="itemId" value="" />
+
+    <div class="row">
+        <div class="col-sm-3">
+            <div class="form-group">
+                <label>Terms</label>
+                <select id="definitionsList" name="definitionsList" class="form-control" size="10" onchange="onDefinitionsChange();"></select>
+            </div>
+        </div>
+        <div class="col-sm-9">
+            <div class="form-group">
+                <label>Expanded meaning</label>
+                <div style="border: 2px solid #1976D2; padding: 5px; color: #1976D2;" id="expendedMeaning"></div>
+            </div>
+            <div class="form-group" style="border: 2px solid #7D7A79; padding: 10px 5px;">
+                <label>Create New Term</label>
+                <div class="row" style="margin-bottom: 5px;">
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control" id="newTerm" name="newTerm" placeholder="New term" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <textarea class="form-control" id="newTermDefinition" name="newTermDefinition" rows="2" placeholder="Expanded meaning"></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</form>
