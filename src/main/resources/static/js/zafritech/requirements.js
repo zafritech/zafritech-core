@@ -622,7 +622,7 @@ function onRequirementClassChange() {
         
     } else if (itemClass.value === "METADATA") {
         
-        var mediaTypes = ["ABBREVIATIONS", "ACRONYMS", "DEFINITIONS", "REFERENCES"];
+        var mediaTypes = ["ABBREVIATIONS", "ACRONYMS", "ACRONYMS_ABBREVIATIONS", "DEFINITIONS", "REFERENCES"];
         
         // Populate Requirement Ident Templates SELECT
         $('#mediaType').empty();

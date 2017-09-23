@@ -235,6 +235,12 @@ public class ItemPDFServiceImpl implements ItemPDFService {
 
                                 break;
 
+                            case ACRONYMS_ABBREVIATIONS:
+
+                                addAcronymsAbbreviations(document, pdf);
+
+                                break;
+
                             case ABBREVIATIONS:
 
                                 addAbbreviations(document, pdf);
@@ -338,6 +344,62 @@ public class ItemPDFServiceImpl implements ItemPDFService {
         pdf.add(refPara);
     }
 
+    private void addAcronymsAbbreviations(Document document, com.itextpdf.text.Document pdf) throws DocumentException {
+
+        float[] abbrevColWidths = {1, 3, 15};
+        PdfPTable abbrevTable = new PdfPTable(abbrevColWidths);
+        abbrevTable.setWidthPercentage(100);
+
+        // Table headers
+        PdfPCell abbrevCell1 = new PdfPCell(new Phrase("#", PdfConstants.TABLE_HEADER));
+        abbrevCell1.setBackgroundColor(new GrayColor(0.75f));
+        abbrevCell1.setHorizontalAlignment(Element.ALIGN_CENTER);
+        abbrevCell1.setPaddingBottom(5);
+        abbrevTable.addCell(abbrevCell1);
+
+        PdfPCell abbrevCell2 = new PdfPCell(new Phrase("Term", PdfConstants.TABLE_HEADER));
+        abbrevCell2.setBackgroundColor(new GrayColor(0.75f));
+        abbrevCell2.setPaddingBottom(5);
+        abbrevTable.addCell(abbrevCell2);
+
+        PdfPCell abbrevCell3 = new PdfPCell(new Phrase("Expanded Meaning", PdfConstants.TABLE_HEADER));
+        abbrevCell3.setBackgroundColor(new GrayColor(0.75f));
+        abbrevCell3.setPaddingBottom(5);
+        abbrevTable.addCell(abbrevCell3);
+
+        Integer count = 1;
+
+        for (Definition definition : document.getDefinitions()) {
+
+            if (definition.getDefinitionType() == DefinitionTypes.ACRONYM || definition.getDefinitionType() == DefinitionTypes.ABBREVIATION) {
+                
+                PdfPCell number = new PdfPCell(new Phrase(String.valueOf(count++), PdfConstants.TABLE_CELL));
+                number.setHorizontalAlignment(Element.ALIGN_CENTER);
+                number.setPaddingBottom(5);
+                abbrevTable.addCell(number);
+
+                PdfPCell term = new PdfPCell(new Phrase(definition.getTerm(), PdfConstants.TABLE_CELL));
+                term.setPaddingBottom(5);
+                abbrevTable.addCell(term);
+
+                PdfPCell termDef = new PdfPCell(new Phrase(definition.getTermDefinition(), PdfConstants.TABLE_CELL));
+                termDef.setPaddingBottom(5);
+                abbrevTable.addCell(termDef);
+            }
+        }
+
+        Paragraph abbrevTablePara = new Paragraph();
+        abbrevTablePara.setIndentationLeft(56f);
+        abbrevTablePara.add(abbrevTable);
+
+        pdf.add(abbrevTablePara);
+
+        // Blank line below table
+        Paragraph abbrevPara = new Paragraph();
+        documentPdfService.addEmptyLine(abbrevPara, 1);
+        pdf.add(abbrevPara);
+    }
+
     private void addAbbreviations(Document document, com.itextpdf.text.Document pdf) throws DocumentException {
 
         float[] abbrevColWidths = {1, 3, 15};
@@ -356,27 +418,27 @@ public class ItemPDFServiceImpl implements ItemPDFService {
         abbrevCell2.setPaddingBottom(5);
         abbrevTable.addCell(abbrevCell2);
 
-        PdfPCell abbrevCell3 = new PdfPCell(new Phrase("Abbreviation Expanded Meaning", PdfConstants.TABLE_HEADER));
+        PdfPCell abbrevCell3 = new PdfPCell(new Phrase("Expanded Meaning", PdfConstants.TABLE_HEADER));
         abbrevCell3.setBackgroundColor(new GrayColor(0.75f));
         abbrevCell3.setPaddingBottom(5);
         abbrevTable.addCell(abbrevCell3);
 
         Integer count = 1;
 
-        for (Definition abbrev : document.getDefinitions()) {
+        for (Definition definition : document.getDefinitions()) {
 
-            if (abbrev.getDefinitionType() == DefinitionTypes.ABBREVIATION) {
+            if (definition.getDefinitionType() == DefinitionTypes.ABBREVIATION) {
                 
                 PdfPCell number = new PdfPCell(new Phrase(String.valueOf(count++), PdfConstants.TABLE_CELL));
                 number.setHorizontalAlignment(Element.ALIGN_CENTER);
                 number.setPaddingBottom(5);
                 abbrevTable.addCell(number);
 
-                PdfPCell term = new PdfPCell(new Phrase(abbrev.getTerm(), PdfConstants.TABLE_CELL));
+                PdfPCell term = new PdfPCell(new Phrase(definition.getTerm(), PdfConstants.TABLE_CELL));
                 term.setPaddingBottom(5);
                 abbrevTable.addCell(term);
 
-                PdfPCell termDef = new PdfPCell(new Phrase(abbrev.getTermDefinition(), PdfConstants.TABLE_CELL));
+                PdfPCell termDef = new PdfPCell(new Phrase(definition.getTermDefinition(), PdfConstants.TABLE_CELL));
                 termDef.setPaddingBottom(5);
                 abbrevTable.addCell(termDef);
             }
@@ -602,7 +664,7 @@ public class ItemPDFServiceImpl implements ItemPDFService {
             phrase = new Phrase();
             phrase.add(new Chunk("Document Type:", PdfConstants.HEADER_LABEL));
             phrase.add(Chunk.NEWLINE);
-            phrase.add(new Chunk(document.getDocumentType().getDocumentTypeName(), PdfConstants.TABLE_CELL));
+            phrase.add(new Chunk(document.getDocumentType().getTypeCode(), PdfConstants.TABLE_CELL));
             cell = new PdfPCell(phrase);
             cell.setBorder(Rectangle.NO_BORDER);
             cell.setFixedHeight(24);
@@ -741,7 +803,7 @@ public class ItemPDFServiceImpl implements ItemPDFService {
             phrase = new Phrase();
             phrase.add(new Chunk("Document Type:", PdfConstants.HEADER_LABEL));
             phrase.add(Chunk.NEWLINE);
-            phrase.add(new Chunk(document.getDocumentType().getDocumentTypeName(), PdfConstants.TABLE_CELL));
+            phrase.add(new Chunk(document.getDocumentType().getTypeCode(), PdfConstants.TABLE_CELL));
             header.addCell(phrase);
 
             // Reference Number Cell

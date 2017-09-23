@@ -13,6 +13,7 @@ public enum MediaType {
     
     ABBREVIATIONS,
     ACRONYMS,
+    ACRONYMS_ABBREVIATIONS,
     EQUATION,
     DEFINITIONS,
     IMAGE, 

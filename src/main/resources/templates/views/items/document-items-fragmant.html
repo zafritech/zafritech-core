@@ -19,7 +19,7 @@
                 <div class="pull-right dropdown">
                   <button type="button" data-toggle="dropdown" class="btn btn-default btn-flat btn-flat-icon"><em class="ion-android-more-vertical"></em></button>
                   <ul role="menu" class="dropdown-menu md-dropdown-menu dropdown-menu-right">
-                    <li><a href="javascript:void(0);" th:onclick="'javascript:RequirementItemInsertNewItem(\'' + ${document.id} + '\');'"><em class="ion-plus icon-fw"></em>New Item</a></li>
+                    <li><a href="javascript:void(0);" th:onclick="'javascript:RequirementItemCreateItem(\'' + ${document.id} + '\',\'\',\'1\');'"><em class="ion-plus icon-fw"></em>New Item</a></li>
                   </ul>
                 </div>
                 <!-- END dropdown-->
@@ -105,6 +105,24 @@
                             
                         </div>
                         
+                        <table th:if="${item.mediaType.name() == 'ACRONYMS_ABBREVIATIONS'}" class="table table-striped table-hover table-bordered">
+                            <thead>
+                                <tr>
+                                    <th style="width: 50px; text-align: center;">#</th>
+                                    <th style="width: 120px;">Abbreviation/Acronym</th>
+                                    <th>Description</th>
+                                </tr>
+                            </thead>
+                            <tbody th:if="${!document.definitions.isEmpty()}">
+                                <tr th:each="definition,iter : ${document.definitions}" 
+                                    th:if="${definition.definitionType.name() == 'ABBREVIATION'} or ${definition.definitionType.name() == 'ACRONYM'}">
+                                    <td style="text-align: center;"><span th:text="${iter.count}">#</span></td>
+                                    <td><span th:text="${definition.term}">Abbreviation/Acronym</span></td>
+                                    <td><span th:text="${definition.termDefinition}">Description</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        
                         <table th:if="${item.mediaType.name() == 'ABBREVIATIONS'}" class="table table-striped table-hover table-bordered">
                             <thead>
                                 <tr>
@@ -182,6 +200,11 @@
                             <li th:if="${item.mediaType.name()} == 'REFERENCES'">
                                 <a href="javascript:void(0);" th:onclick="'javascript:RequirementItemAddReference(\'' + ${item.document.id} + '\',\'' + ${item.id} + '\',\'' + ${item.itemValue} + '\');'">
                                     <em class="ion-plus icon-fw"></em>Add Reference
+                                </a>
+                            </li>
+                            <li th:if="${item.mediaType.name()} == 'ACRONYMS_ABBREVIATIONS'">
+                                <a href="javascript:void(0);" th:onclick="'javascript:RequirementItemAddDefinition(\'' + ${item.document.id} + '\',\'' + ${item.id} + '\',\'' + ${item.mediaType.name()} + '\');'">
+                                    <em class="ion-plus icon-fw"></em>Add Acronym/Abbrev
                                 </a>
                             </li>
                             <li th:if="${item.mediaType.name()} == 'ABBREVIATIONS'">

@@ -113,7 +113,9 @@ public class DocumentServiceImpl implements DocumentService {
     @Override
     public Document saveEditDao(DocEditDao docEditDao) {
         
-        User owner = userRepository.findOne(docEditDao.getOwnerId());
+        User loginUser = userService.loggedInUser();
+        User owner = (docEditDao.getOwnerId() != null) ? userRepository.findOne(docEditDao.getOwnerId()) : loginUser;
+        
         Document document = documentRepository.findOne(docEditDao.getId());
         
         document.setIdentifier(docEditDao.getIdentifier());
