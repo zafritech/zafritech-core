@@ -312,18 +312,15 @@ public class ItemPDFServiceImpl implements ItemPDFService {
             number.setPaddingBottom(5);
             refTable.addCell(number);
 
-//            PdfPCell refId = new PdfPCell(new Phrase(ref.getReference().getRefNumber(), PdfConstants.TABLE_CELL));
-            PdfPCell refId = new PdfPCell(new Phrase(" ", PdfConstants.TABLE_CELL));
+            PdfPCell refId = new PdfPCell(new Phrase(ref.getReference().getRefNumber(), PdfConstants.TABLE_CELL));
             refId.setPaddingBottom(5);
             refTable.addCell(refId);
 
-//            PdfPCell refTitle = new PdfPCell(new Phrase(ref.getReference().getRefTitle(), PdfConstants.TABLE_CELL));
-            PdfPCell refTitle = new PdfPCell(new Phrase(" ", PdfConstants.TABLE_CELL));
+            PdfPCell refTitle = new PdfPCell(new Phrase(ref.getReference().getRefTitle(), PdfConstants.TABLE_CELL));
             refTitle.setPaddingBottom(5);
             refTable.addCell(refTitle);
 
-//            PdfPCell revision = new PdfPCell(new Phrase(ref.getReference().getRefVersion(), PdfConstants.TABLE_CELL));
-            PdfPCell revision = new PdfPCell(new Phrase(" ", PdfConstants.TABLE_CELL));
+            PdfPCell revision = new PdfPCell(new Phrase(ref.getReference().getRefVersion(), PdfConstants.TABLE_CELL));
             revision.setHorizontalAlignment(Element.ALIGN_CENTER);
             revision.setPaddingBottom(5);
             refTable.addCell(revision);
