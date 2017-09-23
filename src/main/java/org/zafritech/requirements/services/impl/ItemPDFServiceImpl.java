@@ -723,7 +723,7 @@ public class ItemPDFServiceImpl implements ItemPDFService {
 
             // Issuerer Contact Cell
             phrase = new Phrase();
-            phrase.add(new Chunk("Preparer Contact:", PdfConstants.HEADER_LABEL));
+            phrase.add(new Chunk("Prepared By Contact:", PdfConstants.HEADER_LABEL));
             phrase.add(Chunk.NEWLINE);
             phrase.add(new Chunk(document.getOwner().getEmail(), PdfConstants.TABLE_CELL));
             cell = new PdfPCell(phrase);
@@ -751,7 +751,7 @@ public class ItemPDFServiceImpl implements ItemPDFService {
 
             // Approver Contact Cell
             phrase = new Phrase();
-            phrase.add(new Chunk("Approver Contact:", PdfConstants.HEADER_LABEL));
+            phrase.add(new Chunk("Approved By Contact:", PdfConstants.HEADER_LABEL));
             phrase.add(Chunk.NEWLINE);
             phrase.add(new Chunk((approver != null ? approver.getEmail() : ""), PdfConstants.TABLE_CELL));
             header.addCell(phrase);
@@ -818,7 +818,7 @@ public class ItemPDFServiceImpl implements ItemPDFService {
 
             // Issuerer Cell
             phrase = new Phrase();
-            phrase.add(new Chunk("Issued By:", PdfConstants.HEADER_LABEL));
+            phrase.add(new Chunk("Prepared By:", PdfConstants.HEADER_LABEL));
             phrase.add(Chunk.NEWLINE);
             phrase.add(new Chunk(document.getOwner().getFirstName() + " " + document.getOwner().getLastName(), PdfConstants.TABLE_CELL));
             header.addCell(phrase);
@@ -883,8 +883,8 @@ public class ItemPDFServiceImpl implements ItemPDFService {
 
             String company = document.getProject().getProjectSponsor().getCompanyName();
             String copyright = "Copyright \u00A9 " + yearFormat.format(document.getModifiedDate()) + " " + company + ". "
-                    + "This document is the property of " + company + " and must not be reproduced in any "
-                    + "form or distributed to any third party without the written consent of " + company + ". "
+                    + "This document is the property of " + company + ". All rights reserved. No part of this document may be reproduced, "
+                    + "distributed, or transmitted in any form or shown to any third party without the written consent of " + company + ". "
                     + "Any infringement of these conditions will lead to institution of legal proceedings. ";
 
             footer = new PdfPTable(1);
