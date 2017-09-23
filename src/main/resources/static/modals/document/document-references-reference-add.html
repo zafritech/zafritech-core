@@ -3,19 +3,20 @@
     <input type="hidden" name="projectId" id="projectId" value="" />
     <input type="hidden" name="documentId" id="documentId" value="" />
     <input type="hidden" name="itemId" id="itemId" value="" />
+    <input type="hidden" name="referenceType" id="referenceType" value="" />
 
     <fieldset>
         <div class="form-group row">
             <label class="col-sm-3 control-label">Reference Source:</label>
             <div class="col-sm-9">
                 <label class="radio-inline c-radio">
-                    <input id="sourceProject" type="radio" name="referenceSource" value="sourceProject" checked="" onchange="onReferenceSourceChange();"><span class="ion-record"></span> Project
+                    <input id="sourceProject" type="radio" name="referenceSource" value="PROJECT" checked="" onchange="onReferenceSourceChange();"><span class="ion-record"></span> Project
                 </label>
                 <label class="radio-inline c-radio">
-                    <input id="sourceLibrary" type="radio" name="referenceSource" value="sourceLibrary" onchange="onReferenceSourceChange();"><span class="ion-record"></span> Library
+                    <input id="sourceLibrary" type="radio" name="referenceSource" value="LIBRARY" onchange="onReferenceSourceChange();"><span class="ion-record"></span> Library
                 </label>
                 <label class="radio-inline c-radio">
-                    <input id="sourceLink" type="radio" name="referenceSource" value="sourceLink" onchange="onReferenceSourceChange();"><span class="ion-record"></span> External Link
+                    <input id="sourceLink" type="radio" name="referenceSource" value="URL_LINK" onchange="onReferenceSourceChange();"><span class="ion-record"></span> External Link
                 </label>
             </div>
         </div>

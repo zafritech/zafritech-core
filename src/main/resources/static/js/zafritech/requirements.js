@@ -1137,35 +1137,36 @@ function RequirementItemAddReference(documentId, itemId, referenceType) {
                          data['documentId'] = document.getElementById('documentId').value;
                          data['projectId'] = document.getElementById('projectId').value;
                          data['itemId'] = document.getElementById('itemId').value;
+                         data['referenceType'] = document.getElementById('referenceType').value;
                          
-                        if (data['source'] === "sourceProject") {
+                        if (data['source'] === "PROJECT") {
                              
                             data['projectRefId'] = document.getElementById('projectReferenceId').value;
                             data['libraryRefId'] = null;
                             data['linkRefId'] = null;
-                            data['linkRefUniqueId'] = null;
+                            data['linkRefIdentifier'] = null;
                             data['linkRefTitle'] = null;
                             data['linkRefUrl'] = null;
                             data['linkRefAuthority'] = null;
                              
-                        } else if (data['source'] === "sourceLibrary") {
+                        } else if (data['source'] === "LIBRARY") {
                              
                             // Issue specific jQuery POST 
                             data['projectRefId'] = null;
                             data['libraryRefId'] = document.getElementById('libraryRefId').value;
                             data['linkRefId'] = null;
-                            data['linkRefUniqueId'] = null;
+                            data['linkRefIdentifier'] = null;
                             data['linkRefTitle'] = null;
                             data['linkRefUrl'] = null;
                             data['linkRefAuthority'] = null;
                              
-                        } else if (data['source'] === "sourceLink") {
+                        } else if (data['source'] === "URL_LINK") {
                              
                             // Issue specific jQuery POST 
                             data['projectRefId'] = null;
                             data['libraryRefId'] = null;
                             data['linkRefId'] = document.getElementById('linkReferenceId').value;
-                            data['linkRefUniqueId'] = document.getElementById('linkReferenceId').value;
+                            data['linkRefIdentifier'] = document.getElementById('linkReferenceId').value;
                             data['linkRefTitle'] = document.getElementById('linkReferenceTitle').value;
                             data['linkRefUrl'] = document.getElementById('linkRefUrl').value;
                             data['linkRefAuthority'] = document.getElementById('linkReferenceAuthority').value;
@@ -1198,6 +1199,7 @@ function RequirementItemAddReference(documentId, itemId, referenceType) {
                     $(e.currentTarget).find('input[name="projectId"]').prop('value', projectId);
                     $(e.currentTarget).find('input[name="documentId"]').prop('value', documentId);
                     $(e.currentTarget).find('input[name="itemId"]').prop('value', itemId);
+                    $(e.currentTarget).find('input[name="referenceType"]').prop('value', referenceType);
                     
                     onReferenceSourceChange();
                 });

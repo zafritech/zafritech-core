@@ -5,9 +5,18 @@
  */
 package org.zafritech.core.services.impl;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.zafritech.core.data.dao.ReferenceDao;
+import org.zafritech.core.data.domain.DocumentReference;
 import org.zafritech.core.data.domain.Reference;
+import org.zafritech.core.data.domain.UrlLink;
+import org.zafritech.core.data.repositories.DocumentReferenceRepository;
+import org.zafritech.core.data.repositories.DocumentRepository;
+import org.zafritech.core.data.repositories.ReferenceRepository;
+import org.zafritech.core.data.repositories.UrlLinkRepository;
+import org.zafritech.core.enums.ReferenceSources;
+import org.zafritech.core.enums.ReferenceTypes;
 import org.zafritech.core.services.ReferenceService;
 
 /**
@@ -17,14 +26,73 @@ import org.zafritech.core.services.ReferenceService;
 @Service
 public class ReferenceServiceImpl implements ReferenceService {
 
+    @Autowired
+    private ReferenceRepository referenceRepository;
+    
+    @Autowired
+    private DocumentRepository documentRepository;
+    
+    @Autowired
+    private DocumentReferenceRepository documentReferenceRepository;
+    
+    @Autowired
+    private UrlLinkRepository urlLinkRepository;
+    
     @Override
     public Reference addDocumentReference(ReferenceDao refDao) {
         
-        if (refDao.getProjectRefId() != null) {
+        Reference reference = null; 
+        DocumentReference documentReference;
+                
+        switch(refDao.getSource()) {
             
+            case "PROJECT":
+                
+                reference = referenceRepository.findBySourceTypeAndIdValue(ReferenceSources.valueOf(refDao.getSource()), refDao.getDocumentId());
+                
+                if (reference == null) {
+                    
+                    reference = new Reference(ReferenceSources.valueOf(refDao.getSource()), refDao.getDocumentId());
+                    reference = referenceRepository.save(reference);
+                }
+
+                break;
+                
+            case "LIBRARY":
             
+                reference = referenceRepository.findBySourceTypeAndIdValue(ReferenceSources.valueOf(refDao.getSource()), refDao.getLibraryRefId());
+                
+                if (reference == null) {
+                    
+                    reference = new Reference(ReferenceSources.valueOf(refDao.getSource()), refDao.getLibraryRefId());
+                    reference = referenceRepository.save(reference);
+                }
+                
+                break;
+                
+            case "URL_LINK":
+                
+                reference = referenceRepository.findBySourceTypeAndIdValue(ReferenceSources.valueOf(refDao.getSource()), refDao.getLinkRefId());
+                
+                if (reference == null) {
+                    
+                    UrlLink link = new UrlLink(refDao.getLinkRefTitle(), refDao.getLinkRefUrl(), refDao.getLinkRefAuthority());
+                    link.setIdentifier(refDao.getLinkRefIdentifier()); 
+                    link = urlLinkRepository.save(link);
+                    
+                    reference = new Reference(ReferenceSources.valueOf(refDao.getSource()), link.getId());
+                    reference = referenceRepository.save(reference);
+                }
+                
+                break;
         }
-            
-        return null;
+
+        documentReference = new DocumentReference(reference, 
+                                                  documentRepository.findOne(refDao.getDocumentId()), 
+                                                  ReferenceTypes.valueOf(refDao.getReferenceType())); 
+
+        documentReferenceRepository.save(documentReference);
+
+        return reference;
     }
 }

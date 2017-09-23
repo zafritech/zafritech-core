@@ -19,11 +19,13 @@ public class UrlLink implements Serializable {
 
     private String uuId;
 
+    private String Identifier;
+
     private String linkTitle;
     
     private String linkUrl;
     
-    private String linkSourceAuthority;
+    private String sourceAuthority;
     
     @Temporal(TemporalType.TIMESTAMP)
     private Date creationDate;
@@ -37,7 +39,7 @@ public class UrlLink implements Serializable {
         this.uuId = UUID.randomUUID().toString();
         this.linkTitle = linkTitle;
         this.linkUrl = linkUrl;
-        this.linkSourceAuthority = linkSourceAuthority;
+        this.sourceAuthority = linkSourceAuthority;
         this.creationDate = new Timestamp(System.currentTimeMillis());
     }
 
@@ -51,6 +53,14 @@ public class UrlLink implements Serializable {
 
     public void setUuId(String uuId) {
         this.uuId = uuId;
+    }
+
+    public String getIdentifier() {
+        return Identifier;
+    }
+
+    public void setIdentifier(String Identifier) {
+        this.Identifier = Identifier;
     }
 
     public String getLinkTitle() {
@@ -69,12 +79,12 @@ public class UrlLink implements Serializable {
         this.linkUrl = linkUrl;
     }
 
-    public String getLinkSourceAuthority() {
-        return linkSourceAuthority;
+    public String getSourceAuthority() {
+        return sourceAuthority;
     }
 
-    public void setLinkSourceAuthority(String linkSourceAuthority) {
-        this.linkSourceAuthority = linkSourceAuthority;
+    public void setSourceAuthority(String sourceAuthority) {
+        this.sourceAuthority = sourceAuthority;
     }
 
     public Date getCreationDate() {

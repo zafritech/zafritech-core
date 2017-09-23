@@ -15,10 +15,11 @@ public class ReferenceDao {
     private Long documentId;
     private Long projectId;
     private Long itemId;
+    private String referenceType;
     private Long projectRefId;
     private Long libraryRefId;
-    private String linkRefId;
-    private String linkRefUniqueId;
+    private Long linkRefId;
+    private String linkRefIdentifier;
     private String linkRefTitle;
     private String linkRefUrl;
     private String linkRefAuthority;
@@ -59,6 +60,14 @@ public class ReferenceDao {
         this.itemId = itemId;
     }
 
+    public String getReferenceType() {
+        return referenceType;
+    }
+
+    public void setReferenceType(String referenceType) {
+        this.referenceType = referenceType;
+    }
+
     public Long getProjectRefId() {
         return projectRefId;
     }
@@ -75,20 +84,20 @@ public class ReferenceDao {
         this.libraryRefId = libraryRefId;
     }
 
-    public String getLinkRefId() {
+    public Long getLinkRefId() {
         return linkRefId;
     }
 
-    public void setLinkRefId(String linkRefId) {
+    public void setLinkRefId(Long linkRefId) {
         this.linkRefId = linkRefId;
     }
 
-    public String getLinkRefUniqueId() {
-        return linkRefUniqueId;
+    public String getLinkRefIdentifier() {
+        return linkRefIdentifier;
     }
 
-    public void setLinkRefUniqueId(String linkRefUniqueId) {
-        this.linkRefUniqueId = linkRefUniqueId;
+    public void setLinkRefIdentifier(String linkRefIdentifier) {
+        this.linkRefIdentifier = linkRefIdentifier;
     }
 
     public String getLinkRefTitle() {
