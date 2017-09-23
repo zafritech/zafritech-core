@@ -92,8 +92,8 @@ public class ItemRestController {
             items = itemService.fetchDocumentItems(document); 
         }
         
-        List<DocumentReference> applicable = docReferenceRepository.findByDocumentAndReferenceType(document, ReferenceTypes.REFERENCE_APPLICABLE);
-        List<DocumentReference> other = docReferenceRepository.findByDocumentAndReferenceType(document, ReferenceTypes.REFERENCE_OTHER);
+        List<DocumentReference> applicable = docReferenceRepository.findByDocumentAndReferenceTypeOrderByReferenceRefTitleAsc(document, ReferenceTypes.REFERENCE_APPLICABLE);
+        List<DocumentReference> other = docReferenceRepository.findByDocumentAndReferenceTypeOrderByReferenceRefTitleAsc(document, ReferenceTypes.REFERENCE_OTHER);
         
         ModelAndView modelView = new ModelAndView("views/items/document-items-fragmant");
         modelView.addObject("document", document);

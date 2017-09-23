@@ -63,6 +63,7 @@ public class Reference implements Serializable {
         this.refNumber = refNumber;
         this.refTitle = refTitle;
         this.refVersion = refVersion;
+        this.refAuthority = refAuthority;
         this.creationDate = new Timestamp(System.currentTimeMillis());
     }
 

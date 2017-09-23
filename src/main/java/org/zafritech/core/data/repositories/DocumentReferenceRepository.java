@@ -18,4 +18,6 @@ import org.zafritech.core.enums.ReferenceTypes;
 public interface DocumentReferenceRepository extends CrudRepository<DocumentReference, Long> {
     
     List<DocumentReference> findByDocumentAndReferenceType(Document document, ReferenceTypes type);
+    
+    List<DocumentReference> findByDocumentAndReferenceTypeOrderByReferenceRefTitleAsc(Document document, ReferenceTypes type);
 }
