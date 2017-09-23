@@ -27,6 +27,14 @@ public class Reference implements Serializable {
     
     private Long idValue;
     
+    private String refNumber;
+    
+    private String refTitle;
+    
+    private String refVersion;
+    
+    private String refAuthority;
+    
     @Temporal(TemporalType.TIMESTAMP)
     private Date creationDate;
 
@@ -42,12 +50,30 @@ public class Reference implements Serializable {
         this.creationDate = new Timestamp(System.currentTimeMillis());
     }
 
+    public Reference(ReferenceSources sourceType, 
+                     Long idValue, 
+                     String refNumber, 
+                     String refTitle, 
+                     String refVersion,
+                     String refAuthority) {
+        
+        this.uuId = UUID.randomUUID().toString();
+        this.sourceType = sourceType;
+        this.idValue = idValue;
+        this.refNumber = refNumber;
+        this.refTitle = refTitle;
+        this.refVersion = refVersion;
+        this.creationDate = new Timestamp(System.currentTimeMillis());
+    }
+
     @Override
     public String toString() {
         
-        return "Reference{" + "id=" + getId() + ", uuId=" + getUuId() + ", sourceType=" 
-                + getSourceType() + ", idValue=" + getIdValue() + ", creationDate=" 
-                + getCreationDate() + '}';
+        return "Reference{" + "id=" + id + ", uuId=" + uuId + ", sourceType=" 
+                + sourceType + ", idValue=" + idValue + ", refNumber=" 
+                + refNumber + ", refTitle=" + refTitle + ", refVersion=" 
+                + refVersion + ", refAuthority=" + refAuthority + ", creationDate=" 
+                + creationDate + '}';
     }
 
     public Long getId() {
@@ -78,12 +104,44 @@ public class Reference implements Serializable {
         this.idValue = idValue;
     }
 
+    public String getRefNumber() {
+        return refNumber;
+    }
+
+    public void setRefNumber(String refNumber) {
+        this.refNumber = refNumber;
+    }
+
+    public String getRefTitle() {
+        return refTitle;
+    }
+
+    public void setRefTitle(String refTitle) {
+        this.refTitle = refTitle;
+    }
+
+    public String getRefVersion() {
+        return refVersion;
+    }
+
+    public void setRefVersion(String refVersion) {
+        this.refVersion = refVersion;
+    }
+
     public Date getCreationDate() {
         return creationDate;
     }
 
     public void setCreationDate(Date creationDate) {
         this.creationDate = creationDate;
+    }
+
+    public String getRefAuthority() {
+        return refAuthority;
+    }
+
+    public void setRefAuthority(String refAuthority) {
+        this.refAuthority = refAuthority;
     }
 }
 

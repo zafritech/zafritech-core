@@ -675,8 +675,8 @@ function onRequirementMediaTypeChange() {
         $('#referenceTypeInput').show();
         
         $('#referenceType').empty();
-        $('#referenceType').append('<option value="APPLICABLE_REFERENCES">Applicable References</option>');
-        $('#referenceType').append('<option value="OTHER_REFERENCES">Other References</option>');
+        $('#referenceType').append('<option value="REFERENCE_APPLICABLE">Applicable References</option>');
+        $('#referenceType').append('<option value="REFERENCE_OTHER">Other References</option>');
         
     } else {
         
@@ -1165,12 +1165,33 @@ function RequirementItemAddReference(documentId, itemId, referenceType) {
                             // Issue specific jQuery POST 
                             data['projectRefId'] = null;
                             data['libraryRefId'] = null;
-                            data['linkRefId'] = document.getElementById('linkReferenceId').value;
+                            data['linkRefId'] = null;
                             data['linkRefIdentifier'] = document.getElementById('linkReferenceId').value;
                             data['linkRefTitle'] = document.getElementById('linkReferenceTitle').value;
                             data['linkRefUrl'] = document.getElementById('linkRefUrl').value;
                             data['linkRefAuthority'] = document.getElementById('linkReferenceAuthority').value;
                         }
+                        
+                        $.ajax({
+
+                            type: "POST",
+                            contentType: "application/json",
+                            url: "/api/requirements/document/reference/add",
+                            data: JSON.stringify(data),
+                            dataType: "json",
+                            timeout: 60000,
+                            success: function () {
+
+                                swal({
+                                    
+                                    title: "Success!",
+                                    text: "Reference has been successfully added.",
+                                    type: "success"
+                                });
+                                
+                                location.reload();
+                            }
+                        });
                     }
                 }
             });
@@ -1238,7 +1259,7 @@ function onReferenceSourceChange() {
     
     var source = $("input[name='referenceSource']:checked").val();
     
-    if (source === "sourceProject") {
+    if (source === "PROJECT") {
         
         $('#projectRow').show();
         $('#libraryRow').hide();
@@ -1268,7 +1289,7 @@ function onReferenceSourceChange() {
             });
         });
         
-    } else if (source === "sourceLibrary") {
+    } else if (source === "LIBRARY") {
         
         $('#projectRow').hide();
         $('#libraryRow').show();
@@ -1277,7 +1298,7 @@ function onReferenceSourceChange() {
         $('#projectReferenceId').empty();
         $('#linkReferenceValue').prop('value', "");
         
-    } else if (source === "sourceLink") {
+    } else if (source === "URL_LINK") {
         
         $('#projectRow').hide();
         $('#libraryRow').hide();

@@ -95,7 +95,7 @@ public class ItemRestController {
         List<DocumentReference> applicable = docReferenceRepository.findByDocumentAndReferenceType(document, ReferenceTypes.REFERENCE_APPLICABLE);
         List<DocumentReference> other = docReferenceRepository.findByDocumentAndReferenceType(document, ReferenceTypes.REFERENCE_OTHER);
         
-        ModelAndView modelView = new ModelAndView("views/requirements/document-items-fragmant");
+        ModelAndView modelView = new ModelAndView("views/items/document-items-fragmant");
         modelView.addObject("document", document);
         modelView.addObject("items", items);
         modelView.addObject("applicables", applicable);

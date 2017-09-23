@@ -8,6 +8,7 @@ package org.zafritech.core.services.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.zafritech.core.data.dao.ReferenceDao;
+import org.zafritech.core.data.domain.Document;
 import org.zafritech.core.data.domain.DocumentReference;
 import org.zafritech.core.data.domain.Reference;
 import org.zafritech.core.data.domain.UrlLink;
@@ -48,11 +49,19 @@ public class ReferenceServiceImpl implements ReferenceService {
             
             case "PROJECT":
                 
+                Document document = documentRepository.findOne(refDao.getDocumentId());
+                
                 reference = referenceRepository.findBySourceTypeAndIdValue(ReferenceSources.valueOf(refDao.getSource()), refDao.getDocumentId());
                 
                 if (reference == null) {
                     
-                    reference = new Reference(ReferenceSources.valueOf(refDao.getSource()), refDao.getDocumentId());
+                    reference = new Reference(ReferenceSources.valueOf(refDao.getSource()), 
+                                              refDao.getDocumentId(),
+                                              document.getIdentifier(), 
+                                              document.getDocumentLongName(), 
+                                              document.getDocumentIssue(),
+                                              document.getProject().getProjectSponsor().getCompanyShortName());
+                    
                     reference = referenceRepository.save(reference);
                 }
 
@@ -71,19 +80,21 @@ public class ReferenceServiceImpl implements ReferenceService {
                 break;
                 
             case "URL_LINK":
-                
-                reference = referenceRepository.findBySourceTypeAndIdValue(ReferenceSources.valueOf(refDao.getSource()), refDao.getLinkRefId());
-                
-                if (reference == null) {
-                    
-                    UrlLink link = new UrlLink(refDao.getLinkRefTitle(), refDao.getLinkRefUrl(), refDao.getLinkRefAuthority());
-                    link.setIdentifier(refDao.getLinkRefIdentifier()); 
-                    link = urlLinkRepository.save(link);
-                    
-                    reference = new Reference(ReferenceSources.valueOf(refDao.getSource()), link.getId());
-                    reference = referenceRepository.save(reference);
-                }
-                
+
+                UrlLink link = new UrlLink(refDao.getLinkRefTitle(), refDao.getLinkRefUrl(), refDao.getLinkRefAuthority());
+                link.setIdentifier(refDao.getLinkRefIdentifier()); 
+
+                link = urlLinkRepository.save(link);
+
+                reference = new Reference(ReferenceSources.valueOf(refDao.getSource()), 
+                                          link.getId(),
+                                          link.getIdentifier(), 
+                                          link.getLinkTitle(), 
+                                          "N/A",
+                                          link.getSourceAuthority());
+
+                reference = referenceRepository.save(reference);
+
                 break;
         }
 
