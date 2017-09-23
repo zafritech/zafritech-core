@@ -16,11 +16,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
+import org.zafritech.core.data.dao.ReferenceDao;
 import org.zafritech.core.data.domain.Document;
 import org.zafritech.core.data.domain.DocumentReference;
+import org.zafritech.core.data.domain.Reference;
 import org.zafritech.core.data.repositories.DocumentReferenceRepository;
 import org.zafritech.core.data.repositories.DocumentRepository;
 import org.zafritech.core.enums.ReferenceTypes;
+import org.zafritech.core.services.ReferenceService;
 import org.zafritech.requirements.data.dao.ItemDao;
 import org.zafritech.requirements.data.dao.ItemRefDao;
 import org.zafritech.requirements.data.dao.ItemTreeDao;
@@ -52,6 +55,9 @@ public class ItemRestController {
     
     @Autowired
     private ItemService itemService;
+    
+    @Autowired
+    private ReferenceService referenceService;
   
     @RequestMapping(value = "/api/requirements/document/items/item/{id}", method = RequestMethod.GET)
     public Item getItemById(@PathVariable(value = "id") Long itemId) {
@@ -86,8 +92,8 @@ public class ItemRestController {
             items = itemService.fetchDocumentItems(document); 
         }
         
-        List<DocumentReference> applicable = docReferenceRepository.findByDocumentAndReferenceTypeOrderByReferenceRefNumberAsc(document, ReferenceTypes.REFERENCE_APPLICABLE);
-        List<DocumentReference> other = docReferenceRepository.findByDocumentAndReferenceTypeOrderByReferenceRefNumberAsc(document, ReferenceTypes.REFERENCE_OTHER);
+        List<DocumentReference> applicable = docReferenceRepository.findByDocumentAndReferenceType(document, ReferenceTypes.REFERENCE_APPLICABLE);
+        List<DocumentReference> other = docReferenceRepository.findByDocumentAndReferenceType(document, ReferenceTypes.REFERENCE_OTHER);
         
         ModelAndView modelView = new ModelAndView("views/requirements/document-items-fragmant");
         modelView.addObject("document", document);
@@ -180,5 +186,13 @@ public class ItemRestController {
         List<ItemTreeDao> headersTree = itemService.getTableOfContents(document); 
         
         return new ResponseEntity<List<ItemTreeDao>>(headersTree, HttpStatus.OK);
+    }
+      
+    @RequestMapping(value = "/api/requirements/document/reference/add", method = RequestMethod.POST)
+    public ResponseEntity<Reference> addDocumentReference(@RequestBody ReferenceDao refDao) {
+        
+        Reference reference = referenceService.addDocumentReference(refDao);
+
+        return new ResponseEntity<Reference>(reference, HttpStatus.OK);
     }
 }

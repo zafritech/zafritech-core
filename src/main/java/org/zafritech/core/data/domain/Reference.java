@@ -11,7 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import org.zafritech.core.enums.MediaFormat;
+import org.zafritech.core.enums.ReferenceSources;
 
 @Entity(name = "CORE_REFERENCES")
 public class Reference implements Serializable {
@@ -22,18 +22,10 @@ public class Reference implements Serializable {
 
     private String uuId;
     
-    private String refNumber;
-    
-    private String refTitle;
-    
     @Enumerated(EnumType.STRING)
-    private MediaFormat refFormat;
+    private ReferenceSources sourceType;
     
-    private String refVersion;
-    
-    private String refLink;
-    
-    private String authority;
+    private Long idValue;
     
     @Temporal(TemporalType.TIMESTAMP)
     private Date creationDate;
@@ -42,47 +34,20 @@ public class Reference implements Serializable {
         
     }
 
-    public Reference(String refNumber, 
-                     String refTitle, 
-                     MediaFormat refFormat, 
-                     String refVersion, 
-                     String refLink) {
+    public Reference(ReferenceSources sourceType, Long idValue) {
         
         this.uuId = UUID.randomUUID().toString();
-        this.refNumber = refNumber;
-        this.refTitle = refTitle;
-        this.refFormat = refFormat;
-        this.refVersion = refVersion;
-        this.refLink = refLink;
-        this.creationDate = new Timestamp(System.currentTimeMillis());
-    }
-
-    
-
-    public Reference(String refNumber, 
-                     String refTitle, 
-                     MediaFormat refFormat, 
-                     String refVersion, 
-                     String refLink, 
-                     String authority) {
-        
-        this.uuId = UUID.randomUUID().toString();
-        this.refNumber = refNumber;
-        this.refTitle = refTitle;
-        this.refFormat = refFormat;
-        this.refVersion = refVersion;
-        this.refLink = refLink;
-        this.authority = authority;
+        this.sourceType = sourceType;
+        this.idValue = idValue;
         this.creationDate = new Timestamp(System.currentTimeMillis());
     }
 
     @Override
     public String toString() {
         
-        return "Reference{" + "id=" + getId() + ", uuId=" + getUuId() + ", refFormat=" + 
-                getRefFormat() + ", refTitle=" + getRefTitle() + ", refVersion=" + 
-                getRefVersion() + ", refLink=" + getRefLink() + ", authority=" + 
-                getAuthority() + ", creationDate=" + getCreationDate() + '}';
+        return "Reference{" + "id=" + getId() + ", uuId=" + getUuId() + ", sourceType=" 
+                + getSourceType() + ", idValue=" + getIdValue() + ", creationDate=" 
+                + getCreationDate() + '}';
     }
 
     public Long getId() {
@@ -97,52 +62,20 @@ public class Reference implements Serializable {
         this.uuId = uuId;
     }
 
-    public MediaFormat getRefFormat() {
-        return refFormat;
+    public ReferenceSources getSourceType() {
+        return sourceType;
     }
 
-    public String getRefNumber() {
-        return refNumber;
+    public void setSourceType(ReferenceSources sourceType) {
+        this.sourceType = sourceType;
     }
 
-    public void setRefNumber(String refNumber) {
-        this.refNumber = refNumber;
+    public Long getIdValue() {
+        return idValue;
     }
 
-    public void setRefFormat(MediaFormat refFormat) {
-        this.refFormat = refFormat;
-    }
-
-    public String getRefTitle() {
-        return refTitle;
-    }
-
-    public void setRefTitle(String refTitle) {
-        this.refTitle = refTitle;
-    }
-
-    public String getRefVersion() {
-        return refVersion;
-    }
-
-    public void setRefVersion(String refVersion) {
-        this.refVersion = refVersion;
-    }
-
-    public String getRefLink() {
-        return refLink;
-    }
-
-    public void setRefLink(String refLink) {
-        this.refLink = refLink;
-    }
-
-    public String getAuthority() {
-        return authority;
-    }
-
-    public void setAuthority(String authority) {
-        this.authority = authority;
+    public void setIdValue(Long idValue) {
+        this.idValue = idValue;
     }
 
     public Date getCreationDate() {
