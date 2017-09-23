@@ -12,5 +12,5 @@ package org.zafritech.core.enums;
 public enum ReferenceTypes {
     
     REFERENCE_APPLICABLE,
-    REFERENCE_OTHER
+    REFERENCE_REFERENCED
 }

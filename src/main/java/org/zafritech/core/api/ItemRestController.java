@@ -93,13 +93,13 @@ public class ItemRestController {
         }
         
         List<DocumentReference> applicable = docReferenceRepository.findByDocumentAndReferenceTypeOrderByReferenceRefTitleAsc(document, ReferenceTypes.REFERENCE_APPLICABLE);
-        List<DocumentReference> other = docReferenceRepository.findByDocumentAndReferenceTypeOrderByReferenceRefTitleAsc(document, ReferenceTypes.REFERENCE_OTHER);
+        List<DocumentReference> referenced = docReferenceRepository.findByDocumentAndReferenceTypeOrderByReferenceRefTitleAsc(document, ReferenceTypes.REFERENCE_REFERENCED);
         
         ModelAndView modelView = new ModelAndView("views/items/document-items-fragmant");
         modelView.addObject("document", document);
         modelView.addObject("items", items);
         modelView.addObject("applicables", applicable);
-        modelView.addObject("others", other);
+        modelView.addObject("referenced", referenced);
         
         return modelView;
     }

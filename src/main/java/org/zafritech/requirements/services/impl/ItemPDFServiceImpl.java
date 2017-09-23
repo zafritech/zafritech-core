@@ -277,9 +277,9 @@ public class ItemPDFServiceImpl implements ItemPDFService {
 
             references = docReferenceRepository.findByDocumentAndReferenceTypeOrderByReferenceRefTitleAsc(document, ReferenceTypes.REFERENCE_APPLICABLE);
 
-        } else if (item.getItemValue().equalsIgnoreCase(ReferenceTypes.REFERENCE_OTHER.name())) {
+        } else if (item.getItemValue().equalsIgnoreCase(ReferenceTypes.REFERENCE_REFERENCED.name())) {
 
-            references = docReferenceRepository.findByDocumentAndReferenceTypeOrderByReferenceRefTitleAsc(document, ReferenceTypes.REFERENCE_OTHER);
+            references = docReferenceRepository.findByDocumentAndReferenceTypeOrderByReferenceRefTitleAsc(document, ReferenceTypes.REFERENCE_REFERENCED);
         }
 
         float[] refColWidths = {1, 6, 12, 2};

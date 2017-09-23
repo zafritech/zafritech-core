@@ -676,7 +676,7 @@ function onRequirementMediaTypeChange() {
         
         $('#referenceType').empty();
         $('#referenceType').append('<option value="REFERENCE_APPLICABLE">Applicable References</option>');
-        $('#referenceType').append('<option value="REFERENCE_OTHER">Other References</option>');
+        $('#referenceType').append('<option value="REFERENCE_REFERENCED">Referenced Documents</option>');
         
     } else {
         
