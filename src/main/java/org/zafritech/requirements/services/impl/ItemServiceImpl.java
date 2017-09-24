@@ -5,20 +5,27 @@
  */
 package org.zafritech.requirements.services.impl;
 
+import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 import org.zafritech.core.data.domain.Document;
 import org.zafritech.core.data.domain.SystemVariable;
 import org.zafritech.core.data.repositories.DocumentRepository;
 import org.zafritech.core.data.repositories.SystemVariableRepository;
 import org.zafritech.core.enums.SystemVariableTypes;
-import org.zafritech.requirements.data.converters.DaoToItemConverter;
+import org.zafritech.core.services.FileUploadService;
 import org.zafritech.requirements.data.converters.DaoToRefItemConverter;
 import org.zafritech.requirements.data.dao.ItemDao;
 import org.zafritech.requirements.data.dao.ItemRefDao;
@@ -28,6 +35,7 @@ import org.zafritech.requirements.data.domain.Link;
 import org.zafritech.requirements.data.repositories.ItemRepository;
 import org.zafritech.requirements.data.repositories.ItemTypeRepository;
 import org.zafritech.requirements.enums.ItemClass;
+import org.zafritech.requirements.enums.MediaType;
 import org.zafritech.requirements.services.ItemService;
 
 /**
@@ -37,6 +45,9 @@ import org.zafritech.requirements.services.ItemService;
 @Service
 public class ItemServiceImpl implements ItemService {
 
+    @Value("${zafritech.paths.images-dir}")
+    private String images_dir;
+    
     @Autowired
     private DocumentRepository documentRepository;
 
@@ -50,8 +61,8 @@ public class ItemServiceImpl implements ItemService {
     private SystemVariableRepository sysvarRepository;
     
     @Autowired
-    private DaoToItemConverter daoToItem;
-
+    private FileUploadService fileUploadService;
+    
     @Override
     public ItemRefDao getDaoForItemCreation(Long id) {
         
@@ -177,6 +188,59 @@ public class ItemServiceImpl implements ItemService {
         return saved;
     }
 
+    @Override
+    public Item saveImageItem(MultipartFile upLoadedFile, Long documentId, Long parentId, Integer itemLevel) {
+            
+        Item imageItem;
+            
+        try {
+
+            Document document = documentRepository.findOne(documentId);
+            Item parent = itemRepository.findOne(parentId);
+
+            String fileExtension = FilenameUtils.getExtension(upLoadedFile.getOriginalFilename());
+            String imageRelPath = "documents/doc_" + document.getUuId() + "/img_" +UUID.randomUUID().toString() + "." + fileExtension;
+            String imageFullPath = images_dir + imageRelPath;
+
+            // Upload and move file
+            List<String> files = fileUploadService.saveUploadedFiles(Arrays.asList(upLoadedFile));
+            FileUtils.moveFile(FileUtils.getFile(files.get(0)), FileUtils.getFile(imageFullPath)); 
+
+            imageItem  =    new Item(getNextSystemIdentifier(documentId),
+                                     imageRelPath,
+                                     null, 
+                                     document,
+                                     parent);
+
+            imageItem.setItemClass(ItemClass.IMAGE.name()); 
+            imageItem.setItemLevel(itemLevel);
+            imageItem.setMediaType(MediaType.valueOf(fileExtension.toUpperCase())); 
+
+            // Get item's sort index
+            Item lastChild;
+            
+            if (parent != null) {
+
+                lastChild = itemRepository.findFirstByParentOrderBySortIndexDesc(parent);
+
+            } else {
+
+                lastChild = itemRepository.findFirstByDocumentAndItemLevelOrderBySortIndexDesc(document, 1); 
+            }
+
+            Integer index = lastChild != null ? lastChild.getSortIndex() + 1 : 0;
+            imageItem.setSortIndex(index); 
+
+            imageItem = itemRepository.save(imageItem);
+            
+        } catch (IOException e) {
+            
+            return null;
+        }
+
+        return imageItem;
+    }
+    
     @Override
     public Item saveRquirementItem(ItemDao itemDao) {
         

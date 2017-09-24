@@ -193,6 +193,85 @@ function RequirementItemCreateItem(documentId, parentId, itemLevel) {
     });
 }
 
+function RequirementItemImageInsert(documentId, parentId, itemLevel) {
+    
+    $.ajax({
+            
+        global: false,
+        type: "GET",
+        url: '/modals/requirements/requirements-image-insert-new.html',
+        success: function (data) {
+            
+            var box = bootbox.confirm({
+
+                closeButton: false,
+                message: data,
+                title: "Insert Image",
+                buttons: {
+                    cancel: {
+                        label: "Cancel",
+                        className: "btn-danger btn-fixed-width-100"
+                    },
+                    confirm: {
+                        label: "Save",
+                        className: "btn-success btn-fixed-width-100"
+                    }
+                },
+                callback: function (result) {
+                    
+                    if (result) {
+                        
+                        var form = $('#imageUploadForm')[0];
+                        var data = new FormData(form);
+                        
+                        data.append('documentId', document.getElementById('documentId').value);
+                        
+                        console.log(data);
+                        
+                        $.ajax({
+                            type: "POST",
+                            enctype: 'multipart/form-data',
+                            url: "/api/requirements/document/items/image/add",
+                            data: data,
+                            processData: false,
+                            contentType: false,
+                            cache: false,
+                            timeout: 600000,
+                            success: function (data) {
+                                
+                                 swal({
+
+                                    title: "Success!",
+                                    text: "New item has been successfully created.",
+                                    type: "success"
+                                });
+                                
+                                setTimeout(function() { loadRequirementsItems(documentId, parentId); }, 2000);
+                            },
+                            error: function (e) {
+
+                                $("#result").text(e.responseText);
+                                console.log("ERROR : ", e);
+                                $("#btnSubmit").prop("disabled", false);
+                            }
+                        });
+                    }
+                }
+            });
+            
+            box.on("shown.bs.modal", function(e) {
+                
+                $(e.currentTarget).find('input[name="documentId"]').prop('value', documentId);
+                $(e.currentTarget).find('input[name="parentId"]').prop('value', parentId);
+                $(e.currentTarget).find('input[name="itemLevel"]').prop('value', itemLevel);
+                
+            });
+            
+            box.modal('show');
+        }
+    });
+}
+
 function RequirementItemEditItem(itemId) {
     
     $.ajax({
@@ -641,25 +720,12 @@ function onRequirementClassChange() {
         
     } else if (itemClass.value === "IMAGE") {
         
-        var mediaTypes = ["JPG", "JPEG", "PNG", "GIF"];
-
-        $('#mediaType').empty();
+        var parentId = document.getElementById('parentId').value;
+        var documentId = document.getElementById('documentId').value;
+        var itemLevel = document.getElementById('itemLevel').value;;
         
-        for(i = 0; i < mediaTypes.length; i++) {
-
-            $('#mediaType').append('<option value="' + mediaTypes[i] + '">' + mediaTypes[i] + '</option>');
-        };
-        
-        $('#mediaType').prop('value', 'PNG');
-        
-        document.getElementById('identTemplate').disabled = true;
-        document.getElementById('itemTypeId').disabled = true;
-        document.getElementById('identifier').disabled = true;
-
-        $('#requirementRow').hide();
-        $('#summernoteRow').hide();
-        $('#referenceTypeInput').show();
-        $('#textRow').hide();
+        bootbox.hideAll();
+        RequirementItemImageInsert(documentId, parentId, itemLevel);
         
     } else {
 

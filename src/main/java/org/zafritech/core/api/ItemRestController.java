@@ -5,8 +5,17 @@
  */
 package org.zafritech.core.api;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.zafritech.core.data.dao.ReferenceDao;
 import org.zafritech.core.data.domain.Document;
@@ -40,6 +50,9 @@ import org.zafritech.requirements.services.ItemService;
  */
 @RestController
 public class ItemRestController {
+    
+    @Value("${zafritech.paths.images-dir}")
+    private String images_dir;
     
     @Autowired
     private DocumentRepository documentRepository;
@@ -120,6 +133,22 @@ public class ItemRestController {
         return createDao;
     }
 
+    @RequestMapping(value = "/api/requirements/document/items/image/add", method = RequestMethod.POST)
+    public ResponseEntity<?> addImageItem(@RequestParam("imageFile") MultipartFile upLoadFile,
+                                          @RequestParam("documentId") Long documentId,
+                                          @RequestParam("parentId") Long parentId,
+                                          @RequestParam("itemLevel") Integer itemLevel) {
+        
+        if (upLoadFile.isEmpty()) {
+            
+            return new ResponseEntity("please select a file!", HttpStatus.OK);
+        }
+
+        Item imageItem = itemService.saveImageItem(upLoadFile, documentId, parentId, itemLevel);
+        
+        return new ResponseEntity("Successfully uploaded - Image name: " + imageItem.getItemValue(), new HttpHeaders(), HttpStatus.OK);
+    }
+      
     @RequestMapping(value = "/api/requirements/document/items/identifier/next", method = RequestMethod.GET)
     public ResponseEntity<String> getNextItemIentifier(@RequestParam(value = "id", required = true) Long id,
                                                        @RequestParam(value = "template", required = true) String template) {
@@ -163,6 +192,20 @@ public class ItemRestController {
         
         if (children.isEmpty()) {
         
+            // IMAGE: remove physical image from disk as well
+            if (item.getItemClass().equals(ItemClass.IMAGE.name())) {
+                
+                try {
+                
+                    Path path = Paths.get(images_dir + item.getItemValue());
+                    Files.deleteIfExists(path);
+                    
+                } catch (IOException ex) {
+                    
+                    Logger.getLogger(ItemRestController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            
             Item parent = item.getParent();
             itemRepository.delete(item);
             

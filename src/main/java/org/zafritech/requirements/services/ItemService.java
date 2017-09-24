@@ -7,6 +7,7 @@ package org.zafritech.requirements.services;
 
 import java.util.List;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 import org.zafritech.core.data.domain.Document;
 import org.zafritech.requirements.data.dao.ItemDao;
 import org.zafritech.requirements.data.dao.ItemRefDao;
@@ -36,6 +37,8 @@ public interface ItemService {
     String getNextRequirementIdentifier(Long id, String template);
     
     Item saveItem(Item item);
+    
+    Item saveImageItem(MultipartFile upLoadedFile, Long documentId, Long parentId, Integer itemLevel);
     
     Item saveRquirementItem(ItemDao itemDao);
     

@@ -175,8 +175,18 @@
                         </table>
                         
                     </div>
+                    
+                    <div th:if="${item.itemClass == 'IMAGE'}" class="col-md-11" style="padding-left: 99px;">
+                        
+                        <img th:attr="src=${'/images/' + item.itemValue}" class="img-responsive" />
+                        
+                    </div>
 
-                    <div th:if="${item.itemClass != 'HEADER' and item.itemClass != 'REQUIREMENT' and item.itemClass != 'METADATA'}" class="col-md-11">
+                    <div th:if="${item.itemClass != 'HEADER' and 
+                         item.itemClass != 'REQUIREMENT' and 
+                         item.itemClass != 'METADATA' and 
+                         item.itemClass != 'IMAGE'}" class="col-md-11">
+                        
                         <div class="plain-text-nonumber">
                             <div th:attr="id=${'text' + item.id}" th:utext="${item.itemValue}"></div>
                         </div>
