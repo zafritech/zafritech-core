@@ -1,0 +1,203 @@
+package org.zafritech.core.data.domain;
+
+import java.io.Serializable;
+import java.sql.Timestamp;
+import java.util.Date;
+import java.util.UUID;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import org.zafritech.core.enums.LibraryItemTypes;
+
+@Entity(name = "CORE_LIBRARY_ITEMS")
+public class LibraryItem implements Serializable {
+    
+    @Id
+    @GeneratedValue
+    private Long id;
+
+    private String uuId;
+    
+    private LibraryCategory category;
+    
+    @Enumerated(EnumType.STRING)
+    private LibraryItemTypes itemType;
+
+    private String idendifier;          // ISBN, Ref #, etc
+    
+    private String authors;
+    
+    private String publishers;
+    
+    private String itemTitle;
+    
+    private String description;
+    
+    private String itemPath;
+    
+    private String format;
+    
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date publicationDate;
+    
+    private String version;
+    
+    private String keywords;
+    
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date creationDate;
+
+    public LibraryItem() {
+        
+    }
+
+    public LibraryItem(LibraryCategory category, 
+                       LibraryItemTypes itemType, 
+                       String idendifier, 
+                       String authors, 
+                       String publishers, 
+                       String itemTitle, 
+                       String description, 
+                       String itemPath, 
+                       String format, 
+                       Date publicationDate, 
+                       String version, 
+                       String keywords) {
+        
+        this.uuId = UUID.randomUUID().toString();
+        this.category = category;
+        this.itemType = itemType;
+        this.idendifier = idendifier;
+        this.authors = authors;
+        this.publishers = publishers;
+        this.itemTitle = itemTitle;
+        this.description = description;
+        this.itemPath = itemPath;
+        this.format = format;
+        this.publicationDate = publicationDate;
+        this.version = version;
+        this.keywords = keywords;
+        this.creationDate = new Timestamp(System.currentTimeMillis());
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public String getUuId() {
+        return uuId;
+    }
+
+    public void setUuId(String uuId) {
+        this.uuId = uuId;
+    }
+
+    public LibraryCategory getCategory() {
+        return category;
+    }
+
+    public void setCategory(LibraryCategory category) {
+        this.category = category;
+    }
+
+    public LibraryItemTypes getItemType() {
+        return itemType;
+    }
+
+    public void setItemType(LibraryItemTypes itemType) {
+        this.itemType = itemType;
+    }
+
+    public String getIdendifier() {
+        return idendifier;
+    }
+
+    public void setIdendifier(String idendifier) {
+        this.idendifier = idendifier;
+    }
+
+    public String getAuthors() {
+        return authors;
+    }
+
+    public void setAuthors(String authors) {
+        this.authors = authors;
+    }
+
+    public String getPublishers() {
+        return publishers;
+    }
+
+    public void setPublishers(String publishers) {
+        this.publishers = publishers;
+    }
+
+    public String getItemTitle() {
+        return itemTitle;
+    }
+
+    public void setItemTitle(String itemTitle) {
+        this.itemTitle = itemTitle;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getItemPath() {
+        return itemPath;
+    }
+
+    public void setItemPath(String itemPath) {
+        this.itemPath = itemPath;
+    }
+
+    public String getFormat() {
+        return format;
+    }
+
+    public void setFormat(String format) {
+        this.format = format;
+    }
+
+    public Date getPublicationDate() {
+        return publicationDate;
+    }
+
+    public void setPublicationDate(Date publicationDate) {
+        this.publicationDate = publicationDate;
+    }
+
+    public String getVersion() {
+        return version;
+    }
+
+    public void setVersion(String version) {
+        this.version = version;
+    }
+
+    public String getKeywords() {
+        return keywords;
+    }
+
+    public void setKeywords(String keywords) {
+        this.keywords = keywords;
+    }
+
+    public Date getCreationDate() {
+        return creationDate;
+    }
+
+    public void setCreationDate(Date creationDate) {
+        this.creationDate = creationDate;
+    }
+}
+

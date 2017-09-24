@@ -3,20 +3,21 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.zafritech.requirements.enums;
+package org.zafritech.core.enums;
 
 /**
  *
  * @author LukeS
  */
-public enum ItemClass {
+public enum LibraryItemTypes {
     
-    GUIDANCE, 
-    METADATA,
-    HEADER, 
-    IMAGE,
-    PROSE, 
-    REQUIREMENT, 
-    TEMPLATE, 
-    UNDEFINED
+    ARTICLE,
+    BOOK,
+    DOCUMENT,
+    DRAWING,
+    GUIDE,
+    PAPER,
+    REPORT,
+    STANDARD,
+    MEMORANDUM
 }

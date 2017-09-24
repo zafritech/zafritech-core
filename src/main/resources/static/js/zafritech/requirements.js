@@ -566,7 +566,7 @@ function onRequirementClassChange() {
 
     if (itemClass.value === "REQUIREMENT") {
 
-        var mediaTypes = ["EQUATION", "IMAGE", "TABLE", "TEXT", "URL"];
+        var mediaTypes = ["EQUATION", "TABLE", "TEXT", "URL"];
         
         $('#mediaType').empty();
         
@@ -639,10 +639,31 @@ function onRequirementClassChange() {
         $('#textRow').hide();
         $('#referenceTypeInput').show();
         
+    } else if (itemClass.value === "IMAGE") {
+        
+        var mediaTypes = ["JPG", "JPEG", "PNG", "GIF"];
 
+        $('#mediaType').empty();
+        
+        for(i = 0; i < mediaTypes.length; i++) {
+
+            $('#mediaType').append('<option value="' + mediaTypes[i] + '">' + mediaTypes[i] + '</option>');
+        };
+        
+        $('#mediaType').prop('value', 'PNG');
+        
+        document.getElementById('identTemplate').disabled = true;
+        document.getElementById('itemTypeId').disabled = true;
+        document.getElementById('identifier').disabled = true;
+
+        $('#requirementRow').hide();
+        $('#summernoteRow').hide();
+        $('#referenceTypeInput').show();
+        $('#textRow').hide();
+        
     } else {
 
-        var mediaTypes = ["EQUATION", "IMAGE", "TABLE", "TEXT", "URL"];
+        var mediaTypes = ["EQUATION", "TABLE", "TEXT", "URL"];
         
         $('#mediaType').empty();
         
