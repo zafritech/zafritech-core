@@ -17,11 +17,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class LibraryController {
     
 
-    @RequestMapping(value = {"/library/titles", "/library/titles/list"})
+    @RequestMapping(value = {"/library", "/library/list"})
     public String documentsList(Model model) {
         
         model.addAttribute("titles", "titles");
         
-        return "views/library/titles/list";
+        return "views/library/index";
     }
 }

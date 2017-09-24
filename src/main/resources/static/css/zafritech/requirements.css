@@ -447,3 +447,10 @@ and open the template in the editor.
     height: 8px !important;
 }
 
+.caption {
+    
+    text-align: center; 
+    margin-top: 10px; 
+    font-weight: bold;
+}
+

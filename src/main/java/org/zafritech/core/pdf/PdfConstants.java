@@ -34,6 +34,8 @@ public class PdfConstants {
     public static float MARGIN_RIGHT_DEFAULT = 30f;
     public static float MARGIN_TOP_FIRST_PAGE = 120f;
     
+    public static float TEXT_INDENT_LEFT = 56f;
+    
     // Font Styles
     public static Font TITLE = new Font(Font.FontFamily.HELVETICA, 20, Font.BOLD);
     public static Font SUBTITLE = new Font(Font.FontFamily.HELVETICA, 16, Font.BOLD);

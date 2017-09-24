@@ -38,7 +38,7 @@ public interface ItemService {
     
     Item saveItem(Item item);
     
-    Item saveImageItem(MultipartFile upLoadedFile, Long documentId, Long parentId, Integer itemLevel);
+    Item saveImageItem(MultipartFile upLoadedFile, Long documentId, Long parentId, String imageCaption, Integer itemLevel);
     
     Item saveRquirementItem(ItemDao itemDao);
     

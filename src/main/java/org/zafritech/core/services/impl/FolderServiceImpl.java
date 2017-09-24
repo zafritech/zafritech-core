@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.zafritech.core.data.dao.FolderTreeDao;
 import org.zafritech.core.data.domain.Document;
 import org.zafritech.core.data.domain.Folder;
+import org.zafritech.core.data.domain.FolderType;
 import org.zafritech.core.data.domain.Project;
 import org.zafritech.core.data.repositories.DocumentRepository;
 import org.zafritech.core.data.repositories.FolderRepository;
@@ -157,5 +158,29 @@ public class FolderServiceImpl implements FolderService {
         }
         
         return folder;
+    }
+
+    @Override
+    public List<FolderTreeDao> getLibraryFolders() {
+        
+        List<FolderTreeDao> foldersTree = new ArrayList<>();
+        
+        FolderType folderType = folderTypeRepository.findByTypeKey("FOLDER_LIBRARY");
+        List<Folder> folders = folderRepository.findByFolderTypeOrderBySortIndexAsc(folderType);
+        
+        for (Folder folder : folders) {
+            
+            foldersTree.add(new FolderTreeDao(
+
+                    folder.getId(),
+                    (folder.getParent() != null) ? folder.getParent().getId() : 0L,
+                    folder.getFolderName(),
+                    (folder.getParent() == null),
+                    true,
+                    true
+            ));
+        }
+       
+        return foldersTree;
     }
 }

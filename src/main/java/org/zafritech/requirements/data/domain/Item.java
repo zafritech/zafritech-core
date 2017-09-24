@@ -60,6 +60,8 @@ public class Item implements Serializable {
 
     @Enumerated(EnumType.STRING)
     private MediaType mediaType;
+    
+    private String itemCaption;
 
     @ManyToOne
     @JoinColumn(name = "documentId")
@@ -68,7 +70,7 @@ public class Item implements Serializable {
     @ManyToOne
     @JoinColumn(name = "parentId")
     private Item parent;
-    
+            
     @ManyToOne
     @JoinColumn(name = "itemCategoryId")
     private ItemCategory itemCategory;
@@ -230,6 +232,14 @@ public class Item implements Serializable {
 
     public void setMediaType(MediaType mediaType) {
         this.mediaType = mediaType;
+    }
+
+    public String getItemCaption() {
+        return itemCaption;
+    }
+
+    public void setItemCaption(String itemCaption) {
+        this.itemCaption = itemCaption;
     }
 
     public Document getDocument() {

@@ -31,14 +31,14 @@ public class LibraryInit {
         
         Folder library = folderRepository.save(new Folder("Library", folderTypeRepository.findByTypeKey("FOLDER_LIBRARY"), null, null, 0)); 
         
-        folderRepository.save(new Folder("Books", folderTypeRepository.findByTypeKey("FOLDER_DOCUMENT"), library, null, 0));
+        folderRepository.save(new Folder("Books", folderTypeRepository.findByTypeKey("FOLDER_LIBRARY"), library, null, 0));
         
-        Folder standards = folderRepository.save(new Folder("Standards", folderTypeRepository.findByTypeKey("FOLDER_DOCUMENT"), library, null, 1));
-        folderRepository.save(new Folder("Company", folderTypeRepository.findByTypeKey("FOLDER_DOCUMENT"), standards, null, 0));
-        folderRepository.save(new Folder("EIA", folderTypeRepository.findByTypeKey("FOLDER_DOCUMENT"), standards, null, 1));
-        folderRepository.save(new Folder("Euro Norm", folderTypeRepository.findByTypeKey("FOLDER_DOCUMENT"), standards, null, 2));
-        folderRepository.save(new Folder("ISO/IEC/IEEE", folderTypeRepository.findByTypeKey("FOLDER_DOCUMENT"), standards, null, 3));
-        folderRepository.save(new Folder("MIL_STD", folderTypeRepository.findByTypeKey("FOLDER_DOCUMENT"), standards, null, 4));
-        folderRepository.save(new Folder("Other", folderTypeRepository.findByTypeKey("FOLDER_DOCUMENT"), standards, null, 5));
+        Folder standards = folderRepository.save(new Folder("Standards", folderTypeRepository.findByTypeKey("FOLDER_LIBRARY"), library, null, 1));
+        folderRepository.save(new Folder("Company", folderTypeRepository.findByTypeKey("FOLDER_LIBRARY"), standards, null, 0));
+        folderRepository.save(new Folder("EIA", folderTypeRepository.findByTypeKey("FOLDER_LIBRARY"), standards, null, 1));
+        folderRepository.save(new Folder("Euro Norm", folderTypeRepository.findByTypeKey("FOLDER_LIBRARY"), standards, null, 2));
+        folderRepository.save(new Folder("ISO/IEC/IEEE", folderTypeRepository.findByTypeKey("FOLDER_LIBRARY"), standards, null, 3));
+        folderRepository.save(new Folder("MIL_STD", folderTypeRepository.findByTypeKey("FOLDER_LIBRARY"), standards, null, 4));
+        folderRepository.save(new Folder("Other", folderTypeRepository.findByTypeKey("FOLDER_LIBRARY"), standards, null, 5));
     }
 }

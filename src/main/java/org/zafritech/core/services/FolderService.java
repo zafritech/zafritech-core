@@ -21,4 +21,6 @@ public interface FolderService {
     List<FolderTreeDao> getProjectDocuments(Project project);
     
     Folder duplicateTree(Long id); 
+    
+    List<FolderTreeDao> getLibraryFolders();
 }

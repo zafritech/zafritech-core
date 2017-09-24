@@ -9,6 +9,8 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import org.zafritech.core.enums.LibraryItemTypes;
@@ -22,7 +24,9 @@ public class LibraryItem implements Serializable {
 
     private String uuId;
     
-    private LibraryCategory category;
+    @ManyToOne
+    @JoinColumn(name = "folderId")
+    private Folder folder;
     
     @Enumerated(EnumType.STRING)
     private LibraryItemTypes itemType;
@@ -55,7 +59,7 @@ public class LibraryItem implements Serializable {
         
     }
 
-    public LibraryItem(LibraryCategory category, 
+    public LibraryItem(Folder folder, 
                        LibraryItemTypes itemType, 
                        String idendifier, 
                        String authors, 
@@ -69,7 +73,7 @@ public class LibraryItem implements Serializable {
                        String keywords) {
         
         this.uuId = UUID.randomUUID().toString();
-        this.category = category;
+        this.folder = folder;
         this.itemType = itemType;
         this.idendifier = idendifier;
         this.authors = authors;
@@ -96,12 +100,12 @@ public class LibraryItem implements Serializable {
         this.uuId = uuId;
     }
 
-    public LibraryCategory getCategory() {
-        return category;
+    public Folder getFolder() {
+        return folder;
     }
 
-    public void setCategory(LibraryCategory category) {
-        this.category = category;
+    public void setFolder(Folder folder) {
+        this.folder = folder;
     }
 
     public LibraryItemTypes getItemType() {

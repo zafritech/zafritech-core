@@ -5,6 +5,7 @@
  */
 package org.zafritech.requirements.services.impl;
 
+import com.itextpdf.text.BadElementException;
 import com.itextpdf.text.Chunk;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Element;
@@ -21,6 +22,7 @@ import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfPageEventHelper;
 import com.itextpdf.text.pdf.PdfWriter;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.AbstractMap.SimpleEntry;
@@ -29,6 +31,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.zafritech.core.data.domain.Claim;
 import org.zafritech.core.data.domain.ClaimType;
@@ -56,6 +59,9 @@ import org.zafritech.requirements.services.ItemPDFService;
 @Service
 public class ItemPDFServiceImpl implements ItemPDFService {
 
+    @Value("${zafritech.paths.images-dir}")
+    private String images_dir;
+    
     @Autowired
     private ItemService itemService;
 
@@ -130,7 +136,7 @@ public class ItemPDFServiceImpl implements ItemPDFService {
         return pdfAsBytes;
     }
 
-    private void addContent(com.itextpdf.text.Document pdf, Document document) throws DocumentException {
+    private void addContent(com.itextpdf.text.Document pdf, Document document) throws DocumentException, BadElementException, IOException {
 
         pdf.newPage();
         pdf.setMargins(PdfConstants.MARGIN_LEFT_DEFAULT, 
@@ -154,7 +160,7 @@ public class ItemPDFServiceImpl implements ItemPDFService {
 
                                 pdf.newPage();
                                 Paragraph header1 = new Paragraph();
-                                header1.setTabSettings(new TabSettings(56f));
+                                header1.setTabSettings(new TabSettings(PdfConstants.TEXT_INDENT_LEFT));
                                 header1.add(new Chunk(item.getItemNumber(), PdfConstants.HEADER1));
                                 header1.add(Chunk.TABBING);
                                 header1.add(new Chunk(item.getItemValue(), PdfConstants.HEADER1));
@@ -167,7 +173,7 @@ public class ItemPDFServiceImpl implements ItemPDFService {
 
                                 Paragraph header2 = new Paragraph();
                                 header2.add(new Chunk(item.getItemNumber(), PdfConstants.HEADER2));
-                                header2.setTabSettings(new TabSettings(56f));
+                                header2.setTabSettings(new TabSettings(PdfConstants.TEXT_INDENT_LEFT));
                                 header2.add(Chunk.TABBING);
                                 header2.add(new Chunk(item.getItemValue(), PdfConstants.HEADER2));
                                 documentPdfService.addEmptyLine(header2, 1);
@@ -179,7 +185,7 @@ public class ItemPDFServiceImpl implements ItemPDFService {
 
                                 Paragraph header3 = new Paragraph();
                                 header3.add(new Chunk(item.getItemNumber(), PdfConstants.HEADER3));
-                                header3.setTabSettings(new TabSettings(56f));
+                                header3.setTabSettings(new TabSettings(PdfConstants.TEXT_INDENT_LEFT));
                                 header3.add(Chunk.TABBING);
                                 header3.add(new Chunk(item.getItemValue(), PdfConstants.HEADER3));
                                 documentPdfService.addEmptyLine(header3, 1);
@@ -191,7 +197,7 @@ public class ItemPDFServiceImpl implements ItemPDFService {
 
                                 Paragraph header4 = new Paragraph();
                                 header4.add(new Chunk(item.getItemNumber(), PdfConstants.HEADER4));
-                                header4.setTabSettings(new TabSettings(56f));
+                                header4.setTabSettings(new TabSettings(PdfConstants.TEXT_INDENT_LEFT));
                                 header4.add(Chunk.TABBING);
                                 header4.add(new Chunk(item.getItemValue(), PdfConstants.HEADER4));
                                 documentPdfService.addEmptyLine(header4, 1);
@@ -207,7 +213,7 @@ public class ItemPDFServiceImpl implements ItemPDFService {
                     case "PROSE":
 
                         Paragraph prose = new Paragraph();
-                        prose.setIndentationLeft(56f);
+                        prose.setIndentationLeft(PdfConstants.TEXT_INDENT_LEFT);
                         prose.add(new Paragraph(item.getItemValue().replaceAll("\\<.*?>", "").replaceAll("&.*?;", " "), PdfConstants.NORMAL));
                         documentPdfService.addEmptyLine(prose, 1);
                         pdf.add(prose);
@@ -217,7 +223,7 @@ public class ItemPDFServiceImpl implements ItemPDFService {
                     case "REQUIREMENT":
 
                         Paragraph requirement = new Paragraph();
-                        requirement.setIndentationLeft(56f);
+                        requirement.setIndentationLeft(PdfConstants.TEXT_INDENT_LEFT);
                         requirement.add(new Chunk(item.getIdentifier() + ": ", PdfConstants.INDENTIFIER));
                         requirement.add(new Chunk(item.getItemValue().replaceAll("\\<.*?>", "").replaceAll("&.*?;", " "), PdfConstants.NORMAL));
                         documentPdfService.addEmptyLine(requirement, 1);
@@ -262,6 +268,33 @@ public class ItemPDFServiceImpl implements ItemPDFService {
 
                         break;
 
+                    case "IMAGE":
+                        
+                        String path = images_dir + item.getItemValue();
+                        Image image = Image.getInstance(path);
+                        
+                        float usablePageWidth = pdf.getPageSize().getWidth() - (PdfConstants.MARGIN_LEFT_DEFAULT + PdfConstants.MARGIN_RIGHT_DEFAULT + PdfConstants.TEXT_INDENT_LEFT);
+                        float imageWidth = image.getPlainWidth();
+                        
+                        if (imageWidth > usablePageWidth) {
+                            
+                            float imageReducedPercentageWidth = usablePageWidth / imageWidth * 100;
+                            image.scalePercent(imageReducedPercentageWidth); 
+                            image.setAlignment(Image.RIGHT); 
+                            pdf.add(image);
+                            
+                        } else {
+                            
+                            image.setAlignment(Image.MIDDLE); 
+                            image.setIndentationLeft(PdfConstants.TEXT_INDENT_LEFT);
+                        }
+                        
+                        Paragraph imagePara = new Paragraph();
+                        documentPdfService.addEmptyLine(imagePara, 1);
+                        pdf.add(imagePara);
+                        
+                        break;
+                        
                     default:
 
                 }
@@ -333,7 +366,7 @@ public class ItemPDFServiceImpl implements ItemPDFService {
         }
 
         Paragraph refTablePara = new Paragraph();
-        refTablePara.setIndentationLeft(56f);
+        refTablePara.setIndentationLeft(PdfConstants.TEXT_INDENT_LEFT);
         refTablePara.add(refTable);
 
         pdf.add(refTablePara);
@@ -389,7 +422,7 @@ public class ItemPDFServiceImpl implements ItemPDFService {
         }
 
         Paragraph abbrevTablePara = new Paragraph();
-        abbrevTablePara.setIndentationLeft(56f);
+        abbrevTablePara.setIndentationLeft(PdfConstants.TEXT_INDENT_LEFT);
         abbrevTablePara.add(abbrevTable);
 
         pdf.add(abbrevTablePara);
@@ -445,7 +478,7 @@ public class ItemPDFServiceImpl implements ItemPDFService {
         }
 
         Paragraph abbrevTablePara = new Paragraph();
-        abbrevTablePara.setIndentationLeft(56f);
+        abbrevTablePara.setIndentationLeft(PdfConstants.TEXT_INDENT_LEFT);
         abbrevTablePara.add(abbrevTable);
 
         pdf.add(abbrevTablePara);
@@ -501,7 +534,7 @@ public class ItemPDFServiceImpl implements ItemPDFService {
         }
 
         Paragraph acronymTablePara = new Paragraph();
-        acronymTablePara.setIndentationLeft(56f);
+        acronymTablePara.setIndentationLeft(PdfConstants.TEXT_INDENT_LEFT);
         acronymTablePara.add(acronymTable);
 
         pdf.add(acronymTablePara);
@@ -557,7 +590,7 @@ public class ItemPDFServiceImpl implements ItemPDFService {
         }
 
         Paragraph defTablePara = new Paragraph();
-        defTablePara.setIndentationLeft(56f);
+        defTablePara.setIndentationLeft(PdfConstants.TEXT_INDENT_LEFT);
         defTablePara.add(defTable);
 
         pdf.add(defTablePara);

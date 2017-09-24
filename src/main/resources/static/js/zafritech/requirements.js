@@ -224,10 +224,6 @@ function RequirementItemImageInsert(documentId, parentId, itemLevel) {
                         var form = $('#imageUploadForm')[0];
                         var data = new FormData(form);
                         
-                        data.append('documentId', document.getElementById('documentId').value);
-                        
-                        console.log(data);
-                        
                         $.ajax({
                             type: "POST",
                             enctype: 'multipart/form-data',
@@ -250,6 +246,13 @@ function RequirementItemImageInsert(documentId, parentId, itemLevel) {
                             },
                             error: function (e) {
 
+                                swal({
+
+                                    title: "Error uploading file!",
+                                    text: e.responseText,
+                                    type: "error"
+                                });
+                                
                                 $("#result").text(e.responseText);
                                 console.log("ERROR : ", e);
                                 $("#btnSubmit").prop("disabled", false);

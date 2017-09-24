@@ -13,6 +13,7 @@ import java.nio.file.Paths;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.activation.MimetypesFileTypeMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
@@ -137,14 +138,21 @@ public class ItemRestController {
     public ResponseEntity<?> addImageItem(@RequestParam("imageFile") MultipartFile upLoadFile,
                                           @RequestParam("documentId") Long documentId,
                                           @RequestParam("parentId") Long parentId,
+                                          @RequestParam("imageCaption") String imageCaption,
                                           @RequestParam("itemLevel") Integer itemLevel) {
         
         if (upLoadFile.isEmpty()) {
             
             return new ResponseEntity("please select a file!", HttpStatus.OK);
         }
+        
+        String mimetype = upLoadFile.getContentType();
+        if (!mimetype.startsWith("image/")) {
+            
+            return new ResponseEntity("The uploaded file is not an Image: " + upLoadFile.getOriginalFilename(), new HttpHeaders(), HttpStatus.BAD_REQUEST);
+        }
 
-        Item imageItem = itemService.saveImageItem(upLoadFile, documentId, parentId, itemLevel);
+        Item imageItem = itemService.saveImageItem(upLoadFile, documentId, parentId, imageCaption, itemLevel);
         
         return new ResponseEntity("Successfully uploaded - Image name: " + imageItem.getItemValue(), new HttpHeaders(), HttpStatus.OK);
     }

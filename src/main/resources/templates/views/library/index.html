@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+      layout:decorator="layouts/zid-menu-detail">
+
+    <head>
+        <title>Zidingo PMS - Library</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="UTF-8" />
+    </head>
+
+    <body>
+
+        <div layout:fragment="content">
+            
+            <div class="content-heading bg-white">
+                <div class="row">
+                    <div class="col-sm-9">
+                        <h4 class="m0">Reference Library</h4>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row content">
+                
+                <div class="container container-lg">
+
+                    <input type="hidden" id="folderId" value="" />
+                    
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="card">
+
+                                <div class="card-body">
+                                    <ul id="libraryTree" class="ztree"></ul>
+                                </div>
+
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-9">
+                            <div class="card">
+                                
+                                <div class="card-heading bg-white" style="border-bottom: 1px solid #efefef;">
+                                    <!-- START dropdown-->
+                                    <div class="pull-right dropdown">
+                                      <button type="button" data-toggle="dropdown" class="btn btn-default btn-flat btn-flat-icon"><em class="ion-android-more-vertical"></em></button>
+                                      <ul role="menu" class="dropdown-menu md-dropdown-menu dropdown-menu-right">
+                                        <li><a href="javascript:void(0);"><em class="ion-plus icon-fw"></em>Add New Item</a></li>
+                                        <li><a href="javascript:void(0);"><em class="ion-folder icon-fw"></em>Add New Folder</a></li>
+                                        <li><a href="/documents"><em class="ion-edit icon-fw"></em>Edit Folder</a></li>
+                                        <li><a href="javascript:void(0);"><em class="ion-wrench icon-fw"></em>Tasks</a></li>
+                                      </ul>
+                                    </div>
+                                    <!-- END dropdown-->
+                                    <div class="card-title" id="libraryFolderTitle">Folder Title</div>
+                                </div>
+                                
+                                <div class="card-body">
+                                    <div id="libraryItemsList"></div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+                
+            </div>
+            
+        </div>
+
+    </body>
+
+    <th:block layout:fragment="scripts">
+        <script src="/js/vendor/ztree/jquery.ztree.core.js"></script>
+        <script src="/js/zafritech/library.js"></script>
+    </th:block>
+
+</html>

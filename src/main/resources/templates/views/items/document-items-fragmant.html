@@ -179,6 +179,7 @@
                     <div th:if="${item.itemClass == 'IMAGE'}" class="col-md-11" style="padding-left: 99px;">
                         
                         <img th:attr="src=${'/images/' + item.itemValue}" class="img-responsive" />
+                        <div th:if="${item.itemCaption != null}" th:text="${item.itemCaption}" class="caption">Caption</div>
                         
                     </div>
 
@@ -190,6 +191,7 @@
                         <div class="plain-text-nonumber">
                             <div th:attr="id=${'text' + item.id}" th:utext="${item.itemValue}"></div>
                         </div>
+                        
                     </div>
 
                     <div class="col-md-1">
@@ -230,6 +232,11 @@
                             <li th:if="${item.mediaType.name()} == 'DEFINITIONS'">
                                 <a href="javascript:void(0);" th:onclick="'javascript:RequirementItemAddDefinition(\'' + ${item.document.id} + '\',\'' + ${item.id} + '\',\'' + ${item.mediaType.name()} + '\');'">
                                     <em class="ion-plus icon-fw"></em>Add Definition
+                                </a>
+                            </li>
+                            <li th:if="${item.itemClass} == 'IMAGE'">
+                                <a href="javascript:void(0);" th:onclick="'javascript:RequirementItemAddCaption(\'' + ${item.document.id} + '\',\'' + ${item.id} + '\',\'' + ${item.mediaType.name()} + '\');'">
+                                    <em class="ion-plus icon-fw"></em>Add Caption
                                 </a>
                             </li>
                             <li><a href="javascript:void(0);" th:onclick="'javascript:RequirementItemEditItem(\'' + ${item.id} + '\');'"><em class="ion-edit icon-fw"></em>Edit Item</a></li>

@@ -189,7 +189,7 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public Item saveImageItem(MultipartFile upLoadedFile, Long documentId, Long parentId, Integer itemLevel) {
+    public Item saveImageItem(MultipartFile upLoadedFile, Long documentId, Long parentId, String imageCaption, Integer itemLevel) {
             
         Item imageItem;
             
@@ -199,7 +199,7 @@ public class ItemServiceImpl implements ItemService {
             Item parent = itemRepository.findOne(parentId);
 
             String fileExtension = FilenameUtils.getExtension(upLoadedFile.getOriginalFilename());
-            String imageRelPath = "documents/doc_" + document.getUuId() + "/img_" +UUID.randomUUID().toString() + "." + fileExtension;
+            String imageRelPath = "documents/doc_" + document.getUuId() + "/img_" + UUID.randomUUID().toString() + "." + fileExtension;
             String imageFullPath = images_dir + imageRelPath;
 
             // Upload and move file
@@ -215,7 +215,8 @@ public class ItemServiceImpl implements ItemService {
             imageItem.setItemClass(ItemClass.IMAGE.name()); 
             imageItem.setItemLevel(itemLevel);
             imageItem.setMediaType(MediaType.valueOf(fileExtension.toUpperCase())); 
-
+            if (!imageCaption.isEmpty()) { imageItem.setItemCaption(imageCaption); }
+            
             // Get item's sort index
             Item lastChild;
             

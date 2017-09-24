@@ -22,3 +22,6 @@ nbbuild/
 dist/
 nbdist/
 .nb-gradle/
+
+### Dynamically cahnging ###
+/src/main/resources/static/images/documents/
