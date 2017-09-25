@@ -47,6 +47,8 @@ function zTreeLibraryLoad() {
         dataType: "json",
         success: function (data) {
 
+            console.log(data);
+            
             zTreeObj = $.fn.zTree.init($("#libraryTree"), setting, data);
 
             // Expand current zTree node
@@ -56,6 +58,12 @@ function zTreeLibraryLoad() {
                 var currentNode = zTreeObj.getNodeByParam("id", nodeId, null);
 
                 zTreeObj.expandNode(currentNode, true, false, true);
+                $('#libraryFolderTitle').text(currentNode.name);
+                
+            } else {
+                
+                var currentNode = zTreeObj.getNodeByParam("pId", 0, null);
+                $('#libraryFolderTitle').text(currentNode.name);
             }
         }
     });
@@ -68,8 +76,8 @@ function zTreeLibraryBeforeClick(treeId, treeNode) {
     
     if (treeNode.isParent) {
         
-        treeObj.expandNode(treeNode, null, null, null);
-        $('#libraryFolderTitle').text(treeNode.name);
+        treeObj.expandNode(treeNode, true, null, null);
+        $('#libraryFolderTitle').text(buildBreadCrumbsString(treeNode));
     }
 }
 
@@ -88,11 +96,30 @@ function zTreeLibraryOnClick(event, treeId, treeNode, clickFlag) {
     })
     .success(function (data) {
 
-        if (data.lenth > 0) {
+        if (data.length > 0) {
+            
+            $('#libraryItemsList').text("");
             
         } else {
             
             $('#libraryItemsList').text("No items found.");
         }
     });
+}
+
+function buildBreadCrumbsString(treeNode) {
+    
+    var zTreeObj = $.fn.zTree.getZTreeObj("libraryTree");
+    var breadCrumbs = treeNode.name;
+    var nodeId = treeNode.pId;
+    
+    while(nodeId > 0) {
+        
+        var parent = zTreeObj.getNodeByParam("id", nodeId, null);
+        breadCrumbs = parent.name + " :: " + breadCrumbs;
+        
+        nodeId = parent.pId;
+    }
+    
+    return breadCrumbs;
 }

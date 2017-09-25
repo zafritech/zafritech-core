@@ -25,3 +25,5 @@ nbdist/
 
 ### Dynamically cahnging ###
 /src/main/resources/static/images/documents/
+/src/main/resources/static/images/library/
+/src/main/resources/static/data/library/

@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.Date;
 import java.util.UUID;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -39,9 +40,12 @@ public class LibraryItem implements Serializable {
     
     private String itemTitle;
     
+    @Column(columnDefinition = "TEXT")
     private String description;
     
     private String itemPath;
+    
+    private String imagePath;
     
     private String format;
     
@@ -158,6 +162,14 @@ public class LibraryItem implements Serializable {
 
     public String getItemPath() {
         return itemPath;
+    }
+
+    public String getImagePath() {
+        return imagePath;
+    }
+
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
     }
 
     public void setItemPath(String itemPath) {
