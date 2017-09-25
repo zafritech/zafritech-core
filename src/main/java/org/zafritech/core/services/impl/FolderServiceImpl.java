@@ -61,6 +61,7 @@ public class FolderServiceImpl implements FolderService {
                         (folder.getParent() == null),
                         true,
                         true,
+                        "/images/icons/db2-icon.png",
                         project.getId()
                 ));
                 
@@ -169,16 +170,33 @@ public class FolderServiceImpl implements FolderService {
         List<Folder> folders = folderRepository.findByFolderTypeOrderBySortIndexAsc(folderType);
         
         for (Folder folder : folders) {
-            
-            foldersTree.add(new FolderTreeDao(
 
-                    folder.getId(),
-                    (folder.getParent() != null) ? folder.getParent().getId() : 0L,
-                    folder.getFolderName(),
-                    (folder.getParent() == null),
-                    true,
-                    true
-            ));
+            if (folder.getParent() == null) { 
+                
+                foldersTree.add(new FolderTreeDao(
+                
+                        folder.getId(),
+                        (folder.getParent() != null) ? folder.getParent().getId() : 0L,
+                        folder.getFolderName(),
+                        (folder.getParent() == null),
+                        true,
+                        true,
+                        "/images/icons/book-icon.png",
+                        null
+                ));
+                
+            } else {
+
+                foldersTree.add(new FolderTreeDao(
+
+                        folder.getId(),
+                        (folder.getParent() != null) ? folder.getParent().getId() : 0L,
+                        folder.getFolderName(),
+                        (folder.getParent() == null),
+                        true,
+                        true
+                ));
+            }
         }
        
         return foldersTree;

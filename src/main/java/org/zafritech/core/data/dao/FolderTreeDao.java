@@ -17,6 +17,7 @@ public class FolderTreeDao {
     private boolean open;
     private boolean isParent;
     private boolean click;
+    private String icon;
     private Long linkId;
 
     public FolderTreeDao() {
@@ -41,6 +42,18 @@ public class FolderTreeDao {
         this.open = open;
         this.isParent = isParent;
         this.click = click;
+        this.linkId = linkId;
+    }
+
+    public FolderTreeDao(Long id, Long pId, String name, boolean open, boolean isParent, boolean click, String icon, Long linkId) {
+        
+        this.id = id;
+        this.pId = pId;
+        this.name = name;
+        this.open = open;
+        this.isParent = isParent;
+        this.click = click;
+        this.icon = icon;
         this.linkId = linkId;
     }
 
@@ -98,6 +111,14 @@ public class FolderTreeDao {
 
     public void setClick(boolean click) {
         this.click = click;
+    }
+
+    public String getIcon() {
+        return icon;
+    }
+
+    public void setIcon(String icon) {
+        this.icon = icon;
     }
 
     public Long getLinkId() {

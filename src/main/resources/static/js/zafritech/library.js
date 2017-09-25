@@ -48,11 +48,9 @@ function zTreeLibraryLoad() {
         dataType: "json",
         success: function (data) {
 
-//            console.log(data);
-            
-            zTreeObj = $.fn.zTree.init($("#folder-tree"), setting, data);
-            $('#folderTreeTitle').text("Reference Library");
-            $('#documentTOC').hide();
+            zTreeObj = $.fn.zTree.init($("#mainFolderTree"), setting, data);
+            $('#mainTreeHeaderLabel').text("Reference Library");
+            $('#subTreeHeaderElement').hide();
             
             // Expand current zTree node
             if ($('#nodeId').length > 0 && $('#nodeId').val().length !== 0) {
@@ -75,7 +73,7 @@ function zTreeLibraryLoad() {
 // Toggle open/close on clicking a parent node
 function zTreeLibraryBeforeClick(treeId, treeNode) {
     
-    var treeObj = $.fn.zTree.getZTreeObj("folder-tree");
+    var treeObj = $.fn.zTree.getZTreeObj("mainFolderTree");
     
     if (treeNode.isParent) {
         
@@ -102,7 +100,7 @@ function loadLibraryItems(folderId) {
 
 function buildBreadCrumbsString(treeNode) {
     
-    var zTreeObj = $.fn.zTree.getZTreeObj("folder-tree");
+    var zTreeObj = $.fn.zTree.getZTreeObj("mainFolderTree");
     var breadCrumbs = treeNode.name;
     var nodeId = treeNode.pId;
     

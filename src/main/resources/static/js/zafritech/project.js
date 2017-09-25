@@ -48,10 +48,10 @@ function zTreeProjectLoad() {
             dataType: "json",
             success: function (data) {
 
-                zTreeObj = $.fn.zTree.init($("#folder-tree"), setting, data);
+                zTreeObj = $.fn.zTree.init($("#mainFolderTree"), setting, data);
                 
                 var projectFolderNode = zTreeObj.getNodeByParam("pId", 0, null);
-                $('#folderTreeTitle').text(projectFolderNode.name + " Documents");
+                $('#mainTreeHeaderLabel').text(projectFolderNode.name + " Documents");
                 
                 // Expand current zTree node
                 if (($('#nodeId').length > 0 && $('#nodeId').val().length !== 0) &&
@@ -61,6 +61,8 @@ function zTreeProjectLoad() {
                     var currentNode = zTreeObj.getNodeByParam("id", nodeId, null);
                     
                     zTreeObj.expandNode(currentNode, true, false, true);
+                    
+                    $('#subTreeHeaderElement').hide();
                 }
             }
         });
@@ -69,7 +71,7 @@ function zTreeProjectLoad() {
 
 function zTreeExpandByIdNode(nodeId) {
     
-    var treeObj = $.fn.zTree.getZTreeObj("folder-tree");
+    var treeObj = $.fn.zTree.getZTreeObj("mainFolderTree");
     var treeNode = treeObj.getNodeByParam("id", nodeId, null);
     
     if (treeNode !== null && treeNode.length > 0) {
@@ -81,7 +83,7 @@ function zTreeExpandByIdNode(nodeId) {
 // Toggle open/close on clicking a parent node
 function zTreeProjectBeforeClick(treeId, treeNode) {
     
-    var treeObj = $.fn.zTree.getZTreeObj("folder-tree");
+    var treeObj = $.fn.zTree.getZTreeObj("mainFolderTree");
     
     if (treeNode.isParent) {
         
@@ -92,7 +94,7 @@ function zTreeProjectBeforeClick(treeId, treeNode) {
 // Toggle open/close on clicking a parent node
 function zTreeProjectBeforeRightClick(treeId, treeNode) {
     
-    var treeObj = $.fn.zTree.getZTreeObj("folder-tree");
+    var treeObj = $.fn.zTree.getZTreeObj("mainFolderTree");
     
     if (treeNode.isParent) {
         
@@ -107,7 +109,7 @@ function zTreeProjectBeforeRightClick(treeId, treeNode) {
 // Toggle open/close on clicking a parent node
 function zTreeProjectOnRightClick(event, treeId, treeNode, clickFlag) {
     
-    var treeObj = $.fn.zTree.getZTreeObj("folder-tree");
+    var treeObj = $.fn.zTree.getZTreeObj("mainFolderTree");
     
     if (treeNode.isParent) {
         

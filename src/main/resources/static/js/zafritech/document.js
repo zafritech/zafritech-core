@@ -28,7 +28,7 @@ function zDocTreeLoad() {
                 }
             },
             view: {
-                showIcon: false,
+                showIcon: showIconForTree,
                 dblClickExpand: true
             },
             callback: {
@@ -54,7 +54,11 @@ function zDocTreeLoad() {
             cache: true,
             success: function (data) {
                 
-                zDocTreeObj = $.fn.zTree.init($("#document-tree"), setting, data);
+                $('#subTreeHeaderElement').show();
+                $('#subTreeHeaderElement').addClass('zid-master-detail-nav-title');
+                $('#subTreeHeaderLabel').text("Table of Contents");
+                
+                zDocTreeObj = $.fn.zTree.init($("#secondaryFolderTree"), setting, data);
                 zDocTreeObj.expandAll(false);   // Collapse all nodes
                 
                 // Expand Table of Contents node (Node ID: 0)
@@ -65,9 +69,14 @@ function zDocTreeLoad() {
     }
 }
 
+function showIconForTree(treeId, treeNode) {
+    
+    return treeNode.id === 0;
+}
+                
 function zTreeDocBeforeClick(treeId, treeNode) {
     
-    var zDocTreeObj = $.fn.zTree.getZTreeObj("document-tree");
+    var zDocTreeObj = $.fn.zTree.getZTreeObj("secondaryFolderTree");
     var documentId = document.getElementById('documentId').value;
      
     // Collapse all open nodes first

@@ -12,19 +12,23 @@
             <aside class="sidebar-master-container">
                 <div class="sidebar-content">
                     
-                    <div class="zid-master-detail-nav-title">
-                        <span id="folderTreeTitle">Documents</span>
+                    <!-- MAIN Folder Tree START -->
+                    <div id="mainTreeHeaderElement" class="zid-master-detail-nav-title">
+                        <span id="mainTreeHeaderLabel"></span>
                     </div>
                     <div>
-                        <ul id="folder-tree" class="ztree"></ul>
+                        <ul id="mainFolderTree" class="ztree"></ul>
                     </div>
+                    <!-- MAIN Folder Tree END -->
                     
-                    <div id="documentTOC" class="zid-master-detail-nav-title">
-                        <span>Table of Contents</span>
+                    <!-- SECONDARY Folder Tree START -->
+                    <div id="subTreeHeaderElement">
+                        <span id="subTreeHeaderLabel"></span>
                     </div>
                     <div>
-                        <ul id="document-tree" class="ztree"></ul>
+                        <ul id="secondaryFolderTree" class="ztree"></ul>
                     </div>
+                    <!-- SECONDARY Folder Tree END -->
                     
                 </div>
             </aside>

@@ -2545,8 +2545,8 @@ fieldset[disabled] .btn-inverse.active {
 .btn-flat.btn-flat-icon {
   border-radius: 50%;
   font-size: 24px;
-  height: 32px;
-  width: 32px;
+  height: 36px;
+  width: 36px;
   padding: 0;
   overflow: hidden;
   color: inherit !important;
