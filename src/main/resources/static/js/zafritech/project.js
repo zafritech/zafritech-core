@@ -50,8 +50,12 @@ function zTreeProjectLoad() {
 
                 zTreeObj = $.fn.zTree.init($("#folder-tree"), setting, data);
                 
+                var projectFolderNode = zTreeObj.getNodeByParam("pId", 0, null);
+                $('#folderTreeTitle').text(projectFolderNode.name + " Documents");
+                
                 // Expand current zTree node
-                if ($('#nodeId').length > 0 && $('#nodeId').val().length !== 0) {
+                if (($('#nodeId').length > 0 && $('#nodeId').val().length !== 0) &&
+                    (($('#documentNodeId').length === 0) || $('#documentNodeId').val().length === 0)) {
                     
                     var nodeId =  document.getElementById('nodeId').value;
                     var currentNode = zTreeObj.getNodeByParam("id", nodeId, null);

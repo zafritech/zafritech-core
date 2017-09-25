@@ -2,7 +2,7 @@
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
-      layout:decorator="layouts/zid-menu-detail">
+      layout:decorator="layouts/zid-master-detail">
 
     <head>
         <title>Zidingo PMS - Library</title>
@@ -13,33 +13,19 @@
     <body>
 
         <div layout:fragment="content">
-            
-            <div class="content-heading bg-white">
-                <div class="row">
-                    <div class="col-sm-9">
-                        <h4 class="m0">Reference Library</h4>
-                    </div>
-                </div>
-            </div>
 
             <div class="row content">
                 
                 <div class="container container-lg">
 
+                    <!-- Modal Boxes Control -->
+                    <input type="hidden" id="modalBusyControl" th:value="OFF" />
+
                     <input type="hidden" id="folderId" value="" />
                     
                     <div class="row">
-                        <div class="col-md-3">
-                            <div class="card">
-
-                                <div class="card-body">
-                                    <ul id="libraryTree" class="ztree"></ul>
-                                </div>
-
-                            </div>
-                        </div>
                         
-                        <div class="col-md-9">
+                        <div class="col-md-12">
                             <div class="card">
                                 
                                 <div class="card-heading bg-white" style="border-bottom: 1px solid #efefef;">
@@ -63,6 +49,7 @@
 
                             </div>
                         </div>
+                        
                     </div>
                     
                 </div>

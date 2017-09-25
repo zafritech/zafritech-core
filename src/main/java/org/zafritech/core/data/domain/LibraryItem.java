@@ -32,7 +32,7 @@ public class LibraryItem implements Serializable {
     @Enumerated(EnumType.STRING)
     private LibraryItemTypes itemType;
 
-    private String idendifier;          // ISBN, Ref #, etc
+    private String identifier;          // ISBN, Ref #, etc
     
     private String authors;
     
@@ -79,7 +79,7 @@ public class LibraryItem implements Serializable {
         this.uuId = UUID.randomUUID().toString();
         this.folder = folder;
         this.itemType = itemType;
-        this.idendifier = idendifier;
+        this.identifier = idendifier;
         this.authors = authors;
         this.publishers = publishers;
         this.itemTitle = itemTitle;
@@ -120,12 +120,12 @@ public class LibraryItem implements Serializable {
         this.itemType = itemType;
     }
 
-    public String getIdendifier() {
-        return idendifier;
+    public String getIdentifier() {
+        return identifier;
     }
 
-    public void setIdendifier(String idendifier) {
-        this.idendifier = idendifier;
+    public void setIdentifier(String identifier) {
+        this.identifier = identifier;
     }
 
     public String getAuthors() {

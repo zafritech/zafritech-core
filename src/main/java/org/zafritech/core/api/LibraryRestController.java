@@ -12,8 +12,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 import org.zafritech.core.data.dao.FolderTreeDao;
 import org.zafritech.core.data.domain.Folder;
 import org.zafritech.core.data.domain.LibraryItem;
@@ -50,11 +52,14 @@ public class LibraryRestController {
         return foldersTree;
     }
     
-    @RequestMapping(value = "/api/library/folder/items/{id}", method = GET)
-    public ResponseEntity<List<LibraryItem>> getLibraryFolderItems(@PathVariable Long id) {
+    @RequestMapping(value = "/api/library/folder/items/list/{id}", method = GET)
+    public ModelAndView getLibraryFolderItems(@PathVariable Long id) {
         
         List<LibraryItem> libraryItems = libraryItemRepository.findByFolder(folderRepository.findOne(id)); 
-                
-        return new ResponseEntity<List<LibraryItem>>(libraryItems, HttpStatus.OK);
+             
+        ModelAndView modelView = new ModelAndView("views/library/library-items-list");
+        modelView.addObject("items", libraryItems);
+        
+        return modelView;
     }
 }

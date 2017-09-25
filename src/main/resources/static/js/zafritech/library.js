@@ -11,6 +11,7 @@ var zTreeObj = null;
 $(document).ready(function () {
     
     zTreeLibraryLoad();
+    loadLibraryItems(0);
 });
 
 function zTreeLibraryLoad() {
@@ -47,10 +48,12 @@ function zTreeLibraryLoad() {
         dataType: "json",
         success: function (data) {
 
-            console.log(data);
+//            console.log(data);
             
-            zTreeObj = $.fn.zTree.init($("#libraryTree"), setting, data);
-
+            zTreeObj = $.fn.zTree.init($("#folder-tree"), setting, data);
+            $('#folderTreeTitle').text("Reference Library");
+            $('#documentTOC').hide();
+            
             // Expand current zTree node
             if ($('#nodeId').length > 0 && $('#nodeId').val().length !== 0) {
 
@@ -72,7 +75,7 @@ function zTreeLibraryLoad() {
 // Toggle open/close on clicking a parent node
 function zTreeLibraryBeforeClick(treeId, treeNode) {
     
-    var treeObj = $.fn.zTree.getZTreeObj("libraryTree");
+    var treeObj = $.fn.zTree.getZTreeObj("folder-tree");
     
     if (treeNode.isParent) {
         
@@ -83,33 +86,23 @@ function zTreeLibraryBeforeClick(treeId, treeNode) {
 
 function zTreeLibraryOnClick(event, treeId, treeNode, clickFlag) {
     
-    $('#folderId').prop('value', treeNode.id);
+    var folderId = treeNode.id;
     
-    $.ajax({
+    $('#folderId').prop('value', folderId);
+    
+    loadLibraryItems(folderId);
+}
 
-        global: false,
-        type: "GET",
-        contentType: "application/json",
-        url: "/api/library/folder/items/" + treeNode.id,
-        dataType: "json",
-        cache: false
-    })
-    .success(function (data) {
-
-        if (data.length > 0) {
-            
-            $('#libraryItemsList').text("");
-            
-        } else {
-            
-            $('#libraryItemsList').text("No items found.");
-        }
-    });
+function loadLibraryItems(folderId) {
+    
+    var url = "/api/library/folder/items/list/" + folderId;
+    
+    $('#libraryItemsList').load(url);
 }
 
 function buildBreadCrumbsString(treeNode) {
     
-    var zTreeObj = $.fn.zTree.getZTreeObj("libraryTree");
+    var zTreeObj = $.fn.zTree.getZTreeObj("folder-tree");
     var breadCrumbs = treeNode.name;
     var nodeId = treeNode.pId;
     

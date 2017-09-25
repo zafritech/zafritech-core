@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+
+    <head>
+        <title>Zidingo PMS - Document</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="UTF-8" />
+    </head>
+
+    <body>
+
+        <div th:fragment="content-details">
+          
+            <!-- START Folder list data-->
+            <div th:if="${items.isEmpty()}">
+                <div class="card-title">No library items found in slected folder.</div>
+            </div>
+            
+            <div th:if="${!items.isEmpty()}">
+                <div th:each="item : ${items}" class="row" style="border-top: 1px solid #cac4c2; margin-top: 10px; padding-top: 10px;">
+                    <div class="col-sm-2">
+                        <a th:href="@{'/library/items/open/' + ${item.uuId}}">
+                            <img th:attr="src=${'/images/' + item.imagePath}" class="img-responsive" />
+                        </a>
+                    </div>
+                    <div class="col-sm-10" style="padding-top: 0px;">
+                        <div style="font-size: 18px;">
+                            <a th:href="@{'/library/items/open/' + ${item.uuId}}">
+                                <span th:text="${item.itemTitle} + ' ' + ${item.version}"></span>
+                            </a>
+                        </div>
+                        <div th:text="${item.identifier} + ', ' + ${item.publishers}" style="margin-top: 8px;"></div>
+                        <div th:text="${item.authors}" style="margin-top: 8px;"></div>
+                        <div th:text="${item.description}" style="margin-top: 8px;"></div>
+                    </div>
+                </div>
+            </div>
+            <!-- END Folder list data-->
+
+        </div>
+        
+        <th:block layout:fragment="scripts"></th:block>
+
+    </body>
+
+</html>

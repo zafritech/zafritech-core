@@ -41,6 +41,10 @@ function zDocTreeLoad() {
             }
         };
         
+        // Reset project folder node
+        // Not needed since a document has been selected
+        $('nodeId').prop('value', "");
+        
         $.ajax({
 
             global: false,
@@ -49,7 +53,7 @@ function zDocTreeLoad() {
             dataType: "json",
             cache: true,
             success: function (data) {
-
+                
                 zDocTreeObj = $.fn.zTree.init($("#document-tree"), setting, data);
                 zDocTreeObj.expandAll(false);   // Collapse all nodes
                 
