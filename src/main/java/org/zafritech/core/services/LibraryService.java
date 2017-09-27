@@ -5,10 +5,16 @@
  */
 package org.zafritech.core.services;
 
+import java.io.IOException;
+import java.text.ParseException;
+import org.zafritech.core.data.dao.LibraryItemDao;
+import org.zafritech.core.data.domain.LibraryItem;
+
 /**
  *
  * @author LukeS
  */
 public interface LibraryService {
     
+    LibraryItem createLibraryItem(LibraryItemDao dao) throws IOException, ParseException;
 }

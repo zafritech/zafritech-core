@@ -16,5 +16,9 @@ import org.zafritech.core.data.domain.LibraryItem;
  */
 public interface LibraryItemRepository extends CrudRepository<LibraryItem, Long> {
     
+    LibraryItem findByUuId(String uuid);
+    
     List<LibraryItem> findByFolder(Folder folder);
+    
+    List<LibraryItem> findByFolderOrderByItemTitleAsc(Folder folder);
 }

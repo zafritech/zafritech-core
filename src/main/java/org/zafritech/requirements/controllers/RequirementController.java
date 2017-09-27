@@ -12,9 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.zafritech.core.data.domain.Document;
-import org.zafritech.core.data.repositories.DocumentReferenceRepository;
 import org.zafritech.core.data.repositories.DocumentRepository;
-import org.zafritech.requirements.services.ItemService;
 
 /**
  *
@@ -26,12 +24,6 @@ public class RequirementController {
     @Autowired
     private DocumentRepository documentRepository;
       
-    @Autowired
-    private DocumentReferenceRepository docReferenceRepository;
-            
-    @Autowired
-    private ItemService itemService;
-    
     @RequestMapping("/requirements")
     public String page(Model model) {
         

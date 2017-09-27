@@ -69,7 +69,7 @@
                                                         </a>
                                                     </li>
                                                     <li><a href="javascript:void(0);" th:onclick="'javascript:EditDocumentProperties(\'' + ${document.id} + '\');'"><em class="ion-edit icon-fw"></em> Edit Properties</a></li>
-                                                    <li><a href="javascript:void(0);" th:onclick="'javascript:UserDocumentItemsFixSortIndices(\'' + ${document.id} + '\');'"><em class="ion-ios-skipforward icon-fw"></em> Release a Baseline</a></li>
+                                                    <li><a href="javascript:void(0);" th:onclick="'javascript:UserDocumentItemsFixSortIndices(\'' + ${document.id} + '\');'"><em class="fa fa-tags fa-fw"></em> Release a Baseline</a></li>
                                                     <li><a th:href="'/requirements/document/pdf/' + ${document.uuId}"><em class="fa fa-file-pdf-o fa-fw"></em> Download PDF</a></li>
                                                     <li role="presentation" class="divider"></li>
                                                     <li><a th:href="'/admin/projects/' + ${document.project.uuId}"><em class="ion-close icon-fw"></em> Close</a></li>
@@ -85,7 +85,7 @@
                                                     <li><a href="javascript:void(0);" th:onclick="'javascript:UserAddDocumentEditors(\'' + ${document.project.uuId} + '\', \'' + ${document.uuId} + '\');'"><em class="ion-edit icon-fw"></em> Add Editors</a></li>
                                                     <li><a href="javascript:void(0);" th:onclick="'javascript:UserAddDocumentReviewers(\'' + ${document.project.uuId} + '\', \'' + ${document.uuId} + '\');'"><em class="ion-chatbox icon-fw"></em> Add Reviers</a></li>
                                                     <li><a href="javascript:void(0);" th:onclick="'javascript:UserAddDocumentApprover(\'' + ${document.project.uuId} + '\', \'' + ${document.uuId} + '\');'"><em class="ion-checkmark icon-fw"></em> Add Approver</a></li>
-                                                    <li><a href="javascript:void(0);" th:onclick="'javascript:UserCreateDistributionList(\'' + ${document.project.uuId} + '\', \'' + ${document.uuId} + '\');'"><em class="ion-android-contacts icon-fw"></em> Distribution List</a></li>
+                                                    <li><a href="javascript:void(0);" th:onclick="'javascript:UserCreateDistributionList(\'' + ${document.project.uuId} + '\', \'' + ${document.uuId} + '\');'"><em class="fa fa-users fa-fw"></em> Distribution List</a></li>
                                                   </ul>
                                                 </li>
                                                 

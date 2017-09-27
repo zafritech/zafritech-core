@@ -27,6 +27,8 @@ public interface FolderRepository extends CrudRepository<Folder, Long> {
     
     List<Folder> findByParent(Folder parent);
     
+    List<Folder> findByParentOrderByFolderNameAsc(Folder parent);
+    
     List<Folder> findByParentOrderBySortIndexAsc(Folder parent);
     
     List<Folder> findByFolderType(FolderType folderType);

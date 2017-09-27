@@ -252,10 +252,6 @@ function RequirementItemImageInsert(documentId, parentId, itemLevel) {
                                     text: e.responseText,
                                     type: "error"
                                 });
-                                
-                                $("#result").text(e.responseText);
-                                console.log("ERROR : ", e);
-                                $("#btnSubmit").prop("disabled", false);
                             }
                         });
                     }

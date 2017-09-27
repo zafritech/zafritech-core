@@ -1,0 +1,77 @@
+<form id="referenceUploadForm" enctype="multipart/form-data" method="POST">
+
+    <input type="hidden" name="folderId" id="folderId" value="" />
+
+    <div class="row">
+        <div class="col-sm-3">
+            <div class="form-group">
+                <label for="referenceType">Reference type:</label>
+                <select class="form-control" id="referenceType" name="referenceType" onchange="onLibraryReferenceTypeChange();"></select>
+            </div>
+        </div>
+        <div class="col-sm-3">
+            <div class="form-group">
+                <label for="uniqueID">Unique ID:</label>
+                <input type="text" class="form-control" id="uniqueID" name="uniqueID" />
+            </div>
+        </div>
+        <div class="col-sm-2">
+            <div class="form-group">
+                <label for="revision">Edition/Issue:</label>
+                <input type="text" class="form-control" id="revision" name="revision" />
+            </div>
+        </div>
+        <div class="col-sm-2">
+            <div class="form-group">
+                <label for="pubDate">Publication date:</label>
+                <input type="text" class="form-control" id="pubDate" name="pubDate" />
+            </div>
+        </div>
+        <div class="col-sm-2">
+            <div class="form-group">
+                <label for="publisher">Publisher:</label>
+                <input type="text" class="form-control" id="publisher" name="publisher" />
+            </div>
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-sm-3" id="referenceTypeInput">
+            <div class="form-group">
+                <label for="authors">Authors:</label>
+                <input type="text" class="form-control" id="authors" name="authors" />
+            </div>
+        </div>
+        <div class="col-sm-9">
+            <div class="form-group">
+                <label for="itemTitle">Reference Title:</label>
+                <input type="text" class="form-control" id="itemTitle" name="itemTitle" />
+            </div>
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="form-group">
+                <label for="itemFile">Reference file:</label>
+                <input type="file" class="form-control" id="itemFile" name="itemFile" />
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="form-group">
+                <label for="imageFile">Cover image:</label>
+                <input type="file" class="form-control" id="imageFile" name="imageFile" />
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="form-group">
+                <label for="itemSummary">Reference Summary:</label>
+                <textarea class="form-control" id="itemSummary" name="itemSummary" rows="3"></textarea>
+            </div>
+        </div>
+    </div>
+    
+</form>

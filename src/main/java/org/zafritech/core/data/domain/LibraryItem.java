@@ -71,6 +71,7 @@ public class LibraryItem implements Serializable {
                        String itemTitle, 
                        String description, 
                        String itemPath, 
+                       String imagePath, 
                        String format, 
                        Date publicationDate, 
                        String version, 
@@ -85,6 +86,7 @@ public class LibraryItem implements Serializable {
         this.itemTitle = itemTitle;
         this.description = description;
         this.itemPath = itemPath;
+        this.imagePath = imagePath;
         this.format = format;
         this.publicationDate = publicationDate;
         this.version = version;

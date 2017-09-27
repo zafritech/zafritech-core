@@ -61,7 +61,7 @@ public class FolderServiceImpl implements FolderService {
                         (folder.getParent() == null),
                         true,
                         true,
-                        "/images/icons/db2-icon.png",
+                        "/images/icons/db-icon.png",
                         project.getId()
                 ));
                 
@@ -181,7 +181,7 @@ public class FolderServiceImpl implements FolderService {
                         (folder.getParent() == null),
                         true,
                         true,
-                        "/images/icons/book-icon.png",
+                        "/images/icons/books-icon.png",
                         null
                 ));
                 

@@ -62,8 +62,6 @@ public class DocumentController {
         
         String fileName = document.getIdentifier() + "-" +  document.getDocumentIssue() + "_" + document.getDocumentType().getTypeCode() + ".pdf";
     
-//        byte[] baos = printService.getItemsPDFDocument(document);
-    
         byte[] baos = itextService.getItemsPDFDocument(document);
         
         response.setHeader("Content-Disposition", "attachment; filename=\"" + fileName + "\"");

@@ -21,7 +21,7 @@
                     <!-- Modal Boxes Control -->
                     <input type="hidden" id="modalBusyControl" th:value="OFF" />
 
-                    <input type="hidden" id="folderId" value="" />
+                    <input type="hidden" id="folderId" value="0" />
                     
                     <div class="row">
                         
@@ -33,10 +33,9 @@
                                     <div class="pull-right dropdown">
                                       <button type="button" data-toggle="dropdown" class="btn btn-default btn-flat btn-flat-icon"><em class="ion-android-more-vertical"></em></button>
                                       <ul role="menu" class="dropdown-menu md-dropdown-menu dropdown-menu-right">
-                                        <li><a href="javascript:void(0);"><em class="ion-plus icon-fw"></em>Add New Item</a></li>
-                                        <li><a href="javascript:void(0);"><em class="ion-folder icon-fw"></em>Add New Folder</a></li>
-                                        <li><a href="/documents"><em class="ion-edit icon-fw"></em>Edit Folder</a></li>
-                                        <li><a href="javascript:void(0);"><em class="ion-wrench icon-fw"></em>Tasks</a></li>
+                                        <li><a href="javascript:void(0);" th:onclick="'javascript:LibraryAddReference();'"><em class="ion-plus icon-fw"></em>Add Reference</a></li>
+                                        <li><a href="javascript:void(0);" th:onclick="'javascript:LibraryAddFolder();'"><em class="fa fa-folder-open fa-fw"></em>Add New Folder</a></li>
+                                        <li><a href="javascript:void(0);" th:onclick="'javascript:LibraryEditFolder();'"><em class="ion-edit icon-fw"></em>Edit Folder</a></li>
                                       </ul>
                                     </div>
                                     <!-- END dropdown-->
