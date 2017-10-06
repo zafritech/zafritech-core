@@ -40,4 +40,14 @@ function timeSince(date) {
     return Math.floor(seconds) + " secs ago";
 }
 
+function notYetImplemented() {
+    
+    swal(
+            
+        'Not Yet Implemented!',
+        'This application function has not been implements yet.',
+        'warning'
+    );
+}
+
 

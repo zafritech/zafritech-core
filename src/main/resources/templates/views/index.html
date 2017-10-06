@@ -2,7 +2,7 @@
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
-      layout:decorator="layouts/zid-menu-detail">
+      layout:decorator="layouts/zid-master-detail">
 
     <head>
         <title>Zidingo RMS Home</title>
@@ -13,18 +13,6 @@
     <body>
 
         <div layout:fragment="content">
-
-            <div class="content-heading bg-white">
-                <div class="row">
-                    <div class="col-sm-9">
-                        <h4 class="m0">My Zidingo Home Page</h4>
-                        <small>Configure this view and build your own Zidingo dashboard</small>
-                    </div>
-                    <div class="col-sm-3 text-right hidden-xs">
-                        <button type="button" class="mt-sm btn btn-labeled btn-default ripple">Configure<span class="btn-label btn-label-right"><i class="ion-settings"></i></span></button>
-                    </div>
-                </div>
-            </div>
 
             <div class="container container-lg">
                 <div class="card">

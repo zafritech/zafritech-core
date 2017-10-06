@@ -54,6 +54,7 @@ function zDocTreeLoad() {
             cache: true,
             success: function (data) {
                 
+                $('#noOpenDocuments').hide();
                 $('#subTreeHeaderElement').show();
                 $('#subTreeHeaderElement').addClass('zid-master-detail-nav-title');
                 $('#subTreeHeaderLabel').text("Table of Contents");
@@ -78,9 +79,6 @@ function zTreeDocBeforeClick(treeId, treeNode) {
     
     var zDocTreeObj = $.fn.zTree.getZTreeObj("secondaryFolderTree");
     var documentId = document.getElementById('documentId').value;
-     
-    // Collapse all open nodes first
-    zDocTreeObj.expandAll(false);
 
     // Expand Table of Contents node (Node ID: 0)
     var toc = zDocTreeObj.getNodeByParam("id", 0, null);

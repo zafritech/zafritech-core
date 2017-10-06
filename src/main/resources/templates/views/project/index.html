@@ -2,7 +2,7 @@
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
-      layout:decorator="layouts/zid-menu-detail">
+      layout:decorator="layouts/zid-master-detail">
 
     <head>
         <title>Zidingo PMS - Projects</title>
@@ -13,62 +13,32 @@
     <body>
 
         <div layout:fragment="content">
-            
-            <div class="content-heading bg-white">
-                <div class="row">
-                    <div class="col-sm-9">
-                        <h4 class="m0">Projects</h4>
-                        <small>Configure this view and build your own Zidingo dashboard</small>
-                    </div>
-                </div>
-            </div>
 
             <div class="row content">
                 
-                <div class="container container-lg">
+                <div class="container container-md">
                    
-                    
-
                     <div class="col-md-12">
 
                         <div class="card">
 
-                            <div class="card-heading">
-
-                                <div class="row mv">
-                                    <div class="col-sm-4"></div>
-                                    <div class="col-sm-8 text-right hidden-xs">
-                                        <form class="form-inline">
-                                            <div class="form-group mr">
-                                                <label class="mr"><small>Status</small></label>
-                                                <select class="form-control input-sm">
-                                                    <option>All Projects</option>
-                                                    <option>Active</option>
-                                                    <option>Completed</option>
-                                                    <option>Paused</option>
-                                                    <option>Canceled</option>
-                                                </select>
-                                            </div>
-                                            <div class="form-group">
-                                                <label class="mr"><small>Sort by</small></label>
-                                                <select class="form-control input-sm">
-                                                    <option>Name</option>
-                                                    <option>Status</option>
-                                                    <option>Start Date</option>
-                                                    <option>Finish Date</option>
-                                                </select>
-                                            </div>
-                                        </form>
-                                    </div>
+                            <div class="card-heading bg-white">
+                                <!-- START dropdown-->
+                                <div class="pull-right dropdown">
+                                    <button type="button" data-toggle="dropdown" class="btn btn-default btn-flat btn-flat-icon"><em class="ion-android-more-vertical"></em></button>
+                                    <ul role="menu" class="dropdown-menu md-dropdown-menu dropdown-menu-right">
+                                        <li><a href="javascript:void(0);" th:onclick="'javascript:ProjectCreateNew();'"><em class="ion-plus icon-fw"></em>Create Project</a></li>
+                                    </ul>
                                 </div>
-
+                                <!-- END dropdown-->
+                                <div class="card-title">Projects</div>
                             </div>
 
                             <div class="card-body">
                                 
                                 <div class="row" th:if="${!projects.isEmpty()}">
                                     
-                                    <div th:each="project : ${projects}" class="col-md-4">
+                                    <div th:each="project : ${projects}" class="col-md-6">
                                         
                                         <div class="card">
                                             <div class="card-heading" 
@@ -81,12 +51,12 @@
                                                 <div class="pull-right dropdown">
                                                     <button type="button" data-toggle="dropdown" class="btn btn-default btn-flat btn-flat-icon"><em class="ion-android-more-vertical"></em></button>
                                                     <ul role="menu" class="dropdown-menu md-dropdown-menu dropdown-menu-right">
-                                                        <li><a th:href="@{/projects/} + ${project.uuId}"><em class="ion-document-text icon-fw"></em>Project Page</a></li>
-                                                        <li><a href="javascript:void(0);"><em class="ion-edit icon-fw"></em>Edit Properties</a></li>
+                                                        <li><a th:href="@{/projects/} + ${project.uuId}"><em class="ion-document-text icon-fw"></em>Open Project</a></li>
+                                                        <li><a href="javascript:void(0);" th:onclick="'javascript:ProjectEditProperties(\'' + ${project.uuId} + '\')'"><em class="ion-edit icon-fw"></em>Properties</a></li>
                                                     </ul>
                                                 </div>
                                                 <!-- END dropdown-->
-                                                <div class="card-title" th:text="${#strings.abbreviate(project.projectName, 27)}">Zafritech Zidingo RMS</div>
+                                                <div class="card-title" th:text="${#strings.abbreviate(project.projectName, 42)}">Zafritech Zidingo RMS</div>
                                             </div>
                                             
                                             <div class="card-body">

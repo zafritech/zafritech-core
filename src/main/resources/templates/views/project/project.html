@@ -21,8 +21,12 @@
                     <div class="col-md-12">
 
                         <div class="card" th:if="${project != null}">
-                
+                            
+                            <!-- zTree navigation tags START-->
+                            <input type="hidden" id="treeValid" th:value="${project.Id}" />
                             <input type="hidden" id="projectId" th:value="${project.Id}" />
+                            <input type="hidden" id="nodeId" th:value="${folder.Id}" />
+                            <!-- zTree navigation tags END-->
                             
                             <div class="card-heading" 
                                  th:classappend="${(#strings.equalsIgnoreCase(project.status, 'STATUS_PLANNED') ? ' bg-blue-grey-500' : '') + 
@@ -34,11 +38,10 @@
                                 <div class="pull-right dropdown">
                                   <button type="button" data-toggle="dropdown" class="btn btn-default btn-flat btn-flat-icon"><em class="ion-android-more-vertical"></em></button>
                                   <ul role="menu" class="dropdown-menu md-dropdown-menu dropdown-menu-right">
-                                    <li><a href="javascript:void(0);"><em class="ion-edit icon-fw"></em>Edit Properties</a></li>
-                                    <li><a href="/documents"><em class="ion-folder icon-fw"></em>Documents</a></li>
-                                    <li><a href="javascript:void(0);"><em class="ion-wrench icon-fw"></em>Tasks</a></li>
-                                    <li><a href="javascript:void(0);"><em class="ion-person-add icon-fw"></em>Add Members</a></li>
-                                    <li><a href="/projects"><em class="ion-close icon-fw"></em>Close</a></li>
+                                    <li><a href="javascript:void(0);" th:onclick="'javascript:ProjectEditProperties(\'' + ${project.uuId} + '\')'"><em class="ion-edit icon-fw"></em>Edit Properties</a></li>
+                                    <li><a href="javascript:void(0);" th:onclick="'javascript:ProjectManageMembers(\'' + ${project.uuId} + '\')'"><em class="ion-person-add icon-fw"></em>Add Members</a></li>
+                                    <li><a href="javascript:void(0);" th:onclick="'javascript:notYetImplemented();'"><em class="ion-settings icon-fw"></em>Tasks</a></li>
+                                    <li><a href="/projects"><em class="ion-close icon-fw"></em>Exit</a></li>
                                   </ul>
                                 </div>
                                 <!-- END dropdown-->
@@ -153,8 +156,18 @@
                                                         </div>
                                                     </div>
                                                 </div>
+                                                <div th:if="${!members.isEmpty()}" class="row" style="padding: 3px 0; margin-bottom: 20px;">
+                                                    <div class="col-sm-4"><strong>Members:</strong></div>
+                                                    <div class="col-sm-8">
+                                                        <div th:each="member : ${members}">
+                                                            <a th:href="'/admin/users/' + ${member.uuId}">
+                                                                <span th:text="${member.firstName} + ' ' + ${member.lastName}"></span>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                                 
-                                                <p><strong>Members</strong></p>
+<!--                                                <p><strong>Members</strong></p>
                                                 
                                                 <div class="pl-lg mb-lg">
                                                     <a href="/admin/users/id-TBD" class="inline">
@@ -178,7 +191,8 @@
                                                     <a href="/admin/users/id-TBD" class="inline">
                                                         <img src="/images/user/07.jpg" alt="project member" class="img-circle thumb32" />
                                                     </a>
-                                                </div>
+                                                </div>-->
+                                                
                                             </div>
                                         </div>
                                     </div>
@@ -260,6 +274,8 @@
         
         <th:block layout:fragment="scripts">
             <script src="/js/zafritech/graphs.js"></script>
+            <script src="/js/vendor/ztree/jquery.ztree.core.js"></script>
+            <script src="/js/zafritech/project.js"></script>
         </th:block>
     
     </body>

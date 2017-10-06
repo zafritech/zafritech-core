@@ -51,7 +51,7 @@
                                                 <li><a href="javascript:void(0);" th:onclick="'javascript:UserAddDocumentEditors(\'' + ${document.project.uuId} + '\', \'' + ${document.uuId} + '\');'"><em class="ion-edit icon-fw"></em> Add Editors</a></li>
                                                 <li><a href="javascript:void(0);" th:onclick="'javascript:UserAddDocumentReviewers(\'' + ${document.project.uuId} + '\', \'' + ${document.uuId} + '\');'"><em class="ion-chatbox icon-fw"></em> Add Reviers</a></li>
                                                 <li><a href="javascript:void(0);" th:onclick="'javascript:UserAddDocumentApprover(\'' + ${document.project.uuId} + '\', \'' + ${document.uuId} + '\');'"><em class="ion-checkmark icon-fw"></em> Add Approver</a></li>
-                                                <li><a th:href="'/admin/projects/' + ${document.project.uuId}"><em class="ion-close icon-fw"></em> Close</a></li>
+                                                <li><a th:href="'/projects/' + ${document.project.uuId}"><em class="ion-close icon-fw"></em> Close</a></li>
                                               </ul>
                                             </div>
                                         </div>

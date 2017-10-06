@@ -23,16 +23,6 @@
                     
                     <ul class="pull-right" style="margin-right: 10px;">
                         <li><a id="header-search" href="#" class="ripple"><em class="ion-ios-search-strong"></em></a></li>
-                        <li sec:authorize="hasRole('ROLE_ADMIN')" class="dropdown"><a href="#" data-toggle="dropdown" class="dropdown-toggle has-badge ripple"><em class="ion-settings"></em></a>
-                            <ul class="dropdown-menu dropdown-menu-right md-dropdown-menu">
-                                <li><a href="/admin"><em class="ion-settings icon-fw zid-header-menu"></em>Administration</a></li>
-                                <li><a href="/admin/companies"><em class="ion-ios-briefcase icon-fw zid-header-menu"></em>Organisations</a></li>
-                                <li><a href="/admin/projects"><em class="ion-stats-bars icon-fw zid-header-menu"></em>Projects</a></li>
-                                <li><a href="/admin/users"><em class="ion-person-stalker icon-fw zid-header-menu"></em>Users</a></li>
-                                <li><a href="javascript:void(0);" th:onclick="'javascript:SendMessage();'"><em class="ion-android-mail icon-fw zid-header-menu"></em>Send Message</a></li>
-                                <li><a href="/admin/messages/template/editor"><em class="ion-android-drafts icon-fw zid-header-menu"></em>Message Templates</a></li>
-                            </ul>
-                        </li>
                         <li id="userMessages" class="dropdown"><a href="#" data-toggle="dropdown" class="dropdown-toggle has-badge ripple"><em class="ion-ios-bell"></em><sup class="badge bg-danger">10+</sup></a>
                             <ul class="dropdown-menu dropdown-menu-right md-dropdown-menu">
                                 <li><a href="/messages"><em class="ion-android-mail icon-fw zid-header-menu"></em>Messages</a></li>

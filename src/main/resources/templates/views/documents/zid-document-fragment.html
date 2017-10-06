@@ -69,10 +69,10 @@
                                                         </a>
                                                     </li>
                                                     <li><a href="javascript:void(0);" th:onclick="'javascript:EditDocumentProperties(\'' + ${document.id} + '\');'"><em class="ion-edit icon-fw"></em> Edit Properties</a></li>
-                                                    <li><a href="javascript:void(0);" th:onclick="'javascript:UserDocumentItemsFixSortIndices(\'' + ${document.id} + '\');'"><em class="fa fa-tags fa-fw"></em> Release a Baseline</a></li>
+                                                    <li><a href="javascript:void(0);" th:onclick="'javascript:notYetImplemented();'"><em class="fa fa-tags fa-fw"></em> Release a Baseline</a></li>
                                                     <li><a th:href="'/requirements/document/pdf/' + ${document.uuId}"><em class="fa fa-file-pdf-o fa-fw"></em> Download PDF</a></li>
                                                     <li role="presentation" class="divider"></li>
-                                                    <li><a th:href="'/admin/projects/' + ${document.project.uuId}"><em class="ion-close icon-fw"></em> Close</a></li>
+                                                    <li><a th:href="'/projects/' + ${document.project.uuId}"><em class="ion-close icon-fw"></em> Close</a></li>
                                                   </ul>
                                                 </li>
                                                 

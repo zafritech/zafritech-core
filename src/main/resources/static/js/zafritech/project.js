@@ -50,8 +50,8 @@ function zTreeProjectLoad() {
 
                 zTreeObj = $.fn.zTree.init($("#mainFolderTree"), setting, data);
                 
-                var projectFolderNode = zTreeObj.getNodeByParam("pId", 0, null);
-                $('#mainTreeHeaderLabel').text(projectFolderNode.name + " Documents");
+                $('#noOpenProjects').hide();
+                $('#mainTreeHeaderLabel').text("Projects");
                 
                 // Expand current zTree node
                 if (($('#nodeId').length > 0 && $('#nodeId').val().length !== 0) &&

@@ -11,8 +11,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.zafritech.core.data.domain.Folder;
 import org.zafritech.core.data.domain.Project;
+import org.zafritech.core.data.domain.User;
+import org.zafritech.core.data.repositories.FolderRepository;
+import org.zafritech.core.data.repositories.FolderTypeRepository;
 import org.zafritech.core.data.repositories.ProjectRepository;
+import org.zafritech.core.services.ClaimService;
 
 /**
  *
@@ -22,7 +27,16 @@ import org.zafritech.core.data.repositories.ProjectRepository;
 public class ProjectController {
     
     @Autowired
+    private FolderRepository folderRepository;
+    
+    @Autowired
+    private FolderTypeRepository folderTypeRepository;
+    
+    @Autowired
     private ProjectRepository projectRepository;
+    
+    @Autowired
+    private ClaimService claimService;
     
     @RequestMapping(value = {"/projects", "/projects/list"})
     public String getProjectsList(Model model) {
@@ -38,8 +52,12 @@ public class ProjectController {
     public String getProject(@PathVariable String uuid, Model model) {
         
         Project project = projectRepository.getByUuId(uuid);
+        Folder folder = folderRepository.findFirstByProjectAndFolderType(project, folderTypeRepository.findByTypeKey("FOLDER_PROJECT"));
+        List<User> members = claimService.findProjectMemberClaims(project);
         
         model.addAttribute("project", project);
+        model.addAttribute("folder", folder);   
+        model.addAttribute("members", members);
         
         return "views/project/project";
     }

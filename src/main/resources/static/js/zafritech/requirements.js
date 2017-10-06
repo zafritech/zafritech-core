@@ -10,6 +10,7 @@ $(document).ready(function () {
     
     var documentId = document.getElementById('documentId').value;
     
+    $('#collapseDocument').collapse('show');
     loadRequirementsItems(documentId, 0);
 });
 
