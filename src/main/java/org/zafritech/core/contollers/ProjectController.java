@@ -18,6 +18,7 @@ import org.zafritech.core.data.repositories.FolderRepository;
 import org.zafritech.core.data.repositories.FolderTypeRepository;
 import org.zafritech.core.data.repositories.ProjectRepository;
 import org.zafritech.core.services.ClaimService;
+import org.zafritech.core.services.UserStateService;
 
 /**
  *
@@ -37,6 +38,9 @@ public class ProjectController {
     
     @Autowired
     private ClaimService claimService;
+    
+    @Autowired
+    private UserStateService stateService;
     
     @RequestMapping(value = {"/projects", "/projects/list"})
     public String getProjectsList(Model model) {
@@ -59,6 +63,17 @@ public class ProjectController {
         model.addAttribute("folder", folder);   
         model.addAttribute("members", members);
         
+        stateService.updateOpenProject(project); 
+        
         return "views/project/project";
+    }
+    
+    @RequestMapping("/projects/close/{uuid}")
+    public String closeProject(@PathVariable String uuid, Model model) {
+        
+        Project project = projectRepository.getByUuId(uuid);
+        stateService.updateCloseProject(project);
+        
+        return "redirect:/projects";
     }
 }

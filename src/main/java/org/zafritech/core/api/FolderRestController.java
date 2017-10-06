@@ -24,11 +24,13 @@ import org.zafritech.core.data.domain.Document;
 import org.zafritech.core.data.domain.Folder;
 import org.zafritech.core.data.domain.FolderType;
 import org.zafritech.core.data.domain.Project;
+import org.zafritech.core.data.domain.UserEntityState;
 import org.zafritech.core.data.repositories.DocumentRepository;
 import org.zafritech.core.data.repositories.FolderRepository;
 import org.zafritech.core.data.repositories.FolderTypeRepository;
 import org.zafritech.core.data.repositories.ProjectRepository;
 import org.zafritech.core.services.FolderService;
+import org.zafritech.core.services.UserStateService;
 
 /**
  *
@@ -51,6 +53,9 @@ public class FolderRestController {
     
     @Autowired
     private FolderService folderService;
+     
+    @Autowired
+    private UserStateService stateService;
     
     @RequestMapping(value = "/api/admin/folders/create/new", method = POST)
     public ResponseEntity<Folder> folderCreateNew(@RequestBody FolderDao folderDao) {
@@ -95,6 +100,27 @@ public class FolderRestController {
         
         foldersTree.addAll(folders);
         foldersTree.addAll(docs);
+        
+        return foldersTree;
+    }
+    
+    @RequestMapping(value = "/api/folders/projects/tree", method = GET)
+    public List<FolderTreeDao> getOpenProjectsFolderTree() {
+        
+        List<FolderTreeDao> foldersTree = new ArrayList<>();
+        
+        List<UserEntityState> openProjects = stateService.getOpenProjects();
+        
+        for (UserEntityState state : openProjects) {
+            
+            Project project = projectRepository.findOne(state.getStateKey().getEntityId());
+
+            List<FolderTreeDao> folders = folderService.getProjectFolders(project);
+            List<FolderTreeDao> docs = folderService.getProjectDocuments(project);
+
+            foldersTree.addAll(folders);
+            foldersTree.addAll(docs);
+        }
         
         return foldersTree;
     }

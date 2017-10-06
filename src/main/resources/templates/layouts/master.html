@@ -52,6 +52,8 @@
         <link rel="stylesheet" href="/css/vendor/ng-material-floating-button/mfb/dist/mfb.css" />
         <!-- Material Colors-->
         <link rel="stylesheet" href="/css/vendor/material-colors/dist/colors.css" />
+        <!-- Fontawesome 4.7.0 -->
+        <link rel="stylesheet" href="/css/vendor/font-awesome/css/font-awesome.css" />
         <!-- Toastr -->
         <link rel="stylesheet" href="/js/toastr/build/toastr.min.css" />
         <!-- endbuild-->
@@ -64,15 +66,18 @@
         
         <!-- Application styles-->
         <link rel="stylesheet" href="/css/zafritech/zidingo.css" />
+        <link rel="stylesheet" href="/css/zafritech/requirements.css" />
     </head>
+    
     <body class="theme-1">
+
         <div class="layout-container">
-            
+
             <!-- top navbar-->
-            <div th:replace="layouts/zid-nav-header :: header-nav"></div>
+            <div th:replace="layouts/nav-header :: header-nav"></div>
 
             <!-- sidebar-->
-            <div th:replace="layouts/zid-nav-side-menu-detail :: menu-side-nav"></div>
+            <div th:replace="layouts/nav-side :: side-nav"></div>
 
             <!-- Main section-->
             <main class="main-container-detail">
@@ -85,8 +90,9 @@
                     </div>
                 </section>
                 <!-- Page footer-->
-                <footer><span>2017 - ZAFRITECH.ORG.</span></footer>
+                <footer><span>2017 - Centric app.</span></footer>
             </main>
+
         </div>
         <!-- Search template-->
         <div tabindex="-1" role="dialog" class="modal modal-top fade modal-search">
@@ -313,6 +319,7 @@
         </div>
         
         <!-- End Settings template-->
+        <!-- build:js(../app) js/vendor.js-->
         <!-- Modernizr-->
         <script src="/js/vendor/modernizr/modernizr.custom.js"></script>
         <!-- jQuery-->
@@ -325,10 +332,23 @@
         <script src="/js/vendor/material-colors/dist/colors.js"></script>
         <!-- Bootstrap Filestyle-->
         <script src="/js/vendor/bootstrap-filestyle/src/bootstrap-filestyle.js"></script>
+        <!-- jVector Maps-->
+        <script src="/js/vendor/ika.jvectormap/jquery-jvectormap-1.2.2.min.js"></script>
+        <script src="/js/vendor/ika.jvectormap/jquery-jvectormap-us-mill-en.js"></script>
+        <script src="/js/vendor/ika.jvectormap/jquery-jvectormap-world-mill-en.js"></script>
+        <!-- Easypie Charts-->
+        <script src="/js/vendor/jquery.easy-pie-chart/dist/jquery.easypiechart.js"></script>
         <!-- Screenfull-->
         <script src="/js/vendor/screenfull/dist/screenfull.js"></script>
+        <!-- Sparkline-->
+        <script src="/js/vendor/sparkline/index.js"></script>
         <!-- Datepicker-->
         <script src="/js/vendor/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+        <!-- jQuery Knob charts-->
+        <script src="/js/vendor/jquery-knob/js/jquery.knob.js"></script>
+        <!-- Rickshaw-->
+        <script src="/js/vendor/d3/d3.js"></script>
+        <script src="/js/vendor/rickshaw/rickshaw.js"></script>
         <!-- jQuery Form Validation-->
         <script src="/js/vendor/jquery-validation/dist/jquery.validate.js"></script>
         <script src="/js/vendor/jquery-validation/dist/additional-methods.js"></script>
@@ -392,7 +412,7 @@
         <script src="/js/bootbox/bootbox.min.js"></script>
         <script src="/js/toastr/build/toastr.min.js"></script>
         <!-- App script-->
-        
+
         <!-- Zafritech scripts -->
         <script src="/js/zafritech/main.js"></script>
         <script src="/js/zafritech/utils.js"></script>
@@ -402,7 +422,9 @@
         <script src="/js/zafritech/contacts.js"></script>
         <script src="/js/zafritech/company.js"></script>
         <script src="/js/zafritech/editor-settings.js"></script>
-
+        <script src="/js/vendor/ztree/jquery.ztree.core.js"></script>
+        <script src="/js/zafritech/project.js"></script>
+        
         <th:block layout:fragment="scripts"></th:block>
         
     </body>

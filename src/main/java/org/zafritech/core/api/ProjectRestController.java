@@ -67,6 +67,14 @@ public class ProjectRestController {
         return new ResponseEntity<List<Project>>(projects, HttpStatus.OK);
     }
       
+    @RequestMapping(value = "/api/projects/project/byid/{id}", method = GET)
+    public ResponseEntity<Project> getProjectById(@PathVariable(value = "id") Long id) {
+  
+        Project project = projectRepository.findOne(id);
+ 
+        return new ResponseEntity<Project>(project, HttpStatus.OK);
+    }
+      
     @RequestMapping(value = "/api/admin/projects/project/new", method = POST)
     public ResponseEntity<Project> newProject(@RequestBody ProjectDao projectDao) {
   

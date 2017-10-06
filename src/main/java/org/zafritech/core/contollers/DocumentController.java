@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.zafritech.core.data.domain.Document;
 import org.zafritech.core.data.repositories.DocumentRepository;
+import org.zafritech.core.services.UserStateService;
 import org.zafritech.requirements.services.ItemPDFService;
 
 /**
@@ -30,6 +31,9 @@ public class DocumentController {
       
     @Autowired
     private ItemPDFService itextService;
+    
+    @Autowired
+    private UserStateService stateService;
     
     @RequestMapping(value = {"/documents", "/documents/list"})
     public String documentsList(Model model) {
@@ -48,6 +52,8 @@ public class DocumentController {
         // Update last access
         document.setLastAccessed(new Timestamp(System.currentTimeMillis()));
         documentRepository.save(document);
+        
+        stateService.updateRecentDocument(document); 
                 
         model.addAttribute("document", document);
         model.addAttribute("descriptor", document.getDocumentType().getContentDescriptor().getDescriptorCode());

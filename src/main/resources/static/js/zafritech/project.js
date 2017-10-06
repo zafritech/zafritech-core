@@ -14,59 +14,60 @@ $(document).ready(function () {
 });
 
 function zTreeProjectLoad() {
-    
-    if ($('#treeValid').length > 0 && $('#projectId').length > 0) {
-        
-        var zTreeObj;
-        var setting = {
-            data: {
-                simpleData: {
-                    enable: true,
-                    idKey: "id",
-                    pIdKey: "pId",
-                    rootPId: 0
-                }
-            },
-            view: {
-                dblClickExpand: true
-            },
-            callback: {
 
-                beforeClick: zTreeProjectBeforeClick,
-                onClick: zTreeProjectOnClick,
-                beforeRightClick: zTreeProjectBeforeRightClick,
-                onRightClick: zTreeProjectOnRightClick,
-                onDblClick: zTreeProjectOnDblClick
+    var zTreeObj;
+    var setting = {
+        data: {
+            simpleData: {
+                enable: true,
+                idKey: "id",
+                pIdKey: "pId",
+                rootPId: 0
             }
-        };
+        },
+        view: {
+            dblClickExpand: true
+        },
+        callback: {
 
-        $.ajax({
+            beforeClick: zTreeProjectBeforeClick,
+            onClick: zTreeProjectOnClick,
+            beforeRightClick: zTreeProjectBeforeRightClick,
+            onRightClick: zTreeProjectOnRightClick,
+            onDblClick: zTreeProjectOnDblClick
+        }
+    };
 
-            global: false,
-            url: '/api/folders/tree/' + document.getElementById('projectId').value,
-            type: "GET",
-            dataType: "json",
-            success: function (data) {
+    $.ajax({
 
-                zTreeObj = $.fn.zTree.init($("#mainFolderTree"), setting, data);
+        global: false,
+        url: '/api/folders/projects/tree',
+        type: "GET",
+        dataType: "json",
+        success: function (data) {
+
+            zTreeObj = $.fn.zTree.init($("#mainFolderTree"), setting, data);
+
+            $('#noOpenProjects').hide();
+            $('#mainTreeHeaderLabel').text("Projects");
+            $('#collapseProjects').collapse('show');
+            
+            // Expand current zTree node
+            if (($('#nodeId').length > 0 && $('#nodeId').val().length !== 0) &&
+                (($('#documentNodeId').length === 0) || $('#documentNodeId').val().length === 0)) {
+
+                var nodeId =  document.getElementById('nodeId').value;
+                var currentNode = zTreeObj.getNodeByParam("id", nodeId, null);
+
+                zTreeObj.expandAll(false);
+                zTreeObj.expandNode(currentNode, true, false, true);
                 
-                $('#noOpenProjects').hide();
-                $('#mainTreeHeaderLabel').text("Projects");
+            } else {
                 
-                // Expand current zTree node
-                if (($('#nodeId').length > 0 && $('#nodeId').val().length !== 0) &&
-                    (($('#documentNodeId').length === 0) || $('#documentNodeId').val().length === 0)) {
-                    
-                    var nodeId =  document.getElementById('nodeId').value;
-                    var currentNode = zTreeObj.getNodeByParam("id", nodeId, null);
-                    
-                    zTreeObj.expandNode(currentNode, true, false, true);
-                    
-                    $('#subTreeHeaderElement').hide();
-                }
+               zTreeObj.expandAll(false);
             }
-        });
-    }
+        }
+    });
 }
 
 function zTreeExpandByIdNode(nodeId) {
@@ -163,7 +164,23 @@ function zTreeProjectOnDblClick(event, treeId, treeNode, clickFlag) {
 
 function zTreeProjectOnClick(event, treeId, treeNode, clickFlag) {
     
-     if (!treeNode.isParent) {
+    if (treeNode.pId === 0) {
+        
+        $.ajax({
+
+            global: false,
+            type: "GET",
+            contentType: "application/json",
+            url: "/api/projects/project/byid/" + treeNode.linkId,
+            dataType: "json",
+            cache: false
+        })
+        .success(function (data) {
+            
+            window.location.href = "/projects/" + data.uuId;
+        });
+        
+    } else if (!treeNode.isParent) {
          
         $.ajax({
 

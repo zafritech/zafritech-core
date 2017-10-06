@@ -11,6 +11,6 @@ package org.zafritech.core.enums;
  */
 public enum UserEntityTypes {
     
-    ENTITY_TYPE_PROJECT,
-    ENTITY_TYPE_DOCUMENT
+    ENTITY_PROJECT_OPEN,
+    ENTITY_DOCUMENT_RECENT
 }

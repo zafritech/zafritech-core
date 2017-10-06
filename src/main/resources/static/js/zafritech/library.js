@@ -50,7 +50,7 @@ function zTreeLibraryLoad() {
             var currentNode = '';
             
             zTreeObj = $.fn.zTree.init($("#mainFolderTree"), setting, data);
-            $('#mainTreeHeaderLabel').text("Reference Library");
+            $('#mainTreeHeaderLabel').text("Library");
             $('#subTreeHeaderElement').hide();
             $('#noOpenProjects').hide();
             

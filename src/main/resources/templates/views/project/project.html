@@ -2,7 +2,7 @@
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
-      layout:decorator="layouts/zid-master-detail">
+      layout:decorator="layouts/master">
 
     <head>
         <title>Zidingo PMS - Project</title>
@@ -41,7 +41,8 @@
                                     <li><a href="javascript:void(0);" th:onclick="'javascript:ProjectEditProperties(\'' + ${project.uuId} + '\')'"><em class="ion-edit icon-fw"></em>Edit Properties</a></li>
                                     <li><a href="javascript:void(0);" th:onclick="'javascript:ProjectManageMembers(\'' + ${project.uuId} + '\')'"><em class="ion-person-add icon-fw"></em>Add Members</a></li>
                                     <li><a href="javascript:void(0);" th:onclick="'javascript:notYetImplemented();'"><em class="ion-settings icon-fw"></em>Tasks</a></li>
-                                    <li><a href="/projects"><em class="ion-close icon-fw"></em>Exit</a></li>
+                                    <li><a href="/projects"><em class="ion-navicon-round icon-fw"></em>Projects List</a></li>
+                                    <li><a th:href="'/projects/close/' + ${project.uuId}"><em class="ion-close icon-fw"></em>Close Project</a></li>
                                   </ul>
                                 </div>
                                 <!-- END dropdown-->
@@ -274,8 +275,6 @@
         
         <th:block layout:fragment="scripts">
             <script src="/js/zafritech/graphs.js"></script>
-            <script src="/js/vendor/ztree/jquery.ztree.core.js"></script>
-            <script src="/js/zafritech/project.js"></script>
         </th:block>
     
     </body>

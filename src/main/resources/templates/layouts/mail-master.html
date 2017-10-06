@@ -52,8 +52,6 @@
         <link rel="stylesheet" href="/css/vendor/ng-material-floating-button/mfb/dist/mfb.css" />
         <!-- Material Colors-->
         <link rel="stylesheet" href="/css/vendor/material-colors/dist/colors.css" />
-        <!-- Fontawesome 4.7.0 -->
-        <link rel="stylesheet" href="/css/vendor/font-awesome/css/font-awesome.css" />
         <!-- Toastr -->
         <link rel="stylesheet" href="/js/toastr/build/toastr.min.css" />
         <!-- endbuild-->
@@ -66,7 +64,6 @@
         
         <!-- Application styles-->
         <link rel="stylesheet" href="/css/zafritech/zidingo.css" />
-        <link rel="stylesheet" href="/css/zafritech/requirements.css" />
     </head>
     
     <body class="theme-1">
@@ -74,10 +71,42 @@
         <div class="layout-container">
 
             <!-- top navbar-->
-            <div th:replace="layouts/zid-nav-header :: header-nav"></div>
+            <div th:replace="layouts/nav-header :: header-nav"></div>
 
             <!-- sidebar-->
-            <div th:replace="layouts/zid-nav-side-master-detail :: master-side-nav"></div>
+            <aside class="sidebar-master-container">
+                <div class="sidebar-content">
+                    
+                    <ul class="mailbox-list">
+                        <li th:classappend="${msgbox == 'inbox'} ? 'active' : ''">
+                            <a href="/messages/inbox">
+                                <span class="pull-right" th:text="${msgBoxSize}">0</span>
+                                <em class="ion-archive icon-fw" style="margin-right: 10px;"></em> Inbox
+                            </a>
+                        </li>
+                        <li th:classappend="${msgbox == 'outbox'} ? 'active' : ''">
+                            <a href="/messages/sent">
+                                <span class="pull-right" th:text="${msgBoxSize}">0</span>
+                                <em class="ion-paper-airplane icon-fw" style="margin-right: 10px;"></em> Sent
+                            </a>
+                        </li>
+                        <li th:classappend="${msgbox == 'draftbox'} ? 'active' : ''">
+                            <a href="/messages/draft">
+                                <span class="pull-right" th:text="${msgBoxSize}">0</span>
+                                <em class="ion-edit icon-fw" style="margin-right: 10px;"></em> Draft
+                            </a>
+                        </li>
+                        <li th:classappend="${msgbox == 'trashbox'} ? 'active' : ''">
+                            <a href="/messages/trash">
+                                <span class="pull-right" th:text="${msgBoxSize}">0</span>
+                                <em class="ion-trash-a icon-fw" style="margin-right: 10px;"></em> Trash
+                            </a>
+                        </li>
+                    </ul>
+                    
+                </div>
+            </aside>
+            <div class="sidebar-layout-obfuscator"></div>
 
             <!-- Main section-->
             <main class="main-container-detail">
@@ -416,7 +445,6 @@
         <!-- Zafritech scripts -->
         <script src="/js/zafritech/main.js"></script>
         <script src="/js/zafritech/utils.js"></script>
-        <script src="/js/zafritech/ui-updates.js"></script>
         <script src="/js/zafritech/messages.js"></script>
         <script src="/js/zafritech/user.js"></script>
         <script src="/js/zafritech/contacts.js"></script>

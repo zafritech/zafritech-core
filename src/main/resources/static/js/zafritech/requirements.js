@@ -19,6 +19,7 @@ function loadRequirementsItems(documentId, sectionId) {
     var url = "/api/requirements/document/items/list/view/" + documentId + "/" + sectionId;
     
     $('#documentDetails').load(url);
+    $('#collapseProjects').collapse('hide');
 }
 
 function RequirementItemCreateItem(documentId, parentId, itemLevel) {
