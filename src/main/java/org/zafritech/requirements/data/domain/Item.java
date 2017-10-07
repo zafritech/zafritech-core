@@ -21,14 +21,27 @@ import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
+import org.apache.lucene.analysis.core.LowerCaseFilterFactory;
+import org.apache.lucene.analysis.standard.ClassicTokenizerFactory;
+import org.hibernate.search.annotations.Analyzer;
+import org.hibernate.search.annotations.AnalyzerDef;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Indexed;
 import org.hibernate.search.annotations.Store;
+import org.hibernate.search.annotations.TokenFilterDef;
+import org.hibernate.search.annotations.TokenizerDef;
 import org.zafritech.core.data.domain.Document;
 import org.zafritech.requirements.enums.MediaType;
 
 @Indexed
 @Entity(name = "REQUIREMENTS_ITEMS")
+@AnalyzerDef(
+    name = "hyphenanalyzer",
+    tokenizer = @TokenizerDef(factory = ClassicTokenizerFactory.class),
+    filters = {
+        @TokenFilterDef(factory = LowerCaseFilterFactory.class),
+    }
+)
 public class Item implements Serializable {
     
     @Id
@@ -38,6 +51,7 @@ public class Item implements Serializable {
     private String uuId;
 
     @Field
+    @Analyzer(definition = "hyphenanalyzer")
     @Column(unique = true, nullable = false)
     private String systemId;
 
@@ -45,6 +59,7 @@ public class Item implements Serializable {
     private String itemClass;
 
     @Field
+    @Analyzer(definition = "hyphenanalyzer")
     private String identifier;
 
     private String itemNumber;

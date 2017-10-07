@@ -5,8 +5,6 @@
  */
 package org.zafritech.requirements.search;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -34,7 +32,7 @@ public class ItemSearch {
     @PersistenceContext
     private EntityManager entityManager;
     
-    public SearchDao search(String text, Long pageSize, Long page) {
+    public SearchDao search(String text, Integer pageSize, Integer page) {
         
         // get the full text entity manager
         FullTextEntityManager fullTextEntityManager = org.hibernate.search.jpa.Search.getFullTextEntityManager(entityManager);
@@ -43,7 +41,7 @@ public class ItemSearch {
         QueryBuilder queryBuilder = fullTextEntityManager.getSearchFactory().buildQueryBuilder().forEntity(Item.class).get();
     
         // a very basic query by keywords
-        org.apache.lucene.search.Query query = queryBuilder.keyword().onFields("itemValue", "sysId", "identifier")
+        org.apache.lucene.search.Query query = queryBuilder.keyword().onFields("itemValue", "systemId", "identifier")
                                                                      .matching(text)
                                                                      .createQuery();
         
@@ -54,17 +52,17 @@ public class ItemSearch {
         @SuppressWarnings("unchecked")
                 
         int size = jpaQuery.getResultSize();
-        jpaQuery.setFirstResult((pageSize.intValue() * (page.intValue() - 1))); 
-        jpaQuery.setMaxResults(pageSize.intValue());
+        jpaQuery.setFirstResult((pageSize * (page - 1))); 
+        jpaQuery.setMaxResults(pageSize);
 
         SearchDao searchResults = new SearchDao();
-        PageNavigationDao navigator = commonService.getPageNavigator(size, pageSize.intValue(), page.intValue());
+        PageNavigationDao navigator = commonService.getPageNavigator(size, pageSize, page);
         List<Item> list = jpaQuery.getResultList();
         
         searchResults.setItemsList(list);
         searchResults.setResultsSize(size);
-        searchResults.setPageSize(pageSize.intValue()); 
-        searchResults.setCurrentPage(page.intValue());
+        searchResults.setPageSize(pageSize); 
+        searchResults.setCurrentPage(page);
         searchResults.setLastPage(navigator.getLastPage()); 
         searchResults.setPageList(navigator.getPageList()); 
         searchResults.setLastDisplayed(navigator.getPageCount());

@@ -31,7 +31,7 @@
                                                 <em class="ion-android-more-vertical"></em>
                                             </button>
                                             <ul role="menu" class="dropdown-menu md-dropdown-menu dropdown-menu-right">
-                                                <li style="border-bottom: 1px solid #ddd;"><a href="javascript:void(0);" th:onclick="'javascript:ProjectCreateNew();'"><em class="ion-plus icon-fw"></em>New Project</a></li>
+                                                <li sec:authorize="hasRole('ROLE_ADMIN')" style="border-bottom: 1px solid #ddd;"><a href="javascript:void(0);" th:onclick="'javascript:ProjectCreateNew();'"><em class="ion-plus icon-fw"></em>New Project</a></li>
                                                 <li style="border-bottom: 1px solid #ddd;"><a href="javascript:void(0);" th:onclick="'javascript:OpenProject();'"><em class="fa fa-folder-open fa-fw"></em>Open Project</a></li>
                                                 <li style="border-bottom: 1px solid #ddd;"><a href="/projects"><em class="fa fa-list fa-fw"></em>List Projects</a></li>
                                                 <li><a href="javascript:void(0);" th:onclick="'javascript:CloseAllProject();'"><em class="ion-close-round icon-fw"></em>Close All Projects</a></li>
@@ -73,13 +73,27 @@
                                             </button>
                                             <ul role="menu" class="dropdown-menu md-dropdown-menu dropdown-menu-right">
                                                 <li style="border-bottom: 1px solid #ddd;"><a href="/admin/companies"><em class="fa fa-briefcase fa-fw"></em>Organisation</a></li>
-                                                <li style="border-bottom: 1px solid #ddd;"><a href="/admin/projects"><em class="fa fa-archive fa-fw"></em>Projects</a></li>
+                                                <li style="border-bottom: 1px solid #ddd;"><a href="/admin/projects"><em class="fa fa-folder fa-fw"></em>Projects</a></li>
                                                 <li><a href="/admin/users"><em class="ion-person-stalker icon-fw"></em>Users</a></li>
                                                 <li><a href="javascript:void(0);" th:onclick="'javascript:SendMessage();'"><em class="ion-android-mail icon-fw"></em>Global Message</a></li>
                                                 <li><a href="/admin/messages/template/editor"><em class="ion-android-drafts icon-fw"></em>Message Templates</a></li>
                                             </ul>
                                         </div>
                                         <div style="padding: 8px 0;"><em class="ion-settings icon-fw"></em> Admin</div>
+                                    </div>
+                                    <div sec:authorize="hasRole('ROLE_ADMIN')" class="col-sm-12" style="padding: 0 5px;">
+                                        <div class="pull-right dropdown" style="padding-top: 5px;">
+                                            <button type="button" data-toggle="dropdown" class="btn btn-default btn-flat btn-flat-icon">
+                                                <em class="ion-android-more-vertical"></em>
+                                            </button>
+                                            <ul role="menu" class="dropdown-menu md-dropdown-menu dropdown-menu-right">
+                                                <li style="border-bottom: 1px solid #ddd;"><a href="javascript:void(0);" th:onclick="'javascript:notYetImplemented();'"><em class="ion-earth icon-fw"></em>Global Settings</a></li>
+                                                <li style="border-bottom: 1px solid #ddd;"><a href="javascript:void(0);" th:onclick="'javascript:notYetImplemented();'"><em class="fa fa-folder fa-fw"></em>Projects Settings</a></li>
+                                                <li style="border-bottom: 1px solid #ddd;"><a href="javascript:void(0);" th:onclick="'javascript:notYetImplemented();'"><em class="fa fa-file-text-o fa-fw"></em>Document Dettings</a></li>
+                                                <li><a href="javascript:void(0);" th:onclick="'javascript:notYetImplemented();'"><em class="ion-android-alarm-clock icon-fw"></em>Scheduler</a></li>
+                                            </ul>
+                                        </div>
+                                        <div style="padding: 8px 0;"><em class="ion-android-options icon-fw"></em> Settings</div>
                                     </div>
                                 </div>
                             </div>
@@ -155,17 +169,15 @@
                                             </td>
                                         </tr>
                                         <tr style="border-bottom: 1px solid #ddd;">
-                                            <td style="padding: 8px 0 0 16px;">
-                                                <div class="pull-right dropdown">
-                                                    <button type="button" data-toggle="dropdown" class="btn btn-default btn-flat btn-flat-icon">
-                                                        <em class="ion-android-more-vertical"></em>
-                                                    </button>
-                                                    <ul role="menu" class="dropdown-menu md-dropdown-menu dropdown-menu-right">
-                                                        <li style="border-bottom: 1px solid #ddd;"><a href="/messages"><em class="fa fa-envelope icon-fw"></em>Messages</a></li>
-                                                        <li style="border-bottom: 1px solid #ddd;"><a href="/messages"><em class="fa fa-bell icon-fw"></em>Alerts</a></li>
-                                                    </ul>
-                                                </div>
-                                                <span class="glyphicon glyphicon-info-sign"></span><a href="javascript:void(0);" th:onclick="'javascript:notYetImplemented();'">Notifications</a>
+                                            <td>
+                                                <span class="glyphicon glyphicon-envelope"></span>
+                                                <a href="/messages">Messages</a>
+                                            </td>
+                                        </tr>
+                                        <tr style="border-bottom: 1px solid #ddd;">
+                                            <td>
+                                                <span class="glyphicon glyphicon-bell"></span>
+                                                <a href="/messages">Alerts</a>
                                             </td>
                                         </tr>
                                         <tr style="border-bottom: 1px solid #ddd;">
@@ -179,7 +191,7 @@
                                                         <li style="border-bottom: 1px solid #ddd;"><a href="/docs/references/help"><em class="fa fa-question-circle icon-fw"></em>Online Help</a></li>
                                                     </ul>
                                                 </div>
-                                                <span style="margin-right: 8px;"><em class="ion-help-buoy"></em></span><a href="javascript:void(0);" th:onclick="'javascript:notYetImplemented();'"> Help</a>
+                                                <span style="margin-right: 12px;"><em class="ion-help-buoy"></em></span><a href="javascript:void(0);" th:onclick="'javascript:notYetImplemented();'"> Help</a>
                                             </td>
                                         </tr>
                                     </table>

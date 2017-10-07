@@ -14,15 +14,6 @@
 
         <div layout:fragment="content">
             
-            <div class="content-heading bg-white">
-                <div class="row">
-                    <div class="col-sm-9">
-                        <h4 class="m0">My Profile</h4>
-                        <small>Configure this view and build your own Zidingo dashboard</small>
-                    </div>
-                </div>
-            </div>
-            
             <div class="row content">
                 
                 <div class="container container-lg">
@@ -37,7 +28,7 @@
                                   <button type="button" data-toggle="dropdown" class="btn btn-default btn-flat btn-flat-icon"><em class="ion-android-more-vertical"></em></button>
                                   <ul role="menu" class="dropdown-menu md-dropdown-menu dropdown-menu-right">
                                     <li><a href="javascript:void(0);" th:onclick="'javascript:UserBasicProfileUpdate(\'' + ${user.uuId} + '\');'"><em class="ion-edit icon-fw"></em>Edit Profile</a></li>
-                                    <li><a href="javascript:void(0);"><em class="ion-ios-camera icon-fw"></em>Profile Picture</a></li>
+                                    <li><a href="javascript:void(0);" th:onclick="'javascript:notYetImplemented();'"><em class="ion-ios-camera icon-fw"></em>Profile Picture</a></li>
                                     <li><a href="javascript:void(0);" th:onclick="'javascript:UserPwdChange(\'' + ${user.uuId} + '\');'"><em class="ion-key icon-fw"></em>Change Password</a></li>
                                   </ul>
                                 </div>
@@ -84,15 +75,6 @@
                         <div class="card">
                             
                             <div class="card-heading bg-teal-500">
-                                <!-- START dropdown-->
-                                <div class="pull-right dropdown">
-                                  <button type="button" data-toggle="dropdown" class="btn btn-default btn-flat btn-flat-icon"><em class="ion-android-more-vertical"></em></button>
-                                  <ul role="menu" class="dropdown-menu md-dropdown-menu dropdown-menu-right">
-                                    <li><a href="javascript:void(0);" th:onclick="'javascript:UserAdminManageRoles(\'' + ${user.uuId} + '\');'"><em class="ion-edit icon-fw"></em> Manage Roles</a></li>
-                                    <li><a href="javascript:void(0);" th:onclick="'javascript:UserAdminManageClaims(\'' + ${user.uuId} + '\');'"><em class="ion-key icon-fw"></em>Manage Claims</a></li>
-                                  </ul>
-                                </div>
-                                <!-- END dropdown-->
                                 <div class="card-title">My Roles and Authorizations</div>
                             </div>
 
@@ -120,14 +102,6 @@
                         <div class="card">
                             
                             <div class="card-heading bg-teal-500">
-                                <!-- START dropdown-->
-                                <div class="pull-right dropdown">
-                                  <button type="button" data-toggle="dropdown" class="btn btn-default btn-flat btn-flat-icon"><em class="ion-android-more-vertical"></em></button>
-                                  <ul role="menu" class="dropdown-menu md-dropdown-menu dropdown-menu-right">
-                                    <li><a href="javascript:void(0);" th:onclick="'javascript:UserAdminAssignProjects(\'' + ${user.uuId} + '\');'"><em class="ion-edit icon-fw"></em> Manage Projects</a></li>
-                                  </ul>
-                                </div>
-                                <!-- END dropdown-->
                                 <div class="card-title">My Projects</div>
                             </div>
 

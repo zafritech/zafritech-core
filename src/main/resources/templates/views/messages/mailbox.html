@@ -20,16 +20,18 @@
                     <div class="card">
                         
                         <div class="card-heading bg-blue-grey-500">
-
-                            <div class="card-title">Messages</div>
-                            <div class="pull-right" style="margin-top: -30px;">
-                                <form class="form-inline pull-right">
-                                    <div class="form-group">
-                                        <input type="search" placeholder="Find message in inbox ..." class="form-control btn-sm" style="width: 250px; height: 32px;" />
-                                    </div>
-                                    <button type="button" class="btn btn-labeled btn-inverse ripple"><span class="btn-label"><i class="ion-ios-search"></i></span>Search<span class="md-ripple"></span></button>
-                                </form>
+                            <!-- START dropdown-->
+                            <div class="pull-right dropdown">
+                                <button type="button" data-toggle="dropdown" class="btn btn-default btn-flat btn-flat-icon"><em class="ion-android-more-vertical"></em></button>
+                                <ul role="menu" class="dropdown-menu md-dropdown-menu dropdown-menu-right">
+                                    <li><a href="javascript:void(0);" th:onclick="'javascript:notYetImplemented();'"><em class="ion-plus icon-fw"></em>New Message</a></li>
+                                    <li><a href="javascript:void(0);" th:onclick="'javascript:notYetImplemented();'"><em class="ion-android-mail icon-fw"></em>Mark as Unread</a></li>
+                                    <li><a href="javascript:void(0);" th:onclick="'javascript:notYetImplemented();'"><em class="ion-android-drafts icon-fw"></em>Mark as Read</a></li>
+                                    <li><a href="javascript:void(0);" th:onclick="'javascript:notYetImplemented();'"><em class="ion-trash-a icon-fw"></em>Delete Selected</a></li>
+                                </ul>
                             </div>
+                            <!-- END dropdown-->
+                            <div class="card-title">Messages</div>
                         </div>
                         
                         <div class="card-body">
@@ -44,6 +46,18 @@
                                         <div id="inboxMail" role="tabpanel" aria-labelledby="inbox-tab" class="tab-pane fade in active">
                                             
                                             <div th:if="${inbox != null} and ${!inbox.messages.isEmpty()}" class="row">
+                                                
+                                                <div class="col-md-12 bg-teal-200" style="padding: 12px;">
+                                                    <div>
+                                                        <form class="form-inline pull-right">
+                                                            <div class="form-group">
+                                                                <input type="search" placeholder="Find message in inbox ..." class="form-control btn-sm" style="width: 250px; height: 32px;" />
+                                                            </div>
+                                                            <button type="button" class="btn btn-labeled btn-inverse ripple"><span class="btn-label"><i class="ion-ios-search"></i></span>Search<span class="md-ripple"></span></button>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                                
                                                 <table class="table table-bordered table-hover">
                                                     <thead>
                                                         <tr>
@@ -72,10 +86,10 @@
                                                                 <div class="pull-right dropdown">
                                                                     <button type="button" data-toggle="dropdown" class="btn btn-default btn-flat btn-flat-icon"><em class="ion-android-more-vertical"></em></button>
                                                                     <ul role="menu" class="dropdown-menu md-dropdown-menu dropdown-menu-right">
-                                                                        <li><a href="#"><em class="ion-reply icon-fw"></em>Reply</a></li>
-                                                                        <li><a href="#"><em class="ion-forward icon-fw"></em>Forward</a></li>
-                                                                        <li><a href="#"><em class="ion-android-mail icon-fw"></em>Mark as Unread</a></li>
-                                                                        <li><a href="#"><em class="ion-trash-a icon-fw"></em>Delete</a></li>
+                                                                        <li><a href="javascript:void(0);" th:onclick="'javascript:notYetImplemented();'"><em class="ion-reply icon-fw"></em>Reply</a></li>
+                                                                        <li><a href="javascript:void(0);" th:onclick="'javascript:notYetImplemented();'"><em class="ion-forward icon-fw"></em>Forward</a></li>
+                                                                        <li><a href="javascript:void(0);" th:onclick="'javascript:notYetImplemented();'"><em class="ion-android-mail icon-fw"></em>Mark as Unread</a></li>
+                                                                        <li><a href="javascript:void(0);" th:onclick="'javascript:notYetImplemented();'"><em class="ion-trash-a icon-fw"></em>Delete</a></li>
                                                                     </ul>
                                                                 </div>
                                                                 <!-- END dropdown-->
@@ -83,6 +97,8 @@
                                                         </tr>
                                                     </tbody>
                                                 </table>
+                                                
+                                                <hr style="border: none; height: 4px; background-color: #a6b3cd;"/>
                                                 
                                                 <div style="padding-bottom: 26px;">
                                                     <span th:utext="'&lt;strong&gt;' + ${inbox.messageCount} + '&lt;/strong&gt; Messages, Page &lt;strong&gt;' + ${inbox.page} + '&lt;/strong&gt; of &lt;strong&gt;' + ${inbox.pageCount} + '&lt;/strong&gt;'">Page # of ##</span>     
@@ -125,6 +141,18 @@
                                         <div id="sentMail" role="tabpanel" aria-labelledby="sent-tab" class="tab-pane fade">
                                             
                                             <div th:if="${sentbox != null} and ${!sentbox.messages.isEmpty()}" class="row">
+                                                
+                                                <div class="col-md-12 bg-teal-200" style="padding: 12px;">
+                                                    <div>
+                                                        <form class="form-inline pull-right">
+                                                            <div class="form-group">
+                                                                <input type="search" placeholder="Find message in inbox ..." class="form-control btn-sm" style="width: 250px; height: 32px;" />
+                                                            </div>
+                                                            <button type="button" class="btn btn-labeled btn-inverse ripple"><span class="btn-label"><i class="ion-ios-search"></i></span>Search<span class="md-ripple"></span></button>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                                
                                                 <table class="table table-bordered table-hover table-fixed" style="font-size: 14px;">
                                                     <thead>
                                                         <tr>
@@ -153,10 +181,10 @@
                                                                 <div class="pull-right dropdown">
                                                                     <button type="button" data-toggle="dropdown" class="btn btn-default btn-flat btn-flat-icon"><em class="ion-android-more-vertical"></em></button>
                                                                     <ul role="menu" class="dropdown-menu md-dropdown-menu dropdown-menu-right">
-                                                                        <li><a href="#"><em class="ion-reply icon-fw"></em>Reply</a></li>
-                                                                        <li><a href="#"><em class="ion-forward icon-fw"></em>Forward</a></li>
-                                                                        <li><a href="#"><em class="ion-android-mail icon-fw"></em>Mark as Unread</a></li>
-                                                                        <li><a href="#"><em class="ion-trash-a icon-fw"></em>Delete</a></li>
+                                                                        <li><a href="javascript:void(0);" th:onclick="'javascript:notYetImplemented();'"><em class="ion-reply icon-fw"></em>Reply</a></li>
+                                                                        <li><a href="javascript:void(0);" th:onclick="'javascript:notYetImplemented();'"><em class="ion-forward icon-fw"></em>Forward</a></li>
+                                                                        <li><a href="javascript:void(0);" th:onclick="'javascript:notYetImplemented();'"><em class="ion-android-mail icon-fw"></em>Mark as Unread</a></li>
+                                                                        <li><a href="javascript:void(0);" th:onclick="'javascript:notYetImplemented();'"><em class="ion-trash-a icon-fw"></em>Delete</a></li>
                                                                     </ul>
                                                                 </div>
                                                                 <!-- END dropdown-->
@@ -164,6 +192,8 @@
                                                         </tr>
                                                     </tbody>
                                                 </table>
+                                                
+                                                <hr style="border: none; height: 4px; background-color: #a6b3cd;"/>
                                                 
                                                 <div style="padding-bottom: 26px;">
                                                     <span th:utext="'&lt;strong&gt;' + ${sentbox.messageCount} + '&lt;/strong&gt; Messages, Page &lt;strong&gt;' + ${sentbox.page} + '&lt;/strong&gt; of &lt;strong&gt;' + ${sentbox.pageCount} + '&lt;/strong&gt;'">Page # of ##</span>     
@@ -207,6 +237,17 @@
                                         <div id="draftMail" role="tabpanel" aria-labelledby="draft-tab" class="tab-pane fade">
                                             <div th:if="${draftbox != null} and ${!draftbox.messages.isEmpty()}" class="row">
                                                 
+                                                <div class="col-md-12 bg-teal-200" style="padding: 12px;">
+                                                    <div>
+                                                        <form class="form-inline pull-right">
+                                                            <div class="form-group">
+                                                                <input type="search" placeholder="Find message in inbox ..." class="form-control btn-sm" style="width: 250px; height: 32px;" />
+                                                            </div>
+                                                            <button type="button" class="btn btn-labeled btn-inverse ripple"><span class="btn-label"><i class="ion-ios-search"></i></span>Search<span class="md-ripple"></span></button>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                                
                                                 <table class="table table-bordered table-hover table-fixed" style="font-size: 14px;">
                                                     <thead>
                                                         <tr>
@@ -235,10 +276,10 @@
                                                                 <div class="pull-right dropdown">
                                                                     <button type="button" data-toggle="dropdown" class="btn btn-default btn-flat btn-flat-icon"><em class="ion-android-more-vertical"></em></button>
                                                                     <ul role="menu" class="dropdown-menu md-dropdown-menu dropdown-menu-right">
-                                                                        <li><a href="#"><em class="ion-reply icon-fw"></em>Reply</a></li>
-                                                                        <li><a href="#"><em class="ion-forward icon-fw"></em>Forward</a></li>
-                                                                        <li><a href="#"><em class="ion-android-mail icon-fw"></em>Mark as Unread</a></li>
-                                                                        <li><a href="#"><em class="ion-trash-a icon-fw"></em>Delete</a></li>
+                                                                        <li><a href="javascript:void(0);" th:onclick="'javascript:notYetImplemented();'"><em class="ion-reply icon-fw"></em>Reply</a></li>
+                                                                        <li><a href="javascript:void(0);" th:onclick="'javascript:notYetImplemented();'"><em class="ion-forward icon-fw"></em>Forward</a></li>
+                                                                        <li><a href="javascript:void(0);" th:onclick="'javascript:notYetImplemented();'"><em class="ion-android-mail icon-fw"></em>Mark as Unread</a></li>
+                                                                        <li><a href="javascript:void(0);" th:onclick="'javascript:notYetImplemented();'"><em class="ion-trash-a icon-fw"></em>Delete</a></li>
                                                                     </ul>
                                                                 </div>
                                                                 <!-- END dropdown-->
@@ -246,6 +287,8 @@
                                                         </tr>
                                                     </tbody>
                                                 </table>
+                                                
+                                                <hr style="border: none; height: 4px; background-color: #a6b3cd;"/>
                                                 
                                                 <div style="padding-bottom: 26px;">
                                                     <span th:utext="'&lt;strong&gt;' + ${draftbox.messageCount} + '&lt;/strong&gt; Messages, Page &lt;strong&gt;' + ${draftbox.page} + '&lt;/strong&gt; of &lt;strong&gt;' + ${draftbox.pageCount} + '&lt;/strong&gt;'">Page # of ##</span>     

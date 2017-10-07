@@ -4,6 +4,8 @@
  * and open the template in the editor.
  */
 
+/* global bootbox */
+
 function timeSince(date) {
 
     var seconds = Math.floor((new Date() - date) / 1000);
@@ -38,6 +40,47 @@ function timeSince(date) {
     }
     
     return Math.floor(seconds) + " secs ago";
+}
+
+function RequirementsSearch() {
+    
+    $.ajax({
+        
+        global: false,
+        type: "GET",
+        url: '/modals/requirements/requirements-search-form.html',
+        success: function (data) {
+            
+            bootbox.confirm({
+
+                global: false,
+                closeButton: false,
+                title: "Search",
+                message: data,
+                buttons: {
+                    cancel: {
+                        label: "Cancel",
+                        className: "btn-danger btn-fixed-width-100"
+                    },
+                    confirm: {
+                        label: "Search",
+                        className: "btn-success btn-fixed-width-100"
+                    }
+                },
+                callback: function (result) {
+                    
+                    if (result) {
+                        
+                        var q = document.getElementById('q').value;
+                        var size = document.getElementById('size').value;
+                        var page = document.getElementById('page').value;
+                        
+                        window.location.href = '/search?q=' + encodeURI(q) + "&size=" + size + "&page=" + page;
+                    }
+                }
+            });
+        }   
+    });
 }
 
 function notYetImplemented() {
