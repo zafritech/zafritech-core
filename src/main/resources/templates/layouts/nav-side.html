@@ -32,9 +32,9 @@
                                             </button>
                                             <ul role="menu" class="dropdown-menu md-dropdown-menu dropdown-menu-right">
                                                 <li style="border-bottom: 1px solid #ddd;"><a href="javascript:void(0);" th:onclick="'javascript:ProjectCreateNew();'"><em class="ion-plus icon-fw"></em>New Project</a></li>
-                                                <li style="border-bottom: 1px solid #ddd;"><a href="javascript:void(0);" th:onclick="'javascript:notYetImplemented();'"><em class="fa fa-folder-open fa-fw"></em>Open Project</a></li>
+                                                <li style="border-bottom: 1px solid #ddd;"><a href="javascript:void(0);" th:onclick="'javascript:OpenProject();'"><em class="fa fa-folder-open fa-fw"></em>Open Project</a></li>
                                                 <li style="border-bottom: 1px solid #ddd;"><a href="/projects"><em class="fa fa-list fa-fw"></em>List Projects</a></li>
-                                                <li><a href="javascript:void(0);" th:onclick="'javascript:notYetImplemented();'"><em class="ion-close-round icon-fw"></em>Close All Projects</a></li>
+                                                <li><a href="javascript:void(0);" th:onclick="'javascript:CloseAllProject();'"><em class="ion-close-round icon-fw"></em>Close All Projects</a></li>
                                             </ul>
                                         </div>
                                         <div style="padding: 8px 0;"><em class="ion-filing icon-fw"></em> Projects</div>
@@ -45,9 +45,8 @@
                                                 <em class="ion-android-more-vertical"></em>
                                             </button>
                                             <ul role="menu" class="dropdown-menu md-dropdown-menu dropdown-menu-right">
-                                                <li style="border-bottom: 1px solid #ddd;"><a href="javascript:void(0);" th:onclick="'javascript:notYetImplemented();'"><em class="ion-plus icon-fw"></em>New Document</a></li>
-                                                <li style="border-bottom: 1px solid #ddd;"><a href="javascript:void(0);" th:onclick="'javascript:notYetImplemented();'"><em class="fa fa-file-text-o fa-fw"></em>Open Document</a></li>
-                                                <li style="border-bottom: 1px solid #ddd;"><a href="javascript:void(0);" th:onclick="'javascript:notYetImplemented();'"><em class="fa fa-history fa-fw"></em>Recent Documents</a></li>
+                                                <li style="border-bottom: 1px solid #ddd;"><a href="javascript:void(0);" th:onclick="'javascript:OpenDocument();'"><em class="fa fa-file-text-o fa-fw"></em>Open Document</a></li>
+                                                <li style="border-bottom: 1px solid #ddd;"><a href="javascript:void(0);" th:onclick="'javascript:RecentDocuments();'"><em class="fa fa-history fa-fw"></em>Recent Documents</a></li>
                                                 <li style="border-bottom: 1px solid #ddd;"><a href="javascript:void(0);" th:onclick="'javascript:notYetImplemented();'"><em class="ion-close-round icon-fw"></em>Close All Documents</a></li>
                                                 <li><a href="javascript:void(0);" th:onclick="'javascript:notYetImplemented();'"><em class="fa fa-file-text fa-fw"></em>Templates</a></li>
                                             </ul>

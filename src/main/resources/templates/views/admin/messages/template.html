@@ -2,7 +2,7 @@
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
-      layout:decorator="layouts/zid-admin-menu-detail">
+      layout:decorator="layouts/master">
 
     <head>
         <title>Zidingo PMS - Template Editor</title>
@@ -15,16 +15,7 @@
         <div layout:fragment="content">
 
             <div class="row content">
-                
-<!--                <div class="content-heading bg-white">
-                    <div class="row">
-                        <div class="col-sm-9">
-                            <h4 class="m0">Message Template Editor</h4>
-                            <small>Message template editor.</small>
-                        </div>
-                    </div>
-                </div>-->
-                
+
                 <div class="container container-md">
 
                     <div class="col-md-12">
@@ -37,7 +28,7 @@
                                 </div>
                             </div>
 
-                            <div class="card-heading bg-teal-500">
+                            <div class="card-heading bg-blue-grey-100">
                                 <div class="row">
                                     <label class="col-sm-2 control-label text-left" style="margin-top: 5px;">Template Name:</label>
                                     <div class="col-sm-4">
@@ -56,13 +47,13 @@
                                 <div id="summernote" class="summernote"></div>
                             </div>
 
-                            <div class="card-footer bg-teal-200">
+                            <div class="card-footer bg-blue-grey-100">
                                 <div class="pull-right">
-                                    <button id="saveButton" class="btn btn-success btn-fixed-width-100" th:onclick="'javascript:saveMessageTemplate();'">
-                                        <i class="fa fa-save"></i> Save
-                                    </button>
                                     <button id="closeButton" class="btn btn-danger btn-fixed-width-100" th:onclick="'javascript:window.location.replace(\'/\');'">
                                         <i class="fa fa-ban"></i> Close
+                                    </button>
+                                    <button id="saveButton" class="btn btn-success btn-fixed-width-100" th:onclick="'javascript:saveMessageTemplate();'">
+                                        <i class="fa fa-save"></i> Save
                                     </button>
                                 </div>
                                 <button class="btn btn-primary btn-fixed-width-100" th:onclick="'javascript:editorClear();'">

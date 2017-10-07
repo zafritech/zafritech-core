@@ -7,9 +7,7 @@ package org.zafritech.core.services;
 
 import java.util.List;
 import org.zafritech.core.data.domain.Document;
-import org.zafritech.core.data.domain.Folder;
 import org.zafritech.core.data.domain.Project;
-import org.zafritech.core.data.domain.UserEntityState;
 
 /**
  *
@@ -23,7 +21,11 @@ public interface UserStateService {
     
     void updateRecentDocument(Document document);
     
-    List<UserEntityState> getOpenProjects();
+    List<Project> getOpenProjects();
     
-    List<UserEntityState> getRecentDocuments();
+    List<Document> getRecentDocuments();
+    
+    boolean isProjectOpen(Project project);
+    
+    Integer closeAllProjects();
 }

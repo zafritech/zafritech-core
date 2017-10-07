@@ -12,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.zafritech.core.data.dao.MailBoxDao;
 import org.zafritech.core.data.dao.PageNavigationDao;
 import org.zafritech.core.data.domain.User;
 import org.zafritech.core.data.domain.UserMessage;
@@ -42,29 +43,45 @@ public class MessageController {
     private UserMessageRepository userMessageRepository;
            
     @RequestMapping(value = {"/messages", "/messages/inbox"})
-    public String messagesInbox(@RequestParam(name = "s", defaultValue = "15") Integer pageSize,
-                                @RequestParam(name = "p", defaultValue = "1") Integer pageNumber,
-                                Model model) {
+    public String getMessagesBoxes(@RequestParam(name = "s", defaultValue = "15") Integer pageSize,
+                                   @RequestParam(name = "p", defaultValue = "1") Integer pageNumber,
+                                   Model model) {
         
-        User user = userService.loggedInUser();
-        List<UserMessageView> inbox = userMessageRepository.findUserMessageViewByUserAndMessageBoxOrderByStatusDateDesc(user, MessageBox.IN);
-        PageNavigationDao navigator = commonService.getPageNavigator(inbox.size(), pageSize, pageNumber);
+        MailBoxDao inbox = messageService.getMessageBox(pageSize, pageNumber, MessageBox.IN);
+        MailBoxDao sentbox = messageService.getMessageBox(pageSize, pageNumber, MessageBox.OUT);
+        MailBoxDao draftbox = messageService.getMessageBox(pageSize, pageNumber, MessageBox.DRAFT);
         
-        List<UserMessageView> messages = messageService.getIncomingMessageViews(user, pageSize, pageNumber);
-        
-        model.addAttribute("user", user);
-        model.addAttribute("messages", messages);
-        model.addAttribute("msgBox", "inbox");
-        model.addAttribute("page", pageNumber);
-        model.addAttribute("size", pageSize);
-        model.addAttribute("msgBoxSize", navigator.getItemCount());
-        model.addAttribute("msgCount", navigator.getItemCount());
-        model.addAttribute("list", navigator.getPageList());
-        model.addAttribute("count", navigator.getPageCount());
-        model.addAttribute("last", navigator.getLastPage());
+        model.addAttribute("inbox", inbox);
+        model.addAttribute("sentbox", sentbox);
+        model.addAttribute("draftbox", draftbox);
           
         return "views/messages/mailbox";
     }
+           
+//    @RequestMapping(value = {"/messages", "/messages/inbox"})
+//    public String messagesInbox(@RequestParam(name = "s", defaultValue = "15") Integer pageSize,
+//                                @RequestParam(name = "p", defaultValue = "1") Integer pageNumber,
+//                                Model model) {
+//        
+//        User user = userService.loggedInUser();
+//        List<UserMessageView> inbox = userMessageRepository.findUserMessageViewByUserAndMessageBoxOrderByStatusDateDesc(user, MessageBox.IN);
+//        PageNavigationDao navigator = commonService.getPageNavigator(inbox.size(), pageSize, pageNumber);
+//        
+//        List<UserMessageView> messages = messageService.getIncomingMessageViews(user, pageSize, pageNumber);
+//        
+//        model.addAttribute("user", user);
+//        model.addAttribute("messages", messages);
+//        model.addAttribute("msgBox", "inbox");
+//        model.addAttribute("page", pageNumber);
+//        model.addAttribute("size", pageSize);
+//        model.addAttribute("msgBoxSize", navigator.getItemCount());
+//        model.addAttribute("msgCount", navigator.getItemCount());
+//        model.addAttribute("list", navigator.getPageList());
+//        model.addAttribute("count", navigator.getPageCount());
+//        model.addAttribute("last", navigator.getLastPage());
+//          
+//        return "views/messages/mailbox";
+//    }
     
     @RequestMapping(value = {"/messages/sent"})
     public String sentMessages(@RequestParam(name = "s", defaultValue = "15") Integer pageSize,

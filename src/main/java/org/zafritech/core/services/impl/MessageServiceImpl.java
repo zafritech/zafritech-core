@@ -15,7 +15,9 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.zafritech.core.data.converters.DaoToMessageConverter;
+import org.zafritech.core.data.dao.MailBoxDao;
 import org.zafritech.core.data.dao.MsgDao;
+import org.zafritech.core.data.dao.PageNavigationDao;
 import org.zafritech.core.data.domain.Message;
 import org.zafritech.core.data.domain.User;
 import org.zafritech.core.data.domain.UserMessage;
@@ -26,6 +28,7 @@ import org.zafritech.core.enums.MessageStatusType;
 import org.zafritech.core.services.MessageService;
 import org.zafritech.core.services.UserService;
 import org.zafritech.core.data.projections.UserMessageView;
+import org.zafritech.core.services.CommonService;
 
 /**
  *
@@ -34,6 +37,9 @@ import org.zafritech.core.data.projections.UserMessageView;
 @Service
 public class MessageServiceImpl implements MessageService {
     
+    @Autowired
+    private CommonService commonService;
+     
     @Autowired
     private UserService userService;
     
@@ -90,6 +96,47 @@ public class MessageServiceImpl implements MessageService {
         userMessageRepository.findByUserAndMessageBoxOrderByStatusDateDesc(request, user, MessageBox.IN).forEach(messages::add);
         
         return messages;
+    }
+    
+    @Override
+    public MailBoxDao getMessageBox(Integer pageSize, Integer pageNumber, MessageBox box) {
+        
+        String mailBoxNname = "inbox";
+        
+        User user = userService.loggedInUser();
+        List<UserMessageView> mailbox = userMessageRepository.findUserMessageViewByUserAndMessageBoxOrderByStatusDateDesc(user, box);
+        PageNavigationDao navigator = commonService.getPageNavigator(mailbox.size(), pageSize, pageNumber);
+        
+        PageRequest request = new PageRequest(pageNumber - 1, pageSize, Sort.Direction.ASC, "statusDate");
+        List<UserMessageView> messages = new ArrayList<>();
+        userMessageRepository.findUserMessageViewByUserAndMessageBoxOrderByStatusDateDesc(request, user, box).forEach(messages::add);
+        
+        switch (box) {
+            case IN:
+                mailBoxNname = "inbox";
+                break;
+            case OUT:
+                mailBoxNname = "outbox";
+                break;
+            case DRAFT:
+                mailBoxNname = "draft";
+                break;
+            default:
+                break;
+        }
+        
+        MailBoxDao messageBox = new MailBoxDao(user, 
+                                               messages, 
+                                               mailBoxNname, 
+                                               pageNumber, 
+                                               pageSize, 
+                                               navigator.getItemCount(), 
+                                               navigator.getItemCount(), 
+                                               navigator.getPageList(), 
+                                               navigator.getPageCount(), 
+                                               navigator.getLastPage());
+        
+        return messageBox;
     }
 
     @Override

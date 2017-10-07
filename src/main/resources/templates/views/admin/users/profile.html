@@ -2,7 +2,7 @@
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
-      layout:decorator="layouts/zid-admin-menu-detail">
+      layout:decorator="layouts/master">
 
     <head>
         <title>Zidingo PMS - User Profile</title>
@@ -16,15 +16,15 @@
             
             <div class="content-heading bg-white">
                 <div class="row">
-                    <div class="col-sm-9">
-                        <h4 class="m0">Application User Management</h4>
-                        <small>Configure this view and build your own Zidingo dashboard</small>
+                    <!-- START dropdown-->
+                    <div class="pull-right dropdown">
+                        <button type="button" data-toggle="dropdown" class="btn btn-default btn-flat btn-flat-icon"><em class="ion-android-more-vertical"></em></button>
+                        <ul role="menu" class="dropdown-menu md-dropdown-menu dropdown-menu-right">
+                            <li><a href="/admin/users"><em class="ion-person-stalker icon-fw"></em>Users List</a></li>
+                        </ul>
                     </div>
-                    <div class="col-sm-3 text-right hidden-xs">
-                        <a href="/admin/users" type="button" class="btn btn-fixed-width-100 btn-success">
-                            <em class="ion-ios-arrow-back mr-sm"></em>Users List
-                        </a>
-                    </div>
+                    <!-- END dropdown-->
+                    <h4 class="m0">Application User Management</h4>
                 </div>
             </div>
 
@@ -42,7 +42,7 @@
                                   <button type="button" data-toggle="dropdown" class="btn btn-default btn-flat btn-flat-icon"><em class="ion-android-more-vertical"></em></button>
                                   <ul role="menu" class="dropdown-menu md-dropdown-menu dropdown-menu-right">
                                     <li><a href="javascript:void(0);" th:onclick="'javascript:UserBasicProfileUpdate(\'' + ${user.uuId} + '\');'"><em class="ion-edit icon-fw"></em>Edit Profile</a></li>
-                                    <li><a href="javascript:void(0);"><em class="ion-ios-camera icon-fw"></em>Profile Picture</a></li>
+                                    <li><a href="javascript:void(0);" th:onclick="'javascript:notYetImplemented();'"><em class="ion-ios-camera icon-fw"></em>Profile Picture</a></li>
                                     <li><a href="javascript:void(0);" th:onclick="'javascript:UserPwdChange(\'' + ${user.uuId} + '\');'"><em class="ion-key icon-fw"></em>Change Password</a></li>
                                   </ul>
                                 </div>

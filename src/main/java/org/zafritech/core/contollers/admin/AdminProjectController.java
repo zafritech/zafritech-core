@@ -45,7 +45,7 @@ public class AdminProjectController {
         
         model.addAttribute("projects", projects);
         
-        return "views/admin/project/index";
+        return "views/project/index";
     }
     
     @RequestMapping("/admin/projects/{uuid}")

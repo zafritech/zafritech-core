@@ -7,11 +7,13 @@ package org.zafritech.core.services;
 
 import java.util.List;
 import javax.management.Notification;
+import org.zafritech.core.data.dao.MailBoxDao;
 import org.zafritech.core.data.dao.MsgDao;
 import org.zafritech.core.data.domain.Message;
 import org.zafritech.core.data.domain.User;
 import org.zafritech.core.data.domain.UserMessage;
 import org.zafritech.core.data.projections.UserMessageView;
+import org.zafritech.core.enums.MessageBox;
 
 /**
  *
@@ -44,6 +46,8 @@ public interface MessageService {
     void setMessageRead(UserMessage message, User user);
     
     // Project based servieces
+    MailBoxDao getMessageBox(Integer pageSize, Integer pageNumber, MessageBox box);
+    
     List<UserMessageView> getUnreadMessageViews(User user);
     
     List<UserMessageView> getIncomingMessageViews(User user, Integer pageSize, Integer pageNumber);

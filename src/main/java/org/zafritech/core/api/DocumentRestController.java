@@ -38,6 +38,7 @@ import org.zafritech.core.data.repositories.UserRepository;
 import org.zafritech.core.enums.DocumentStatus;
 import org.zafritech.core.services.ClaimService;
 import org.zafritech.core.services.DocumentService;
+import org.zafritech.core.services.UserStateService;
 
 /**
  *
@@ -73,6 +74,9 @@ public class DocumentRestController {
     @Autowired
     private UserRepository userRepository;
     
+    @Autowired
+    private UserStateService stateService;
+    
     @RequestMapping(value = "/api/documents/document/create/new", method = POST)
     public ResponseEntity<Document> newDocument(@RequestBody DocDao docDao) {
   
@@ -103,6 +107,14 @@ public class DocumentRestController {
         Document document = documentRepository.findOne(id); 
 
         return new ResponseEntity<Document>(document, HttpStatus.OK);
+    }
+    
+    @RequestMapping(value = "/api/documents/recent/documents/list", method = GET)
+    public ResponseEntity<List<Document>> getRecentDocument() {
+        
+        List<Document> documents = stateService.getRecentDocuments(); 
+
+        return new ResponseEntity<List<Document>>(documents, HttpStatus.OK);
     }
     
     @RequestMapping(value = "/api/documents/document/getproject/{id}", method = GET)

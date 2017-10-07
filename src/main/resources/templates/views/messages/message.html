@@ -2,7 +2,7 @@
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
-      layout:decorator="layouts/mail-master">
+      layout:decorator="layouts/master">
 
     <head>
         <title>Zidingo PMS - Mailbox</title>
@@ -22,23 +22,23 @@
                         
                         <div class="card email-compose">
 
-                            <div class="card-heading bg-teal-500">
-                                <!-- START dropdown-->
-                                <div class="pull-right dropdown">
-                                  <button type="button" data-toggle="dropdown" class="btn btn-default btn-flat btn-flat-icon"><em class="ion-android-more-vertical"></em></button>
-                                  <ul role="menu" class="dropdown-menu md-dropdown-menu dropdown-menu-right">
-                                    <li><a href="#"><em class="ion-reply icon-fw"></em>Reply</a></li>
-                                    <li><a href="#"><em class="ion-reply-all icon-fw"></em>Reply All</a></li>
-                                    <li><a href="#"><em class="ion-forward icon-fw"></em>Forward</a></li>
-                                    <li><a href="/messages"><em class="ion-close-circled icon-fw"></em>Close Message</a></li>
-                                  </ul>
-                                </div>
-                                <!-- END dropdown-->
-                                <div class="card-title" th:text="${message.message.subject}">Subject</div>
-                            </div>
-
                             <div class="card-body">
-                                <div class="bg-teal-200" style="padding: 10px; margin-bottom: 15px;">
+                                <div class="bg-blue-grey-500" style="padding: 10px; margin-bottom: 15px;">
+                                    <!-- START dropdown-->
+                                    <div class="pull-right dropdown">
+                                      <button type="button" data-toggle="dropdown" class="btn btn-default btn-flat btn-flat-icon"><em class="ion-android-more-vertical"></em></button>
+                                      <ul role="menu" class="dropdown-menu md-dropdown-menu dropdown-menu-right">
+                                        <li><a href="#"><em class="ion-reply icon-fw"></em>Reply</a></li>
+                                        <li><a href="#"><em class="ion-reply-all icon-fw"></em>Reply All</a></li>
+                                        <li><a href="#"><em class="ion-forward icon-fw"></em>Forward</a></li>
+                                        <li><a href="/messages"><em class="ion-close-circled icon-fw"></em>Close Message</a></li>
+                                      </ul>
+                                    </div>
+                                    <!-- END dropdown-->
+                                    <div>
+                                        <span class="text-bold">Subject: </span>
+                                        <span th:text="${message.message.subject}">Sender</span>
+                                    </div>
                                     <div>
                                         <span class="text-bold">From: </span>
                                         <span th:if="${message.message.sender.lastName} != null" th:text="${message.message.sender.firstName} + ' ' + ${message.message.sender.lastName}">Sender</span>
@@ -46,7 +46,7 @@
                                     </div>
                                     <div>
                                         <span class="text-bold">Email: </span>
-                                        <a href="#" th:text="${message.message.sender.email}" style="text-decoration: none; color: #4F5256;">email</a>
+                                        <a href="#" th:text="${message.message.sender.email}" style="text-decoration: none; color: #64B5F6;">email</a>
                                     </div>
                                     <div>
                                         <span class="text-bold">Date: </span>

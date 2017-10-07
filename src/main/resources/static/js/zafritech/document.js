@@ -714,3 +714,183 @@ function AddRemoveUsers(btn) {
         $(selectedOpts).remove();
     }
 }
+
+function OpenDocument() {
+    
+    $.ajax({
+        
+        global: false,
+        type: "GET",
+        url: '/modals/document/document-document-open.html',
+        success: function (data) {
+            
+            var box = bootbox.confirm({
+
+                closeButton: false,
+                title: 'Open Document',
+                message: data,
+                buttons: {
+                    cancel: {
+                        label: "Cancel",
+                        className: "btn-danger btn-fixed-width-100"
+                    },
+                    confirm: {
+                        label: "Open",
+                        className: "btn-success btn-fixed-width-100"
+                    }
+                },
+                callback: function (result) {
+                    
+                    if (result) {
+                        
+                        $.ajax({
+
+                            global: false,
+                            type: "GET",
+                            contentType: "application/json",
+                            url: "/api/documents/document/" + document.getElementById('selectedDocumentId').value,
+                            dataType: "json",
+                            cache: false
+                        })
+                        .success(function (data) {
+
+                            window.location.href = "/" + data.documentType.contentDescriptor.componentName + "/document/" + data.uuId;
+                        });
+                    }
+                }
+            });
+            
+            box.on("shown.bs.modal", function(e) {
+                
+                $.ajax({
+
+                    type: "GET",
+                    contentType: "application/json",
+                    url: "/api/projects/list/open",
+                    dataType: "json",
+                    cache: false
+                })
+                .done(function (data) {
+                    
+                    var selectOptions = '';
+                    
+                    $.each(data, function (key, index) {
+
+                        selectOptions = selectOptions + '<option value="' + index.id + '">' + index.projectNumber + ": " + index.projectName + '</option>';
+                    });
+
+                    $('#selectedProjectId').empty();
+                    $('#selectedProjectId').append(selectOptions);
+                    
+                    onSelectedProjectChange();
+                });
+            });
+            
+            box.modal('show');
+        }
+    });
+}
+
+function onSelectedProjectChange() {
+    
+    var projectId = document.getElementById('selectedProjectId').value;
+    
+    $.ajax({
+
+        type: "GET",
+        contentType: "application/json",
+        url: "/api/documents/byproject/" + projectId,
+        dataType: "json",
+        cache: false
+    })
+    .done(function (data) {
+        
+        var selectOptions = '';
+
+        $.each(data, function (key, index) {
+
+            selectOptions = selectOptions + '<option value="' + index.id + '">' 
+                                          + index.identifier + ": " + index.documentLongName
+                                          + '</option>';
+        });
+
+        $('#selectedDocumentId').empty();
+        $('#selectedDocumentId').append(selectOptions);
+    });
+}
+
+function RecentDocuments() {
+    
+    $.ajax({
+        
+        global: false,
+        type: "GET",
+        url: '/modals/document/document-recent-documents.html',
+        success: function (data) {
+            
+            var box = bootbox.confirm({
+
+                closeButton: false,
+                title: 'Recent Documents',
+                message: data,
+                buttons: {
+                    cancel: {
+                        label: "Cancel",
+                        className: "btn-danger btn-fixed-width-100"
+                    },
+                    confirm: {
+                        label: "Open",
+                        className: "btn-success btn-fixed-width-100"
+                    }
+                },
+                callback: function (result) {
+                    
+                    if (result) {
+                        
+                        $.ajax({
+
+                            global: false,
+                            type: "GET",
+                            contentType: "application/json",
+                            url: "/api/documents/document/" + document.getElementById('recentDocumentId').value,
+                            dataType: "json",
+                            cache: false
+                        })
+                        .success(function (data) {
+
+                            window.location.href = "/" + data.documentType.contentDescriptor.componentName + "/document/" + data.uuId;
+                        });
+                    }
+                }
+            });
+            
+            box.on("shown.bs.modal", function(e) {
+                
+                $.ajax({
+
+                    type: "GET",
+                    contentType: "application/json",
+                    url: "/api/documents/recent/documents/list",
+                    dataType: "json",
+                    cache: false
+                })
+                .done(function (data) {
+                    
+                    console.log(data);
+                    
+                    var selectOptions = '';
+                    
+                    $.each(data, function (key, index) {
+
+                        selectOptions = selectOptions + '<option value="' + index.id + '">' + index.identifier + ": " + index.documentLongName + '</option>';
+                    });
+
+                    $('#recentDocumentId').empty();
+                    $('#recentDocumentId').append(selectOptions);
+                });
+            });
+            
+            box.modal('show');
+        }
+    });
+}

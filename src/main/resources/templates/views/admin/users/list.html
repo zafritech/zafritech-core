@@ -2,7 +2,7 @@
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
-      layout:decorator="layouts/zid-admin-menu-detail">
+      layout:decorator="layouts/master">
 
     <head>
         <title>Zidingo PMS - Users</title>
@@ -14,28 +14,20 @@
 
         <div layout:fragment="content">
             
-            <div class="content-heading bg-white">
-                <div class="row">
-                    <div class="col-sm-9">
-                        <h4 class="m0">Application User Management</h4>
-                        <small>Configure this view and build your own Zidingo dashboard</small>
-                    </div>
-                    <div class="col-sm-3 text-right hidden-xs">
-                        <a  href="javascript:void(0);" th:onclick="'javascript:UserNewCreate();'" type="button" class="btn btn-fixed-width-100 btn-success">
-                            <em class="ion-plus mr-sm"></em>New User
-                        </a>
-                    </div>
-                </div>
-            </div>
-            
             <div class="container container-lg">
             
                 <div class="card" id="details" th:if="${!users.isEmpty()}">
                     
                     <div class="card-heading bg-pink-500">
-                        <div class="card-title">
-                            Users List
+                        <!-- START dropdown-->
+                        <div class="pull-right dropdown">
+                            <button type="button" data-toggle="dropdown" class="btn btn-default btn-flat btn-flat-icon"><em class="ion-android-more-vertical"></em></button>
+                            <ul role="menu" class="dropdown-menu md-dropdown-menu dropdown-menu-right">
+                                <li><a href="javascript:void(0);" th:onclick="'javascript:UserNewCreate();'"><em class="ion-person-add icon-fw"></em>New User</a></li>
+                            </ul>
                         </div>
+                        <!-- END dropdown-->
+                        <div class="card-title">Users List</div>
                     </div>
 
                     <div class="card-body">

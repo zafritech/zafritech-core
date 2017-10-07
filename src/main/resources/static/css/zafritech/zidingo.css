@@ -828,10 +828,13 @@ button.list-group-item:hover {
 .nav-tabs > li > a,
 .nav-tabs.nav-justified > li > a {
   padding: 16px 24px;
+  margin: 0 2px;
   background-color: transparent;
   border-radius: 0;
   border: 0;
   color: inherit;
+  font-size: 16px;
+  font-weight: 600;
 }
 .nav-tabs > li > a:hover,
 .nav-tabs.nav-justified > li > a:hover,

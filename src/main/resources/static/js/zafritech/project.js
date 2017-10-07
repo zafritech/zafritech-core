@@ -50,7 +50,7 @@ function zTreeProjectLoad() {
 
             $('#noOpenProjects').hide();
             $('#mainTreeHeaderLabel').text("Projects");
-            $('#collapseProjects').collapse('show');
+//            $('#collapseProjects').collapse('show');
             
             // Expand current zTree node
             if (($('#nodeId').length > 0 && $('#nodeId').val().length !== 0) &&
@@ -1555,6 +1555,113 @@ function ProjectEditProperties(uuId) {
             
             box.modal('show');
         }
+    });
+}
+
+function OpenProject() {
+    
+    $.ajax({
+        
+        global: false,
+        type: "GET",
+        url: '/modals/project/project-open-project.html',
+        success: function (data) {
+            
+            var box = bootbox.confirm({
+
+                closeButton: false,
+                title: 'Open Project',
+                message: data,
+                buttons: {
+                    cancel: {
+                        label: "Cancel",
+                        className: "btn-danger btn-fixed-width-100"
+                    },
+                    confirm: {
+                        label: "Open",
+                        className: "btn-success btn-fixed-width-100"
+                    }
+                },
+                callback: function (result) {
+                    
+                    if (result) {
+                        
+                        window.location.href = "/projects/" + document.getElementById('projectId').value;
+                    }
+                }
+            });
+            
+            box.on("shown.bs.modal", function(e) {
+                
+                $.ajax({
+
+                    type: "GET",
+                    contentType: "application/json",
+                    url: "/api/projects/list/closed",
+                    dataType: "json",
+                    cache: false
+                })
+                .done(function (data) {
+                    
+                    var selectOptions = '';
+                    
+                    $.each(data, function (key, index) {
+
+                        selectOptions = selectOptions + '<option value="' + index.uuId + '">' + index.projectNumber + ": " + index.projectName + '</option>';
+                    });
+
+                    $('#projectId').empty();
+                    $('#projectId').append(selectOptions);
+                });
+            });
+            
+            box.modal('show');
+        }
+    });
+}
+
+function CloseAllProject() {
+  
+    swal({
+        
+        title: "Do you want to Close All Projects?",
+        text: "This will close all open documents!",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#DD6B55",
+        confirmButtonText: "Yes, close",
+        cancelButtonText: "No, cancel",
+        closeOnConfirm: false,
+        closeOnCancel: false},
+        function (isConfirm) {
+            if (isConfirm) {
+
+                $.ajax({
+
+                    global: false,
+                    type: "GET",
+                    contentType: "application/json",
+                    url: '/api/projects/close/allopen',
+                    dataType: "json",
+                    cache: false
+                })
+                .done(function () {
+
+                    swal("Closed!", "All projects have been successfully closed.", "success");
+
+                    setTimeout(function () {
+                        window.location.href = "/";
+                    }, 2000);
+                })
+                .error(function() {
+
+                    swal("Failed!", "Failed to close projects.", "error");
+                });
+
+            } else {
+
+                swal("Cancelled", "Projects not closed.", "error");
+            }
     });
 }
 

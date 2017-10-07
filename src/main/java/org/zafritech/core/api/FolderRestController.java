@@ -109,12 +109,10 @@ public class FolderRestController {
         
         List<FolderTreeDao> foldersTree = new ArrayList<>();
         
-        List<UserEntityState> openProjects = stateService.getOpenProjects();
+        List<Project> openProjects = stateService.getOpenProjects();
         
-        for (UserEntityState state : openProjects) {
+        for (Project project : openProjects) {
             
-            Project project = projectRepository.findOne(state.getStateKey().getEntityId());
-
             List<FolderTreeDao> folders = folderService.getProjectFolders(project);
             List<FolderTreeDao> docs = folderService.getProjectDocuments(project);
 

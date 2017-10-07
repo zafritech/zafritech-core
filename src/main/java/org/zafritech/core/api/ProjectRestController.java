@@ -32,6 +32,7 @@ import org.zafritech.core.data.repositories.UserRepository;
 import org.zafritech.core.enums.ProjectStatus;
 import org.zafritech.core.services.ClaimService;
 import org.zafritech.core.services.ProjectService;
+import org.zafritech.core.services.UserStateService;
 
 
 /**
@@ -59,12 +60,49 @@ public class ProjectRestController {
     @Autowired
     private ClaimService claimService;
       
+    @Autowired
+    private UserStateService stateService;
+    
     @RequestMapping(value = "/api/admin/projects/list", method = GET)
     public ResponseEntity<List<Project>> listProjects() {
   
         List<Project> projects = projectRepository.findAllByOrderByProjectName();
  
         return new ResponseEntity<List<Project>>(projects, HttpStatus.OK);
+    }
+      
+    @RequestMapping(value = "/api/projects/list/open", method = GET)
+    public ResponseEntity<List<Project>> listOpenProjects() {
+  
+        List<Project> projects = stateService.getOpenProjects();
+ 
+        return new ResponseEntity<List<Project>>(projects, HttpStatus.OK);
+    }
+      
+    @RequestMapping(value = "/api/projects/list/closed", method = GET)
+    public ResponseEntity<List<Project>> listClosedProjects() {
+  
+        List<Project> closedProjects = new ArrayList<>();
+        
+        List<Project> projects = projectRepository.findAllByOrderByProjectName();
+ 
+        for (Project project : projects) {
+            
+            if (!stateService.isProjectOpen(project)){
+                
+                closedProjects.add(project);
+            }
+        }
+ 
+        return new ResponseEntity<List<Project>>(closedProjects, HttpStatus.OK);
+    }
+    
+    @RequestMapping(value = "/api/projects/close/allopen", method = GET)
+    public ResponseEntity<Integer> closeAllOpenProjects() {
+        
+        Integer numberClosed = stateService.closeAllProjects();
+        
+        return new ResponseEntity<Integer>(numberClosed, HttpStatus.OK);
     }
       
     @RequestMapping(value = "/api/projects/project/byid/{id}", method = GET)
@@ -89,7 +127,7 @@ public class ProjectRestController {
   
         projectDao.setId(projectRepository.getByUuId(uuid).getId());
         Project project = projectService.saveDao(projectDao);
- 
+        
         return new ResponseEntity<Project>(project, HttpStatus.OK);
     }
     
