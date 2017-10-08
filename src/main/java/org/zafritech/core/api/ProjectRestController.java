@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -32,6 +33,7 @@ import org.zafritech.core.data.repositories.UserRepository;
 import org.zafritech.core.enums.ProjectStatus;
 import org.zafritech.core.services.ClaimService;
 import org.zafritech.core.services.ProjectService;
+import org.zafritech.core.services.UserService;
 import org.zafritech.core.services.UserStateService;
 
 
@@ -61,13 +63,27 @@ public class ProjectRestController {
     private ClaimService claimService;
       
     @Autowired
+    private UserService userService;
+    
+    @Autowired
     private UserStateService stateService;
     
     @RequestMapping(value = "/api/admin/projects/list", method = GET)
     public ResponseEntity<List<Project>> listProjects() {
   
-        List<Project> projects = projectRepository.findAllByOrderByProjectName();
- 
+        User user = userService.loggedInUser();
+        boolean isAdmin = userService.hasRole("ROLE_ADMIN");
+        List<Project> allProjects = projectRepository.findAllByOrderByProjectName();
+        List<Project> projects = new ArrayList<>();
+        
+        for (Project project : allProjects) {
+            
+            if (isAdmin || claimService.isProjectMember(user, project)){
+                
+                projects.add(project);
+            }
+        }
+        
         return new ResponseEntity<List<Project>>(projects, HttpStatus.OK);
     }
       
@@ -82,13 +98,15 @@ public class ProjectRestController {
     @RequestMapping(value = "/api/projects/list/closed", method = GET)
     public ResponseEntity<List<Project>> listClosedProjects() {
   
+        User user = userService.loggedInUser();
+        boolean isAdmin = userService.hasRole("ROLE_ADMIN");
         List<Project> closedProjects = new ArrayList<>();
         
         List<Project> projects = projectRepository.findAllByOrderByProjectName();
  
         for (Project project : projects) {
             
-            if (!stateService.isProjectOpen(project)){
+            if (!stateService.isProjectOpen(project) && (isAdmin || claimService.isProjectMember(user, project))){
                 
                 closedProjects.add(project);
             }

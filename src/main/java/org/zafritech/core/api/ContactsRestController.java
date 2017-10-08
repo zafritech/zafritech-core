@@ -15,7 +15,6 @@ import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import org.springframework.web.bind.annotation.RestController;
 import org.zafritech.core.data.domain.Country;
 import org.zafritech.core.data.repositories.CountryRepository;
-import org.zafritech.core.services.InitService;
 
 
 /**
@@ -28,9 +27,6 @@ public class ContactsRestController {
     @Autowired
     private CountryRepository countryRepository;
  
-    @Autowired
-    private InitService initService;
-
     @RequestMapping(value = "/api/contacts/countries/list", method = GET)
     public ResponseEntity<List<Country>> getCountriesList(Model model) {
         

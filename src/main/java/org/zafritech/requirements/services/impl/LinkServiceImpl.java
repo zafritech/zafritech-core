@@ -71,7 +71,8 @@ public class LinkServiceImpl implements LinkService {
                              sourceDocument,
                              destinationItem,
                              destinationDocument,
-                             linkTypeRepository.findOne(linkDao.getLinkTypeId())); 
+                             linkTypeRepository.findOne(linkDao.getLinkTypeId()),
+                             linkDao.getLinkComment()); 
         
         link.setLinkGroup(group); 
         link = linkRepository.save(link);

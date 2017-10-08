@@ -5,6 +5,7 @@
  */
 package org.zafritech.core.contollers;
 
+import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,6 +19,7 @@ import org.zafritech.core.data.repositories.FolderRepository;
 import org.zafritech.core.data.repositories.FolderTypeRepository;
 import org.zafritech.core.data.repositories.ProjectRepository;
 import org.zafritech.core.services.ClaimService;
+import org.zafritech.core.services.UserService;
 import org.zafritech.core.services.UserStateService;
 
 /**
@@ -37,6 +39,10 @@ public class ProjectController {
     private ProjectRepository projectRepository;
     
     @Autowired
+    private UserService userService;
+    
+    
+    @Autowired
     private ClaimService claimService;
     
     @Autowired
@@ -45,7 +51,19 @@ public class ProjectController {
     @RequestMapping(value = {"/projects", "/projects/list"})
     public String getProjectsList(Model model) {
         
-        List<Project> projects = projectRepository.findAllByOrderByProjectName();
+        User user = userService.loggedInUser();
+        boolean isAdmin = userService.hasRole("ROLE_ADMIN");
+        List<Project> allProjects = projectRepository.findAllByOrderByProjectName();
+        
+        List<Project> projects = new ArrayList<>();
+        
+        for (Project project : allProjects) {
+            
+            if (isAdmin || claimService.isProjectMember(user, project)){
+                
+                projects.add(project);
+            }
+        }
         
         model.addAttribute("projects", projects);
         

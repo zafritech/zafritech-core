@@ -855,6 +855,7 @@ function RequirementItemLinkCreate(itemId) {
                         data['dstDocumentId'] = document.getElementById('dstDocumentId').value;
                         data['linkTypeId'] = document.getElementById('linkTypeId').value;
                         data['dstItemId'] = document.getElementById('dstItemId').value;
+                        data['linkComment'] = document.getElementById('linkComment').value;
                         
                         $.ajax({
 
@@ -1386,6 +1387,8 @@ function onReferenceSourceChange() {
         $('#projectReferenceId').empty();
         $('#linkReferenceValue').prop('value', "");
         
+        zTreeReferencesLoad();
+        
     } else if (source === "URL_LINK") {
         
         $('#projectRow').hide();
@@ -1395,5 +1398,72 @@ function onReferenceSourceChange() {
         $('#projectReferenceId').empty();
         $('#libraryReferenceId').empty();
     }
+}
+
+function zTreeReferencesLoad() {
+   
+    var zTreeObj;
     
+    var setting = {
+        data: {
+            simpleData: {
+                enable: true,
+                idKey: "id",
+                pIdKey: "pId",
+                rootPId: 0
+            }
+        },
+        view: {
+            dblClickExpand: true
+        },
+        callback: {
+
+            beforeClick: zTreeReferencesBeforeClick,
+            onClick: zTreeReferencesOnClick
+        }
+    };
+
+    $.ajax({
+
+        global: false,
+        url: '/api/library/folders/tree/list',
+        type: "GET",
+        dataType: "json",
+        success: function (data) {
+
+            zTreeObj = $.fn.zTree.init($("#itemReferenceDocumentSelector"), setting, data);
+        }
+    }); 
+}
+
+function zTreeReferencesBeforeClick(treeId, treeNode) {
+    
+//    alert(treeNode.id);
+}
+
+function zTreeReferencesOnClick(event, treeId, treeNode, clickFlag) {
+    
+    var folderId = treeNode.id;
+    
+    $.ajax({
+
+        global: false,
+        url: '/api/library/folder/items/get/' + folderId,
+        type: "GET",
+        dataType: "json",
+        success: function (data) {
+            
+            console.log(data);
+            
+            var selectReferences = '';
+
+            $.each(data, function (key, index) {
+
+                selectReferences = selectReferences + '<option value="' + index.id + '">' + index.identifier + ': ' + index.itemTitle + '</option>';
+            });
+
+            $('#libraryReferenceId').empty();
+            $('#libraryReferenceId').append(selectReferences);
+        }
+    });
 }

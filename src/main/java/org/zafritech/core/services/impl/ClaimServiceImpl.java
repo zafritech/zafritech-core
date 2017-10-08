@@ -141,6 +141,24 @@ public class ClaimServiceImpl implements ClaimService {
     }
 
     @Override
+    public boolean isProjectMember(User user, Project project) {
+        
+        ClaimType claimType = claimTypeRepository.findByTypeName("PROJECT_MEMBER");
+        Claim projectClaim = claimRepository.findFirstByClaimTypeAndClaimValue(claimType, project.getId());
+        List<UserClaim> userClaims = userClaimRepository.findByClaim(projectClaim);
+        
+        for (UserClaim userClaim : userClaims) {
+            
+            if (userClaim.getUser() == user) {
+                
+                return true;
+            }
+        }
+        
+        return false;
+    }
+    
+    @Override
     public List<User> findProjectMemberClaims(Project project) {
         
         List<User> members = new ArrayList<>();

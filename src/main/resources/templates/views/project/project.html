@@ -38,9 +38,9 @@
                                 <div class="pull-right dropdown">
                                   <button type="button" data-toggle="dropdown" class="btn btn-default btn-flat btn-flat-icon"><em class="ion-android-more-vertical"></em></button>
                                   <ul role="menu" class="dropdown-menu md-dropdown-menu dropdown-menu-right">
-                                    <li><a href="javascript:void(0);" th:onclick="'javascript:ProjectEditProperties(\'' + ${project.uuId} + '\')'"><em class="ion-edit icon-fw"></em>Edit Properties</a></li>
+                                    <li sec:authorize="hasRole('ROLE_ADMIN')"><a href="javascript:void(0);" th:onclick="'javascript:ProjectEditProperties(\'' + ${project.uuId} + '\')'"><em class="ion-edit icon-fw"></em>Edit Properties</a></li>
                                     <li><a href="javascript:void(0);" th:onclick="'javascript:ProjectManageMembers(\'' + ${project.uuId} + '\')'"><em class="ion-person-add icon-fw"></em>Add Members</a></li>
-                                    <li><a href="javascript:void(0);" th:onclick="'javascript:notYetImplemented();'"><em class="ion-settings icon-fw"></em>Tasks</a></li>
+                                    <li><a href="javascript:void(0);" th:onclick="'javascript:notYetImplemented();'"><em class="ion-settings icon-fw"></em>Project Tasks</a></li>
                                     <li><a href="/projects"><em class="ion-navicon-round icon-fw"></em>Projects List</a></li>
                                     <li><a th:href="'/projects/close/' + ${project.uuId}"><em class="ion-close icon-fw"></em>Close Project</a></li>
                                   </ul>

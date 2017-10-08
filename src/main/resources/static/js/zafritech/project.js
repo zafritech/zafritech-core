@@ -1707,9 +1707,6 @@ function ProjectManageMembers(uuId) {
                             members.push(member);
                         }
                         
-                        console.log(members);
-                        console.log(JSON.stringify(members));
-                        
                         $.ajax({
 
                             global: false,

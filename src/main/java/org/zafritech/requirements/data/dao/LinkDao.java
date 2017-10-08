@@ -17,9 +17,11 @@ public class LinkDao {
     
     private Long dstDocumentId;
     
+    private Long dstItemId;
+    
     private Long linkTypeId;
     
-    private Long dstItemId;
+    private String linkComment;
 
     public LinkDao() {
         
@@ -55,6 +57,14 @@ public class LinkDao {
 
     public void setLinkTypeId(Long linkTypeId) {
         this.linkTypeId = linkTypeId;
+    }
+
+    public String getLinkComment() {
+        return linkComment;
+    }
+
+    public void setLinkComment(String linkComment) {
+        this.linkComment = linkComment;
     }
 
     public Long getDstItemId() {

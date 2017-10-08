@@ -52,7 +52,7 @@
                                                     <button type="button" data-toggle="dropdown" class="btn btn-default btn-flat btn-flat-icon"><em class="ion-android-more-vertical"></em></button>
                                                     <ul role="menu" class="dropdown-menu md-dropdown-menu dropdown-menu-right">
                                                         <li><a th:href="@{/projects/} + ${project.uuId}"><em class="ion-document-text icon-fw"></em>Open Project</a></li>
-                                                        <li><a href="javascript:void(0);" th:onclick="'javascript:ProjectEditProperties(\'' + ${project.uuId} + '\')'"><em class="ion-edit icon-fw"></em>Properties</a></li>
+                                                        <li sec:authorize="hasRole('ROLE_ADMIN')"><a href="javascript:void(0);" th:onclick="'javascript:ProjectEditProperties(\'' + ${project.uuId} + '\')'"><em class="ion-edit icon-fw"></em>Properties</a></li>
                                                     </ul>
                                                 </div>
                                                 <!-- END dropdown-->

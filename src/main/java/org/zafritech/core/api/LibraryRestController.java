@@ -25,6 +25,7 @@ import org.zafritech.core.data.dao.LibraryItemDao;
 import org.zafritech.core.data.dao.ValuePairDao;
 import org.zafritech.core.data.domain.Folder;
 import org.zafritech.core.data.domain.LibraryItem;
+import org.zafritech.core.data.domain.Project;
 import org.zafritech.core.data.repositories.FolderRepository;
 import org.zafritech.core.data.repositories.FolderTypeRepository;
 import org.zafritech.core.data.repositories.LibraryItemRepository;
@@ -65,8 +66,16 @@ public class LibraryRestController {
         return foldersTree;
     }
     
+    @RequestMapping(value = "/api/library/folder/items/get/{id}", method = GET)
+    public ResponseEntity<List<LibraryItem>> getLibraryFolderItems(@PathVariable Long id) {
+        
+        List<LibraryItem> items = libraryItemRepository.findByFolderOrderByItemTitleAsc(folderRepository.findOne(id)); 
+
+        return new ResponseEntity<List<LibraryItem>>(items, HttpStatus.OK);
+    }
+    
     @RequestMapping(value = "/api/library/folder/items/list/{id}", method = GET)
-    public ModelAndView getLibraryFolderItems(@PathVariable Long id) {
+    public ModelAndView getLibraryFolderModel(@PathVariable Long id) {
         
         List<Folder> folders = folderRepository.findByParentOrderByFolderNameAsc(folderRepository.findOne(id)); 
         List<LibraryItem> libraryItems = libraryItemRepository.findByFolderOrderByItemTitleAsc(folderRepository.findOne(id)); 

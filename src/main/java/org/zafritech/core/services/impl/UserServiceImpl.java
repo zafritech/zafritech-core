@@ -12,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -69,6 +71,23 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         User user = userRepository.findByUserName(name);
 
         return user;
+    }
+ 
+    @Override
+    public boolean hasRole(String roleName) {
+        
+        SecurityContext context = SecurityContextHolder.getContext();
+        if (context == null) return false;
+        
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication == null) return false;
+        
+        for (GrantedAuthority auth : authentication.getAuthorities()) {
+            
+            if (roleName.equals(auth.getAuthority())) return true;
+        }
+        
+        return false;
     }
     
     @Override

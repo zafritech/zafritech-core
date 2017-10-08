@@ -25,6 +25,8 @@ public class DocumentReference implements Serializable {
 
     private String uuId;
     
+    private String docRefId;
+    
     @ManyToOne
     @JoinColumn(name = "referenceId")
     @JsonBackReference
@@ -45,7 +47,21 @@ public class DocumentReference implements Serializable {
         
     }
 
-    public DocumentReference(Reference reference, Document document, ReferenceTypes referenceType) {
+    public DocumentReference(Reference reference, 
+                             Document document, 
+                             ReferenceTypes referenceType) {
+        
+        this.uuId = UUID.randomUUID().toString();
+        this.reference = reference;
+        this.document = document;
+        this.referenceType = referenceType;
+        this.creationDate = new Timestamp(System.currentTimeMillis());
+    }
+
+    public DocumentReference(String docRefId, 
+                             Reference reference, 
+                             Document document, 
+                             ReferenceTypes referenceType) {
         
         this.uuId = UUID.randomUUID().toString();
         this.reference = reference;
@@ -72,6 +88,14 @@ public class DocumentReference implements Serializable {
 
     public void setUuId(String uuId) {
         this.uuId = uuId;
+    }
+
+    public String getDocRefId() {
+        return docRefId;
+    }
+
+    public void setDocRefId(String docRefId) {
+        this.docRefId = docRefId;
     }
 
     public Reference getReference() {

@@ -242,9 +242,15 @@
                             <li><a href="javascript:void(0);" th:onclick="'javascript:RequirementItemEditItem(\'' + ${item.id} + '\');'"><em class="ion-edit icon-fw"></em>Edit Item</a></li>
                             <li><a href="javascript:void(0);" th:onclick="'javascript:RequirementItemMoveItem(\'' + ${item.id} + '\',\'UP\');'"><em class="ion-arrow-up-a icon-fw"></em>Move Item Up</a></li>
                             <li><a href="javascript:void(0);" th:onclick="'javascript:RequirementItemMoveItem(\'' + ${item.id} + '\',\'DOWN\');'"><em class="ion-arrow-down-a icon-fw"></em>Move Item Down</a></li>
+                            <li th:if="${!item.outLinks.isEmpty()}">
+                                <a href="javascript:void(0);" th:onclick="'javascript:notYetImplemented();'">
+                                    <em class="ion-link icon-fw"></em>Edit Link(s)
+                                </a>
+                            </li>
                             <li th:if="${item.itemClass} == 'REQUIREMENT'">
                                 <a href="javascript:void(0);" th:onclick="'javascript:RequirementItemLinkCreate(\'' + ${item.id} + '\');'">
-                                    <em class="ion-link icon-fw"></em>Create Link</a>
+                                    <em class="ion-link icon-fw"></em>Create Link
+                                </a>
                             </li>
                             <li th:if="${item.itemClass == 'REQUIREMENT'} and ${item.document.status.name() == 'REVIEW'}">
                                 <a href="javascript:void(0);" th:onclick="'javascript:RequirementItemCommentCreate(\'' + ${item.id} + '\');'">

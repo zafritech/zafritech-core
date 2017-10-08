@@ -27,6 +27,8 @@ public interface ClaimService {
     
     void removeUserClaims(String entityType, Long claimValue);
     
+    boolean isProjectMember(User user, Project project);
+    
     List<User> findProjectMemberClaims(Project project);
     
     List<Project> findProjectMemberships(User user);

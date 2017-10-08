@@ -18,6 +18,8 @@ import org.zafritech.core.data.domain.UserClaim;
 public interface UserService {
     
     User loggedInUser();
+    
+    boolean hasRole(String roleName);
        
     List<User> allUser();
     

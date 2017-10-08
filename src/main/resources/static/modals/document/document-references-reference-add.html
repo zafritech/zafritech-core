@@ -32,10 +32,16 @@
     </div>
     
     <div class="row" id="libraryRow">
-        <div class="col-sm-12">
+        <div class="col-sm-4">
+            <div class="form-group">
+                <ul id ="itemReferenceDocumentSelector" class="ztree"></ul>
+            </div>
+        </div>
+        <div class="col-sm-8">
             <div class="form-group">
                 <label>Library Reference</label>
-                <select id="libraryReferenceId" name="libraryReferenceId" class="form-control"></select>
+                <!--<select id="libraryReferenceId" name="libraryReferenceId" class="form-control"></select>-->
+                <select id='libraryReferenceId' name='libraryReferenceId' multiple="multiple" class="form-control" style="height: 200px;"></select>
             </div>
         </div>
     </div>

@@ -50,6 +50,9 @@ public class Link implements Serializable {
     @JoinColumn(name = "linkTypeId")
     private LinkType linkType;
     
+    @Column(columnDefinition = "TEXT")
+    private String linkComment;
+    
     @Temporal(TemporalType.TIMESTAMP)
     private Date creationDate;
     
@@ -86,6 +89,24 @@ public class Link implements Serializable {
         this.dstItem = dstItem;
         this.dstDocument = dstDocument;
         this.linkType = linkType;
+        this.creationDate = new Timestamp(System.currentTimeMillis());
+        this.dstItemChanged = false;
+    }
+
+    public Link(Item srcItem, 
+                Document srcDocument, 
+                Item dstItem, 
+                Document dstDocument, 
+                LinkType linkType,
+                String linkComment) {
+        
+        this.uuId = UUID.randomUUID().toString();
+        this.srcItem = srcItem;
+        this.srcDocument = srcDocument;
+        this.dstItem = dstItem;
+        this.dstDocument = dstDocument;
+        this.linkType = linkType;
+        this.linkComment = linkComment;
         this.creationDate = new Timestamp(System.currentTimeMillis());
         this.dstItemChanged = false;
     }
