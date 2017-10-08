@@ -33,9 +33,6 @@ function zTreeLibraryLoad() {
 
             beforeClick: zTreeLibraryBeforeClick,
             onClick: zTreeLibraryOnClick
-//            beforeRightClick: zTreeProjectBeforeRightClick,
-//            onRightClick: zTreeProjectOnRightClick,
-//            onDblClick: zTreeProjectOnDblClick
         }
     };
 
@@ -49,10 +46,10 @@ function zTreeLibraryLoad() {
 
             var currentNode = '';
             
-            zTreeObj = $.fn.zTree.init($("#mainFolderTree"), setting, data);
-            $('#mainTreeHeaderLabel').text("Library");
-            $('#subTreeHeaderElement').hide();
-            $('#noOpenProjects').hide();
+            zTreeObj = $.fn.zTree.init($("#libraryFolderTree"), setting, data);
+//            $('#mainTreeHeaderLabel').text("Library");
+//            $('#subTreeHeaderElement').hide();
+//            $('#noOpenProjects').hide();
             
             // Expand current zTree node
             if ($('#nodeId').length > 0 && $('#nodeId').val().length !== 0) {
@@ -77,7 +74,7 @@ function zTreeLibraryLoad() {
 // Toggle open/close on clicking a parent node
 function zTreeLibraryBeforeClick(treeId, treeNode) {
     
-    var treeObj = $.fn.zTree.getZTreeObj("mainFolderTree");
+    var treeObj = $.fn.zTree.getZTreeObj("libraryFolderTree");
     
     if (treeNode.isParent) {
         
@@ -104,7 +101,7 @@ function loadLibraryItems(folderId) {
 
 function openFolder(folderId) {
      
-    var zTreeObj = $.fn.zTree.getZTreeObj("mainFolderTree");
+    var zTreeObj = $.fn.zTree.getZTreeObj("libraryFolderTree");
     var node = zTreeObj.getNodeByParam("id", folderId, null);
     
     $('#libraryFolderTitle').text(buildBreadCrumbsString(node));
@@ -113,7 +110,7 @@ function openFolder(folderId) {
 
 function buildBreadCrumbsString(treeNode) {
     
-    var zTreeObj = $.fn.zTree.getZTreeObj("mainFolderTree");
+    var zTreeObj = $.fn.zTree.getZTreeObj("libraryFolderTree");
     var breadCrumbs = treeNode.name;
     var nodeId = treeNode.pId;
     
