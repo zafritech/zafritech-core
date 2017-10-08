@@ -5,6 +5,7 @@
  */
 package org.zafritech.core.services.impl;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -84,6 +85,11 @@ public class UserStateServiceImpl implements UserStateService {
             
             UserEntityState newState = new UserEntityState(pk);
             stateRepository.save(newState);
+            
+        } else {
+            
+            state.setUpdateDate(new Timestamp(System.currentTimeMillis())); 
+            stateRepository.save(state);
         }
         
         List<UserEntityState> documents = stateRepository.findByStateKeyUserIdAndStateKeyEntityTypeOrderByUpdateDateDesc(userService.loggedInUser().getId(), 

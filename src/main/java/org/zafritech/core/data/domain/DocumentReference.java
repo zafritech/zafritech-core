@@ -64,6 +64,7 @@ public class DocumentReference implements Serializable {
                              ReferenceTypes referenceType) {
         
         this.uuId = UUID.randomUUID().toString();
+        this.docRefId = docRefId;
         this.reference = reference;
         this.document = document;
         this.referenceType = referenceType;

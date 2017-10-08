@@ -10,10 +10,12 @@ import org.springframework.stereotype.Service;
 import org.zafritech.core.data.dao.ReferenceDao;
 import org.zafritech.core.data.domain.Document;
 import org.zafritech.core.data.domain.DocumentReference;
+import org.zafritech.core.data.domain.LibraryItem;
 import org.zafritech.core.data.domain.Reference;
 import org.zafritech.core.data.domain.UrlLink;
 import org.zafritech.core.data.repositories.DocumentReferenceRepository;
 import org.zafritech.core.data.repositories.DocumentRepository;
+import org.zafritech.core.data.repositories.LibraryItemRepository;
 import org.zafritech.core.data.repositories.ReferenceRepository;
 import org.zafritech.core.data.repositories.UrlLinkRepository;
 import org.zafritech.core.enums.ReferenceSources;
@@ -39,28 +41,33 @@ public class ReferenceServiceImpl implements ReferenceService {
     @Autowired
     private UrlLinkRepository urlLinkRepository;
     
+    @Autowired
+    private LibraryItemRepository libRepository;
+    
     @Override
     public Reference addDocumentReference(ReferenceDao refDao) {
         
         Reference reference = null; 
         DocumentReference documentReference;
+        Document document = documentRepository.findOne(refDao.getDocumentId());
+        String docRefId = getNextDocumentReferenceId(document);
                 
         switch(refDao.getSource()) {
             
             case "PROJECT":
                 
-                Document document = documentRepository.findOne(refDao.getDocumentId());
+                Document refDocument = documentRepository.findOne(refDao.getProjectRefId());
                 
-                reference = referenceRepository.findBySourceTypeAndIdValue(ReferenceSources.valueOf(refDao.getSource()), refDao.getDocumentId());
+                reference = referenceRepository.findBySourceTypeAndIdValue(ReferenceSources.valueOf(refDao.getSource()), refDao.getProjectRefId());
                 
                 if (reference == null) {
                     
                     reference = new Reference(ReferenceSources.valueOf(refDao.getSource()), 
-                                              refDao.getDocumentId(),
-                                              document.getIdentifier(), 
-                                              document.getDocumentLongName(), 
-                                              document.getDocumentIssue(),
-                                              document.getProject().getProjectSponsor().getCompanyShortName());
+                                              refDao.getProjectRefId(),
+                                              refDocument.getIdentifier(), 
+                                              refDocument.getDocumentLongName(), 
+                                              refDocument.getDocumentIssue(),
+                                              refDocument.getProject().getProjectSponsor().getCompanyShortName());
                     
                     reference = referenceRepository.save(reference);
                 }
@@ -73,7 +80,15 @@ public class ReferenceServiceImpl implements ReferenceService {
                 
                 if (reference == null) {
                     
-                    reference = new Reference(ReferenceSources.valueOf(refDao.getSource()), refDao.getLibraryRefId());
+                    LibraryItem libItem = libRepository.findOne(refDao.getLibraryRefId());
+                    
+                    reference = new Reference(ReferenceSources.valueOf(refDao.getSource()), 
+                                              refDao.getLibraryRefId(),
+                                              libItem.getIdentifier(),
+                                              libItem.getItemTitle(),
+                                              libItem.getVersion(),
+                                              libItem.getAuthors());
+                    
                     reference = referenceRepository.save(reference);
                 }
                 
@@ -98,12 +113,30 @@ public class ReferenceServiceImpl implements ReferenceService {
                 break;
         }
 
-        documentReference = new DocumentReference(reference, 
+        documentReference = new DocumentReference(docRefId,
+                                                  reference, 
                                                   documentRepository.findOne(refDao.getDocumentId()), 
                                                   ReferenceTypes.valueOf(refDao.getReferenceType())); 
 
         documentReferenceRepository.save(documentReference);
 
         return reference;
+    }
+    
+    private String getNextDocumentReferenceId(Document document) {
+        
+        String docRefId = "RD 01";
+        
+        DocumentReference docReference = documentReferenceRepository.findFirstByDocumentOrderByDocRefIdDesc(document);
+        
+        if (docReference != null) {
+        
+            String docRefString = docReference.getDocRefId();
+            String[] docRefArray = docRefString.split("\\s+");
+            docRefId = docRefArray[0] + " " + String.format("%02d", Integer.valueOf(docRefArray[1]) + 1);
+            
+        }
+        
+        return docRefId;
     }
 }

@@ -1242,13 +1242,13 @@ function RequirementItemAddReference(documentId, itemId, referenceType) {
                              
                             // Issue specific jQuery POST 
                             data['projectRefId'] = null;
-                            data['libraryRefId'] = document.getElementById('libraryRefId').value;
+                            data['libraryRefId'] = document.getElementById('libraryReferenceId').value;
                             data['linkRefId'] = null;
                             data['linkRefIdentifier'] = null;
                             data['linkRefTitle'] = null;
                             data['linkRefUrl'] = null;
                             data['linkRefAuthority'] = null;
-                             
+                            
                         } else if (data['source'] === "URL_LINK") {
                              
                             // Issue specific jQuery POST 
@@ -1260,7 +1260,7 @@ function RequirementItemAddReference(documentId, itemId, referenceType) {
                             data['linkRefUrl'] = document.getElementById('linkRefUrl').value;
                             data['linkRefAuthority'] = document.getElementById('linkReferenceAuthority').value;
                         }
-                        
+
                         $.ajax({
 
                             type: "POST",
@@ -1272,12 +1272,12 @@ function RequirementItemAddReference(documentId, itemId, referenceType) {
                             success: function () {
 
                                 swal({
-                                    
+
                                     title: "Success!",
                                     text: "Reference has been successfully added.",
                                     type: "success"
                                 });
-                                
+
                                 location.reload();
                             }
                         });
@@ -1298,8 +1298,6 @@ function RequirementItemAddReference(documentId, itemId, referenceType) {
                 })
                 .done(function (data) {
             
-                    console.log(data);
-                    
                     var projectId = data.id;
                     
                     // Clear INPUT and TEXTAREA controls
@@ -1438,7 +1436,12 @@ function zTreeReferencesLoad() {
 
 function zTreeReferencesBeforeClick(treeId, treeNode) {
     
-//    alert(treeNode.id);
+    var treeObj = $.fn.zTree.getZTreeObj("itemReferenceDocumentSelector");
+    
+    if (treeNode.isParent) {
+        
+        treeObj.expandNode(treeNode, null, null, null);
+    }
 }
 
 function zTreeReferencesOnClick(event, treeId, treeNode, clickFlag) {
@@ -1452,8 +1455,6 @@ function zTreeReferencesOnClick(event, treeId, treeNode, clickFlag) {
         type: "GET",
         dataType: "json",
         success: function (data) {
-            
-            console.log(data);
             
             var selectReferences = '';
 

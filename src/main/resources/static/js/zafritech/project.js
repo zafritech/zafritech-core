@@ -1586,7 +1586,7 @@ function OpenProject() {
                     
                     if (result) {
                         
-                        window.location.href = "/projects/" + document.getElementById('projectId').value;
+                        window.location.href = "/projects/" + document.getElementById('openProjectId').value;
                     }
                 }
             });
@@ -1602,16 +1602,16 @@ function OpenProject() {
                     cache: false
                 })
                 .done(function (data) {
-                    
+            
                     var selectOptions = '';
                     
                     $.each(data, function (key, index) {
-
+                    
                         selectOptions = selectOptions + '<option value="' + index.uuId + '">' + index.projectNumber + ": " + index.projectName + '</option>';
                     });
 
-                    $('#projectId').empty();
-                    $('#projectId').append(selectOptions);
+                    $('#openProjectId').empty();
+                    $('#openProjectId').append(selectOptions);
                 });
             });
             
