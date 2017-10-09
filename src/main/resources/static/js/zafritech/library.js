@@ -47,10 +47,7 @@ function zTreeLibraryLoad() {
             var currentNode = '';
             
             zTreeObj = $.fn.zTree.init($("#libraryFolderTree"), setting, data);
-//            $('#mainTreeHeaderLabel').text("Library");
-//            $('#subTreeHeaderElement').hide();
-//            $('#noOpenProjects').hide();
-            
+
             // Expand current zTree node
             if ($('#nodeId').length > 0 && $('#nodeId').val().length !== 0) {
 
@@ -67,6 +64,7 @@ function zTreeLibraryLoad() {
             zTreeObj.expandNode(currentNode, true, false, true);
             
             loadLibraryItems(currentNode.id);
+            $('#collapseLibrary').collapse('show');
         }
     });
 }

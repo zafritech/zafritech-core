@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+
+    <body>
+        
+        <div th:fragment="side-nav">
+            
+            <!-- sidebar-->
+            <aside class="sidebar-master-container">
+                <div class="sidebar-content">
+                    
+                    <!-- START Accordion -->
+                    <div class="panel-group" id="accordion">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h4 class="panel-title">
+                                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseMenu">
+                                        <span class="glyphicon glyphicon-th"></span>
+                                        <span id="mainMenuLabel">Menu</span>
+                                    </a>
+                                </h4>
+                            </div>
+                            <div id="collapseMenu" class="panel-collapse collapse">
+                                <div class="panel-body">
+                                    <div class="col-sm-12" style="padding: 0 5px; border-bottom: 1px solid #ddd;">
+                                        <div class="pull-right dropdown" style="padding-top: 5px;">
+                                            <button type="button" data-toggle="dropdown" class="btn btn-default btn-flat btn-flat-icon">
+                                                <em class="ion-android-more-vertical"></em>
+                                            </button>
+                                            <ul role="menu" class="dropdown-menu md-dropdown-menu dropdown-menu-right">
+                                                <li sec:authorize="hasRole('ROLE_ADMIN')" style="border-bottom: 1px solid #ddd;"><a href="javascript:void(0);" th:onclick="'javascript:ProjectCreateNew();'"><em class="ion-plus icon-fw"></em>New Project</a></li>
+                                                <li style="border-bottom: 1px solid #ddd;"><a href="javascript:void(0);" th:onclick="'javascript:OpenProject();'"><em class="fa fa-folder-open fa-fw"></em>Open Project</a></li>
+                                                <li style="border-bottom: 1px solid #ddd;"><a href="/projects"><em class="fa fa-list fa-fw"></em>List Projects</a></li>
+                                                <li><a href="javascript:void(0);" th:onclick="'javascript:CloseAllProject();'"><em class="ion-close-round icon-fw"></em>Close All Projects</a></li>
+                                            </ul>
+                                        </div>
+                                        <div style="padding: 8px 0;"><em class="ion-filing icon-fw"></em> Projects</div>
+                                    </div>
+                                    <div class="col-sm-12" style="padding: 0 5px; border-bottom: 1px solid #ddd;">
+                                        <div class="pull-right dropdown" style="padding-top: 5px;">
+                                            <button type="button" data-toggle="dropdown" class="btn btn-default btn-flat btn-flat-icon">
+                                                <em class="ion-android-more-vertical"></em>
+                                            </button>
+                                            <ul role="menu" class="dropdown-menu md-dropdown-menu dropdown-menu-right">
+                                                <li style="border-bottom: 1px solid #ddd;"><a href="javascript:void(0);" th:onclick="'javascript:OpenDocument();'"><em class="fa fa-file-text-o fa-fw"></em>Open Document</a></li>
+                                                <li style="border-bottom: 1px solid #ddd;"><a href="javascript:void(0);" th:onclick="'javascript:RecentDocuments();'"><em class="fa fa-history fa-fw"></em>Recent Documents</a></li>
+                                                <li style="border-bottom: 1px solid #ddd;"><a href="javascript:void(0);" th:onclick="'javascript:notYetImplemented();'"><em class="ion-close-round icon-fw"></em>Close All Documents</a></li>
+                                                <li><a href="javascript:void(0);" th:onclick="'javascript:notYetImplemented();'"><em class="fa fa-file-text fa-fw"></em>Templates</a></li>
+                                            </ul>
+                                        </div>
+                                        <div style="padding: 8px 0;"><em class="ion-ios-copy icon-fw"></em> Documents</div>
+                                    </div>
+                                    <div class="col-sm-12" style="padding: 0 5px; border-bottom: 1px solid #ddd;">
+                                        <div class="pull-right dropdown" style="padding-top: 5px;">
+                                            <button type="button" data-toggle="dropdown" class="btn btn-default btn-flat btn-flat-icon">
+                                                <em class="ion-android-more-vertical"></em>
+                                            </button>
+                                            <ul role="menu" class="dropdown-menu md-dropdown-menu dropdown-menu-right">
+                                                <li style="border-bottom: 1px solid #ddd;"><a href="javascript:void(0);" th:onclick="'javascript:notYetImplemented();'"><em class="fa fa-link fa-fw"></em>Tracebility Reports</a></li>
+                                                <li style="border-bottom: 1px solid #ddd;"><a href="javascript:void(0);" th:onclick="'javascript:notYetImplemented();'"><em class="fa fa-bar-chart fa-fw"></em>Requirements Metrics</a></li>
+                                                <li><a href="javascript:void(0);" th:onclick="'javascript:notYetImplemented();'"><em class="fa fa-area-chart fa-fw"></em>Coverage Analysis</a></li>
+                                            </ul>
+                                        </div>
+                                        <div style="padding: 8px 0;"><em class="ion-wrench icon-fw"></em> Tools</div>
+                                    </div>
+                                    <div sec:authorize="hasRole('ROLE_ADMIN')" class="col-sm-12" style="padding: 0 5px;">
+                                        <div class="pull-right dropdown" style="padding-top: 5px;">
+                                            <button type="button" data-toggle="dropdown" class="btn btn-default btn-flat btn-flat-icon">
+                                                <em class="ion-android-more-vertical"></em>
+                                            </button>
+                                            <ul role="menu" class="dropdown-menu md-dropdown-menu dropdown-menu-right">
+                                                <li style="border-bottom: 1px solid #ddd;"><a href="/admin/companies"><em class="fa fa-briefcase fa-fw"></em>Organisation</a></li>
+                                                <li style="border-bottom: 1px solid #ddd;"><a href="/admin/projects"><em class="fa fa-folder fa-fw"></em>Projects</a></li>
+                                                <li><a href="/admin/users"><em class="ion-person-stalker icon-fw"></em>Users</a></li>
+                                                <li><a href="javascript:void(0);" th:onclick="'javascript:SendMessage();'"><em class="ion-android-mail icon-fw"></em>Global Message</a></li>
+                                                <li><a href="/admin/messages/template/editor"><em class="ion-android-drafts icon-fw"></em>Message Templates</a></li>
+                                            </ul>
+                                        </div>
+                                        <div style="padding: 8px 0;"><em class="ion-settings icon-fw"></em> Admin</div>
+                                    </div>
+                                    <div sec:authorize="hasRole('ROLE_ADMIN')" class="col-sm-12" style="padding: 0 5px;">
+                                        <div class="pull-right dropdown" style="padding-top: 5px;">
+                                            <button type="button" data-toggle="dropdown" class="btn btn-default btn-flat btn-flat-icon">
+                                                <em class="ion-android-more-vertical"></em>
+                                            </button>
+                                            <ul role="menu" class="dropdown-menu md-dropdown-menu dropdown-menu-right">
+                                                <li style="border-bottom: 1px solid #ddd;"><a href="javascript:void(0);" th:onclick="'javascript:notYetImplemented();'"><em class="ion-earth icon-fw"></em>Global Settings</a></li>
+                                                <li style="border-bottom: 1px solid #ddd;"><a href="javascript:void(0);" th:onclick="'javascript:notYetImplemented();'"><em class="fa fa-folder fa-fw"></em>Projects Settings</a></li>
+                                                <li style="border-bottom: 1px solid #ddd;"><a href="javascript:void(0);" th:onclick="'javascript:notYetImplemented();'"><em class="fa fa-file-text-o fa-fw"></em>Document Dettings</a></li>
+                                                <li><a href="javascript:void(0);" th:onclick="'javascript:notYetImplemented();'"><em class="ion-android-alarm-clock icon-fw"></em>Scheduler</a></li>
+                                            </ul>
+                                        </div>
+                                        <div style="padding: 8px 0;"><em class="ion-android-options icon-fw"></em> Settings</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h4 class="panel-title">
+                                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseLibrary">
+                                        <span class="glyphicon glyphicon-folder-close"></span>
+                                        <span id="libraryTreeHeaderLabel">Library</span>
+                                    </a>
+                                </h4>
+                            </div>
+                            <div id="collapseLibrary" class="panel-collapse collapse">
+                                <div class="panel-body">
+                                    
+                                    <div>
+                                        <ul id="libraryFolderTree" class="ztree"></ul>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h4 class="panel-title">
+                                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseNavigator">
+                                        <span class="glyphicon glyphicon-globe"></span>
+                                        <span id="mainNavigatorLabel">Navigator</span>
+                                    </a>
+                                </h4>
+                            </div>
+                            <div id="collapseNavigator" class="panel-collapse collapse">
+                                <div class="panel-body">
+                                    <table class="table">
+                                        <tr style="border-bottom: 1px solid #ddd;">
+                                            <td>
+                                                <span class="glyphicon glyphicon-dashboard"></span>
+                                                <a href="/dashboard">Dashboard</a>
+                                            </td>
+                                        </tr>
+                                        <tr style="border-bottom: 1px solid #ddd;">
+                                            <td>
+                                                <span class="glyphicon glyphicon-stats"></span>
+                                                <a href="javascript:void(0);" th:onclick="'javascript:notYetImplemented();'">Statistics</a>
+                                            </td>
+                                        </tr>
+                                        <tr style="border-bottom: 1px solid #ddd;">
+                                            <td>
+                                                <span class="glyphicon glyphicon-tasks"></span>
+                                                <a href="/tasks">Tasks</a>
+                                            </td>
+                                        </tr>
+                                        <tr style="border-bottom: 1px solid #ddd;">
+                                            <td>
+                                                <span class="glyphicon glyphicon-envelope"></span>
+                                                <a href="/messages">Messages</a>
+                                            </td>
+                                        </tr>
+                                        <tr style="border-bottom: 1px solid #ddd;">
+                                            <td>
+                                                <span class="glyphicon glyphicon-bell"></span>
+                                                <a href="/messages">Alerts</a>
+                                            </td>
+                                        </tr>
+                                        <tr style="border-bottom: 1px solid #ddd;">
+                                            <td style="padding: 8px 0 0 16px;">
+                                                <div class="pull-right dropdown">
+                                                    <button type="button" data-toggle="dropdown" class="btn btn-default btn-flat btn-flat-icon">
+                                                        <em class="ion-android-more-vertical"></em>
+                                                    </button>
+                                                    <ul role="menu" class="dropdown-menu md-dropdown-menu dropdown-menu-right">
+                                                        <li style="border-bottom: 1px solid #ddd;"><a href="/library"><em class="fa fa-book icon-fw"></em>Library</a></li>
+                                                        <li style="border-bottom: 1px solid #ddd;"><a href="/docs/references/help"><em class="fa fa-question-circle icon-fw"></em>Online Help</a></li>
+                                                    </ul>
+                                                </div>
+                                                <span style="margin-right: 12px;"><em class="ion-help-buoy"></em></span><a href="javascript:void(0);" th:onclick="'javascript:notYetImplemented();'"> Help</a>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- END Accordion -->
+                    
+                </div>
+            </aside>
+            <div class="sidebar-layout-obfuscator"></div>
+            
+        </div>
+       
+    </body>
+    
+</html>

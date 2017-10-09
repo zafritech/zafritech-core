@@ -403,7 +403,7 @@ public class ItemServiceImpl implements ItemService {
         List<Item> headers = itemRepository.findByDocumentAndItemClassOrderBySortIndexAsc(document, ItemClass.HEADER.name());
        
         ItemTreeDao toc = new ItemTreeDao(0L, null, document.getIdentifier(), true, true, true, 0L); 
-        toc.setIcon("/images/icons/table-icon.png");
+        toc.setIcon("/images/icons/write-icon.png");
         headersTree.add(toc);
         
         for (Item item : headers) {
