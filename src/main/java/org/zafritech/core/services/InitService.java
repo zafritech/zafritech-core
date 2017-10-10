@@ -43,10 +43,6 @@ public interface InitService {
     
     RunOnceTask initSystemVariable();
     
-    RunOnceTask initItemTypes();
-    
-    RunOnceTask initLinkTypes();
-    
     RunOnceTask initLibrary();
     
     RunOnceTask initSnaphots();

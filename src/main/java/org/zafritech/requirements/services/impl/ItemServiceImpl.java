@@ -23,6 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.zafritech.core.data.domain.Document;
 import org.zafritech.core.data.domain.SystemVariable;
 import org.zafritech.core.data.repositories.DocumentRepository;
+import org.zafritech.core.data.repositories.EntityTypeRepository;
 import org.zafritech.core.data.repositories.SystemVariableRepository;
 import org.zafritech.core.enums.SystemVariableTypes;
 import org.zafritech.core.services.FileUploadService;
@@ -33,7 +34,6 @@ import org.zafritech.requirements.data.dao.ItemTreeDao;
 import org.zafritech.requirements.data.domain.Item;
 import org.zafritech.requirements.data.domain.Link;
 import org.zafritech.requirements.data.repositories.ItemRepository;
-import org.zafritech.requirements.data.repositories.ItemTypeRepository;
 import org.zafritech.requirements.enums.ItemClass;
 import org.zafritech.requirements.enums.MediaType;
 import org.zafritech.requirements.services.ItemService;
@@ -55,7 +55,7 @@ public class ItemServiceImpl implements ItemService {
     private ItemRepository itemRepository;
 
     @Autowired
-    private ItemTypeRepository itemTypeRepository;
+    private EntityTypeRepository entityTypeRepository;
 
     @Autowired
     private SystemVariableRepository sysvarRepository;
@@ -72,7 +72,7 @@ public class ItemServiceImpl implements ItemService {
         item.setDocument(documentRepository.findOne(id)); 
         ItemRefDao createDao = createConverter.convert(item);
         
-        createDao.setItemTypes(itemTypeRepository.findAllByOrderByItemTypeLongName());
+        createDao.setItemTypes(entityTypeRepository.findByEntityTypeKeyOrderByEntityTypeNameAsc("ITEM_TYPE_ENTITY"));
         createDao.setIdentPrefices(sysvarRepository.findByOwnerIdAndOwnerTypeAndVariableNameOrderByVariableValue(
                                                     id, 
                                                     "DOCUMENT", 
@@ -255,7 +255,7 @@ public class ItemServiceImpl implements ItemService {
         Item item = new Item(getNextSystemIdentifier(itemDao.getDocumentId()),
                              itemDao.getItemClass().equalsIgnoreCase(ItemClass.REQUIREMENT.name()) ? itemDao.getIdentifier() : null,
                              itemValue,
-                             itemDao.getItemClass().equalsIgnoreCase(ItemClass.REQUIREMENT.name()) ? itemTypeRepository.findOne(itemDao.getItemTypeId()) : null, 
+                             itemDao.getItemClass().equalsIgnoreCase(ItemClass.REQUIREMENT.name()) ? entityTypeRepository.findOne(itemDao.getItemTypeId()) : null, 
                              itemDao.getMediaType(),
                              document,
                              parent);
@@ -302,7 +302,7 @@ public class ItemServiceImpl implements ItemService {
         if (itemDao.getItemClass().equalsIgnoreCase("REQUIREMENT")) {
             
             item.setIdentifier(itemDao.getIdentifier());
-            item.setItemType(itemTypeRepository.findOne(itemDao.getItemTypeId())); 
+            item.setItemType(entityTypeRepository.findOne(itemDao.getItemTypeId())); 
         }
         
         return itemRepository.save(item); 

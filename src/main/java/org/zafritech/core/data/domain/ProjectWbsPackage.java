@@ -19,8 +19,8 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import org.springframework.data.annotation.CreatedDate;
 
-@Entity(name = "CORE_PROJECT_SUB_CATEGORIES")
-public class ProjectSubCategory implements Serializable {
+@Entity(name = "CORE_PROJECT_WBS_PACKAGES")
+public class ProjectWbsPackage implements Serializable {
     
     @Id
     @GeneratedValue
@@ -38,14 +38,14 @@ public class ProjectSubCategory implements Serializable {
     
     @ManyToOne
     @JoinColumn(name = "parentId")
-    private ProjectSubCategory parent;
+    private ProjectWbsPackage parent;
     
     @ManyToOne
     @JoinColumn(name = "leaderId")
     private User categoryLeader;
     
     @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
-    @JoinTable(name = "CORE_PROJECT_SUB_CATEGORY_MEMBERS",
+    @JoinTable(name = "CORE_PROJECT_WBS_MEMBERS",
                joinColumns = {@JoinColumn(name = "category_id", referencedColumnName = "id")},
                inverseJoinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")}
     )
@@ -55,11 +55,11 @@ public class ProjectSubCategory implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date creationDate;
 
-    public ProjectSubCategory() {
+    public ProjectWbsPackage() {
         
     }
 
-    public ProjectSubCategory(Project project, String categoryCode, String categoryName) {
+    public ProjectWbsPackage(Project project, String categoryCode, String categoryName) {
         
         this.uuId = UUID.randomUUID().toString();
         this.project = project;
@@ -68,7 +68,7 @@ public class ProjectSubCategory implements Serializable {
         this.creationDate = new Timestamp(System.currentTimeMillis());
     }
 
-    public ProjectSubCategory(Project project, String categoryCode, String categoryName, ProjectSubCategory parent) {
+    public ProjectWbsPackage(Project project, String categoryCode, String categoryName, ProjectWbsPackage parent) {
         
         this.uuId = UUID.randomUUID().toString();
         this.project = project;
@@ -124,11 +124,11 @@ public class ProjectSubCategory implements Serializable {
         this.categoryName = categoryName;
     }
 
-    public ProjectSubCategory getParent() {
+    public ProjectWbsPackage getParent() {
         return parent;
     }
 
-    public void setParent(ProjectSubCategory parent) {
+    public void setParent(ProjectWbsPackage parent) {
         this.parent = parent;
     }
 
@@ -155,5 +155,6 @@ public class ProjectSubCategory implements Serializable {
     public void setCreationDate(Date creationDate) {
         this.creationDate = creationDate;
     }
+
 }
 

@@ -9,7 +9,6 @@ import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import org.zafritech.requirements.data.domain.ItemType;
 import org.zafritech.requirements.enums.MediaType;
 
 /**

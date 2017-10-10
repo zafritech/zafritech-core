@@ -28,18 +28,18 @@ import org.springframework.web.servlet.ModelAndView;
 import org.zafritech.core.data.dao.ReferenceDao;
 import org.zafritech.core.data.domain.Document;
 import org.zafritech.core.data.domain.DocumentReference;
+import org.zafritech.core.data.domain.EntityType;
 import org.zafritech.core.data.domain.Reference;
 import org.zafritech.core.data.repositories.DocumentReferenceRepository;
 import org.zafritech.core.data.repositories.DocumentRepository;
+import org.zafritech.core.data.repositories.EntityTypeRepository;
 import org.zafritech.core.enums.ReferenceTypes;
 import org.zafritech.core.services.ReferenceService;
 import org.zafritech.requirements.data.dao.ItemDao;
 import org.zafritech.requirements.data.dao.ItemRefDao;
 import org.zafritech.requirements.data.dao.ItemTreeDao;
 import org.zafritech.requirements.data.domain.Item;
-import org.zafritech.requirements.data.domain.ItemType;
 import org.zafritech.requirements.data.repositories.ItemRepository;
-import org.zafritech.requirements.data.repositories.ItemTypeRepository;
 import org.zafritech.requirements.enums.ItemClass;
 import org.zafritech.requirements.services.ItemService;
 
@@ -60,7 +60,7 @@ public class ItemRestController {
     private DocumentReferenceRepository docReferenceRepository;
      
     @Autowired
-    private ItemTypeRepository itemTypeRepository;
+    private EntityTypeRepository entityTypeRepository;
     
     @Autowired
     private ItemRepository itemRepository;
@@ -117,11 +117,11 @@ public class ItemRestController {
     }
     
     @RequestMapping(value = "/api/requirements/document/item/types/list", method = RequestMethod.GET)
-    public ResponseEntity<List<ItemType>> getItemTypes() {
+    public ResponseEntity<List<EntityType>> getItemTypes() {
 
-        List<ItemType> itemTypes = itemTypeRepository.findAllByOrderByItemTypeLongName();
+        List<EntityType> itemTypes = entityTypeRepository.findByEntityTypeKeyOrderByEntityTypeNameAsc("ITEM_TYPE_ENTITY");
         
-        return new ResponseEntity<List<ItemType>>(itemTypes, HttpStatus.OK);
+        return new ResponseEntity<List<EntityType>>(itemTypes, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/api/requirements/document/items/newitem/ref/dao/{id}", method = RequestMethod.GET)

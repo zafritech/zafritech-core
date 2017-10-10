@@ -14,6 +14,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import org.zafritech.core.data.domain.Document;
+import org.zafritech.core.data.domain.EntityType;
 
 @Entity(name = "REQUIREMENTS_ITEM_LINKS")
 public class Link implements Serializable {
@@ -48,7 +49,7 @@ public class Link implements Serializable {
     
     @ManyToOne
     @JoinColumn(name = "linkTypeId")
-    private LinkType linkType;
+    private EntityType linkType;
     
     @Column(columnDefinition = "TEXT")
     private String linkComment;
@@ -67,7 +68,7 @@ public class Link implements Serializable {
 
     public Link(Item srcItem, 
                 Item dstItem, 
-                LinkType linkType) {
+                EntityType linkType) {
         
         this.uuId = UUID.randomUUID().toString();
         this.srcItem = srcItem;
@@ -81,7 +82,7 @@ public class Link implements Serializable {
                 Document srcDocument, 
                 Item dstItem, 
                 Document dstDocument, 
-                LinkType linkType) {
+                EntityType linkType) {
         
         this.uuId = UUID.randomUUID().toString();
         this.srcItem = srcItem;
@@ -97,7 +98,7 @@ public class Link implements Serializable {
                 Document srcDocument, 
                 Item dstItem, 
                 Document dstDocument, 
-                LinkType linkType,
+                EntityType linkType,
                 String linkComment) {
         
         this.uuId = UUID.randomUUID().toString();
@@ -174,12 +175,20 @@ public class Link implements Serializable {
         this.dstDocument = dstDocument;
     }
 
-    public LinkType getLinkType() {
+    public EntityType getLinkType() {
         return linkType;
     }
 
-    public void setLinkType(LinkType linkType) {
+    public void setLinkType(EntityType linkType) {
         this.linkType = linkType;
+    }
+
+    public String getLinkComment() {
+        return linkComment;
+    }
+
+    public void setLinkComment(String linkComment) {
+        this.linkComment = linkComment;
     }
 
     public Date getCreationDate() {
@@ -205,5 +214,6 @@ public class Link implements Serializable {
     public void setDstHistoryValue(String dstHistoryValue) {
         this.dstHistoryValue = dstHistoryValue;
     }
+
 }
 

@@ -18,6 +18,7 @@ import org.zafritech.core.data.repositories.EntityTypeRepository;
 import org.zafritech.core.data.repositories.FolderRepository;
 import org.zafritech.core.data.repositories.InformationClassRepository;
 import org.zafritech.core.data.repositories.ProjectRepository;
+import org.zafritech.core.data.repositories.ProjectWbsPackageRepository;
 import org.zafritech.core.data.repositories.UserRepository;
 import org.zafritech.core.enums.DocumentStatus;
 import org.zafritech.core.services.ClaimService;
@@ -42,6 +43,9 @@ public class DocumentServiceImpl implements DocumentService {
     
     @Autowired
     private ProjectRepository projectRepository;
+    
+    @Autowired
+    private ProjectWbsPackageRepository wbsPackageRepository;
     
     @Autowired
     private FolderRepository folderRepository;
@@ -73,6 +77,7 @@ public class DocumentServiceImpl implements DocumentService {
                 entitytTypeRepository.findOne(docDao.getTypeId()),
                 descriptorRepository.findOne(docDao.getDecriptorId()),
                 projectRepository.findOne(docDao.getProjectId()),
+                wbsPackageRepository.findOne(docDao.getWbsId()),
                 folderRepository.findOne(docDao.getFolderId()),
                 infoClassRepository.findOne(docDao.getInfoClassId()),
                 "0A"
@@ -102,6 +107,7 @@ public class DocumentServiceImpl implements DocumentService {
                 oldDoc.getDocumentType(),
                 oldDoc.getContentDescriptor(),
                 oldDoc.getProject(),
+                oldDoc.getWbs(),
                 oldDoc.getFolder(),
                 oldDoc.getInfoClass(),
                 "0A"

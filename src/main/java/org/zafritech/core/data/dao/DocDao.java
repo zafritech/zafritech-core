@@ -17,6 +17,8 @@ public class DocDao {
     
     private Long projectId;
     
+    private Long wbsId;
+    
     private Long folderId;
     
     private Long typeId;
@@ -57,6 +59,14 @@ public class DocDao {
 
     public void setProjectId(Long projectId) {
         this.projectId = projectId;
+    }
+
+    public Long getWbsId() {
+        return wbsId;
+    }
+
+    public void setWbsId(Long wbsId) {
+        this.wbsId = wbsId;
     }
 
     public Long getFolderId() {

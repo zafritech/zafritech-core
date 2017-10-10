@@ -39,8 +39,6 @@ public class StartupCLR implements CommandLineRunner {
         initService.initDocuments();
         initService.initLibrary();
         initService.initSystemVariable();
-        initService.initItemTypes();
-        initService.initLinkTypes();
         initService.initSnaphots();
     }
 }

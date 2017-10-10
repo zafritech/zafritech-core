@@ -7,7 +7,7 @@ package org.zafritech.requirements.data.dao;
 
 import java.util.List;
 import org.zafritech.core.data.domain.Document;
-import org.zafritech.requirements.data.domain.LinkType;
+import org.zafritech.core.data.domain.EntityType;
 
 /**
  *
@@ -23,7 +23,7 @@ public class LinkCreateDao {
     
     private List<Document> dstDocuments;
     
-    private List<LinkType> linkTypes;
+    private List<EntityType> linkTypes;
 
     public LinkCreateDao() {
         
@@ -61,11 +61,12 @@ public class LinkCreateDao {
         this.dstDocuments = dstDocuments;
     }
 
-    public List<LinkType> getLinkTypes() {
+    public List<EntityType> getLinkTypes() {
         return linkTypes;
     }
 
-    public void setLinkTypes(List<LinkType> linkTypes) {
+    public void setLinkTypes(List<EntityType> linkTypes) {
         this.linkTypes = linkTypes;
     }
+
 }

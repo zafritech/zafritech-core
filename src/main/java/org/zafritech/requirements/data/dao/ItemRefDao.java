@@ -6,9 +6,9 @@
 package org.zafritech.requirements.data.dao;
 
 import java.util.List;
+import org.zafritech.core.data.domain.EntityType;
 import org.zafritech.core.data.domain.SystemVariable;
 import org.zafritech.requirements.data.domain.Item;
-import org.zafritech.requirements.data.domain.ItemType;
 import org.zafritech.requirements.enums.ItemClass;
 import org.zafritech.requirements.enums.MediaType;
 
@@ -24,7 +24,7 @@ public class ItemRefDao {
     
     private List<ItemClass> itemClasses;
     
-    private List<ItemType> itemTypes;
+    private List<EntityType> itemTypes;
     
     private List<MediaType> mediaTypes;
     
@@ -62,11 +62,11 @@ public class ItemRefDao {
         this.itemClasses = itemClasses;
     }
 
-    public List<ItemType> getItemTypes() {
+    public List<EntityType> getItemTypes() {
         return itemTypes;
     }
 
-    public void setItemTypes(List<ItemType> itemTypes) {
+    public void setItemTypes(List<EntityType> itemTypes) {
         this.itemTypes = itemTypes;
     }
 

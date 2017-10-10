@@ -14,6 +14,7 @@ import org.zafritech.core.data.domain.Claim;
 import org.zafritech.core.data.domain.ClaimType;
 import org.zafritech.core.data.domain.InformationClass;
 import org.zafritech.core.data.domain.Project;
+import org.zafritech.core.data.domain.ProjectWbsPackage;
 import org.zafritech.core.data.domain.UserClaim;
 import org.zafritech.core.data.repositories.ClaimRepository;
 import org.zafritech.core.data.repositories.ClaimTypeRepository;
@@ -22,6 +23,7 @@ import org.zafritech.core.data.repositories.ContactRepository;
 import org.zafritech.core.data.repositories.EntityTypeRepository;
 import org.zafritech.core.data.repositories.InformationClassRepository;
 import org.zafritech.core.data.repositories.ProjectRepository;
+import org.zafritech.core.data.repositories.ProjectWbsPackageRepository;
 import org.zafritech.core.data.repositories.UserClaimRepository;
 import org.zafritech.core.data.repositories.UserRepository;
 import org.zafritech.core.enums.CompanyRole;
@@ -61,6 +63,9 @@ public class ProjectsInit {
     
     @Autowired
     private ContactRepository contactRepository;
+    
+    @Autowired
+    private ProjectWbsPackageRepository wbsPackageRepository;
     
     @Autowired
     private ProjectService projectService;
@@ -122,6 +127,7 @@ public class ProjectsInit {
         }
         
         initProjectClaims();
+        initProjectWbs();
     }
     
     private void initProjectClaims() {
@@ -140,6 +146,18 @@ public class ProjectsInit {
                     project.getProjectName() + " (" + project.getProjectNumber() + ")"));
 
             userClaimRepository.save(new UserClaim(project.getProjectManager(), claim));
+        }
+    }
+    
+    private void initProjectWbs() {
+        
+        List<Project> projects = new ArrayList<>();
+        projectRepository.findAll().forEach(projects::add);
+        
+        for (Project project : projects) {
+            
+            ProjectWbsPackage wbsPackage = new ProjectWbsPackage(project, "0001", "System Top Level");
+            wbsPackageRepository.save(wbsPackage);
         }
     }
 }

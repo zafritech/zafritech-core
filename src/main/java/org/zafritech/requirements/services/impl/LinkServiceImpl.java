@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.zafritech.core.data.domain.Document;
 import org.zafritech.core.data.repositories.DocumentRepository;
+import org.zafritech.core.data.repositories.EntityTypeRepository;
 import org.zafritech.requirements.data.dao.LinkCreateDao;
 import org.zafritech.requirements.data.dao.LinkDao;
 import org.zafritech.requirements.data.domain.Item;
@@ -17,7 +18,6 @@ import org.zafritech.requirements.data.domain.LinkGroup;
 import org.zafritech.requirements.data.repositories.ItemRepository;
 import org.zafritech.requirements.data.repositories.LinkGroupRepository;
 import org.zafritech.requirements.data.repositories.LinkRepository;
-import org.zafritech.requirements.data.repositories.LinkTypeRepository;
 import org.zafritech.requirements.services.LinkService;
 
 /**
@@ -34,7 +34,7 @@ public class LinkServiceImpl implements LinkService {
     private DocumentRepository documentRepository;
 
     @Autowired
-    private LinkTypeRepository linkTypeRepository;
+    private EntityTypeRepository entityTypeRepository;
 
     @Autowired
     private LinkRepository linkRepository;
@@ -52,7 +52,7 @@ public class LinkServiceImpl implements LinkService {
         dao.setSrcItemId(itemId);
         dao.setDstItemId(null);
         dao.setDstDocuments(documentRepository.findByProjectOrderByDocumentNameAsc(item.getDocument().getProject())); 
-        dao.setLinkTypes(linkTypeRepository.findAllByOrderByLinkTypeName()); 
+        dao.setLinkTypes(entityTypeRepository.findByEntityTypeKeyOrderByEntityTypeNameAsc("LINK_TYPE_ENTITY")); 
         
         return dao;
     }
@@ -71,7 +71,7 @@ public class LinkServiceImpl implements LinkService {
                              sourceDocument,
                              destinationItem,
                              destinationDocument,
-                             linkTypeRepository.findOne(linkDao.getLinkTypeId()),
+                             entityTypeRepository.findOne(linkDao.getLinkTypeId()),
                              linkDao.getLinkComment()); 
         
         link.setLinkGroup(group); 

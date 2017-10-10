@@ -9,12 +9,12 @@ import java.sql.Timestamp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
+import org.zafritech.core.data.domain.EntityType;
 import org.zafritech.core.data.repositories.DocumentRepository;
+import org.zafritech.core.data.repositories.EntityTypeRepository;
 import org.zafritech.requirements.data.dao.ItemDao;
 import org.zafritech.requirements.data.domain.Item;
-import org.zafritech.requirements.data.domain.ItemType;
 import org.zafritech.requirements.data.repositories.ItemRepository;
-import org.zafritech.requirements.data.repositories.ItemTypeRepository;
 import org.zafritech.requirements.enums.MediaType;
 
 /**
@@ -31,14 +31,14 @@ public class DaoToItemConverter implements Converter<ItemDao, Item> {
     private DocumentRepository documentRepository;
 
     @Autowired
-    private ItemTypeRepository itemTypeRepository;
+    private EntityTypeRepository entityTypeRepository;
 
     @Override
     public Item convert(ItemDao itemDao) {
 
         if (itemDao.getId() != null) {
 
-            ItemType itemType = itemTypeRepository.findOne(itemDao.getItemTypeId());
+            EntityType itemType = entityTypeRepository.findOne(itemDao.getItemTypeId());
 
             Item item = itemRepository.findOne(itemDao.getId());
 
@@ -57,11 +57,11 @@ public class DaoToItemConverter implements Converter<ItemDao, Item> {
 
         } else {
 
-            ItemType itemType;
+            EntityType itemType;
 
             if (itemDao.getItemTypeId() != null) {
 
-                itemType = itemTypeRepository.findOne(itemDao.getItemTypeId());
+                itemType = entityTypeRepository.findOne(itemDao.getItemTypeId());
 
             } else {
 

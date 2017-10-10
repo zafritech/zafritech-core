@@ -5,7 +5,6 @@
  */
 package org.zafritech.core.services.impl;
 
-import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -23,9 +22,7 @@ import org.zafritech.core.data.initializr.DocumentInit;
 import org.zafritech.core.data.initializr.EntityTypesInit;
 import org.zafritech.core.data.initializr.FolderInit;
 import org.zafritech.core.data.initializr.InfoClassesInit;
-import org.zafritech.core.data.initializr.ItemTypesInit;
 import org.zafritech.core.data.initializr.LibraryInit;
-import org.zafritech.core.data.initializr.LinkTypesInit;
 import org.zafritech.core.data.initializr.LocalesDataInit;
 import org.zafritech.core.data.initializr.ProjectsInit;
 import org.zafritech.core.data.initializr.SIUnitsDataInit;
@@ -95,12 +92,6 @@ public class InitServiceImpl implements InitService {
     
     @Autowired
     private LibraryInit libraryInit;
-    
-    @Autowired
-    private ItemTypesInit itemTypesInit;
-    
-    @Autowired
-    private LinkTypesInit linkTypesInit;
     
     @Override
     public RunOnceTask initEntityTypes() {
@@ -297,30 +288,6 @@ public class InitServiceImpl implements InitService {
         return null;
     }
 
-    @Override
-    public RunOnceTask initItemTypes() {
-        
-        if (!isInitComplete("ITEM_TYPES_INIT")) {
-            
-            itemTypesInit.init();
-            return completeTask("ITEM_TYPES_INIT");
-        }
-        
-        return null;
-    }
-    
-    @Override
-    public RunOnceTask initLinkTypes() {
-        
-        if (!isInitComplete("LINK_TYPES_INIT")) {
-            
-            linkTypesInit.init();
-            return completeTask("LINK_TYPES_INIT");
-        }
-        
-        return null;
-    }
-    
     @Override
     public RunOnceTask initSnaphots() {
         

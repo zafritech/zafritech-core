@@ -149,6 +149,7 @@ public class FolderServiceImpl implements FolderService {
                     doc.getDocumentType(),
                     doc.getContentDescriptor(),
                     doc.getProject(),
+                    doc.getWbs(),
                     folder,
                     infoClassRepository.findByClassCode("INFO_OFFICIAL"),
                     "0A"

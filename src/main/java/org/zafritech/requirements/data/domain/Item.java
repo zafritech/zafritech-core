@@ -31,6 +31,7 @@ import org.hibernate.search.annotations.Store;
 import org.hibernate.search.annotations.TokenFilterDef;
 import org.hibernate.search.annotations.TokenizerDef;
 import org.zafritech.core.data.domain.Document;
+import org.zafritech.core.data.domain.EntityType;
 import org.zafritech.requirements.enums.MediaType;
 
 @Indexed
@@ -71,7 +72,7 @@ public class Item implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "itemTypeId")
-    private ItemType itemType;
+    private EntityType itemType;
 
     @Enumerated(EnumType.STRING)
     private MediaType mediaType;
@@ -128,7 +129,7 @@ public class Item implements Serializable {
 
     public Item(String sysId,
             String itemValue,
-            ItemType itemType,
+            EntityType itemType,
             Document document,
             Item parent) {
 
@@ -148,7 +149,7 @@ public class Item implements Serializable {
     public Item(String sysId,
             String identifier,
             String itemValue,
-            ItemType itemType,
+            EntityType itemType,
             MediaType mediaType,
             Document document,
             Item parent) {
@@ -233,11 +234,11 @@ public class Item implements Serializable {
         this.itemValue = itemValue;
     }
 
-    public ItemType getItemType() {
+    public EntityType getItemType() {
         return itemType;
     }
 
-    public void setItemType(ItemType itemType) {
+    public void setItemType(EntityType itemType) {
         this.itemType = itemType;
     }
 

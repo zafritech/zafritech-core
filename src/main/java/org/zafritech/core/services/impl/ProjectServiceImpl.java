@@ -23,6 +23,7 @@ import org.zafritech.core.data.domain.DocumentContentDescriptor;
 import org.zafritech.core.data.domain.EntityType;
 import org.zafritech.core.data.domain.Folder;
 import org.zafritech.core.data.domain.Project;
+import org.zafritech.core.data.domain.ProjectWbsPackage;
 import org.zafritech.core.data.domain.User;
 import org.zafritech.core.data.domain.UserClaim;
 import org.zafritech.core.data.repositories.ClaimRepository;
@@ -35,6 +36,7 @@ import org.zafritech.core.data.repositories.EntityTypeRepository;
 import org.zafritech.core.data.repositories.FolderRepository;
 import org.zafritech.core.data.repositories.InformationClassRepository;
 import org.zafritech.core.data.repositories.ProjectRepository;
+import org.zafritech.core.data.repositories.ProjectWbsPackageRepository;
 import org.zafritech.core.data.repositories.UserClaimRepository;
 import org.zafritech.core.data.repositories.UserRepository;
 import org.zafritech.core.enums.TemplateVariableCategories;
@@ -56,6 +58,9 @@ public class ProjectServiceImpl implements ProjectService {
    
     @Autowired
     private ProjectRepository projectRepository;
+    
+    @Autowired
+    private ProjectWbsPackageRepository wbsPackageRepository;
     
     @Autowired
     private InformationClassRepository infoClassRepository;
@@ -151,8 +156,9 @@ public class ProjectServiceImpl implements ProjectService {
             String ident = project.getProjectCode() + "-" + project.getProjectSponsor().getCompanyCode() + "-RLS-" + String.format("%04d", 1);
             String name = subfolder.getFolderName() + " RLS " + String.format("%04d", 1);
             DocumentContentDescriptor descriptor = descriptorRepository.findByDescriptorCode("CONTENT_TYPE_REQUIREMENTS");
+            ProjectWbsPackage wbs = wbsPackageRepository.findFirstByProjectAndCategoryCode(project, "0001");
             
-            documentRepository.save(new Document(ident, name, null, descriptor, project, subfolder, infoClassRepository.findByClassCode("INFO_OFFICIAL"), "0A"));
+            documentRepository.save(new Document(ident, name, null, descriptor, project, wbs, subfolder, infoClassRepository.findByClassCode("INFO_OFFICIAL"), "0A"));
         }
         
         // Create project manager claim

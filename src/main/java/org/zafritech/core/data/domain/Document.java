@@ -57,6 +57,10 @@ public class Document implements Serializable {
     @ManyToOne
     @JoinColumn(name = "projectId")
     private Project project;
+    
+    @ManyToOne
+    @JoinColumn(name = "wbsId")
+    private ProjectWbsPackage wbs;
 
     @ManyToOne
     @JoinColumn(name = "folderId")
@@ -103,6 +107,7 @@ public class Document implements Serializable {
                     EntityType documentType, 
                     DocumentContentDescriptor descriptor, 
                     Project project, 
+                    ProjectWbsPackage wbs,
                     Folder folder,
                     InformationClass infoClass,
                     String issue) {
@@ -113,6 +118,7 @@ public class Document implements Serializable {
         this.documentType = documentType;
         this.contentDescriptor = descriptor;
         this.project = project;
+        this.wbs = wbs;
         this.folder = folder;
         this.status = DocumentStatus.DRAFT;
         this.infoClass = infoClass;
@@ -153,13 +159,13 @@ public class Document implements Serializable {
     @Override
     public String toString() {
         
-        return "Document{" + "id=" + id + ", uuId=" + uuId + ", identifier=" + 
-                identifier + ", documentName=" + documentName + ", documentLongName=" + 
-                documentLongName + ", documentDescription=" + documentDescription + ", documentType=" + 
-                documentType + ", infoClass=" + infoClass + ", documentIssue=" + 
-                documentIssue + ", project=" + project + ", folder=" + folder + ", owner=" + 
-                owner + ", status=" + status + ", creationDate=" + creationDate + ", modifiedDate=" +
-                modifiedDate + '}';
+        return "Document{" + "id=" + getId() + ", uuId=" + getUuId() + ", identifier=" + 
+                getIdentifier() + ", documentName=" + getDocumentName() + ", documentLongName=" + 
+                getDocumentLongName() + ", documentDescription=" + getDocumentDescription() + ", documentType=" + 
+                getDocumentType() + ", infoClass=" + getInfoClass() + ", documentIssue=" + 
+                getDocumentIssue() + ", project=" + getProject() + ", folder=" + getFolder() + ", owner=" + 
+                getOwner() + ", status=" + getStatus() + ", creationDate=" + getCreationDate() + ", modifiedDate=" +
+                getModifiedDate() + '}';
     }
 
     public Long getId() {
@@ -246,6 +252,14 @@ public class Document implements Serializable {
         this.project = project;
     }
 
+    public ProjectWbsPackage getWbs() {
+        return wbs;
+    }
+
+    public void setWbs(ProjectWbsPackage wbs) {
+        this.wbs = wbs;
+    }
+
     public Folder getFolder() {
         return folder;
     }
@@ -309,5 +323,6 @@ public class Document implements Serializable {
     public void setDistributions(List<User> distributions) {
         this.distributions = distributions;
     }
+
 }
 
