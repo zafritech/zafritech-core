@@ -34,6 +34,8 @@ public class Project implements Serializable {
 
     private String uuId;
 
+    private String numericNumber;
+    
     private String projectNumber;
 
     private String projectCode;
@@ -207,6 +209,14 @@ public class Project implements Serializable {
 
     public void setUuId(String uuId) {
         this.uuId = uuId;
+    }
+
+    public String getNumericNumber() {
+        return numericNumber;
+    }
+
+    public void setNumericNumber(String numericNumber) {
+        this.numericNumber = numericNumber;
     }
 
     public String getProjectNumber() {

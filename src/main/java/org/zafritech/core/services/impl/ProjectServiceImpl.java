@@ -7,16 +7,21 @@ package org.zafritech.core.services.impl;
 
 import java.sql.Date;
 import java.sql.Timestamp;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import org.apache.commons.text.StrSubstitutor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.zafritech.core.data.dao.ProjectDao;
 import org.zafritech.core.data.domain.Claim;
 import org.zafritech.core.data.domain.ClaimType;
 import org.zafritech.core.data.domain.Company;
+import org.zafritech.core.data.domain.TemplateVariable;
 import org.zafritech.core.data.domain.Document;
 import org.zafritech.core.data.domain.Folder;
 import org.zafritech.core.data.domain.Project;
+import org.zafritech.core.data.domain.ProjectType;
 import org.zafritech.core.data.domain.User;
 import org.zafritech.core.data.domain.UserClaim;
 import org.zafritech.core.data.repositories.ClaimRepository;
@@ -31,10 +36,12 @@ import org.zafritech.core.data.repositories.ProjectRepository;
 import org.zafritech.core.data.repositories.ProjectTypeRepository;
 import org.zafritech.core.data.repositories.UserClaimRepository;
 import org.zafritech.core.data.repositories.UserRepository;
+import org.zafritech.core.enums.TemplateVariableCategories;
 import org.zafritech.core.enums.ProjectStatus;
 import org.zafritech.core.services.ClaimService;
 import org.zafritech.core.services.ProjectService;
 import org.zafritech.core.services.UserService;
+import org.zafritech.core.data.repositories.TemplateVariableRepository;
 
 /**
  *
@@ -85,6 +92,9 @@ public class ProjectServiceImpl implements ProjectService {
     @Autowired
     private ClaimService claimService;
     
+    @Autowired
+    private TemplateVariableRepository configRepository;
+    
     @Override
     public Project saveDao(ProjectDao dao) {
         
@@ -100,6 +110,7 @@ public class ProjectServiceImpl implements ProjectService {
             project.setProjectShortName(dao.getProjectShortName());
             project.setProjectSponsor(company); 
             project.setModifiedDate(new Timestamp(System.currentTimeMillis())); 
+            if (dao.getProjectNumber() != null) { project.setProjectNumber(dao.getProjectNumber()); }
             
         } else {
             
@@ -115,7 +126,6 @@ public class ProjectServiceImpl implements ProjectService {
             manager = userService.loggedInUser();
         }
        
-        if (dao.getProjectNumber() != null) { project.setProjectNumber(dao.getProjectNumber()); }
         if (dao.getInfoClassId() != null) { project.setInfoClass(infoClassRepository.findOne(dao.getInfoClassId())); }
         if (dao.getProjectTypeId() != null) { project.setProjectType(projectTypeRepository.findOne(dao.getProjectTypeId())); }
         if (dao.getStartDate() != null) { project.setStartDate(Date.valueOf(dao.getStartDate())); }
@@ -189,5 +199,39 @@ public class ProjectServiceImpl implements ProjectService {
         }
         
         return claimService.findProjectMemberClaims(project); 
+    }
+
+    @Override
+    public String generateProjectNumber(ProjectType type) {
+        
+        Map<String, String> valuesMap = new HashMap<String, String>();
+        
+        List<TemplateVariable> projectProperties = configRepository.findByCategory(TemplateVariableCategories.VARIABLES_PROJECT);
+        
+        for (TemplateVariable config : projectProperties) {
+            
+            valuesMap.put(config.getVariable(), config.getValue());
+        }
+        
+        StrSubstitutor subst = new StrSubstitutor(valuesMap);
+        
+        String numericValue;
+        String format = String.format("%%0%dd", Integer.valueOf(subst.replace("${project_numbering_digits}")));
+        
+        Project project = projectRepository.findFirstByOrderByNumericNumberDesc();
+        
+        if (project != null) {
+            
+            numericValue = String.format(format, Integer.valueOf(project.getNumericNumber()) + 1);
+                    
+        } else {
+            
+            numericValue = String.format(format, Integer.valueOf(subst.replace("${project_numbering_start}")));
+        }
+        
+        valuesMap.put("project_type_code", type.getTypeCode());
+        valuesMap.put("project_numbering_numberic", numericValue);
+        
+        return subst.replace("${project_numbering_format}"); 
     }
 }

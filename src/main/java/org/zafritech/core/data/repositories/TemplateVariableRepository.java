@@ -7,17 +7,14 @@ package org.zafritech.core.data.repositories;
 
 import java.util.List;
 import org.springframework.data.repository.CrudRepository;
-import org.zafritech.core.data.domain.Project;
+import org.zafritech.core.data.domain.TemplateVariable;
+import org.zafritech.core.enums.TemplateVariableCategories;
 
 /**
  *
  * @author LukeS
  */
-public interface ProjectRepository extends CrudRepository<Project, Long> {
+public interface TemplateVariableRepository extends CrudRepository<TemplateVariable, Long> {
     
-    Project getByUuId(String uuid);
-    
-    List<Project> findAllByOrderByProjectName();
-    
-    Project findFirstByOrderByNumericNumberDesc();
+    List<TemplateVariable> findByCategory(TemplateVariableCategories variableType);
 }

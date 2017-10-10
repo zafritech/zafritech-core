@@ -94,7 +94,7 @@ public class FolderServiceImpl implements FolderService {
                     
                     doc.getId() + 5000,             // Prevent TreeNodes id classes with folders
                     doc.getFolder().getId(),
-                    doc.getDocumentName(),
+                    doc.getIdentifier(),
                     false,
                     false,
                     true,

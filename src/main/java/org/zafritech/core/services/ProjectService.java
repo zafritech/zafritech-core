@@ -8,6 +8,7 @@ package org.zafritech.core.services;
 import java.util.List;
 import org.zafritech.core.data.dao.ProjectDao;
 import org.zafritech.core.data.domain.Project;
+import org.zafritech.core.data.domain.ProjectType;
 import org.zafritech.core.data.domain.User;
 
 /**
@@ -21,4 +22,6 @@ public interface ProjectService {
     User addMemberToProject(Project project, User user);
     
     List<User> addProjectMembers(Project project, List<User> users);
+    
+    String generateProjectNumber(ProjectType type);
 }

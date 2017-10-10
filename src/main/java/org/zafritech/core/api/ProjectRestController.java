@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -29,6 +28,7 @@ import org.zafritech.core.data.projections.UserView;
 import org.zafritech.core.data.repositories.ClaimTypeRepository;
 import org.zafritech.core.data.repositories.InformationClassRepository;
 import org.zafritech.core.data.repositories.ProjectRepository;
+import org.zafritech.core.data.repositories.ProjectTypeRepository;
 import org.zafritech.core.data.repositories.UserRepository;
 import org.zafritech.core.enums.ProjectStatus;
 import org.zafritech.core.services.ClaimService;
@@ -46,6 +46,9 @@ public class ProjectRestController {
     
     @Autowired
     private ProjectRepository projectRepository;
+    
+    @Autowired
+    private ProjectTypeRepository projectTypeRepository;
     
     @Autowired
     private UserRepository userRepository;
@@ -130,7 +133,15 @@ public class ProjectRestController {
  
         return new ResponseEntity<Project>(project, HttpStatus.OK);
     }
-      
+ 
+    @RequestMapping(value = "/api/projects/project/new/number/{id}", method = GET)
+    public ResponseEntity<String> getNewProjectNumber(@PathVariable(value = "id") Long id) {
+  
+        String number = projectService.generateProjectNumber(projectTypeRepository.findOne(id));
+ 
+        return new ResponseEntity<String>(number, HttpStatus.OK);
+    }
+    
     @RequestMapping(value = "/api/admin/projects/project/new", method = POST)
     public ResponseEntity<Project> newProject(@RequestBody ProjectDao projectDao) {
   

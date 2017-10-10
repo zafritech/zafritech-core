@@ -1,0 +1,117 @@
+[
+	{
+		"name" : "Legal Requirement",
+		"code" : "LEG",
+		"description" : "A legal requirement is a non-functional requirement that states a regulation that must be recognized by the system. Regulations could be laws, standards, specifications, etc."
+	},
+	{
+		"name" : "Design Requirement",
+		"code" : "DSN",
+		"description" : "Design requirements direct the design (internals of the system), by inclusion (build it this way), or exclusion (don't build it this way)."
+	},
+	{
+		"name" : "Constraint Requirement",
+		"code" : "CON",
+		"description" : "Constraint Requirement describes real-world limits or boundaries around what we want to happen"
+	},
+	{
+		"name" : "Unclassified Requirement",
+		"code" : "UNC",
+		"description" : "Requirements not classified."
+	},
+	{
+		"name" : "Adaptability Requirement",
+		"code" : "ADP",
+		"description" : ""
+	},
+	{
+		"name" : "Not a Requirement",
+		"code" : "NAN",
+		"description" : "Prose textual information for clarification and context setting for a set of requirements."
+	},
+	{
+		"name" : "User Story",
+		"code" : "STR",
+		"description" : "A (user) story is a special kind of functional requirement, which uses one or more sentences in the everyday or business language of the end user that captures what the user (resp. a role) wants to achieve. User stories generally follow the following template: \"As a <role>, I want <goal/desire> so that <benefit>.\""
+	},
+	{
+		"name" : "Usability Requirement",
+		"code" : "USB",
+		"description" : "A usability requirement is a non-functional requirement describing the intended ease of use (ergonomical comfort) and learnability of the system."
+	},
+	{
+		"name" : "Operational Requirement",
+		"code" : "OPR",
+		"description" : ""
+	},
+	{
+		"name" : "Cost and Schedule Constraint",
+		"code" : "COS",
+		"description" : ""
+	},
+	{
+		"name" : "Maintainability Requirement",
+		"code" : "MAN",
+		"description" : "A maintainability requirement is a non-functional requirement that describes the ease with which the system can be maintained in order to isolate defects or their cause, correct defects or their cause, meet new requirements, make future maintenance easier, or cope with a changed environment."
+	},
+	{
+		"name" : "Security Requirement",
+		"code" : "SCT",
+		"description" : "A security requirement is a non-functional requirement that describes the stipulated degree of the systems protection against danger, damage, misuse, unauthorized access, data loss and crime."
+	},
+	{
+		"name" : "Functional Requirement",
+		"code" : "FCN",
+		"description" : "A functional requirement describes a function of the system, i.e. what the system must do resp. a service the system provides to its users."
+	},
+	{
+		"name" : "Logistical Requirement",
+		"code" : "LOG",
+		"description" : ""
+	},
+	{
+		"name" : "Scalability Requirement",
+		"code" : "SCL",
+		"description" : "A scalability requirement is a non-functional requirement that describes the ability of the system to handle growing amounts of work in a graceful manner or its ability to be enlarged to accommodate that growth."
+	},
+	{
+		"name" : "Environment Requirement",
+		"code" : "ENV",
+		"description" : ""
+	},
+	{
+		"name" : "States/Modes Requirement",
+		"code" : "SMD",
+		"description" : ""
+	},
+	{
+		"name" : "Resource Requirement",
+		"code" : "RES",
+		"description" : ""
+	},
+	{
+		"name" : "External Interface Requirement",
+		"code" : "INF",
+		"description" : ""
+	},
+	{
+		"name" : "Physical Requirement",
+		"code" : "PHY",
+		"description" : ""
+	},
+	{
+		"name" : "Performance Requirement",
+		"code" : "PER",
+		"description" : "A performance requirement is a non-functional requirement that describes the amount of useful work accomplished by the system compared to the time and resources used."
+	},
+	{
+		"name" : "Other Quality Requirement",
+		"code" : "OTH",
+		"description" : ""
+	},
+	{
+		"name" : "Policy and Regulations",
+		"code" : "POL",
+		"description" : ""
+	}
+]

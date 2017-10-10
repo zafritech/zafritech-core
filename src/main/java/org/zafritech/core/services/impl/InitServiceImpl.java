@@ -5,6 +5,7 @@
  */
 package org.zafritech.core.services.impl;
 
+import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -280,8 +281,15 @@ public class InitServiceImpl implements InitService {
         
         if (!isInitComplete("DOCUMENT_TYPES_INIT")) {
 
-            documentTypeInit.init();
-            return completeTask("DOCUMENT_TYPES_INIT");
+            try {
+                
+                documentTypeInit.init();
+                return completeTask("DOCUMENT_TYPES_INIT");
+                
+            } catch (IOException ex) {
+                
+                Logger.getLogger(InitServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         
         return null;

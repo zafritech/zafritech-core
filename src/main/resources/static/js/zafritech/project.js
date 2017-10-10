@@ -1305,6 +1305,8 @@ function ProjectCreateNew() {
 
                             $('#infoClassId').empty();
                             $('#infoClassId').append(selectOptions);
+                            
+                            onProjectTypeChange();
                         });
                     });
                 });
@@ -1312,6 +1314,28 @@ function ProjectCreateNew() {
             
             box.modal('show');
         }
+    });
+}
+
+function onProjectTypeChange() {
+    
+    var projectTypeId = document.getElementById('projectTypeId').value;
+    
+    $.ajax({
+
+        global: false,
+        type: "GET",
+        contentType: "application/json",
+        url: "/api/projects/project/new/number/" + projectTypeId,
+        dataType: "text",
+        cache: false
+    })
+    .done(function (data) {
+
+        console.log(data);
+
+        $('#projectNumber').prop('value', data);
+        
     });
 }
 

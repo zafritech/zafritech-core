@@ -1,0 +1,37 @@
+[
+	{
+		"name" : "Personal Development",
+		"code" : "PER",
+		"description" : ""
+	},
+	{
+		"name" : "Information Technology",
+		"code" : "ICT",
+		"description" : ""
+	},
+	{
+		"name" : "Training",
+		"code" : "TRN",
+		"description" : ""
+	},
+	{
+		"name" : "Product Development",
+		"code" : "PDT",
+		"description" : ""
+	},
+	{
+		"name" : "Software Development",
+		"code" : "SWD",
+		"description" : ""
+	},
+	{
+		"name" : "Finance and Investment",
+		"code" : "FIN",
+		"description" : ""
+	},
+	{
+		"name" : "Construction",
+		"code" : "CON",
+		"description" : ""
+	}
+]
