@@ -25,8 +25,8 @@ import org.zafritech.core.data.repositories.ClaimRepository;
 import org.zafritech.core.data.repositories.ClaimTypeRepository;
 import org.zafritech.core.data.repositories.DocumentRepository;
 import org.zafritech.core.data.repositories.DocumentTypeRepository;
+import org.zafritech.core.data.repositories.EntityTypeRepository;
 import org.zafritech.core.data.repositories.FolderRepository;
-import org.zafritech.core.data.repositories.FolderTypeRepository;
 import org.zafritech.core.data.repositories.InformationClassRepository;
 import org.zafritech.core.data.repositories.ProjectRepository;
 import org.zafritech.core.data.repositories.UserClaimRepository;
@@ -46,7 +46,7 @@ public class DocumentInit {
     private FolderRepository folderRepository;
     
     @Autowired
-    private FolderTypeRepository folderTypeRepository;
+    private EntityTypeRepository entityTypeRepository;
     
     @Autowired
     private DocumentTypeRepository documentTypeRepository;
@@ -78,8 +78,8 @@ public class DocumentInit {
         String documentIssue = "0A";
         
         for (Project project : projects) {
-        
-            Folder root = folderRepository.findFirstByProjectAndFolderType(project, folderTypeRepository.findByTypeKey("FOLDER_PROJECT"));
+            
+            Folder root = folderRepository.findFirstByProjectAndFolderType(project, entityTypeRepository.findByEntityTypeKeyAndEntityTypeCode("FOLDER_TYPE_ENTITY", "FOLDER_PROJECT"));
             List<Folder> folders = folderRepository.findByParent(root);
 
             int counter = Integer.valueOf( new SimpleDateFormat("yy").format(new Date()) + "01");

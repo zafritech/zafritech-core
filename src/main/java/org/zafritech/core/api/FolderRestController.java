@@ -21,13 +21,12 @@ import org.zafritech.core.data.dao.FolderDao;
 import org.zafritech.core.data.dao.FolderTreeDao;
 import org.zafritech.core.data.dao.ValuePairDao;
 import org.zafritech.core.data.domain.Document;
+import org.zafritech.core.data.domain.EntityType;
 import org.zafritech.core.data.domain.Folder;
-import org.zafritech.core.data.domain.FolderType;
 import org.zafritech.core.data.domain.Project;
-import org.zafritech.core.data.domain.UserEntityState;
 import org.zafritech.core.data.repositories.DocumentRepository;
+import org.zafritech.core.data.repositories.EntityTypeRepository;
 import org.zafritech.core.data.repositories.FolderRepository;
-import org.zafritech.core.data.repositories.FolderTypeRepository;
 import org.zafritech.core.data.repositories.ProjectRepository;
 import org.zafritech.core.services.FolderService;
 import org.zafritech.core.services.UserStateService;
@@ -46,7 +45,7 @@ public class FolderRestController {
     private FolderRepository folderRepository;
    
     @Autowired
-    private FolderTypeRepository folderTypeRepository;
+    private EntityTypeRepository entityTypeRepository;
     
     @Autowired
     private DocumentRepository documentRepository;
@@ -62,7 +61,7 @@ public class FolderRestController {
         
         Folder folder = folderRepository.save(new Folder(
                 folderDao.getFolderName(),
-                folderTypeRepository.findOne(folderDao.getFolderTypeId()),
+                entityTypeRepository.findOne(folderDao.getFolderTypeId()),
                 folderRepository.findOne(folderDao.getParentId()),
                 projectRepository.findOne(folderDao.getProjectId()) 
         )); 
@@ -160,11 +159,11 @@ public class FolderRestController {
     }
     
     @RequestMapping(value = "/api/folders/foldertypes/list", method = GET)
-    public ResponseEntity<List<FolderType>> listFolderTypes() {
+    public ResponseEntity<List<EntityType>> listFolderTypes() {
         
-        List<FolderType> folderTypes = folderTypeRepository.findByOrderByTypeName(); 
+        List<EntityType> folderTypes = entityTypeRepository.findByEntityTypeKeyOrderByEntityTypeNameAsc("FOLDER_TYPE_ENTITY"); 
         
-        return new ResponseEntity<List<FolderType>>(folderTypes, HttpStatus.OK);
+        return new ResponseEntity<List<EntityType>>(folderTypes, HttpStatus.OK);
     }
     
     @RequestMapping(value = "/api/folders/folder/delete/{id}", method = GET)

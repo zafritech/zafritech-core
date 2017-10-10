@@ -26,9 +26,9 @@ import org.zafritech.core.data.domain.User;
 import org.zafritech.core.data.domain.UserClaim;
 import org.zafritech.core.data.projections.UserView;
 import org.zafritech.core.data.repositories.ClaimTypeRepository;
+import org.zafritech.core.data.repositories.EntityTypeRepository;
 import org.zafritech.core.data.repositories.InformationClassRepository;
 import org.zafritech.core.data.repositories.ProjectRepository;
-import org.zafritech.core.data.repositories.ProjectTypeRepository;
 import org.zafritech.core.data.repositories.UserRepository;
 import org.zafritech.core.enums.ProjectStatus;
 import org.zafritech.core.services.ClaimService;
@@ -48,7 +48,7 @@ public class ProjectRestController {
     private ProjectRepository projectRepository;
     
     @Autowired
-    private ProjectTypeRepository projectTypeRepository;
+    private EntityTypeRepository entityTypeRepository;
     
     @Autowired
     private UserRepository userRepository;
@@ -137,7 +137,7 @@ public class ProjectRestController {
     @RequestMapping(value = "/api/projects/project/new/number/{id}", method = GET)
     public ResponseEntity<String> getNewProjectNumber(@PathVariable(value = "id") Long id) {
   
-        String number = projectService.generateProjectNumber(projectTypeRepository.findOne(id));
+        String number = projectService.generateProjectNumber(entityTypeRepository.findOne(id));
  
         return new ResponseEntity<String>(number, HttpStatus.OK);
     }

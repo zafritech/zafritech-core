@@ -6,7 +6,6 @@
 package org.zafritech.core.data.initializr;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,13 +19,14 @@ import org.zafritech.core.data.repositories.ClaimRepository;
 import org.zafritech.core.data.repositories.ClaimTypeRepository;
 import org.zafritech.core.data.repositories.CompanyRepository;
 import org.zafritech.core.data.repositories.ContactRepository;
+import org.zafritech.core.data.repositories.EntityTypeRepository;
 import org.zafritech.core.data.repositories.InformationClassRepository;
 import org.zafritech.core.data.repositories.ProjectRepository;
-import org.zafritech.core.data.repositories.ProjectTypeRepository;
 import org.zafritech.core.data.repositories.UserClaimRepository;
 import org.zafritech.core.data.repositories.UserRepository;
 import org.zafritech.core.enums.CompanyRole;
 import org.zafritech.core.enums.ProjectStatus;
+import org.zafritech.core.services.ProjectService;
 
 /**
  *
@@ -42,7 +42,7 @@ public class ProjectsInit {
     private CompanyRepository companyRepository;
     
     @Autowired
-    private ProjectTypeRepository projectTypeRepository;
+    private EntityTypeRepository entityTypeRepository;
     
     @Autowired
     private ProjectRepository projectRepository;
@@ -62,20 +62,52 @@ public class ProjectsInit {
     @Autowired
     private ContactRepository contactRepository;
     
+    @Autowired
+    private ProjectService projectService;
+    
     @Transactional
     public void init() {
         
         InformationClass infoClass = infoClassRepository.findByClassCode("INFO_UNCLASSIFIED");
-                    
-        projectRepository.save(new HashSet<Project>() {{
-                
-                add(new Project(projectTypeRepository.findByTypeCode("SWD"), "1610SWD-WA201", "Zidingo RMS System", "Zidingo RMS", companyRepository.findFirstByCompanyRole(CompanyRole.PRIMARY_ORGANISATION), infoClass)); 
-                add(new Project(projectTypeRepository.findByTypeCode("CON"), "1202CON-RL502", "QF People Mover System", "Qatar PMS", companyRepository.findFirstByCompanyRole(CompanyRole.PRIMARY_ORGANISATION), infoClass)); 
-                add(new Project(projectTypeRepository.findByTypeCode("FIN"), "1507FIN-GN101", "Project Dabasir 2015", "Dabasir 2015", companyRepository.findFirstByCompanyRole(CompanyRole.PRIMARY_ORGANISATION), infoClass)); 
-                add(new Project(projectTypeRepository.findByTypeCode("ICT"), "1602ICT-CL301", "Cloud Server Project", "Cloud SVR", companyRepository.findFirstByCompanyRole(CompanyRole.PRIMARY_ORGANISATION), infoClass)); 
-                add(new Project(projectTypeRepository.findByTypeCode("PER"), "9401PER-GN101", "Professional Development", "Engineering CPD", companyRepository.findFirstByCompanyRole(CompanyRole.PRIMARY_ORGANISATION), infoClass)); 
-            }
-        });
+        
+        projectRepository.save(new Project(entityTypeRepository.findByEntityTypeKeyAndEntityTypeCode("PROJECT_TYPE_ENTITY", "SWD"), 
+                                projectService.generateProjectNumber(entityTypeRepository.findByEntityTypeKeyAndEntityTypeCode("PROJECT_TYPE_ENTITY", "SWD")), 
+                                "Zidingo RMS System", 
+                                "Zidingo RMS", 
+                                companyRepository.findFirstByCompanyRole(CompanyRole.PRIMARY_ORGANISATION), 
+                                infoClass)
+        );
+        
+        projectRepository.save(new Project(entityTypeRepository.findByEntityTypeKeyAndEntityTypeCode("PROJECT_TYPE_ENTITY", "CON"), 
+                                projectService.generateProjectNumber(entityTypeRepository.findByEntityTypeKeyAndEntityTypeCode("PROJECT_TYPE_ENTITY", "CON")), 
+                                "QF People Mover System", 
+                                "Qatar PMS", companyRepository.findFirstByCompanyRole(CompanyRole.PRIMARY_ORGANISATION), 
+                                infoClass)
+        );
+             
+        projectRepository.save(new Project(entityTypeRepository.findByEntityTypeKeyAndEntityTypeCode("PROJECT_TYPE_ENTITY", "FIN"), 
+                                projectService.generateProjectNumber(entityTypeRepository.findByEntityTypeKeyAndEntityTypeCode("PROJECT_TYPE_ENTITY", "FIN")), 
+                                "Project Dabasir 2015", 
+                                "Dabasir 2015", 
+                                companyRepository.findFirstByCompanyRole(CompanyRole.PRIMARY_ORGANISATION), 
+                                infoClass)
+        );
+        
+        projectRepository.save(new Project(entityTypeRepository.findByEntityTypeKeyAndEntityTypeCode("PROJECT_TYPE_ENTITY", "ICT"), 
+                                projectService.generateProjectNumber(entityTypeRepository.findByEntityTypeKeyAndEntityTypeCode("PROJECT_TYPE_ENTITY", "ICT")), 
+                                "Cloud Server Project", 
+                                "Cloud SVR", 
+                                companyRepository.findFirstByCompanyRole(CompanyRole.PRIMARY_ORGANISATION), 
+                                infoClass)
+        );
+        
+        projectRepository.save(new Project(entityTypeRepository.findByEntityTypeKeyAndEntityTypeCode("PROJECT_TYPE_ENTITY", "PER"), 
+                                projectService.generateProjectNumber(entityTypeRepository.findByEntityTypeKeyAndEntityTypeCode("PROJECT_TYPE_ENTITY", "PER")), 
+                                "Professional Development", 
+                                "Engineering CPD", 
+                                companyRepository.findFirstByCompanyRole(CompanyRole.PRIMARY_ORGANISATION), 
+                                infoClass)
+        );
         
         List<Project> projects = new ArrayList<>();
         projectRepository.findAll().forEach(projects::add);

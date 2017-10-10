@@ -1,0 +1,22 @@
+[
+    {
+        "category": "VARIABLES_PROJECT",
+        "variable": "project_numbering_root",
+        "value": "${project_type_code}"
+    },
+    {
+        "category": "VARIABLES_PROJECT",
+        "variable": "project_numbering_digits",
+        "value": "3"
+    },
+    {
+        "category": "VARIABLES_PROJECT",
+        "variable": "project_numbering_start",
+        "value": "021"
+    },
+    {
+        "category": "VARIABLES_PROJECT",
+        "variable": "project_numbering_format",
+        "value": "${project_numbering_numberic}${project_numbering_root}"
+    }
+]

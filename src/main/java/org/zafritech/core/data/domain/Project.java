@@ -52,7 +52,7 @@ public class Project implements Serializable {
     
     @ManyToOne
     @JoinColumn(name = "projectTypeId")
-    private ProjectType projectType;
+    private EntityType projectType;
 
     @Column(columnDefinition = "TEXT")
     private String projectDescription;
@@ -158,18 +158,19 @@ public class Project implements Serializable {
         this.modifiedDate = new Timestamp(System.currentTimeMillis());
     }
 
-    public Project(ProjectType type,
-            String number,
-            String name,
-            String shortName,
-            Company company,
-            InformationClass infoClass) {
+    public Project(EntityType type,
+                    String number,
+                    String name,
+                    String shortName,
+                    Company company,
+                    InformationClass infoClass) {
 
         this.uuId = UUID.randomUUID().toString();
         this.projectType = type;
         this.projectNumber = number;
+        this.numericNumber = number.replaceAll("[^0-9]", "");
         this.projectName = name;
-        this.projectCode = new SimpleDateFormat("yy").format(new Date()) + new SimpleDateFormat("MM").format(new Date()) + name.replaceAll("\\s+","").substring(0, 3).toUpperCase();
+        this.projectCode = number + new SimpleDateFormat("yy").format(new Date()) + new SimpleDateFormat("MM").format(new Date()) + name.replaceAll("\\s+","").substring(0, 3).toUpperCase();
         this.projectShortName = shortName;
         this.projectTagLine = "A Zidingo RMS managed project";
         this.projectSponsor = company;
@@ -184,15 +185,15 @@ public class Project implements Serializable {
     @Override
     public String toString() {
         
-        return "Project{" + "Id=" + Id + ", uuId=" + uuId + ", projectNumber=" + 
-                projectNumber + ", projectCode=" + projectCode + ", projectName=" + 
-                projectName + ", projectShortName=" + projectShortName + ", projectTagLine=" +
-                projectTagLine + ", infoClass=" + infoClass + ", projectType=" + 
-                projectType + ", projectDescription=" + projectDescription + ", projectSponsor=" +
-                projectSponsor + ", projectContact=" + projectContact + ", startDate=" + 
-                startDate + ", endDate=" + endDate + ", createdBy=" + createdBy + ", projectManager=" + 
-                projectManager + ", projectMembers=" + projectMembers + ", status=" + 
-                status + ", creationDate=" + creationDate + ", modifiedDate=" + modifiedDate + '}';
+        return "Project{" + "Id=" + getId() + ", uuId=" + getUuId() + ", projectNumber=" + 
+                getProjectNumber() + ", projectCode=" + getProjectCode() + ", projectName=" + 
+                getProjectName() + ", projectShortName=" + getProjectShortName() + ", projectTagLine=" +
+                getProjectTagLine() + ", infoClass=" + getInfoClass() + ", projectType=" + 
+                getProjectType() + ", projectDescription=" + getProjectDescription() + ", projectSponsor=" +
+                getProjectSponsor() + ", projectContact=" + getProjectContact() + ", startDate=" + 
+                getStartDate() + ", endDate=" + getEndDate() + ", createdBy=" + getCreatedBy() + ", projectManager=" + 
+                getProjectManager() + ", projectMembers=" + getProjectMembers() + ", status=" + 
+                getStatus() + ", creationDate=" + getCreationDate() + ", modifiedDate=" + getModifiedDate() + '}';
     }
 
     public static long getSerialVersionUID() {
@@ -267,11 +268,11 @@ public class Project implements Serializable {
         this.infoClass = infoClass;
     }
 
-    public ProjectType getProjectType() {
+    public EntityType getProjectType() {
         return projectType;
     }
 
-    public void setProjectType(ProjectType projectType) {
+    public void setProjectType(EntityType projectType) {
         this.projectType = projectType;
     }
 

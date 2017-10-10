@@ -7,8 +7,8 @@ package org.zafritech.core.data.repositories;
 
 import java.util.List;
 import org.springframework.data.repository.CrudRepository;
+import org.zafritech.core.data.domain.EntityType;
 import org.zafritech.core.data.domain.Folder;
-import org.zafritech.core.data.domain.FolderType;
 import org.zafritech.core.data.domain.Project;
 
 /**
@@ -23,7 +23,7 @@ public interface FolderRepository extends CrudRepository<Folder, Long> {
     
     List<Folder> findByProjectOrderBySortIndexAsc(Project project);
     
-    Folder findFirstByProjectAndFolderType(Project project, FolderType type);
+    Folder findFirstByProjectAndFolderType(Project project, EntityType type);
     
     List<Folder> findByParent(Folder parent);
     
@@ -31,7 +31,7 @@ public interface FolderRepository extends CrudRepository<Folder, Long> {
     
     List<Folder> findByParentOrderBySortIndexAsc(Folder parent);
     
-    List<Folder> findByFolderType(FolderType folderType);
+    List<Folder> findByFolderType(EntityType folderType);
     
-    List<Folder> findByFolderTypeOrderBySortIndexAsc(FolderType folderType);
+    List<Folder> findByFolderTypeOrderBySortIndexAsc(EntityType folderType);
 }

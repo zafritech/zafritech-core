@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.zafritech.core.data.domain.Folder;
 import org.zafritech.core.data.domain.Project;
 import org.zafritech.core.data.domain.User;
+import org.zafritech.core.data.repositories.EntityTypeRepository;
 import org.zafritech.core.data.repositories.FolderRepository;
-import org.zafritech.core.data.repositories.FolderTypeRepository;
 import org.zafritech.core.data.repositories.ProjectRepository;
 import org.zafritech.core.services.ClaimService;
 
@@ -33,7 +33,7 @@ public class AdminProjectController {
     private FolderRepository folderRepository;
     
     @Autowired
-    private FolderTypeRepository folderTypeRepository;
+    private EntityTypeRepository entityTypeRepository;
     
     @Autowired
     private ClaimService claimService;
@@ -52,7 +52,7 @@ public class AdminProjectController {
     public String getProject(@PathVariable String uuid, Model model) {
         
         Project project = projectRepository.getByUuId(uuid);
-        Folder folder = folderRepository.findFirstByProjectAndFolderType(project, folderTypeRepository.findByTypeKey("FOLDER_PROJECT"));
+        Folder folder = folderRepository.findFirstByProjectAndFolderType(project, entityTypeRepository.findByEntityTypeKeyAndEntityTypeCode("FOLDER_TYPE_ENTITY", "FOLDER_PROJECT"));
         List<User> members = claimService.findProjectMemberClaims(project);
         
         model.addAttribute("project", project);

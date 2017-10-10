@@ -21,18 +21,18 @@ import org.zafritech.core.data.initializr.ContentDescriptorsInit;
 import org.zafritech.core.data.initializr.CountriesDataInit;
 import org.zafritech.core.data.initializr.DocumentInit;
 import org.zafritech.core.data.initializr.DocumentTypeInit;
+import org.zafritech.core.data.initializr.EntityTypesInit;
 import org.zafritech.core.data.initializr.FolderInit;
-import org.zafritech.core.data.initializr.FolderTypesInit;
 import org.zafritech.core.data.initializr.InfoClassesInit;
 import org.zafritech.core.data.initializr.ItemTypesInit;
 import org.zafritech.core.data.initializr.LibraryInit;
 import org.zafritech.core.data.initializr.LinkTypesInit;
 import org.zafritech.core.data.initializr.LocalesDataInit;
-import org.zafritech.core.data.initializr.ProjectTypesInit;
 import org.zafritech.core.data.initializr.ProjectsInit;
 import org.zafritech.core.data.initializr.SIUnitsDataInit;
 import org.zafritech.core.data.initializr.SnaphotsInit;
 import org.zafritech.core.data.initializr.SystemVariableInit;
+import org.zafritech.core.data.initializr.TemplateVariablesInit;
 import org.zafritech.core.data.initializr.UserRolesInit;
 import org.zafritech.core.data.initializr.UsersInit;
 
@@ -47,10 +47,16 @@ public class InitServiceImpl implements InitService {
     private RunOnceTaskRepository runOnceTaskRepository;
 
     @Autowired
+    private TemplateVariablesInit templateVariablesInit;
+
+    @Autowired
     private UserRolesInit userRolesInit;
    
     @Autowired
     private UsersInit userInit;
+  
+    @Autowired
+    private EntityTypesInit entityTypesInit;
   
     @Autowired
     private ClaimTypesInit claimTypesInit;
@@ -71,13 +77,7 @@ public class InitServiceImpl implements InitService {
     private CompaniesInit companiesInit;
 
     @Autowired
-    private ProjectTypesInit projectTypesInit;
-    
-    @Autowired
     private ProjectsInit projectsInit;
-    
-    @Autowired
-    private FolderTypesInit folderTypesInit;
     
     @Autowired
     private FolderInit folderInit;
@@ -105,6 +105,31 @@ public class InitServiceImpl implements InitService {
     
     @Autowired
     private LinkTypesInit linkTypesInit;
+    
+    @Override
+    public RunOnceTask initEntityTypes() {
+        
+        if (!isInitComplete("ENTITY_TYPES_INIT")) {
+            
+            entityTypesInit.init();
+            return completeTask("ENTITY_TYPES_INIT");
+        }
+        
+        return null;
+    }
+   
+    @Transactional
+    @Override
+    public RunOnceTask initTemplateVariables() {
+        
+        if (!isInitComplete("TEMPLATE_VARIABLES_INIT")) {
+            
+            templateVariablesInit.init();
+            return completeTask("TEMPLATE_VARIABLES_INIT");
+        }
+        
+        return null;
+    }
     
     @Transactional
     @Override
@@ -205,36 +230,12 @@ public class InitServiceImpl implements InitService {
     }
 
     @Override
-    public RunOnceTask initProjectTypes() {
-        
-        if (!isInitComplete("PROJECT_TYPES_INIT")) {
-            
-            projectTypesInit.init();
-            return completeTask("PROJECT_TYPES_INIT");
-        }
-        
-        return null;
-    }
-    
-    @Override
     public RunOnceTask initProjects() {
        
         if (!isInitComplete("PROJECTS_INIT")) {
             
             projectsInit.init();
             return completeTask("PROJECTS_INIT");
-        }
-        
-        return null;
-    }
- 
-    @Override
-    public RunOnceTask initFolderTypes() {
-        
-        if (!isInitComplete("FOLDER_TYPES_INIT")) {
-           
-            folderTypesInit.init();
-            return completeTask("FOLDER_TYPES_INIT");
         }
         
         return null;

@@ -15,10 +15,9 @@ import org.zafritech.core.data.repositories.CompanyRepository;
 import org.zafritech.core.data.repositories.ContactRepository;
 import org.zafritech.core.data.repositories.InformationClassRepository;
 import org.zafritech.core.data.repositories.ProjectRepository;
-import org.zafritech.core.data.repositories.ProjectTypeRepository;
+import org.zafritech.core.data.repositories.EntityTypeRepository;
 import org.zafritech.core.data.repositories.UserRepository;
 import org.zafritech.core.enums.ProjectStatus;
-import org.zafritech.core.services.ProjectService;
 
 /**
  *
@@ -37,10 +36,7 @@ public class DaoToProjectConverter implements Converter<ProjectDao, Project> {
     private ProjectRepository projectRepository;
  
     @Autowired
-    private ProjectService projectService;
-    
-    @Autowired
-    private ProjectTypeRepository projectTypeRepository;
+    private EntityTypeRepository entityTypeRepository;
 
     @Autowired
     private InformationClassRepository infoClassRepository;
@@ -62,7 +58,7 @@ public class DaoToProjectConverter implements Converter<ProjectDao, Project> {
                                       infoClassRepository.findOne(projectDao.getInfoClassId()));
 
 
-        project.setProjectType(projectTypeRepository.findOne(projectDao.getProjectTypeId())); 
+        project.setProjectType(entityTypeRepository.findOne(projectDao.getProjectTypeId())); 
         project.setStartDate(Timestamp.valueOf(projectDao.getStartDate())); 
         project.setEndDate(Timestamp.valueOf(projectDao.getEndDate())); 
         project.setStatus(ProjectStatus.valueOf(projectDao.getStatus())); 

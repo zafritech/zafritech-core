@@ -23,6 +23,8 @@ public class StartupCLR implements CommandLineRunner {
     @Override
     public void run(String... strings) throws Exception {
         
+        initService.initEntityTypes();
+        initService.initTemplateVariables();
         initService.initRoles();
         initService.initLocales();
         initService.initSIUnits();
@@ -33,9 +35,7 @@ public class StartupCLR implements CommandLineRunner {
         initService.initCompanies();
         initService.initDocumentContentDescriptors();
         initService.initDocumentTypes();
-        initService.initProjectTypes();
         initService.initProjects();
-        initService.initFolderTypes();
         initService.initFolders();
         initService.initDocuments();
         initService.initLibrary();

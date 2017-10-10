@@ -12,8 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.zafritech.core.data.domain.Folder;
 import org.zafritech.core.data.domain.Project;
+import org.zafritech.core.data.repositories.EntityTypeRepository;
 import org.zafritech.core.data.repositories.FolderRepository;
-import org.zafritech.core.data.repositories.FolderTypeRepository;
 import org.zafritech.core.data.repositories.ProjectRepository;
 
 /**
@@ -30,7 +30,7 @@ public class FolderInit {
     private FolderRepository folderRepository;
     
     @Autowired
-    private FolderTypeRepository folderTypeRepository;
+    private EntityTypeRepository entityTypeRepository;
      
     @Transactional
     public void init() {
@@ -40,15 +40,15 @@ public class FolderInit {
         
         for(Project project : projects) {
             
-            Folder folder = folderRepository.save(new Folder(project.getProjectShortName(), folderTypeRepository.findByTypeKey("FOLDER_PROJECT"), null, project, index++)); 
+            Folder folder = folderRepository.save(new Folder(project.getProjectShortName(), entityTypeRepository.findByEntityTypeKeyAndEntityTypeCode("FOLDER_TYPE_ENTITY", "FOLDER_PROJECT"), null, project, index++)); 
             
             folderRepository.save(new HashSet<Folder>(){{
                 
-                    add(new Folder("Planning", folderTypeRepository.findByTypeKey("FOLDER_DOCUMENT"), folder, project, 0));
-                    add(new Folder("Specification", folderTypeRepository.findByTypeKey("FOLDER_DOCUMENT"), folder, project, 1));
-                    add(new Folder("Design", folderTypeRepository.findByTypeKey("FOLDER_DOCUMENT"), folder, project, 2));
-                    add(new Folder("Integration", folderTypeRepository.findByTypeKey("FOLDER_DOCUMENT"), folder, project, 3));
-                    add(new Folder("Validation", folderTypeRepository.findByTypeKey("FOLDER_DOCUMENT"), folder, project, 4));
+                    add(new Folder("Planning", entityTypeRepository.findByEntityTypeKeyAndEntityTypeCode("FOLDER_TYPE_ENTITY", "FOLDER_DOCUMENT"), folder, project, 0));
+                    add(new Folder("Specification", entityTypeRepository.findByEntityTypeKeyAndEntityTypeCode("FOLDER_TYPE_ENTITY", "FOLDER_DOCUMENT"), folder, project, 1));
+                    add(new Folder("Design", entityTypeRepository.findByEntityTypeKeyAndEntityTypeCode("FOLDER_TYPE_ENTITY", "FOLDER_DOCUMENT"), folder, project, 2));
+                    add(new Folder("Integration", entityTypeRepository.findByEntityTypeKeyAndEntityTypeCode("FOLDER_TYPE_ENTITY", "FOLDER_DOCUMENT"), folder, project, 3));
+                    add(new Folder("Validation", entityTypeRepository.findByEntityTypeKeyAndEntityTypeCode("FOLDER_TYPE_ENTITY", "FOLDER_DOCUMENT"), folder, project, 4));
                 }
             });
         }

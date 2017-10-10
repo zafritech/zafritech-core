@@ -25,9 +25,8 @@ import org.zafritech.core.data.dao.LibraryItemDao;
 import org.zafritech.core.data.dao.ValuePairDao;
 import org.zafritech.core.data.domain.Folder;
 import org.zafritech.core.data.domain.LibraryItem;
-import org.zafritech.core.data.domain.Project;
+import org.zafritech.core.data.repositories.EntityTypeRepository;
 import org.zafritech.core.data.repositories.FolderRepository;
-import org.zafritech.core.data.repositories.FolderTypeRepository;
 import org.zafritech.core.data.repositories.LibraryItemRepository;
 import org.zafritech.core.services.FolderService;
 import org.zafritech.core.services.LibraryService;
@@ -43,7 +42,7 @@ public class LibraryRestController {
     private FolderRepository folderRepository;
    
     @Autowired
-    private FolderTypeRepository folderTypeRepository;
+    private EntityTypeRepository entityTypeRepository;
     
     @Autowired
     private LibraryItemRepository libraryItemRepository;
@@ -110,7 +109,7 @@ public class LibraryRestController {
         
         System.out.println(dao);
         
-        Folder folder = new Folder(dao.getItemName(), folderTypeRepository.findByTypeKey("FOLDER_LIBRARY"), folderRepository.findOne(dao.getId()), null);
+        Folder folder = new Folder(dao.getItemName(), entityTypeRepository.findByEntityTypeKeyAndEntityTypeCode("FOLDER_TYPE_ENTITY", "FOLDER_LIBRARY"), folderRepository.findOne(dao.getId()), null);
         folder = folderRepository.save(folder);
         
         return new ResponseEntity("Successfully created folder: " + folder.getFolderName(), new HttpHeaders(), HttpStatus.OK);

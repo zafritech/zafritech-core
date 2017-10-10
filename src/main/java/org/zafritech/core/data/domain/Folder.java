@@ -29,7 +29,7 @@ public class Folder implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "folderTypeId")
-    private FolderType folderType;
+    private EntityType folderType;
 
     @ManyToOne
     @JoinColumn(name = "parentId")
@@ -59,7 +59,7 @@ public class Folder implements Serializable {
     public Folder() {
     }
 
-    public Folder(String folderName, FolderType folderType, Project project) {
+    public Folder(String folderName, EntityType folderType, Project project) {
 
         this.uuId = UUID.randomUUID().toString();
         this.folderName = folderName;
@@ -70,7 +70,7 @@ public class Folder implements Serializable {
         this.modifiedDate = new Timestamp(System.currentTimeMillis());
     }
 
-    public Folder(String folderName, FolderType folderType, Folder parent, Project project) {
+    public Folder(String folderName, EntityType folderType, Folder parent, Project project) {
 
         this.uuId = UUID.randomUUID().toString();
         this.folderName = folderName;
@@ -81,7 +81,7 @@ public class Folder implements Serializable {
         this.modifiedDate = new Timestamp(System.currentTimeMillis());
     }
 
-    public Folder(String folderName, FolderType folderType, Folder parent, Project project, Integer sortIndex) {
+    public Folder(String folderName, EntityType folderType, Folder parent, Project project, Integer sortIndex) {
 
         this.uuId = UUID.randomUUID().toString();
         this.folderName = folderName;
@@ -117,11 +117,11 @@ public class Folder implements Serializable {
         this.folderName = folderName;
     }
 
-    public FolderType getFolderType() {
+    public EntityType getFolderType() {
         return folderType;
     }
 
-    public void setFolderType(FolderType folderType) {
+    public void setFolderType(EntityType folderType) {
         this.folderType = folderType;
     }
 

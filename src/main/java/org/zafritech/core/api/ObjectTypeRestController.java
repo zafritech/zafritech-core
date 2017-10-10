@@ -14,14 +14,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.zafritech.core.data.domain.ClaimType;
-import org.zafritech.core.data.domain.FolderType;
+import org.zafritech.core.data.domain.EntityType;
 import org.zafritech.core.data.domain.InformationClass;
-import org.zafritech.core.data.domain.ProjectType;
 import org.zafritech.core.data.repositories.ClaimTypeRepository;
-import org.zafritech.core.data.repositories.FolderTypeRepository;
+import org.zafritech.core.data.repositories.EntityTypeRepository;
 import org.zafritech.core.data.repositories.InformationClassRepository;
-import org.zafritech.core.data.repositories.ProjectTypeRepository;
-
 
 /**
  *
@@ -35,12 +32,9 @@ public class ObjectTypeRestController {
     
     @Autowired
     private InformationClassRepository infoClassRepository;
-    
+
     @Autowired
-    private ProjectTypeRepository projectTypeRepository;
-    
-    @Autowired
-    private FolderTypeRepository folderTypeRepository;
+    private EntityTypeRepository entityTypeRepository;
     
     @RequestMapping("/api/itemtypes/claimtype/list")
     public ResponseEntity<List<ClaimType>> getClaimTypesList(Model model) {
@@ -60,21 +54,19 @@ public class ObjectTypeRestController {
     }
     
     @RequestMapping("/api/itemtypes/projecttype/list")
-    public ResponseEntity<List<ProjectType>> getProjectTypeList(Model model) {
+    public ResponseEntity<List<EntityType>> getProjectTypeList(Model model) {
         
-        List<ProjectType> projectTypes = projectTypeRepository.findAllByOrderByTypeNameAsc();
-//        List<ProjectType> projectTypes = new ArrayList<>();
-//        projectTypeRepository.findAll().forEach(projectTypes::add);
+        List<EntityType> projectTypes = entityTypeRepository.findByEntityTypeKeyOrderByEntityTypeNameAsc("PROJECT_TYPE_ENTITY");
         
-        return new ResponseEntity<List<ProjectType>>(projectTypes, HttpStatus.OK);
+        return new ResponseEntity<List<EntityType>>(projectTypes, HttpStatus.OK);
     }
     
     @RequestMapping("/api/itemtypes/foldertype/list")
-    public ResponseEntity<List<FolderType>> getFolderTypeList(Model model) {
+    public ResponseEntity<List<EntityType>> getFolderTypeList(Model model) {
         
-        List<FolderType> folderTypes = new ArrayList<>();
-        folderTypeRepository.findAll().forEach(folderTypes::add);
+        List<EntityType> folderTypes = new ArrayList<>();
+        entityTypeRepository.findByEntityTypeKeyOrderByEntityTypeNameAsc("PROJECT_TYPE_ENTITY").forEach(folderTypes::add);
         
-        return new ResponseEntity<List<FolderType>>(folderTypes, HttpStatus.OK);
+        return new ResponseEntity<List<EntityType>>(folderTypes, HttpStatus.OK);
     }
 }

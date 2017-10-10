@@ -7,15 +7,15 @@ package org.zafritech.core.data.repositories;
 
 import java.util.List;
 import org.springframework.data.repository.CrudRepository;
-import org.zafritech.core.data.domain.ProjectType;
+import org.zafritech.core.data.domain.EntityType;
 
 /**
  *
  * @author LukeS
  */
-public interface ProjectTypeRepository extends CrudRepository<ProjectType, Long> {
+public interface EntityTypeRepository extends CrudRepository<EntityType, Long> {
     
-    List<ProjectType> findAllByOrderByTypeNameAsc();
+    List<EntityType> findByEntityTypeKeyOrderByEntityTypeNameAsc(String key);
     
-    ProjectType findByTypeCode(String typeCode);
+    EntityType findByEntityTypeKeyAndEntityTypeCode(String typeKey, String typeCode);
 }

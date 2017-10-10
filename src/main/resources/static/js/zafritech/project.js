@@ -1279,7 +1279,7 @@ function ProjectCreateNew() {
 
                         $.each(data, function (key, index) {
 
-                            selectOptions = selectOptions + '<option value="' + index.id + '">' + index.typeName + '</option>';
+                            selectOptions = selectOptions + '<option value="' + index.id + '">' + index.entityTypeName + '</option>';
                         });
 
                         $('#projectTypeId').empty();
@@ -1331,8 +1331,6 @@ function onProjectTypeChange() {
         cache: false
     })
     .done(function (data) {
-
-        console.log(data);
 
         $('#projectNumber').prop('value', data);
         
@@ -1492,7 +1490,7 @@ function ProjectEditProperties(uuId) {
 
                                 $.each(data, function (key, index) {
 
-                                    selectOptions = selectOptions + '<option value="' + index.id + '">' + index.typeName + '</option>';
+                                    selectOptions = selectOptions + '<option value="' + index.id + '">' + index.entityTypeName + '</option>';
                                 });
 
                                 $('#projectTypeId').empty();

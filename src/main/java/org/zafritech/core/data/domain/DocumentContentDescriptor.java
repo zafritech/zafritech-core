@@ -45,7 +45,7 @@ public class DocumentContentDescriptor implements Serializable {
         
         this.uuId = UUID.randomUUID().toString();
         this.descriptorName = descriptorName;
-        this.descriptorName = descriptorName;
+        this.descriptorCode = descriptorCode;
         this.componentName = componentName;
     }
 

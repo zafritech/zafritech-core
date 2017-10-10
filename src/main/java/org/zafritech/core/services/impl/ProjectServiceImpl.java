@@ -19,9 +19,9 @@ import org.zafritech.core.data.domain.ClaimType;
 import org.zafritech.core.data.domain.Company;
 import org.zafritech.core.data.domain.TemplateVariable;
 import org.zafritech.core.data.domain.Document;
+import org.zafritech.core.data.domain.EntityType;
 import org.zafritech.core.data.domain.Folder;
 import org.zafritech.core.data.domain.Project;
-import org.zafritech.core.data.domain.ProjectType;
 import org.zafritech.core.data.domain.User;
 import org.zafritech.core.data.domain.UserClaim;
 import org.zafritech.core.data.repositories.ClaimRepository;
@@ -29,11 +29,10 @@ import org.zafritech.core.data.repositories.ClaimTypeRepository;
 import org.zafritech.core.data.repositories.CompanyRepository;
 import org.zafritech.core.data.repositories.ContactRepository;
 import org.zafritech.core.data.repositories.DocumentRepository;
+import org.zafritech.core.data.repositories.EntityTypeRepository;
 import org.zafritech.core.data.repositories.FolderRepository;
-import org.zafritech.core.data.repositories.FolderTypeRepository;
 import org.zafritech.core.data.repositories.InformationClassRepository;
 import org.zafritech.core.data.repositories.ProjectRepository;
-import org.zafritech.core.data.repositories.ProjectTypeRepository;
 import org.zafritech.core.data.repositories.UserClaimRepository;
 import org.zafritech.core.data.repositories.UserRepository;
 import org.zafritech.core.enums.TemplateVariableCategories;
@@ -57,17 +56,14 @@ public class ProjectServiceImpl implements ProjectService {
     private ProjectRepository projectRepository;
     
     @Autowired
-    private ProjectTypeRepository projectTypeRepository;
+    private InformationClassRepository infoClassRepository;
 
     @Autowired
-    private InformationClassRepository infoClassRepository;
+    private EntityTypeRepository entityTypeRepository;
 
     @Autowired
     private FolderRepository folderRepository;
     
-    @Autowired
-    private FolderTypeRepository folderTypeRepository;
-     
     @Autowired
     private DocumentRepository documentRepository;
     
@@ -127,7 +123,7 @@ public class ProjectServiceImpl implements ProjectService {
         }
        
         if (dao.getInfoClassId() != null) { project.setInfoClass(infoClassRepository.findOne(dao.getInfoClassId())); }
-        if (dao.getProjectTypeId() != null) { project.setProjectType(projectTypeRepository.findOne(dao.getProjectTypeId())); }
+        if (dao.getProjectTypeId() != null) { project.setProjectType(entityTypeRepository.findOne(dao.getProjectTypeId())); }
         if (dao.getStartDate() != null) { project.setStartDate(Date.valueOf(dao.getStartDate())); }
         if (dao.getEndDate() != null) { project.setEndDate(Date.valueOf(dao.getEndDate())); }
         if (dao.getStatus() != null) { project.setStatus(ProjectStatus.valueOf(dao.getStatus())); }
@@ -143,8 +139,8 @@ public class ProjectServiceImpl implements ProjectService {
         List<Folder> folders = folderRepository.findByProject(project);
         if (folders.isEmpty()) {
         
-            Folder folder = folderRepository.save(new Folder(project.getProjectShortName(), folderTypeRepository.findByTypeKey("FOLDER_PROJECT"), null, project, 0));
-            Folder subfolder = folderRepository.save(new Folder("Planning", folderTypeRepository.findByTypeKey("FOLDER_DOCUMENT"), folder, project, 0));
+            Folder folder = folderRepository.save(new Folder(project.getProjectShortName(), entityTypeRepository.findByEntityTypeKeyAndEntityTypeCode("FOLDER_TYPE_ENTITY", "FOLDER_PROJECT"), null, project, 0));
+            Folder subfolder = folderRepository.save(new Folder("Planning", entityTypeRepository.findByEntityTypeKeyAndEntityTypeCode("FOLDER_TYPE_ENTITY", "FOLDER_DOCUMENT"), folder, project, 0));
             
             // Add dummy document
             String ident = project.getProjectCode() + "-" + project.getProjectSponsor().getCompanyCode() + "-RLS-" + String.format("%04d", 1);
@@ -202,7 +198,7 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
-    public String generateProjectNumber(ProjectType type) {
+    public String generateProjectNumber(EntityType type) {
         
         Map<String, String> valuesMap = new HashMap<String, String>();
         
@@ -222,14 +218,21 @@ public class ProjectServiceImpl implements ProjectService {
         
         if (project != null) {
             
-            numericValue = String.format(format, Integer.valueOf(project.getNumericNumber()) + 1);
-                    
+            if (project.getNumericNumber() != null) {
+            
+                numericValue = String.format(format, Integer.valueOf(project.getNumericNumber()) + 1);
+                
+            } else {
+                
+                numericValue = String.format(format, Integer.valueOf(project.getProjectNumber().replaceAll("[^0-9]", "")) + 1);
+            }
+            
         } else {
             
             numericValue = String.format(format, Integer.valueOf(subst.replace("${project_numbering_start}")));
         }
         
-        valuesMap.put("project_type_code", type.getTypeCode());
+        valuesMap.put("project_type_code", type.getEntityTypeCode());
         valuesMap.put("project_numbering_numberic", numericValue);
         
         return subst.replace("${project_numbering_format}"); 

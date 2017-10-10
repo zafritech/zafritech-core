@@ -13,6 +13,10 @@ import org.zafritech.core.data.domain.RunOnceTask;
  */
 public interface InitService {
     
+    RunOnceTask initEntityTypes();
+    
+    RunOnceTask initTemplateVariables();
+    
     RunOnceTask initRoles();
     
     RunOnceTask initUsers();
@@ -29,15 +33,11 @@ public interface InitService {
     
     RunOnceTask initCompanies();
     
-    RunOnceTask initFolderTypes();
-    
     RunOnceTask initFolders();
     
     RunOnceTask initDocumentContentDescriptors();
     
     RunOnceTask initDocumentTypes();
-    
-    RunOnceTask initProjectTypes();
     
     RunOnceTask initProjects();
     

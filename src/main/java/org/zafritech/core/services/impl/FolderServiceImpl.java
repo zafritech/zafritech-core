@@ -11,12 +11,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.zafritech.core.data.dao.FolderTreeDao;
 import org.zafritech.core.data.domain.Document;
+import org.zafritech.core.data.domain.EntityType;
 import org.zafritech.core.data.domain.Folder;
-import org.zafritech.core.data.domain.FolderType;
 import org.zafritech.core.data.domain.Project;
 import org.zafritech.core.data.repositories.DocumentRepository;
+import org.zafritech.core.data.repositories.EntityTypeRepository;
 import org.zafritech.core.data.repositories.FolderRepository;
-import org.zafritech.core.data.repositories.FolderTypeRepository;
 import org.zafritech.core.data.repositories.InformationClassRepository;
 import org.zafritech.core.services.FolderService;
 import org.zafritech.core.services.UserService;
@@ -29,7 +29,7 @@ import org.zafritech.core.services.UserService;
 public class FolderServiceImpl implements FolderService {
 
     @Autowired
-    private FolderTypeRepository folderTypeRepository;
+    private EntityTypeRepository entityTypeRepository;
 
     @Autowired
     private FolderRepository folderRepository;
@@ -51,7 +51,7 @@ public class FolderServiceImpl implements FolderService {
         
         for (Folder folder : folders) {
             
-            if (folder.getFolderType().equals(folderTypeRepository.findByTypeKey("FOLDER_PROJECT"))) { 
+            if (folder.getFolderType().equals(entityTypeRepository.findByEntityTypeKeyAndEntityTypeCode("FOLDER_TYPE_ENTITY", "FOLDER_PROJECT"))) { 
                 
                 folderTree.add(new FolderTreeDao(
                 
@@ -166,7 +166,7 @@ public class FolderServiceImpl implements FolderService {
         
         List<FolderTreeDao> foldersTree = new ArrayList<>();
         
-        FolderType folderType = folderTypeRepository.findByTypeKey("FOLDER_LIBRARY");
+        EntityType folderType = entityTypeRepository.findByEntityTypeKeyAndEntityTypeCode("FOLDER_TYPE_ENTITY", "FOLDER_LIBRARY");
         List<Folder> folders = folderRepository.findByFolderTypeOrderBySortIndexAsc(folderType);
         
         for (Folder folder : folders) {
