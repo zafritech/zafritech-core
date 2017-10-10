@@ -37,8 +37,6 @@ public interface InitService {
     
     RunOnceTask initDocumentContentDescriptors();
     
-    RunOnceTask initDocumentTypes();
-    
     RunOnceTask initProjects();
     
     RunOnceTask initDocuments();

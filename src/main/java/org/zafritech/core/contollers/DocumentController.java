@@ -56,7 +56,7 @@ public class DocumentController {
         stateService.updateRecentDocument(document); 
                 
         model.addAttribute("document", document);
-        model.addAttribute("descriptor", document.getDocumentType().getContentDescriptor().getDescriptorCode());
+        model.addAttribute("descriptor", document.getContentDescriptor().getDescriptorCode());
         
         return "views/documents/document";
     }
@@ -66,7 +66,7 @@ public class DocumentController {
         
         Document document = documentRepository.findByUuId(uuid);
         
-        String fileName = document.getIdentifier() + "-" +  document.getDocumentIssue() + "_" + document.getDocumentType().getTypeCode() + ".pdf";
+        String fileName = document.getIdentifier() + "-" +  document.getDocumentIssue() + "_" + document.getDocumentType().getEntityTypeCode() + ".pdf";
     
         byte[] baos = itextService.getItemsPDFDocument(document);
         

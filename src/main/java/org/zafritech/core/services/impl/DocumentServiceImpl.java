@@ -12,8 +12,9 @@ import org.zafritech.core.data.dao.DocEditDao;
 import org.zafritech.core.data.domain.Document;
 import org.zafritech.core.data.domain.User;
 import org.zafritech.core.data.repositories.ClaimTypeRepository;
+import org.zafritech.core.data.repositories.DocumentContentDescriptorRepository;
 import org.zafritech.core.data.repositories.DocumentRepository;
-import org.zafritech.core.data.repositories.DocumentTypeRepository;
+import org.zafritech.core.data.repositories.EntityTypeRepository;
 import org.zafritech.core.data.repositories.FolderRepository;
 import org.zafritech.core.data.repositories.InformationClassRepository;
 import org.zafritech.core.data.repositories.ProjectRepository;
@@ -34,7 +35,10 @@ public class DocumentServiceImpl implements DocumentService {
     private DocumentRepository documentRepository;
     
     @Autowired
-    private DocumentTypeRepository documentTypeRepository;
+    private EntityTypeRepository entitytTypeRepository;
+    
+    @Autowired
+    private DocumentContentDescriptorRepository descriptorRepository;
     
     @Autowired
     private ProjectRepository projectRepository;
@@ -66,7 +70,8 @@ public class DocumentServiceImpl implements DocumentService {
         
                 docDao.getIdentifier(),
                 docDao.getDocumentName(),
-                documentTypeRepository.findOne(docDao.getTypeId()),
+                entitytTypeRepository.findOne(docDao.getTypeId()),
+                descriptorRepository.findOne(docDao.getDecriptorId()),
                 projectRepository.findOne(docDao.getProjectId()),
                 folderRepository.findOne(docDao.getFolderId()),
                 infoClassRepository.findOne(docDao.getInfoClassId()),
@@ -95,6 +100,7 @@ public class DocumentServiceImpl implements DocumentService {
                 oldDoc.getIdentifier() + "-COPY",
                 oldDoc.getDocumentName() + " - Copy",
                 oldDoc.getDocumentType(),
+                oldDoc.getContentDescriptor(),
                 oldDoc.getProject(),
                 oldDoc.getFolder(),
                 oldDoc.getInfoClass(),
@@ -127,7 +133,7 @@ public class DocumentServiceImpl implements DocumentService {
         
         document.setProject(projectRepository.findOne(docEditDao.getProjectId()));
         document.setFolder(folderRepository.findOne(docEditDao.getFolderId()));
-        document.setDocumentType(documentTypeRepository.findOne(docEditDao.getTypeId()));
+        document.setDocumentType(entitytTypeRepository.findOne(docEditDao.getTypeId()));
         document.setInfoClass(infoClassRepository.findOne(docEditDao.getInfoClassId()));
         document.setOwner(owner); 
         document = documentRepository.save(document);

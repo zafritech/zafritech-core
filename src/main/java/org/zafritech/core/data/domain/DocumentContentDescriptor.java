@@ -23,6 +23,8 @@ public class DocumentContentDescriptor implements Serializable {
     private String descriptorCode;
     
     private String componentName;
+    
+    private String urlPathString;
 
     @Column(columnDefinition = "TEXT")
     private String description;
@@ -32,31 +34,37 @@ public class DocumentContentDescriptor implements Serializable {
     }
 
     public DocumentContentDescriptor(String descriptorName, 
-                                     String descriptorCode) {
+                                     String descriptorCode,
+                                     String urlPathString) {
         
         this.uuId = UUID.randomUUID().toString();
         this.descriptorName = descriptorName;
         this.descriptorCode = descriptorCode;
+        this.urlPathString = urlPathString;
     }
 
     public DocumentContentDescriptor(String descriptorName,
                                      String descriptorCode,
+                                     String urlPathString,
                                      String componentName) {
         
         this.uuId = UUID.randomUUID().toString();
         this.descriptorName = descriptorName;
         this.descriptorCode = descriptorCode;
         this.componentName = componentName;
+        this.urlPathString = urlPathString;
     }
 
     public DocumentContentDescriptor(String descriptorName, 
                                      String componentName,
-                                     String descriptorCode, 
+                                     String descriptorCode,
+                                     String urlPathString, 
                                      String description) {
         
         this.uuId = UUID.randomUUID().toString();
         this.descriptorName = descriptorName;
         this.descriptorCode = descriptorCode;
+        this.urlPathString = urlPathString;
         this.description = description;
         this.componentName = componentName;
     }
@@ -97,6 +105,22 @@ public class DocumentContentDescriptor implements Serializable {
         this.descriptorCode = descriptorCode;
     }
 
+    public String getComponentName() {
+        return componentName;
+    }
+
+    public void setComponentName(String componentName) {
+        this.componentName = componentName;
+    }
+
+    public String getUrlPathString() {
+        return urlPathString;
+    }
+
+    public void setUrlPathString(String urlPathString) {
+        this.urlPathString = urlPathString;
+    }
+
     public String getDescription() {
         return description;
     }
@@ -105,12 +129,5 @@ public class DocumentContentDescriptor implements Serializable {
         this.description = description;
     }
 
-    public String getComponentName() {
-        return componentName;
-    }
-
-    public void setComponentName(String componentName) {
-        this.componentName = componentName;
-    }
 }
 

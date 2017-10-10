@@ -23,7 +23,7 @@ import org.zafritech.core.data.dao.ValuePairDao;
 import org.zafritech.core.data.domain.Claim;
 import org.zafritech.core.data.domain.ClaimType;
 import org.zafritech.core.data.domain.Document;
-import org.zafritech.core.data.domain.DocumentType;
+import org.zafritech.core.data.domain.EntityType;
 import org.zafritech.core.data.domain.Project;
 import org.zafritech.core.data.domain.User;
 import org.zafritech.core.data.domain.UserClaim;
@@ -31,7 +31,7 @@ import org.zafritech.core.data.projections.UserView;
 import org.zafritech.core.data.repositories.ClaimRepository;
 import org.zafritech.core.data.repositories.ClaimTypeRepository;
 import org.zafritech.core.data.repositories.DocumentRepository;
-import org.zafritech.core.data.repositories.DocumentTypeRepository;
+import org.zafritech.core.data.repositories.EntityTypeRepository;
 import org.zafritech.core.data.repositories.ProjectRepository;
 import org.zafritech.core.data.repositories.UserClaimRepository;
 import org.zafritech.core.data.repositories.UserRepository;
@@ -51,7 +51,7 @@ public class DocumentRestController {
     private DocumentService documentService;
    
     @Autowired
-    private DocumentTypeRepository documentTypeRepository;
+    private EntityTypeRepository entityTypeRepository;
    
     @Autowired
     private DocumentRepository documentRepository;
@@ -145,19 +145,19 @@ public class DocumentRestController {
     }
     
     @RequestMapping(value = "/api/documents/types/list", method = GET)
-    public ResponseEntity<List<DocumentType>> listDocumentTypes() {
+    public ResponseEntity<List<EntityType>> listDocumentTypes() {
         
-        List<DocumentType> docTypes = documentTypeRepository.findByOrderByDocumentTypeName(); 
+        List<EntityType> docTypes = entityTypeRepository.findByEntityTypeKeyOrderByEntityTypeNameAsc("DOCUMENT_TYPE_ENTITY"); 
         
-        return new ResponseEntity<List<DocumentType>>(docTypes, HttpStatus.OK);
+        return new ResponseEntity<List<EntityType>>(docTypes, HttpStatus.OK);
     }
     
     @RequestMapping(value = "/api/documents/types/byid/{id}", method = GET)
-    public ResponseEntity<DocumentType> listDocumentTypeItem(@PathVariable Long id) {
+    public ResponseEntity<EntityType> listDocumentTypeItem(@PathVariable Long id) {
         
-        DocumentType docType = documentTypeRepository.findOne(id); 
+        EntityType docType = entityTypeRepository.findOne(id); 
         
-        return new ResponseEntity<DocumentType>(docType, HttpStatus.OK);
+        return new ResponseEntity<EntityType>(docType, HttpStatus.OK);
     }
     
     @RequestMapping(value = "/api/documents/status/list", method = GET)

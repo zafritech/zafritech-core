@@ -21,6 +21,8 @@ public class DocDao {
     
     private Long typeId;
     
+    private Long decriptorId;
+    
     private Long infoClassId;
     
     private String documentName;
@@ -71,6 +73,14 @@ public class DocDao {
 
     public void setTypeId(Long typeId) {
         this.typeId = typeId;
+    }
+
+    public Long getDecriptorId() {
+        return decriptorId;
+    }
+
+    public void setDecriptorId(Long decriptorId) {
+        this.decriptorId = decriptorId;
     }
 
     public Long getInfoClassId() {

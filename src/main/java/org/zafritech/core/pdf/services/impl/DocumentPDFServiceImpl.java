@@ -87,7 +87,7 @@ public class DocumentPDFServiceImpl implements DocumentPDFService {
         document.add(identifier);
 
         // Add Document Title
-        Paragraph title = new Paragraph(doc.getDocumentType().getDocumentTypeName(), PdfConstants.TITLE);
+        Paragraph title = new Paragraph(doc.getDocumentType().getEntityTypeName(), PdfConstants.TITLE);
         title.setAlignment(Element.ALIGN_CENTER);
         document.add(title);
 

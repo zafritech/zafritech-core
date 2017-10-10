@@ -49,7 +49,7 @@
                                             <span th:text="${document.identifier}"></span>
                                         </div>
                                         <div class="col-md-6">
-                                            <span th:text="${document.documentLongName} + ' (' + ${document.documentType.typeCode} + ')'"></span>
+                                            <span th:text="${document.documentLongName} + ' (' + ${document.documentType.entityTypeCode} + ')'"></span>
                                         </div>
                                         <div class="col-md-3">
                                             
@@ -148,7 +148,7 @@
                             <!--Document footer--> 
                             <div class="card-footer bg-blue-grey-500">
                                 <div class="pull-right"><span th:text="${document.identifier}"></span></div>
-                                <span th:text="${document.documentLongName} + ' (' + ${document.documentType.typeCode} + ')'"></span>
+                                <span th:text="${document.documentLongName} + ' (' + ${document.documentType.entityTypeCode} + ')'"></span>
                             </div>
                             
                         </div>

@@ -697,7 +697,7 @@ public class ItemPDFServiceImpl implements ItemPDFService {
             phrase = new Phrase();
             phrase.add(new Chunk("Document Type:", PdfConstants.HEADER_LABEL));
             phrase.add(Chunk.NEWLINE);
-            phrase.add(new Chunk(document.getDocumentType().getTypeCode(), PdfConstants.TABLE_CELL));
+            phrase.add(new Chunk(document.getDocumentType().getEntityTypeCode(), PdfConstants.TABLE_CELL));
             cell = new PdfPCell(phrase);
             cell.setBorder(Rectangle.NO_BORDER);
             cell.setFixedHeight(24);
@@ -836,7 +836,7 @@ public class ItemPDFServiceImpl implements ItemPDFService {
             phrase = new Phrase();
             phrase.add(new Chunk("Document Type:", PdfConstants.HEADER_LABEL));
             phrase.add(Chunk.NEWLINE);
-            phrase.add(new Chunk(document.getDocumentType().getTypeCode(), PdfConstants.TABLE_CELL));
+            phrase.add(new Chunk(document.getDocumentType().getEntityTypeCode(), PdfConstants.TABLE_CELL));
             header.addCell(phrase);
 
             // Reference Number Cell

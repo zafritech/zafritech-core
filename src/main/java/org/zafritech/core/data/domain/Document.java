@@ -42,7 +42,11 @@ public class Document implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "documentTypeId")
-    private DocumentType documentType;
+    private EntityType documentType;
+    
+    @ManyToOne
+    @JoinColumn(name = "descriptorId")
+    private DocumentContentDescriptor contentDescriptor;
     
     @ManyToOne
     @JoinColumn(name = "infoClassId")
@@ -96,7 +100,8 @@ public class Document implements Serializable {
 
     public Document(String identifier, 
                     String documentName, 
-                    DocumentType documentType, 
+                    EntityType documentType, 
+                    DocumentContentDescriptor descriptor, 
                     Project project, 
                     Folder folder,
                     InformationClass infoClass,
@@ -106,6 +111,7 @@ public class Document implements Serializable {
         this.identifier = identifier;
         this.documentName = documentName;
         this.documentType = documentType;
+        this.contentDescriptor = descriptor;
         this.project = project;
         this.folder = folder;
         this.status = DocumentStatus.DRAFT;
@@ -120,7 +126,8 @@ public class Document implements Serializable {
                     String documentName, 
                     String documentLongName, 
                     String documentDescription, 
-                    DocumentType documentType, 
+                    EntityType documentType, 
+                    DocumentContentDescriptor descriptor,
                     Project project, 
                     Folder folder,
                     InformationClass infoClass,
@@ -132,6 +139,7 @@ public class Document implements Serializable {
         this.documentLongName = documentLongName;
         this.documentDescription = documentDescription;
         this.documentType = documentType;
+        this.contentDescriptor = descriptor;
         this.project = project;
         this.folder = folder;
         this.status = DocumentStatus.DRAFT;
@@ -198,12 +206,20 @@ public class Document implements Serializable {
         this.documentDescription = documentDescription;
     }
 
-    public DocumentType getDocumentType() {
+    public EntityType getDocumentType() {
         return documentType;
     }
 
-    public void setDocumentType(DocumentType documentType) {
+    public void setDocumentType(EntityType documentType) {
         this.documentType = documentType;
+    }
+
+    public DocumentContentDescriptor getContentDescriptor() {
+        return contentDescriptor;
+    }
+
+    public void setContentDescriptor(DocumentContentDescriptor contentDescriptor) {
+        this.contentDescriptor = contentDescriptor;
     }
 
     public InformationClass getInfoClass() {

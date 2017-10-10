@@ -193,7 +193,9 @@ function zTreeProjectOnClick(event, treeId, treeNode, clickFlag) {
         })
         .success(function (data) {
 
-            window.location.href = "/" + data.documentType.contentDescriptor.componentName + "/document/" + data.uuId;
+            console.log(data);
+    
+            window.location.href = "/" + data.contentDescriptor.urlPathString + "/document/" + data.uuId;
         });
      }
 }
@@ -836,12 +838,12 @@ function EditDocumentProperties(documentId) {
                         cache: false
                     })
                     .done(function (data) {
-
+                        
                         $(e.currentTarget).find('select[name="documentType"]').empty();
 
                         $.each(data, function (key, index) {
 
-                            $(e.currentTarget).find('select[name="documentType"]').append('<option value="' + index.id + '">' + index.documentTypeName + ' (' + index.typeCode + ')</option>');
+                            $(e.currentTarget).find('select[name="documentType"]').append('<option value="' + index.id + '">' + index.entityTypeName + ' (' + index.entityTypeCode + ')</option>');
                         });
                         
                         $(e.currentTarget).find('select[name="documentType"]').prop('value', docTypeId);
@@ -857,12 +859,12 @@ function EditDocumentProperties(documentId) {
                         cache: false
                     })
                     .done(function (data) {
-
+                        
                         $(e.currentTarget).find('select[name="ownerId"]').empty();
 
                         $.each(data, function (key, index) {
 
-                            $(e.currentTarget).find('select[name="ownerId"]').append('<option value="' + index.id + '">' + index.email + '</option>');
+                            $(e.currentTarget).find('select[name="ownerId"]').append('<option value="' + index.id + '">' + index.name + '</option>');
                         });
                         
                         $(e.currentTarget).find('select[name="ownerId"]').prop('value', ownerId);

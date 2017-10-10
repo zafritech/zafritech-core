@@ -20,7 +20,6 @@ import org.zafritech.core.data.initializr.CompaniesInit;
 import org.zafritech.core.data.initializr.ContentDescriptorsInit;
 import org.zafritech.core.data.initializr.CountriesDataInit;
 import org.zafritech.core.data.initializr.DocumentInit;
-import org.zafritech.core.data.initializr.DocumentTypeInit;
 import org.zafritech.core.data.initializr.EntityTypesInit;
 import org.zafritech.core.data.initializr.FolderInit;
 import org.zafritech.core.data.initializr.InfoClassesInit;
@@ -93,9 +92,6 @@ public class InitServiceImpl implements InitService {
     
     @Autowired
     private ContentDescriptorsInit contentDescriptorsInit;
-    
-    @Autowired
-    private DocumentTypeInit documentTypeInit;
     
     @Autowired
     private LibraryInit libraryInit;
@@ -277,25 +273,6 @@ public class InitServiceImpl implements InitService {
         return null;
     }
     
-    @Override
-    public RunOnceTask initDocumentTypes() {
-        
-        if (!isInitComplete("DOCUMENT_TYPES_INIT")) {
-
-            try {
-                
-                documentTypeInit.init();
-                return completeTask("DOCUMENT_TYPES_INIT");
-                
-            } catch (IOException ex) {
-                
-                Logger.getLogger(InitServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-        
-        return null;
-    }
- 
     @Override
     public RunOnceTask initDocuments() {
         

@@ -146,7 +146,8 @@ public class FolderServiceImpl implements FolderService {
             
                     doc.getIdentifier() + "-COPY",
                     doc.getDocumentName() + " - Empty",
-                    doc.getDocumentType(), 
+                    doc.getDocumentType(),
+                    doc.getContentDescriptor(),
                     doc.getProject(),
                     folder,
                     infoClassRepository.findByClassCode("INFO_OFFICIAL"),

@@ -28,11 +28,11 @@ public class ContentDescriptorsInit {
         descriptorRepository.save(new HashSet<DocumentContentDescriptor>() {
 
             {
-                add(new DocumentContentDescriptor("Generic Information", "CONTENT_TYPE_GENERIC", "Generic textual information"));
-                add(new DocumentContentDescriptor("Project Information", "CONTENT_TYPE_PROJECT", "Project detail information"));
-                add(new DocumentContentDescriptor("Tasks", "CONTENT_TYPE_TASKS", "Task list information"));
-                add(new DocumentContentDescriptor("Requirements", "CONTENT_TYPE_REQUIREMENTS", "Requirements specification information"));
-                add(new DocumentContentDescriptor("Requirements Link", "CONTENT_TYPE_LINKS", "Requirements links information"));
+                add(new DocumentContentDescriptor("Generic Information", "CONTENT_TYPE_GENERIC", "requirements", "Generic textual information"));
+                add(new DocumentContentDescriptor("Project Information", "CONTENT_TYPE_PROJECT", "requirements", "Project detail information"));
+                add(new DocumentContentDescriptor("Tasks", "CONTENT_TYPE_TASKS", "requirements", "Task list information"));
+                add(new DocumentContentDescriptor("Requirements", "CONTENT_TYPE_REQUIREMENTS", "requirements", "Requirements specification information"));
+                add(new DocumentContentDescriptor("Requirements Link", "CONTENT_TYPE_LINKS", "requirements", "Requirements links information"));
             }
         });
     }

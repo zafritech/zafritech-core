@@ -19,6 +19,7 @@ import org.zafritech.core.data.domain.ClaimType;
 import org.zafritech.core.data.domain.Company;
 import org.zafritech.core.data.domain.TemplateVariable;
 import org.zafritech.core.data.domain.Document;
+import org.zafritech.core.data.domain.DocumentContentDescriptor;
 import org.zafritech.core.data.domain.EntityType;
 import org.zafritech.core.data.domain.Folder;
 import org.zafritech.core.data.domain.Project;
@@ -28,6 +29,7 @@ import org.zafritech.core.data.repositories.ClaimRepository;
 import org.zafritech.core.data.repositories.ClaimTypeRepository;
 import org.zafritech.core.data.repositories.CompanyRepository;
 import org.zafritech.core.data.repositories.ContactRepository;
+import org.zafritech.core.data.repositories.DocumentContentDescriptorRepository;
 import org.zafritech.core.data.repositories.DocumentRepository;
 import org.zafritech.core.data.repositories.EntityTypeRepository;
 import org.zafritech.core.data.repositories.FolderRepository;
@@ -66,6 +68,9 @@ public class ProjectServiceImpl implements ProjectService {
     
     @Autowired
     private DocumentRepository documentRepository;
+    
+    @Autowired
+    private DocumentContentDescriptorRepository descriptorRepository;
     
     @Autowired
     private ContactRepository contactRepository;
@@ -145,7 +150,9 @@ public class ProjectServiceImpl implements ProjectService {
             // Add dummy document
             String ident = project.getProjectCode() + "-" + project.getProjectSponsor().getCompanyCode() + "-RLS-" + String.format("%04d", 1);
             String name = subfolder.getFolderName() + " RLS " + String.format("%04d", 1);
-            documentRepository.save(new Document(ident, name, null, project, subfolder, infoClassRepository.findByClassCode("INFO_OFFICIAL"), "0A"));
+            DocumentContentDescriptor descriptor = descriptorRepository.findByDescriptorCode("CONTENT_TYPE_REQUIREMENTS");
+            
+            documentRepository.save(new Document(ident, name, null, descriptor, project, subfolder, infoClassRepository.findByClassCode("INFO_OFFICIAL"), "0A"));
         }
         
         // Create project manager claim

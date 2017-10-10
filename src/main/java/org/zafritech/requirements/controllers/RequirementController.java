@@ -49,7 +49,7 @@ public class RequirementController {
         stateService.updateRecentDocument(document); 
                
         model.addAttribute("document", document);
-        model.addAttribute("descriptor", document.getDocumentType().getContentDescriptor().getDescriptorCode());
+        model.addAttribute("descriptor", document.getContentDescriptor().getDescriptorCode());
 
         return "views/documents/zid-document-fragment";
     }
