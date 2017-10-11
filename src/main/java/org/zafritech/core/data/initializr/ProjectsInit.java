@@ -156,7 +156,7 @@ public class ProjectsInit {
         
         for (Project project : projects) {
             
-            ProjectWbsPackage wbsPackage = new ProjectWbsPackage(project, "0001", "System Top Level");
+            ProjectWbsPackage wbsPackage = new ProjectWbsPackage(project, "0101", "STL", "System Top Level");
             wbsPackageRepository.save(wbsPackage);
         }
     }

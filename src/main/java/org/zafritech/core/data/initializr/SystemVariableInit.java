@@ -40,7 +40,7 @@ public class SystemVariableInit {
         
         for (Document document : documents) {
             
-            String wbs = document.getWbs().getCategoryCode();
+            String wbs = document.getWbs().getWbsCode();
             String uuidTemplate = "ID" + document.getProject().getNumericNumber() + "-" + wbs + "-" + document.getDocumentType().getEntityTypeCode() + "-";
             String reqIdTemplate = "R" + document.getProject().getNumericNumber() + "-" + wbs + "-";
             

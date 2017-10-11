@@ -585,10 +585,7 @@ function UserCreateDistributionList(projectUuId, documentUuId) {
                             member['itemValue'] = $('#selectedUsersList option').eq(i).html();
                             members.push(member);
                         }
-                        
-                        console.log(members);
-                        console.log(JSON.stringify(members));
-                        
+                       
                         $.ajax({
 
                             global: false,
@@ -857,8 +854,8 @@ function RecentDocuments() {
                             cache: false
                         })
                         .success(function (data) {
-
-                            window.location.href = "/" + data.documentType.contentDescriptor.componentName + "/document/" + data.uuId;
+                            
+                            window.location.href = "/" + data.contentDescriptor.urlPathString + "/document/" + data.uuId;
                         });
                     }
                 }
@@ -875,8 +872,6 @@ function RecentDocuments() {
                     cache: false
                 })
                 .done(function (data) {
-                    
-                    console.log(data);
                     
                     var selectOptions = '';
                     

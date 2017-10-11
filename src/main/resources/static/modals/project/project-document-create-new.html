@@ -1,8 +1,9 @@
 <form action="/api/user/update" method="POST">
 
-    <input type="hidden" id="projectId" value="" />
-    <input type="hidden" id="folderId" value="" />
-    <input type="hidden" id="docCodeRoot" value="" />
+    <input type="hidden" id="projectId" name="projectId" value="" />
+    <input type="hidden" id="folderId" name="folderId" value="" />
+    <input type="hidden" id="docNumberRoot" name="docNumberRoot" value="" />
+    <input type="hidden" id="wbsCode" name="wbsCode" value="" />
     
     <div class="row">
         <div class="col-sm-8">
@@ -22,13 +23,28 @@
     <div class="row">
         <div class="col-sm-6">
             <div class="form-group">
-                <label for="documentNumber">Document Number</label>
-                <input type="text" class="form-control" id="documentNumber" name="documentNumber"  placeholder="Document number"/>
+                <label for="wbsId">WBS/Subsystem</label>
+                <select class="form-control" id="wbsId" name="wbsId"></select>
             </div>
         </div>
         <div class="col-sm-6">
             <div class="form-group">
-                <label for="documentName">Document Title</label>
+                <label for="documentNumber">Document Number</label>
+                <input type="text" class="form-control" id="documentNumber" name="documentNumber"  placeholder="Document number"/>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="form-group">
+                <label for="decriptorId">Document Content</label>
+                <select class="form-control" id="decriptorId" name="decriptorId"></select>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="form-group">
+                <label for="documentName">Title</label>
                 <input type="text" class="form-control" id="documentName" name="documentName"  placeholder="Document title"/>
             </div>
         </div>
@@ -37,7 +53,7 @@
     <div class="row">
         <div class="col-sm-12">
             <div class="form-group">
-                <label for="documentLongName">Document Full Title</label>
+                <label for="documentLongName">Full Title</label>
                 <input type="text" class="form-control" id="documentLongName" name="documentLongName"  placeholder="Document full title"/>
             </div>
         </div>

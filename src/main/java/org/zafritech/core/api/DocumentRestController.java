@@ -23,6 +23,7 @@ import org.zafritech.core.data.dao.ValuePairDao;
 import org.zafritech.core.data.domain.Claim;
 import org.zafritech.core.data.domain.ClaimType;
 import org.zafritech.core.data.domain.Document;
+import org.zafritech.core.data.domain.DocumentContentDescriptor;
 import org.zafritech.core.data.domain.EntityType;
 import org.zafritech.core.data.domain.Project;
 import org.zafritech.core.data.domain.User;
@@ -30,6 +31,7 @@ import org.zafritech.core.data.domain.UserClaim;
 import org.zafritech.core.data.projections.UserView;
 import org.zafritech.core.data.repositories.ClaimRepository;
 import org.zafritech.core.data.repositories.ClaimTypeRepository;
+import org.zafritech.core.data.repositories.DocumentContentDescriptorRepository;
 import org.zafritech.core.data.repositories.DocumentRepository;
 import org.zafritech.core.data.repositories.EntityTypeRepository;
 import org.zafritech.core.data.repositories.ProjectRepository;
@@ -55,6 +57,9 @@ public class DocumentRestController {
    
     @Autowired
     private DocumentRepository documentRepository;
+    
+    @Autowired
+    private DocumentContentDescriptorRepository descriptorRepository;
     
     @Autowired
     private ProjectRepository projectRepository;
@@ -150,6 +155,15 @@ public class DocumentRestController {
         List<EntityType> docTypes = entityTypeRepository.findByEntityTypeKeyOrderByEntityTypeNameAsc("DOCUMENT_TYPE_ENTITY"); 
         
         return new ResponseEntity<List<EntityType>>(docTypes, HttpStatus.OK);
+    }
+    
+    @RequestMapping(value = "/api/documents/descriptors/list", method = GET)
+    public ResponseEntity<List<DocumentContentDescriptor>> listDocumentDescriptors() {
+        
+        List<DocumentContentDescriptor> descriptors = new ArrayList<>();
+        descriptorRepository.findByOrderByDescriptorName().forEach(descriptors::add); 
+        
+        return new ResponseEntity<List<DocumentContentDescriptor>>(descriptors, HttpStatus.OK);
     }
     
     @RequestMapping(value = "/api/documents/types/byid/{id}", method = GET)

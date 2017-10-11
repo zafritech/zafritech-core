@@ -37,6 +37,18 @@ public class DocDao {
         
     }
 
+    @Override
+    public String toString() {
+        
+        return "DocDao{" + "Id=" + Id + ", identifier=" + identifier 
+                + ", projectId=" + projectId + ", wbsId=" + wbsId 
+                + ", folderId=" + folderId + ", typeId=" + typeId 
+                + ", decriptorId=" + decriptorId + ", infoClassId=" 
+                + infoClassId + ", documentName=" + documentName 
+                + ", documentLongName=" + documentLongName + ", documentDescription=" 
+                + documentDescription + '}';
+    }
+
     public Long getId() {
         return Id;
     }

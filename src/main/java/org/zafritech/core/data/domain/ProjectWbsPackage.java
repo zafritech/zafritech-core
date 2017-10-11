@@ -32,9 +32,11 @@ public class ProjectWbsPackage implements Serializable {
     @JoinColumn(name = "projectId")
     private Project project;
     
-    private String categoryCode;
+    private String wbsNumber;
     
-    private String categoryName;
+    private String wbsCode;
+    
+    private String wbsName;
     
     @ManyToOne
     @JoinColumn(name = "parentId")
@@ -59,21 +61,23 @@ public class ProjectWbsPackage implements Serializable {
         
     }
 
-    public ProjectWbsPackage(Project project, String categoryCode, String categoryName) {
+    public ProjectWbsPackage(Project project, String wbsNumber, String wbsCode, String wbsName) {
         
         this.uuId = UUID.randomUUID().toString();
         this.project = project;
-        this.categoryCode = categoryCode;
-        this.categoryName = categoryName;
+        this.wbsNumber = wbsNumber;
+        this.wbsCode = wbsCode;
+        this.wbsName = wbsName;
         this.creationDate = new Timestamp(System.currentTimeMillis());
     }
 
-    public ProjectWbsPackage(Project project, String categoryCode, String categoryName, ProjectWbsPackage parent) {
+    public ProjectWbsPackage(Project project, String wbsNumber, String wbsCode, String wbsName, ProjectWbsPackage parent) {
         
         this.uuId = UUID.randomUUID().toString();
         this.project = project;
-        this.categoryCode = categoryCode;
-        this.categoryName = categoryName;
+        this.wbsNumber = wbsNumber;
+        this.wbsCode = wbsCode;
+        this.wbsName = wbsName;
         this.parent = parent;
         this.creationDate = new Timestamp(System.currentTimeMillis());
     }
@@ -81,9 +85,9 @@ public class ProjectWbsPackage implements Serializable {
     @Override
     public String toString() {
         
-        return "ProjectSubCategory{" + "id=" + getId() + ", uuId=" + getUuId() + ", project=" 
-                + getProject() + ", categoryCode=" + getCategoryCode() + ", categoryName=" 
-                + getCategoryName() + ", parent=" + getParent() + ", categoryLeader=" 
+        return "ProjectWbsPackage{" + "id=" + getId() + ", uuId=" + getUuId() + ", project=" 
+                + getProject() + ", wbsNumber=" + getWbsNumber() + ", wbsCode=" + getWbsCode() 
+                + ", wbsName=" + getWbsName() + ", parent=" + getParent() + ", categoryLeader=" 
                 + getCategoryLeader() + ", categoryMembers=" + getCategoryMembers() 
                 + ", creationDate=" + getCreationDate() + '}';
     }
@@ -108,20 +112,28 @@ public class ProjectWbsPackage implements Serializable {
         this.project = project;
     }
 
-    public String getCategoryCode() {
-        return categoryCode;
+    public String getWbsNumber() {
+        return wbsNumber;
     }
 
-    public void setCategoryCode(String categoryCode) {
-        this.categoryCode = categoryCode;
+    public void setWbsNumber(String wbsNumber) {
+        this.wbsNumber = wbsNumber;
     }
 
-    public String getCategoryName() {
-        return categoryName;
+    public String getWbsCode() {
+        return wbsCode;
     }
 
-    public void setCategoryName(String categoryName) {
-        this.categoryName = categoryName;
+    public void setWbsCode(String wbsCode) {
+        this.wbsCode = wbsCode;
+    }
+
+    public String getWbsName() {
+        return wbsName;
+    }
+
+    public void setWbsName(String wbsName) {
+        this.wbsName = wbsName;
     }
 
     public ProjectWbsPackage getParent() {

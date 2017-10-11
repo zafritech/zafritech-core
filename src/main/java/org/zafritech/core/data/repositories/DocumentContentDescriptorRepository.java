@@ -5,6 +5,7 @@
  */
 package org.zafritech.core.data.repositories;
 
+import java.util.List;
 import org.springframework.data.repository.CrudRepository;
 import org.zafritech.core.data.domain.DocumentContentDescriptor;
 
@@ -13,6 +14,8 @@ import org.zafritech.core.data.domain.DocumentContentDescriptor;
  * @author LukeS
  */
 public interface DocumentContentDescriptorRepository extends CrudRepository<DocumentContentDescriptor, Long> {
+    
+    List<DocumentContentDescriptor> findByOrderByDescriptorName();
     
     DocumentContentDescriptor findByDescriptorCode(String code);
 }

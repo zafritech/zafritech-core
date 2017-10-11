@@ -22,6 +22,7 @@ import org.zafritech.core.data.dao.ValuePairDao;
 import org.zafritech.core.data.domain.ClaimType;
 import org.zafritech.core.data.domain.InformationClass;
 import org.zafritech.core.data.domain.Project;
+import org.zafritech.core.data.domain.ProjectWbsPackage;
 import org.zafritech.core.data.domain.User;
 import org.zafritech.core.data.domain.UserClaim;
 import org.zafritech.core.data.projections.UserView;
@@ -29,6 +30,7 @@ import org.zafritech.core.data.repositories.ClaimTypeRepository;
 import org.zafritech.core.data.repositories.EntityTypeRepository;
 import org.zafritech.core.data.repositories.InformationClassRepository;
 import org.zafritech.core.data.repositories.ProjectRepository;
+import org.zafritech.core.data.repositories.ProjectWbsPackageRepository;
 import org.zafritech.core.data.repositories.UserRepository;
 import org.zafritech.core.enums.ProjectStatus;
 import org.zafritech.core.services.ClaimService;
@@ -61,6 +63,9 @@ public class ProjectRestController {
     
     @Autowired
     private ProjectService projectService;
+    
+    @Autowired
+    private ProjectWbsPackageRepository wbsPackageRepository;
     
     @Autowired
     private ClaimService claimService;
@@ -225,5 +230,22 @@ public class ProjectRestController {
         List<InformationClass> infoClasses = infoClassRepository.findAllByOrderByClassNameAsc(); 
         
         return new ResponseEntity<List<InformationClass>>(infoClasses, HttpStatus.OK);
+    }
+    
+    @RequestMapping(value = "/api/projects/wbs/packages/{id}", method = GET)
+    public ResponseEntity<ProjectWbsPackage> getProjectWBSPackage(@PathVariable(value = "id") Long id) {
+        
+        ProjectWbsPackage wbs = wbsPackageRepository.findOne(id);
+        
+        return new ResponseEntity<ProjectWbsPackage>(wbs, HttpStatus.OK);
+    }
+    
+    @RequestMapping(value = "/api/projects/wbs/packages/list/{uuid}", method = GET)
+    public ResponseEntity<List<ProjectWbsPackage>> listProjectWBSPackages(@PathVariable(value = "uuid") String uuid) {
+        
+        Project project = projectRepository.getByUuId(uuid);
+        List<ProjectWbsPackage> wbsList = wbsPackageRepository.findByProjectOrderByWbsName(project);
+        
+        return new ResponseEntity<List<ProjectWbsPackage>>(wbsList, HttpStatus.OK);
     }
 }

@@ -90,31 +90,31 @@ public class DocumentInit {
 
             int counter = 1;
             
-            String identRoot = project.getNumericNumber() + "-SWD";
-            String numericRoot = new SimpleDateFormat("yyMM").format(new Date());
             InformationClass infoClass = infoClassRepository.findByClassCode("INFO_OFFICIAL");
             DocumentContentDescriptor descriptor = descriptorRepository.findByDescriptorCode("CONTENT_TYPE_REQUIREMENTS");
-            ProjectWbsPackage wbs = wbsPackageRepository.findFirstByProjectAndCategoryCode(project, "0001");
+            ProjectWbsPackage wbs = wbsPackageRepository.findFirstByProjectAndWbsNumber(project, "0101");
                     
             for (Folder folder : folders) {
                 
+                String identRoot = project.getNumericNumber() + wbs.getWbsCode().toUpperCase();
+                
                 EntityType docType = entityTypeRepository.findByEntityTypeKeyAndEntityTypeCode("DOCUMENT_TYPE_ENTITY","RLS");
-                String ident = identRoot + '-' + docType.getEntityTypeCode().toUpperCase() + "-" + numericRoot + String.format("%04d", counter);
+                String ident = identRoot + '-' + docType.getEntityTypeCode().toUpperCase() + "-" + wbs.getWbsNumber() + String.format("%04d", counter);
                 String name = folder.getFolderName() + ' ' + docType.getEntityTypeCode().toUpperCase() + ' ' + String.format("%04d", counter++);
                 documentRepository.save(new Document(ident, name, docType, descriptor, project, wbs, folder, infoClass, documentIssue));
                                 
                 docType = entityTypeRepository.findByEntityTypeKeyAndEntityTypeCode("DOCUMENT_TYPE_ENTITY","SYS");
-                ident = identRoot + '-' + docType.getEntityTypeCode().toUpperCase() + "-" + numericRoot + String.format("%04d", counter);
+                ident = identRoot + '-' + docType.getEntityTypeCode().toUpperCase() + "-" + wbs.getWbsNumber() + String.format("%04d", counter);
                 name = folder.getFolderName() + ' ' + docType.getEntityTypeCode().toUpperCase() + ' ' + String.format("%04d", counter++);
                 documentRepository.save(new Document(ident, name, docType, descriptor, project, wbs, folder, infoClass, documentIssue));
                 
                 docType = entityTypeRepository.findByEntityTypeKeyAndEntityTypeCode("DOCUMENT_TYPE_ENTITY","SRS");
-                ident = identRoot + '-' + docType.getEntityTypeCode().toUpperCase() + "-" + numericRoot + String.format("%04d", counter);
+                ident = identRoot + '-' + docType.getEntityTypeCode().toUpperCase() + "-" + wbs.getWbsNumber() + String.format("%04d", counter);
                 name = folder.getFolderName() + ' ' + docType.getEntityTypeCode().toUpperCase() + ' ' + String.format("%04d", counter++);
                 documentRepository.save(new Document(ident, name, docType, descriptor, project, wbs, folder, infoClass, documentIssue));
                 
                 docType = entityTypeRepository.findByEntityTypeKeyAndEntityTypeCode("DOCUMENT_TYPE_ENTITY","ICD");
-                ident = identRoot + '-' + docType.getEntityTypeCode().toUpperCase() + "-" + numericRoot + String.format("%04d", counter);
+                ident = identRoot + '-' + docType.getEntityTypeCode().toUpperCase() + "-" + wbs.getWbsNumber() + String.format("%04d", counter);
                 name = folder.getFolderName() + ' ' + docType.getEntityTypeCode().toUpperCase() + ' ' + String.format("%04d", counter++);
                 documentRepository.save(new Document(ident, name, docType, descriptor, project, wbs, folder, infoClass, documentIssue));
                 

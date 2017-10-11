@@ -639,12 +639,16 @@ function CreateDocument(treeNodeId) {
                         data['projectId'] = document.getElementById('projectId').value;
                         data['folderId'] = treeNodeId;
                         data['typeId'] = document.getElementById('documentType').value;
+                        data['wbsId'] = document.getElementById('wbsId').value;
                         data['infoClassId'] = document.getElementById('infoClassId').value;
+                        data['decriptorId'] = document.getElementById('decriptorId').value;
                         data['identifier'] = document.getElementById('documentNumber').value;
                         data['documentName'] = document.getElementById('documentName').value;
                         data['documentLongName'] = document.getElementById('documentLongName').value;
                         data['documentDescription'] = document.getElementById('documentDescription').value;
                        
+                        console.log(data);
+                        
                         $.ajax({
                             
                             global: false,
@@ -683,16 +687,17 @@ function CreateDocument(treeNodeId) {
                     cache: false
                 })
                 .done(function (data) {
-            
-                    var docCodeRoot = data.project.projectCode + '-' + data.project.projectSponsor.companyCode + '-';
+                    
+                    var docNumberRoot = data.project.numericNumber;
+                    var projectUuId = data.project.uuId;
 
                     $(e.currentTarget).find('input[name="documentProject"]').prop('value', data.project.projectName);
                     $(e.currentTarget).find('input[name="documentFolder"]').prop('value', data.folderName);
-                    $(e.currentTarget).find('input[name="documentNumber"]').prop('value', docCodeRoot);
+                    $(e.currentTarget).find('input[name="documentNumber"]').prop('value', docNumberRoot);
 
-                    $(e.currentTarget).find('input[name="folderId"]').prop('value', data.parent.id);
+                    $(e.currentTarget).find('input[name="folderId"]').prop('value', (data.parent !== null) ? data.parent.id : 0);
                     $(e.currentTarget).find('input[name="projectId"]').prop('value', data.project.id);
-                    $(e.currentTarget).find('input[name="docCodeRoot"]').prop('value', docCodeRoot);
+                    $(e.currentTarget).find('input[name="docNumberRoot"]').prop('value', docNumberRoot);
  
                     $.ajax({
 
@@ -703,15 +708,56 @@ function CreateDocument(treeNodeId) {
                         cache: false
                     })
                     .done(function (data) {
-
+                        
                         $(e.currentTarget).find('select[name="documentType"]').empty();
 
                         $.each(data, function (key, index) {
 
-                            $(e.currentTarget).find('select[name="documentType"]').append('<option value="' + index.id + '">' + index.documentTypeName + ' (' + index.typeCode + ')</option>');
+                            $(e.currentTarget).find('select[name="documentType"]').append('<option value="' + index.id + '">' + index.entityTypeName + ' (' + index.entityTypeCode + ')</option>');
                         });
                         
-                        $(e.currentTarget).find('input[name="documentNumber"]').prop('value', docCodeRoot + data[0].typeCode+ '-#####');
+                        $.ajax({
+
+                            type: "GET",
+                            contentType: "application/json",
+                            url: "/api/projects/wbs/packages/list/" + projectUuId,
+                            dataType: "json",
+                            cache: false
+                        })    
+                        .done( function(data) {
+                                  
+                            $(e.currentTarget).find('select[name="wbsId"]').empty();
+                            
+                            $.each(data, function (key, index) {
+
+                                $(e.currentTarget).find('select[name="wbsId"]').append('<option value="' + index.id + '">' + index.wbsNumber + " - " + index.wbsName + '</option>');
+                            });
+                            
+                            $.ajax({
+
+                                type: "GET",
+                                contentType: "application/json",
+                                url: "/api/documents/descriptors/list",
+                                dataType: "json",
+                                cache: false
+                            })
+                            .done( function(data) {
+                                
+                                var defaultId = '';
+                        
+                                $(e.currentTarget).find('select[name="decriptorId"]').empty();
+                                
+                                $.each(data, function (key, index) {
+                                    
+                                    $(e.currentTarget).find('select[name="decriptorId"]').append('<option value="' + index.id + '">' + index.descriptorName + '</option>');
+                                    if (index.descriptorCode === "CONTENT_TYPE_REQUIREMENTS") { defaultId = index.id; }
+                                });
+                                
+                                $(e.currentTarget).find('select[name="decriptorId"]').prop('value', defaultId);
+                            });
+                            
+                            onDocumentTypeChange();
+                        });
                     });
                 });
                 
@@ -785,7 +831,7 @@ function EditDocumentProperties(documentId) {
                                 },
                                 function() {
                                    
-                                    zTreeProjectLoad();
+                                    window.location.reload();
                                 });
                             }
                         });
@@ -1084,7 +1130,8 @@ function ConfirmDocumentDeleted(documentId) {
 function onDocumentTypeChange() {
     
     var docTypeId = document.getElementById('documentType').value;
-    var docCodeRoot = document.getElementById('documentNumber').value;
+    var docNumberRoot = document.getElementById('docNumberRoot').value;
+    var wbsId = document.getElementById('wbsId').value;
 
     $.ajax({
 
@@ -1096,7 +1143,21 @@ function onDocumentTypeChange() {
     })
     .done(function (data) {
 
-       document.getElementById('documentNumber').value = docCodeRoot.substr(0, 12) + data.typeCode.toUpperCase() + '-#####';
+       var documentTypeCode = data.entityTypeCode.toUpperCase();
+       
+       $.ajax({
+
+            type: "GET",
+            contentType: "application/json",
+            url: "/api/projects/wbs/packages/" + wbsId,
+            dataType: "json",
+            cache: false
+        })
+        .done(function(data) {
+                 
+            document.getElementById('documentNumber').value = docNumberRoot + data.wbsCode + "-" + documentTypeCode + '-' + data.wbsNumber + '####';
+        });
+       
     });
 }
 

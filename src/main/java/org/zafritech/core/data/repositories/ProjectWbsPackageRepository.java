@@ -5,6 +5,7 @@
  */
 package org.zafritech.core.data.repositories;
 
+import java.util.List;
 import org.springframework.data.repository.CrudRepository;
 import org.zafritech.core.data.domain.Project;
 import org.zafritech.core.data.domain.ProjectWbsPackage;
@@ -15,5 +16,7 @@ import org.zafritech.core.data.domain.ProjectWbsPackage;
  */
 public interface ProjectWbsPackageRepository extends CrudRepository<ProjectWbsPackage, Long> {
     
-    ProjectWbsPackage findFirstByProjectAndCategoryCode(Project project, String code);
+    ProjectWbsPackage findFirstByProjectAndWbsNumber(Project project, String code);
+    
+    List<ProjectWbsPackage> findByProjectOrderByWbsName(Project project);
 }

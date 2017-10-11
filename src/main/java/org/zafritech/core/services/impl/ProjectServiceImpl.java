@@ -156,7 +156,7 @@ public class ProjectServiceImpl implements ProjectService {
             String ident = project.getProjectCode() + "-" + project.getProjectSponsor().getCompanyCode() + "-RLS-" + String.format("%04d", 1);
             String name = subfolder.getFolderName() + " RLS " + String.format("%04d", 1);
             DocumentContentDescriptor descriptor = descriptorRepository.findByDescriptorCode("CONTENT_TYPE_REQUIREMENTS");
-            ProjectWbsPackage wbs = wbsPackageRepository.findFirstByProjectAndCategoryCode(project, "0001");
+            ProjectWbsPackage wbs = wbsPackageRepository.findFirstByProjectAndWbsNumber(project, "0001");
             
             documentRepository.save(new Document(ident, name, null, descriptor, project, wbs, subfolder, infoClassRepository.findByClassCode("INFO_OFFICIAL"), "0A"));
         }
