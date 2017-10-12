@@ -36,7 +36,7 @@ public class SIUnitsDataInit {
     @Transactional
     public void init() {
         
-        String file = data_dir + "json/si-units.json";
+        String file = data_dir + "initialisation/si-units.json";
         
         ObjectMapper mapper = new ObjectMapper();
         

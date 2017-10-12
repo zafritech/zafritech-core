@@ -42,7 +42,7 @@ public class CountriesDataInit {
     @Transactional
     public void init() {
         
-        String dataFile = data_dir + "json/countries.json";
+        String dataFile = data_dir + "initialisation/countries.json";
         String flagPath = images_dir + "/flags/";
         
         ObjectMapper mapper = new ObjectMapper();

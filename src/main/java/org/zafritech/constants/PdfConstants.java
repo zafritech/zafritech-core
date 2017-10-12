@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.zafritech.core.pdf;
+package org.zafritech.constants;
 
 import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Font;

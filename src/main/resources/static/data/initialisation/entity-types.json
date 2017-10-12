@@ -382,5 +382,53 @@
 		"name" : "Implements",
 		"code" : "IML",
 		"description" : "Captures the relationship between a requirement artifact and a change management item that describes the implementation of the requirement artifact. For example, a story in the CCM application can describe the implementation of a requirement artifact. In the CCM application, links of this type are shown as Implements links."
+	},
+	{
+		"key" : "VERIFICATION_VALIDATION_METHOD_TYPE_ENTITY",
+		"name" : "Inspection",
+		"code" : "INSP",
+		"description" : "Technique based on visual or dimensional examination of an element; the verification relies on the human senses or uses simple methods of measurement and handling. Inspection is generally non-destructive, and typically includes the use of sight, hearing, smell, touch, and taste, simple physical manipulation, mechanical and electrical gauging, and measurement. No stimuli (tests) are necessary. The technique is used to check properties or characteristics best determined by observation (e.g. - paint color, weight, documentation, listing of code, etc.)."
+	},
+	{
+		"key" : "VERIFICATION_VALIDATION_METHOD_TYPE_ENTITY",
+		"name" : "Analysis",
+		"code" : "ANLY",
+		"description" : "Technique based on analytical evidence obtained without any intervention on the submitted element using mathematical or probabilistic calculation, logical reasoning (including the theory of predicates), modeling and/or simulation under defined conditions to show theoretical compliance. Mainly used where testing to realistic conditions cannot be achieved or is not cost-effective."
+	},
+	{
+		"key" : "VERIFICATION_VALIDATION_METHOD_TYPE_ENTITY",
+		"name" : "Analogy or Similarity",
+		"code" : "ANAL",
+		"description" : "Technique based on evidence of similar elements to the submitted element or on experience feedback. It is absolutely necessary to show by prediction that the context is invariant that the outcomes are transposable (models, investigations, experience feedback, etc.). Similarity can only be used if the submitted element is similar in design, manufacture, and use; equivalent or more stringent verification actions were used for the similar element, and the intended operational environment is identical to or less rigorous than the similar element."
+	},
+	{
+		"key" : "VERIFICATION_VALIDATION_METHOD_TYPE_ENTITY",
+		"name" : "Demonstration",
+		"code" : "DEMO",
+		"description" : "Technique used to demonstrate correct operation of the submitted element against operational and observable characteristics without using physical measurements (no or minimal instrumentation or test equipment). Demonstration is sometimes called 'field testing'. It generally consists of a set of tests selected by the supplier to show that the element response to stimuli is suitable or to show that operators can perform their assigned tasks when using the element. Observations are made and compared with predetermined/expected responses. Demonstration may be appropriate when requirements or specification are given in statistical terms (e.g. meant time to repair, average power consumption, etc.)."
+	},
+	{
+		"key" : "VERIFICATION_VALIDATION_METHOD_TYPE_ENTITY",
+		"name" : "Testing",
+		"code" : "TEST",
+		"description" : "Technique performed onto the submitted element by which functional, measurable characteristics, operability, supportability, or performance capability is quantitatively verified when subjected to controlled conditions that are real or simulated. Testing often uses special test equipment or instrumentation to obtain accurate quantitative data to be analyzed."
+	},
+	{
+		"key" : "VERIFICATION_VALIDATION_METHOD_TYPE_ENTITY",
+		"name" : "Sampling",
+		"code" : "SAMP",
+		"description" : "Technique based on verification of characteristics using samples. The number, tolerance, and other characteristics must be specified to be in agreement with the experience feedback."
+	},
+	{
+		"key" : "VERIFICATION_VALIDATION_METHOD_TYPE_ENTITY",
+		"name" : "Submission",
+		"code" : "SUBM",
+		"description" : "Submissions made and approved within the project like manuals and drawings will be considered as evidence. (e.g. manuals, plans, safety cases, standards, drawings, etc.)"
+	},
+	{
+		"key" : "VERIFICATION_VALIDATION_METHOD_TYPE_ENTITY",
+		"name" : "External Certification",
+		"code" : "XTCT",
+		"description" : "Third party certification (e.g. Certificate of Conformity) shall be used as an evidence for the implementation of the requirement."
 	}
 ]

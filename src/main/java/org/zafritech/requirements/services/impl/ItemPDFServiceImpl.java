@@ -46,10 +46,10 @@ import org.zafritech.core.data.repositories.DocumentReferenceRepository;
 import org.zafritech.core.data.repositories.UserClaimRepository;
 import org.zafritech.core.enums.DefinitionTypes;
 import org.zafritech.core.enums.ReferenceTypes;
-import org.zafritech.core.pdf.PdfConstants;
+import org.zafritech.constants.PdfConstants;
 import org.zafritech.requirements.data.domain.Item;
 import org.zafritech.requirements.services.ItemService;
-import org.zafritech.core.pdf.services.DocumentPDFService;
+import org.zafritech.core.services.DocumentPDFService;
 import org.zafritech.requirements.services.ItemPDFService;
 
 /**

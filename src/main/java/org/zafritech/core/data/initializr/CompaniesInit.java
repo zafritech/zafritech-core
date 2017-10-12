@@ -46,7 +46,7 @@ public class CompaniesInit {
     @Transactional
     public void init() {
         
-        String file = data_dir + "json/companies.json";
+        String file = data_dir + "initialisation/companies.json";
         
         ObjectMapper mapper = new ObjectMapper();
          

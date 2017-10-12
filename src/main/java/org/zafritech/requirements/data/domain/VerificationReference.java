@@ -14,9 +14,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import org.zafritech.core.data.domain.EntityType;
 import org.zafritech.requirements.enums.ItemStatus;
 
-@Entity(name = "REQUIREMENTS_VERIFICATION_REFERENCES")
+@Entity(name = "REQUIREMENTS_VV_REFERENCES")
 public class VerificationReference implements Serializable {
     
     @Id
@@ -31,13 +32,13 @@ public class VerificationReference implements Serializable {
     
     @ManyToOne
     @JoinColumn(name = "methodId")
-    private VerificationMethod method;
+    private EntityType method;
     
     @Column(columnDefinition = "TEXT")
-    private String verificationRef;
+    private String vvRef;
     
     @Column(columnDefinition = "TEXT")
-    private String evidence;
+    private String vvEvidence;
     
     @Enumerated(EnumType.STRING)
     private ItemStatus status;
@@ -49,7 +50,7 @@ public class VerificationReference implements Serializable {
         
     }
 
-    public VerificationReference(Item item, VerificationMethod method) {
+    public VerificationReference(Item item, EntityType method) {
         
         this.uuId = UUID.randomUUID().toString();
         this.item = item;
@@ -57,22 +58,23 @@ public class VerificationReference implements Serializable {
         this.creationDate = new Timestamp(System.currentTimeMillis());
     }
 
-    public VerificationReference(Item item, VerificationMethod method, String reference) {
+    public VerificationReference(Item item, EntityType method, String reference) {
         
         this.uuId = UUID.randomUUID().toString();
         this.item = item;
         this.method = method;
-        this.verificationRef = reference;
+        this.vvRef = reference;
         this.creationDate = new Timestamp(System.currentTimeMillis());
     }
 
     @Override
     public String toString() {
         
-        return "VerificationReference{" + "id=" + getId() + ", uuId=" + 
-                getUuId() + ", item=" + getItem() + ", method=" + getMethod() + ", verificationRef=" + 
-                getReferences() + ", evidence=" + getEvidence() + ", status=" + 
-                getStatus() + ", creationDate=" + getCreationDate() + '}';
+        return "Verification and Validation Reference{" + "id=" + getId() + ", uuId=" 
+                + getUuId() + ", item=" + getItem() + ", method=" + getMethod() 
+                + ", vvRef=" + getVvRef() + ", vvEvidence=" 
+                + getVvEvidence() + ", status=" + getStatus() + ", creationDate=" 
+                + getCreationDate() + '}';
     }
 
     public Long getId() {
@@ -95,28 +97,28 @@ public class VerificationReference implements Serializable {
         this.item = item;
     }
 
-    public VerificationMethod getMethod() {
+    public EntityType getMethod() {
         return method;
     }
 
-    public void setMethod(VerificationMethod method) {
+    public void setMethod(EntityType method) {
         this.method = method;
     }
 
-    public String getReferences() {
-        return verificationRef;
+    public String getVvRef() {
+        return vvRef;
     }
 
-    public void setReferences(String references) {
-        this.verificationRef = references;
+    public void setVvRef(String vvRef) {
+        this.vvRef = vvRef;
     }
 
-    public String getEvidence() {
-        return evidence;
+    public String getVvEvidence() {
+        return vvEvidence;
     }
 
-    public void setEvidence(String evidence) {
-        this.evidence = evidence;
+    public void setVvEvidence(String vvEvidence) {
+        this.vvEvidence = vvEvidence;
     }
 
     public ItemStatus getStatus() {

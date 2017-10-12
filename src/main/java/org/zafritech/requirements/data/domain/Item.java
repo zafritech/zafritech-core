@@ -127,14 +127,14 @@ public class Item implements Serializable {
     
     }
 
-    public Item(String sysId,
+    public Item(String systemId,
             String itemValue,
             EntityType itemType,
             Document document,
             Item parent) {
 
         this.uuId = UUID.randomUUID().toString();
-        this.systemId = sysId;
+        this.systemId = systemId;
         this.itemValue = itemValue;
         this.itemType = itemType;
         this.mediaType = MediaType.TEXT;
@@ -146,7 +146,7 @@ public class Item implements Serializable {
         this.modifiedDate = new Timestamp(System.currentTimeMillis());
     }
 
-    public Item(String sysId,
+    public Item(String systemId,
             String identifier,
             String itemValue,
             EntityType itemType,
@@ -155,7 +155,7 @@ public class Item implements Serializable {
             Item parent) {
 
         this.uuId = UUID.randomUUID().toString();
-        this.systemId = sysId;
+        this.systemId = systemId;
         this.identifier = identifier;
         this.itemValue = itemValue;
         this.itemType = itemType;

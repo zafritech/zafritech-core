@@ -54,7 +54,7 @@ public class UsersInit {
     @Transactional
     public void init() {
         
-        String file = data_dir + "json/users.json";
+        String file = data_dir + "initialisation/users.json";
   
         ObjectMapper mapper = new ObjectMapper();
         

@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.zafritech.core.pdf.services.impl;
+package org.zafritech.core.services.impl;
 
-import org.zafritech.core.pdf.services.DocumentPDFService;
+import org.zafritech.core.services.DocumentPDFService;
 import com.itextpdf.text.Chunk;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
@@ -35,7 +35,7 @@ import org.zafritech.core.data.repositories.ClaimTypeRepository;
 import org.zafritech.core.data.repositories.DocumentHistoryRepository;
 import org.zafritech.core.data.repositories.DocumentRepository;
 import org.zafritech.core.data.repositories.UserClaimRepository;
-import org.zafritech.core.pdf.PdfConstants;
+import org.zafritech.constants.PdfConstants;
 
 /**
  *

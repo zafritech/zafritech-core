@@ -36,7 +36,7 @@ public class EntityTypesInit {
     @Transactional
     public void init() {
         
-        String dataFile = data_dir + "json/entity-types.json";
+        String dataFile = data_dir + "initialisation/entity-types.json";
         
         ObjectMapper mapper = new ObjectMapper();
         

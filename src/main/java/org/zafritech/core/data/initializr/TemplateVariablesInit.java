@@ -37,7 +37,7 @@ public class TemplateVariablesInit {
     @Transactional
     public void init() {
           
-        String dataFile = data_dir + "json/template-variables.json";
+        String dataFile = data_dir + "initialisation/template-variables.json";
         
         ObjectMapper mapper = new ObjectMapper();
         

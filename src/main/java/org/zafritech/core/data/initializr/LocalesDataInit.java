@@ -36,7 +36,7 @@ public class LocalesDataInit {
     @Transactional
     public void init() {
         
-        String file = data_dir + "json/locales.json";
+        String file = data_dir + "initialisation/locales.json";
         
         ObjectMapper mapper = new ObjectMapper();
         

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.zafritech.core.pdf.services;
+package org.zafritech.core.services;
 
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
