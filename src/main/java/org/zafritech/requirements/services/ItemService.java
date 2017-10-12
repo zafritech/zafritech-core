@@ -14,6 +14,7 @@ import org.zafritech.requirements.data.dao.ItemRefDao;
 import org.zafritech.requirements.data.dao.ItemTreeDao;
 import org.zafritech.requirements.data.domain.Item;
 import org.zafritech.requirements.data.domain.Link;
+import org.zafritech.requirements.data.domain.Template;
 
 /**
  *
@@ -53,4 +54,6 @@ public interface ItemService {
     List<Item> fetchDocumentItemsForSection(Document document, Item section);
     
     List<ItemTreeDao> getTableOfContents(Document document);
+    
+    Document importTemplateToDocument(Document document, Template template);
 }

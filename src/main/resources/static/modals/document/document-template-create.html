@@ -1,0 +1,39 @@
+<form action="/api/document/template/save" method="POST">
+
+    <input type="hidden" id="documentId" name="documentId" value="" />
+    <input type="hidden" id="sourceDocumentType" name="sourceDocumentType" value="" />
+    
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="form-group">
+                <label for="documentType">Document Type</label>
+                <select class="form-control" id="documentType" name="documentType" onchange="onDocumentTypeChange();"></select>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="form-group">
+                <label for="templateName">Template Name</label>
+                <input type="text" class="form-control" id="templateName" name="templateName"  placeholder="Template name"/>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="form-group">
+                <label for="templateLongName">Template Full Name</label>
+                <input type="text" class="form-control" id="templateLongName" name="templateLongName"  placeholder="Template full name"/>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="form-group">
+                <label for="templateDescription">Document Description</label>
+                <textarea class="form-control"  rows="3" id="templateDescription" name="templateDescription"></textarea>
+            </div>
+        </div>
+    </div>
+
+</form>

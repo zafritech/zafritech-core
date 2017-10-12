@@ -41,6 +41,10 @@ import org.zafritech.core.enums.DocumentStatus;
 import org.zafritech.core.services.ClaimService;
 import org.zafritech.core.services.DocumentService;
 import org.zafritech.core.services.UserStateService;
+import org.zafritech.requirements.data.dao.TemplateDao;
+import org.zafritech.requirements.data.domain.Template;
+import org.zafritech.requirements.data.repositories.TemplateRepository;
+import org.zafritech.requirements.services.TemplateItemService;
 
 /**
  *
@@ -81,6 +85,12 @@ public class DocumentRestController {
     
     @Autowired
     private UserStateService stateService;
+    
+    @Autowired
+    private TemplateRepository templateRepository;
+    
+    @Autowired
+    private TemplateItemService templateItemService;
     
     @RequestMapping(value = "/api/documents/document/create/new", method = POST)
     public ResponseEntity<Document> newDocument(@RequestBody DocDao docDao) {
@@ -192,6 +202,24 @@ public class DocumentRestController {
         documentRepository.delete(id);
         
         return new ResponseEntity<Integer> (1, HttpStatus.OK);
+    }
+    
+    @RequestMapping(value = "/api/documents/template/create/new", method = POST)
+    public ResponseEntity<Template> updateDocumentDistributionList(@RequestBody TemplateDao daos) {
+        
+        Template template = templateItemService.createTemplateFromDocument(daos); 
+        
+        return new ResponseEntity<Template>(template, HttpStatus.OK);
+    }
+    
+    @RequestMapping(value = "/api/documents/template/list/doctype/{id}", method = GET)
+    public ResponseEntity<List<Template>> gettemplatesListByDoumentType(@PathVariable(value = "id") Long id) {
+        
+        EntityType documentType = entityTypeRepository.findOne(id);
+        
+        List<Template> templates = templateRepository.findByDocumentTypeOrderByTemplateName(documentType);
+        
+        return new ResponseEntity<List<Template>>(templates, HttpStatus.OK);
     }
     
     @RequestMapping(value = "/api/projects/project/members/list/{uuid}", method = GET)

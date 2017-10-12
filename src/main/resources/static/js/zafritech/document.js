@@ -89,6 +89,7 @@ function zTreeDocBeforeClick(treeId, treeNode) {
         
         zDocTreeObj.expandNode(treeNode, true, null, null);
         $('#documentNodeId').prop('value', treeNode.id);
+        $('#sectionId').prop('value', treeNode.id);
         
         loadRequirementsItems(documentId, treeNode.id);
     }
@@ -887,5 +888,219 @@ function RecentDocuments() {
             
             box.modal('show');
         }
+    });
+}
+
+function SaveAsTemplate(documentId, sourceDocumentType) {
+    
+    $.ajax({
+        
+        global: false,
+        type: "GET",
+        url: '/modals/document/document-template-create.html',
+        success: function (data) {
+            
+            var box = bootbox.confirm({
+
+                closeButton: false,
+                title: 'Create Template',
+                message: data,
+                buttons: {
+                    cancel: {
+                        label: "Cancel",
+                        className: "btn-danger btn-fixed-width-100"
+                    },
+                    confirm: {
+                        label: "Save",
+                        className: "btn-success btn-fixed-width-100"
+                    }
+                },
+                callback: function (result) {
+                    
+                    if (result) {
+                        
+                        var data = {};
+                        
+                        data['documentId'] = documentId;
+                        data['documentTypeId'] = document.getElementById('documentType').value;
+                        data['templateName'] = document.getElementById('templateName').value;
+                        data['templateLongName'] = document.getElementById('templateLongName').value;
+                        data['templateDescription'] = document.getElementById('templateDescription').value;
+                        
+                        $.ajax({
+                            
+                            global: false,
+                            type: "POST",
+                            contentType: "application/json",
+                            url: "/api/documents/template/create/new",
+                            data: JSON.stringify(data),
+                            dataType: "json",
+                            timeout: 60000,
+                            success: function (data) {
+                                
+                                swal({
+                                    
+                                    title: "Template Save",
+                                    text: "Template " + data.templateName + " successfully created!",
+                                    type: "success"
+                                },
+                                function() {
+                                   
+                                    window.location.reload();
+                                });
+                            },
+                            error: function(e) {
+                                
+                                console.log(e);
+                            }
+                        });
+                    }
+                }
+            });
+            
+            box.on("shown.bs.modal", function(e) {
+                 
+                $(e.currentTarget).find('input[name="documentId"]').prop('value', documentId);
+                $(e.currentTarget).find('input[name="sourceDocumentType"]').prop('value', sourceDocumentType);
+                 
+                $.ajax({
+
+                    type: "GET",
+                    contentType: "application/json",
+                    url: "/api/documents/types/list",
+                    dataType: "json",
+                    cache: false
+                })
+                .done(function (data) {
+                    
+                    $(e.currentTarget).find('select[name="documentType"]').empty();
+
+                    $.each(data, function (key, index) {
+
+                        $(e.currentTarget).find('select[name="documentType"]').append('<option value="' + index.id + '">' + index.entityTypeName + ' (' + index.entityTypeCode + ')</option>');
+                    });
+            
+                    $(e.currentTarget).find('select[name="documentType"]').prop('value', sourceDocumentType);
+                });
+            });
+             
+             box.modal('show');
+        }
+    });
+}
+
+function ImportFromTemplate(documentId, documentTypeId) {
+    
+    $.ajax({
+        
+        global: false,
+        type: "GET",
+        url: '/modals/document/document-import-from-template.html',
+        success: function (data) {
+            
+            var box = bootbox.confirm({
+
+                closeButton: false,
+                title: 'Import from Template',
+                message: data,
+                buttons: {
+                    cancel: {
+                        label: "Cancel",
+                        className: "btn-danger btn-fixed-width-100"
+                    },
+                    confirm: {
+                        label: "Save",
+                        className: "btn-success btn-fixed-width-100"
+                    }
+                },
+                callback: function (result) {
+                    
+                    if (result) {
+                        
+                        var data = {};
+                        
+                        data['documentId'] = documentId;
+                        data['templateId'] = document.getElementById('templateId').value;
+                        
+                        $.ajax({
+                            
+                            global: false,
+                            type: "POST",
+                            contentType: "application/json",
+                            url: "/api/requirements/import/items/from/template/",
+                            data: JSON.stringify(data),
+                            dataType: "json",
+                            timeout: 60000,
+                            success: function (data) {
+                                
+                                swal({
+                                    
+                                    title: "Template Saved",
+                                    text: "Template " + data.templateName + " successfully created!",
+                                    type: "success"
+                                },
+                                function() {
+                                   
+                                    window.location.reload();
+                                });
+                            }
+                        });
+                    }
+                }
+            });
+            
+            box.on("shown.bs.modal", function(e) {
+                
+                $(e.currentTarget).find('input[name="documentId"]').prop('value', documentId);
+                $(e.currentTarget).find('input[name="documentTypeId"]').prop('value', documentTypeId);
+                 
+                $.ajax({
+
+                    type: "GET",
+                    contentType: "application/json",
+                    url: "/api/documents/types/list",
+                    dataType: "json",
+                    cache: false
+                })
+                .done(function (data) {
+                    
+                    $(e.currentTarget).find('select[name="templateTypeId"]').empty();
+
+                    $.each(data, function (key, index) {
+
+                        $(e.currentTarget).find('select[name="templateTypeId"]').append('<option value="' + index.id + '">' + index.entityTypeName + ' (' + index.entityTypeCode + ')</option>');
+                    });
+            
+                    $(e.currentTarget).find('select[name="templateTypeId"]').prop('value', documentTypeId);
+                    
+                    onTemplateDocumentTypeChange();
+                });
+            });
+            
+            box.modal('show');
+        }
+    });
+}
+
+function onTemplateDocumentTypeChange() {
+    
+    var documentTypeId = document.getElementById('templateTypeId').value;
+    
+    $.ajax({
+
+        type: "GET",
+        contentType: "application/json",
+        url: "/api/documents/template/list/doctype/" + documentTypeId,
+        dataType: "json",
+        cache: false
+    })
+    .done(function (data) {
+        
+        $('#templateId').empty();
+
+        $.each(data, function (key, index) {
+
+            $('#templateId').append('<option value="' + index.id + '">' + index.documentType.entityTypeCode + ' - ' + index.templateName + '</option>');
+        });
     });
 }

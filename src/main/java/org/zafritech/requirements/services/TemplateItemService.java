@@ -5,7 +5,7 @@
  */
 package org.zafritech.requirements.services;
 
-import org.zafritech.core.data.domain.Document;
+import org.zafritech.requirements.data.dao.TemplateDao;
 import org.zafritech.requirements.data.domain.Template;
 
 /**
@@ -14,7 +14,5 @@ import org.zafritech.requirements.data.domain.Template;
  */
 public interface TemplateItemService {
     
-    Template createTemplateFromDocument(Document document);
-    
-    Document importTemplateToDocument(Template template);
+    Template createTemplateFromDocument(TemplateDao templateDao);
 }

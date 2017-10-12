@@ -9,9 +9,10 @@
 $(document).ready(function () {
     
     var documentId = document.getElementById('documentId').value;
+    var sectionId = document.getElementById('sectionId').value;
     
     $('#collapseDocument').collapse('show');
-    loadRequirementsItems(documentId, 0);
+    loadRequirementsItems(documentId, sectionId);
 });
 
 function loadRequirementsItems(documentId, sectionId) {
@@ -101,7 +102,8 @@ function RequirementItemCreateItem(documentId, parentId, itemLevel) {
                             timeout: 60000,
                             success: function (data) {
                     
-                                var section = data.item > 1 ? data.parent.id : 0;
+//                                var section = data.item > 1 ? data.parent.id : 0;
+                                var section = document.getElementById('sectionId').value;
                                 
                                 if (section === 0) { zDocTreeLoad(); }
                                 loadRequirementsItems(data.document.id, section);
@@ -237,14 +239,16 @@ function RequirementItemImageInsert(documentId, parentId, itemLevel) {
                             timeout: 600000,
                             success: function (data) {
                                 
-                                 swal({
+                                swal({
 
                                     title: "Success!",
                                     text: "New item has been successfully created.",
                                     type: "success"
                                 });
                                 
-                                setTimeout(function() { loadRequirementsItems(documentId, parentId); }, 2000);
+                                var sectionId = document.getElementById('sectionId').value;
+                                
+                                setTimeout(function() { loadRequirementsItems(documentId, sectionId); }, 2000);
                             },
                             error: function (e) {
 
@@ -350,7 +354,8 @@ function RequirementItemEditItem(itemId) {
                                 timeout: 60000,
                                 success: function (data) {
                                     
-                                    var section = data.item > 1 ? data.parent.id : 0;
+//                                    var section = data.item > 1 ? data.parent.id : 0;
+                                    var section = document.getElementById('sectionId').value;
                                     
                                     if (section === 0) { zDocTreeLoad(); }
                                     loadRequirementsItems(data.document.id, section);
@@ -875,7 +880,9 @@ function RequirementItemLinkCreate(itemId) {
                                     type: "success"
                                 });
                                 
-                                loadRequirementsItems(data['srcDocumentId'], itemId);
+                                var sectionId = document.getElementById('sectionId').value;
+                                
+                                loadRequirementsItems(data['srcDocumentId'], sectionId);
                             }
                         });
                     }
@@ -987,7 +994,9 @@ function RequirementItemCommentCreate(itemId) {
                                     type: "success"
                                 });
                                 
-                                loadRequirementsItems(documentId, itemId);
+                                var sectionId = document.getElementById('sectionId').value;
+                                
+                                loadRequirementsItems(documentId, sectionId);
                             }
                         });
                     }
@@ -1128,7 +1137,6 @@ function RequirementItemAddDefinition(documentId, itemId, definitionClass) {
                         if (data['newTerm'].length > 0 && data['newTermDefinition'].length > 0) {
                             
                             data['definitionId'] = null;
-                            
                         }
                         
                         $.ajax({
@@ -1149,7 +1157,8 @@ function RequirementItemAddDefinition(documentId, itemId, definitionClass) {
                                     type: "success"
                                 });
                                 
-                                window.location.reload();
+                                var sectionId = document.getElementById('sectionId').value;
+                                loadRequirementsItems(documentId, sectionId);
                             }
                         });
                     }
@@ -1278,7 +1287,8 @@ function RequirementItemAddReference(documentId, itemId, referenceType) {
                                     type: "success"
                                 });
 
-                                location.reload();
+                                var sectionId = document.getElementById('sectionId').value;
+                                loadRequirementsItems(documentId, sectionId);
                             }
                         });
                     }

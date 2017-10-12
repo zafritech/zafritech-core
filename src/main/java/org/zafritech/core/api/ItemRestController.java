@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import static org.springframework.web.bind.annotation.RequestMethod.POST;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -35,13 +36,17 @@ import org.zafritech.core.data.repositories.DocumentRepository;
 import org.zafritech.core.data.repositories.EntityTypeRepository;
 import org.zafritech.core.enums.ReferenceTypes;
 import org.zafritech.core.services.ReferenceService;
+import org.zafritech.requirements.data.dao.DocumentTemplateIdsDao;
 import org.zafritech.requirements.data.dao.ItemDao;
 import org.zafritech.requirements.data.dao.ItemRefDao;
 import org.zafritech.requirements.data.dao.ItemTreeDao;
 import org.zafritech.requirements.data.domain.Item;
+import org.zafritech.requirements.data.domain.Template;
 import org.zafritech.requirements.data.repositories.ItemRepository;
+import org.zafritech.requirements.data.repositories.TemplateRepository;
 import org.zafritech.requirements.enums.ItemClass;
 import org.zafritech.requirements.services.ItemService;
+import org.zafritech.requirements.services.TemplateItemService;
 
 /**
  *
@@ -70,6 +75,12 @@ public class ItemRestController {
     
     @Autowired
     private ReferenceService referenceService;
+    
+    @Autowired
+    private TemplateRepository templateRepository;
+    
+    @Autowired
+    private TemplateItemService templateItemService;
   
     @RequestMapping(value = "/api/requirements/document/items/item/{id}", method = RequestMethod.GET)
     public Item getItemById(@PathVariable(value = "id") Long itemId) {
@@ -226,6 +237,17 @@ public class ItemRestController {
         }
         
         return new ResponseEntity<Item>(item, HttpStatus.OK);
+    }
+    
+    @RequestMapping(value = "/api/requirements/import/items/from/template", method = POST)
+    public ResponseEntity<Document> importDocumentFromTemplate(@RequestBody DocumentTemplateIdsDao dao) {
+        
+        Document document = documentRepository.findOne(dao.getDocumentId());
+        Template template = templateRepository.findOne(dao.getTemplateId());
+        
+        Document doc = itemService.importTemplateToDocument(document, template);
+                
+        return new ResponseEntity<Document>(doc, HttpStatus.OK);
     }
     
     @RequestMapping(value = "/api/requirements/document/tree/{id}", method = RequestMethod.GET)

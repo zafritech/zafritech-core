@@ -38,6 +38,7 @@
                             <input type="hidden" id="docTreeValid" th:value="${document.Id}" />
                             <input type="hidden" id="documentId" th:value="${document.Id}" />
                             <input type="hidden" id="documentNodeId" th:value="${document.Id}" />
+                            <input type="hidden" id="sectionId" th:value="0" />
                             <!-- zTree navigation tags END -->
                             
                             <input type="hidden" id="contentDescriptorCode" th:value="${descriptor}" />
@@ -71,6 +72,7 @@
                                                     <li><a href="javascript:void(0);" th:onclick="'javascript:EditDocumentProperties(\'' + ${document.id} + '\');'"><em class="ion-edit icon-fw"></em> Edit Properties</a></li>
                                                     <li><a href="javascript:void(0);" th:onclick="'javascript:notYetImplemented();'"><em class="fa fa-tags fa-fw"></em> Release a Baseline</a></li>
                                                     <li><a th:href="'/requirements/document/pdf/' + ${document.uuId}"><em class="fa fa-file-pdf-o fa-fw"></em> Download PDF</a></li>
+                                                    <li><a href="javascript:void(0);" th:onclick="'javascript:SaveAsTemplate(\'' + ${document.id} + '\', \'' + ${document.documentType.Id} + '\');'"><em class="fa fa-save fa-fw"></em> Save As Template ...</a></li>
                                                     <li role="presentation" class="divider"></li>
                                                     <li><a th:href="'/projects/' + ${document.project.uuId}"><em class="ion-close icon-fw"></em> Close</a></li>
                                                   </ul>

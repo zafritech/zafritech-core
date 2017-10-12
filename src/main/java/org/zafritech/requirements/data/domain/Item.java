@@ -53,7 +53,7 @@ public class Item implements Serializable {
 
     @Field
     @Analyzer(definition = "hyphenanalyzer")
-    @Column(unique = true, nullable = false)
+    @Column(nullable = false)
     private String systemId;
 
     @Column(columnDefinition = "TEXT")

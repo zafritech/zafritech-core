@@ -27,7 +27,7 @@ public class TemplateItem implements Serializable {
 
     private String uuId;
 
-    @Column(unique = true, nullable = false)
+    @Column(nullable = false)
     private String systemId;
 
     @Column(columnDefinition = "TEXT")
@@ -48,9 +48,7 @@ public class TemplateItem implements Serializable {
     
     private String itemCaption;
 
-    @ManyToOne
-    @JoinColumn(name = "parentId")
-    private TemplateItem parent;
+    private String parentSysId;
     
     @ManyToOne
     @JoinColumn(name = "templateId")
@@ -70,7 +68,7 @@ public class TemplateItem implements Serializable {
     public TemplateItem(String systemId, 
                         String itemValue, 
                         EntityType itemType, 
-                        TemplateItem parent,
+                        String parentSysId,
                         Template template) {
         
         this.uuId = UUID.randomUUID().toString();
@@ -78,36 +76,47 @@ public class TemplateItem implements Serializable {
         this.itemValue = itemValue;
         this.itemType = itemType;
         this.mediaType = MediaType.TEXT;
-        this.parent = parent;
+        this.parentSysId = parentSysId;
         this.template = template;
         this.modifiedDate = new Timestamp(System.currentTimeMillis());
     }
 
     public TemplateItem(String systemId, 
+                        String itemClass,
+                        int itemLevel,
+                        String itemNumber,
                         String itemValue, 
                         EntityType itemType, 
                         MediaType mediaType, 
-                        TemplateItem parent,
-                        Template template) {
+                        String parentSysId,
+                        Template template,
+                        int sortIndex) {
         
         this.uuId = UUID.randomUUID().toString();
         this.systemId = systemId;
+        this.itemClass = itemClass;
+        this.itemLevel = itemLevel;
+        this.itemLevel = itemLevel;
+        this.itemNumber = itemNumber;
         this.itemValue = itemValue;
         this.itemType = itemType;
         this.mediaType = mediaType;
-        this.parent = parent;
+        this.parentSysId = parentSysId;
         this.template = template;
+        this.sortIndex = sortIndex;
         this.modifiedDate = new Timestamp(System.currentTimeMillis());
     }
 
     @Override
     public String toString() {
         
-        return "TemplateItem{" + "id=" + getId() + ", uuId=" + getUuId() + ", systemId=" + getSystemId() 
-                + ", itemClass=" + getItemClass() + ", itemNumber=" + getItemNumber() + ", itemValue=" 
-                + getItemValue() + ", itemType=" + getItemType() + ", mediaType=" + getMediaType() + ", itemCaption=" 
-                + getItemCaption() + ", parent=" + getParent() + ", itemLevel=" + getItemLevel() + ", sortIndex=" 
-                + getSortIndex() + ", modifiedDate=" + getModifiedDate() + '}';
+        return "TemplateItem{" + "id=" + id + ", uuId=" + uuId + ", systemId=" 
+                + systemId + ", itemClass=" + itemClass + ", itemNumber=" 
+                + itemNumber + ", itemValue=" + itemValue + ", itemType=" 
+                + itemType + ", mediaType=" + mediaType + ", itemCaption=" 
+                + itemCaption + ", parentSysId=" + parentSysId + ", template=" 
+                + template + ", itemLevel=" + itemLevel + ", sortIndex=" 
+                + sortIndex + ", modifiedDate=" + modifiedDate + '}';
     }
 
     public Long getId() {
@@ -178,12 +187,12 @@ public class TemplateItem implements Serializable {
         this.itemCaption = itemCaption;
     }
 
-    public TemplateItem getParent() {
-        return parent;
+    public String getParentSysId() {
+        return parentSysId;
     }
 
-    public void setParent(TemplateItem parent) {
-        this.parent = parent;
+    public void setParentSysId(String parentSysId) {
+        this.parentSysId = parentSysId;
     }
 
     public Template getTemplate() {

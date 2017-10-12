@@ -65,7 +65,7 @@ public class DocumentPDFServiceImpl implements DocumentPDFService {
         org.zafritech.core.data.domain.Document doc = documentRepository.findOne(id);
         
         document.addTitle(doc.getDocumentName());
-        document.addSubject(doc.getDocumentLongName());
+        document.addSubject(doc.getDocumentLongName() != null ? doc.getDocumentLongName() : "");
         document.addAuthor(doc.getOwner().getFirstName() + " " + doc.getOwner().getLastName());
         document.addCreator(doc.getOwner().getFirstName() + " " + doc.getOwner().getLastName());
     }
@@ -124,7 +124,7 @@ public class DocumentPDFServiceImpl implements DocumentPDFService {
 
         LinkedHashMap<String, String> properties = new LinkedHashMap<String, String>();
 
-        properties.put("Document Title:", doc.getDocumentLongName());
+        properties.put("Document Title:", doc.getDocumentLongName() != null ? doc.getDocumentLongName() : "");
         properties.put("Document Reference:", doc.getIdentifier());
         properties.put("Revision:", doc.getDocumentIssue());
         properties.put("Date:", dateFormat.format(doc.getModifiedDate()));

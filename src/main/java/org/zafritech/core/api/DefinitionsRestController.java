@@ -84,8 +84,6 @@ public class DefinitionsRestController {
         
         if (!dao.getNewTerm().isEmpty()) {
             
-            System.out.println("NEW");
-            
             abbrev = new Definition(dao.getNewTerm(), 
                                     dao.getNewTermDefinition(), 
                                     DefinitionTypes.valueOf(dao.getDefinitionType()), 
@@ -95,7 +93,6 @@ public class DefinitionsRestController {
             
         } else {
             
-            System.out.println("OLD");
             abbrev = definitionRepository.findOne(dao.getDefinitionId());
         }
         

@@ -33,7 +33,10 @@ import org.zafritech.requirements.data.dao.ItemRefDao;
 import org.zafritech.requirements.data.dao.ItemTreeDao;
 import org.zafritech.requirements.data.domain.Item;
 import org.zafritech.requirements.data.domain.Link;
+import org.zafritech.requirements.data.domain.Template;
+import org.zafritech.requirements.data.domain.TemplateItem;
 import org.zafritech.requirements.data.repositories.ItemRepository;
+import org.zafritech.requirements.data.repositories.TemplateItemRepository;
 import org.zafritech.requirements.enums.ItemClass;
 import org.zafritech.requirements.enums.MediaType;
 import org.zafritech.requirements.services.ItemService;
@@ -60,6 +63,9 @@ public class ItemServiceImpl implements ItemService {
     @Autowired
     private SystemVariableRepository sysvarRepository;
     
+    @Autowired
+    private TemplateItemRepository templateItemRepository;
+        
     @Autowired
     private FileUploadService fileUploadService;
     
@@ -131,11 +137,11 @@ public class ItemServiceImpl implements ItemService {
 
         if (!list.isEmpty()) {
 
-            return template + "-" + String.format(format, Integer.parseInt(list.get(list.size() - 1)) + 1);
+            return template + String.format(format, Integer.parseInt(list.get(list.size() - 1)) + 1);
 
         } else {
 
-            return template + "-" + String.format(format, 1);
+            return template + String.format(format, 1);
         }
     }
 
@@ -424,9 +430,52 @@ public class ItemServiceImpl implements ItemService {
         return headersTree;
     }
     
+    @Override
+    public Document importTemplateToDocument(Document document, Template template) {
+        
+        List<TemplateItem> firstLevelTemplateItems = templateItemRepository.findByTemplateAndItemLevelOrderBySortIndexAsc(template, 1);
+        
+        for (TemplateItem templateItem : firstLevelTemplateItems) {
+            
+            Item item = saveTemplateItem(document, templateItem, null);
+            List<TemplateItem> childTemplateItems = templateItemRepository.findByParentSysIdOrderBySortIndexAsc(templateItem.getSystemId());
+            
+            for (TemplateItem childTemplateItem : childTemplateItems) {
+                
+                Item childItem = saveTemplateItem(document, childTemplateItem, item);
+                
+                getTemplateItemChildren(childTemplateItem).forEach(child->{
+                
+                    saveTemplateItem(document, child, childItem);
+                }); 
+            }
+        }
+        
+        return document;
+    }
+    
     /*********************************************************************************************************************
     * Private methods beyond this point
     **********************************************************************************************************************/
+    
+    private Item saveTemplateItem(Document document, TemplateItem templateItem, Item parent) {
+
+        Item item = new Item(getNextSystemIdentifier(document.getId()),
+                             templateItem.getItemValue(),
+                             templateItem.getItemType(),
+                             document,
+                             parent);
+        
+        item.setItemNumber(templateItem.getItemNumber());
+        item.setItemClass(templateItem.getItemClass());
+        item.setItemLevel(templateItem.getItemLevel());
+        item.setMediaType(templateItem.getMediaType());
+        
+        
+        item = itemRepository.save(item);
+        
+        return item;
+    }
     
     private List<Item> getItemChildren(Item item) {
         
@@ -437,6 +486,20 @@ public class ItemServiceImpl implements ItemService {
 
             children.add(child);
             getItemChildren(child).forEach(children::add); 
+        }
+        
+        return children;
+    }
+    
+    private List<TemplateItem> getTemplateItemChildren(TemplateItem templateItem) {
+        
+        List<TemplateItem> children = new ArrayList<>();
+        List<TemplateItem> childTemplateItems = templateItemRepository.findByParentSysIdOrderBySortIndexAsc(templateItem.getSystemId());  
+        
+        for (TemplateItem child : childTemplateItems) {
+
+            children.add(child);
+            getTemplateItemChildren(child).forEach(children::add); 
         }
         
         return children;
