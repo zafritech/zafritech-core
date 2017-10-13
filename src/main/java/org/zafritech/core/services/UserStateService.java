@@ -18,10 +18,16 @@ public interface UserStateService {
     void updateOpenProject(Project project);
    
     void updateCloseProject(Project project);
+   
+    void updateOpenDocument(Document document);
+   
+    void updateCloseDocument(Document document);
     
     void updateRecentDocument(Document document);
     
     List<Project> getOpenProjects();
+    
+    List<Document> getOpenDocuments();
     
     List<Document> getRecentDocuments();
     

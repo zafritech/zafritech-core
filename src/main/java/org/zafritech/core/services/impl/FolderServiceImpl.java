@@ -57,7 +57,7 @@ public class FolderServiceImpl implements FolderService {
                 
                         folder.getId(),
                         (folder.getParent() != null) ? folder.getParent().getId() : 0L,
-                        folder.getFolderName(),
+                        project.getProjectNumber() + " " + folder.getFolderName(),
                         (folder.getParent() == null),
                         true,
                         true,

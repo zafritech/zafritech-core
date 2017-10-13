@@ -27,7 +27,6 @@
                             
                             <!-- Project/Document properties -->
                             <input type="hidden" id="projectId" th:value="${document.project.id}" />
-                            <input type="hidden" id="documentId" th:value="${document.id}" />
                             <input type="hidden" id="commentsInline" th:value="${inlineComments}" />
                             
                             <!-- zTree navigation tags START -->
@@ -50,7 +49,8 @@
                                             <span th:text="${document.identifier}"></span>
                                         </div>
                                         <div class="col-md-6">
-                                            <span th:text="${document.documentLongName} + ' (' + ${document.documentType.entityTypeCode} + ')'"></span>
+                                            <span th:if="${document.documentLongName != null}" th:text="${document.documentLongName} + ' '"></span>
+                                            <span th:text="'(' + ${document.documentType.entityTypeCode} + ')'"></span>
                                         </div>
                                         <div class="col-md-3">
                                             
@@ -74,7 +74,7 @@
                                                     <li><a th:href="'/requirements/document/pdf/' + ${document.uuId}"><em class="fa fa-file-pdf-o fa-fw"></em> Download PDF</a></li>
                                                     <li><a href="javascript:void(0);" th:onclick="'javascript:SaveAsTemplate(\'' + ${document.id} + '\', \'' + ${document.documentType.Id} + '\');'"><em class="fa fa-save fa-fw"></em> Save As Template ...</a></li>
                                                     <li role="presentation" class="divider"></li>
-                                                    <li><a th:href="'/projects/' + ${document.project.uuId}"><em class="ion-close icon-fw"></em> Close</a></li>
+                                                    <li><a href="javascript:void(0);" th:onclick="'javascript:CloseDocument(\'' + ${document.id} + '\');'"><em class="ion-close icon-fw"></em> Close</a></li>
                                                   </ul>
                                                 </li>
                                                 
@@ -150,7 +150,8 @@
                             <!--Document footer--> 
                             <div class="card-footer bg-blue-grey-500">
                                 <div class="pull-right"><span th:text="${document.identifier}"></span></div>
-                                <span th:text="${document.documentLongName} + ' (' + ${document.documentType.entityTypeCode} + ')'"></span>
+                                <span th:if="${document.documentLongName != null}" th:text="${document.documentLongName} + ' '"></span>
+                                <span th:text="'(' + ${document.documentType.entityTypeCode} + ')'"></span>
                             </div>
                             
                         </div>

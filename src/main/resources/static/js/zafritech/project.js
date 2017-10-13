@@ -46,7 +46,7 @@ function zTreeProjectLoad() {
         dataType: "json",
         success: function (data) {
 
-            zTreeObj = $.fn.zTree.init($("#mainFolderTree"), setting, data);
+            zTreeObj = $.fn.zTree.init($("#mainProjectTree"), setting, data);
 
             $('#noOpenProjects').hide();
             $('#mainTreeHeaderLabel').text("Projects");
@@ -72,7 +72,7 @@ function zTreeProjectLoad() {
 
 function zTreeExpandByIdNode(nodeId) {
     
-    var treeObj = $.fn.zTree.getZTreeObj("mainFolderTree");
+    var treeObj = $.fn.zTree.getZTreeObj("mainProjectTree");
     var treeNode = treeObj.getNodeByParam("id", nodeId, null);
     
     if (treeNode !== null && treeNode.length > 0) {
@@ -84,7 +84,7 @@ function zTreeExpandByIdNode(nodeId) {
 // Toggle open/close on clicking a parent node
 function zTreeProjectBeforeClick(treeId, treeNode) {
     
-    var treeObj = $.fn.zTree.getZTreeObj("mainFolderTree");
+    var treeObj = $.fn.zTree.getZTreeObj("mainProjectTree");
     
     if (treeNode.isParent) {
         
@@ -95,7 +95,7 @@ function zTreeProjectBeforeClick(treeId, treeNode) {
 // Toggle open/close on clicking a parent node
 function zTreeProjectBeforeRightClick(treeId, treeNode) {
     
-    var treeObj = $.fn.zTree.getZTreeObj("mainFolderTree");
+    var treeObj = $.fn.zTree.getZTreeObj("mainProjectTree");
     
     if (treeNode.isParent) {
         
@@ -110,7 +110,7 @@ function zTreeProjectBeforeRightClick(treeId, treeNode) {
 // Toggle open/close on clicking a parent node
 function zTreeProjectOnRightClick(event, treeId, treeNode, clickFlag) {
     
-    var treeObj = $.fn.zTree.getZTreeObj("mainFolderTree");
+    var treeObj = $.fn.zTree.getZTreeObj("mainProjectTree");
     
     if (treeNode.isParent) {
         

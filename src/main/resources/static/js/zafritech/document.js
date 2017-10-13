@@ -6,18 +6,21 @@
 
 /* global bootbox */
 
-var zDocTreeObj = null;
+var zMainDocTreeObj = null;
 
 $(document).ready(function () {
     
-    zDocTreeLoad();
+    zMainDocTreeLoad();
+    zOpenDocTreeLoad();
 });
 
-function zDocTreeLoad() {
+function zMainDocTreeLoad() {
     
     if ($('#docTreeValid').length > 0 && $('#documentId').length > 0) {
+    
+        var documentId = document.getElementById('documentId').value;
         
-        var zDocTreeObj;
+        var zMainDocTreeObj;
         var setting = {
             data: {
                 simpleData: {
@@ -33,40 +36,108 @@ function zDocTreeLoad() {
             },
             callback: {
 
-                beforeClick: zTreeDocBeforeClick
-//                onClick: zTreeDocOnClick,
-//                beforeRightClick: zTreeDocBeforeRightClick,
-//                onRightClick: zTreeDocOnRightClick,
-//                onDblClick: zTreeDocOnDblClick
+                beforeClick: zMainTreeDocBeforeClick
             }
         };
-        
-        // Reset project folder node
-        // Not needed since a document has been selected
-        $('nodeId').prop('value', "");
-        
+  
         $.ajax({
 
             global: false,
-            url: '/api/requirements/document/tree/' + document.getElementById('documentId').value,
+            url: '/api/requirements/document/tree/' + documentId,
             type: "GET",
             dataType: "json",
             cache: true,
             success: function (data) {
                 
-                $('#noOpenDocuments').hide();
-                $('#subTreeHeaderElement').show();
-                $('#subTreeHeaderElement').addClass('zid-master-detail-nav-title');
-                $('#subTreeHeaderLabel').text("Table of Contents");
+                $('#docTreeHeaderLabel').text("Documents");
                 
-                zDocTreeObj = $.fn.zTree.init($("#secondaryFolderTree"), setting, data);
-                zDocTreeObj.expandAll(false);   // Collapse all nodes
+                zMainDocTreeObj = $.fn.zTree.init($("#mainDocumentTree"), setting, data);
+                zMainDocTreeObj.expandAll(false);   // Collapse all nodes
                 
                 // Expand Table of Contents node (Node ID: 0)
-                var toc = zDocTreeObj.getNodeByParam("id", 0, null);
-                zDocTreeObj.expandNode(toc, true, false, true);
+                var toc = zMainDocTreeObj.getNodeByParam("id", 0, null);
+                zMainDocTreeObj.expandNode(toc, true, false, true);
             }
         });
+    }
+}
+
+function zOpenDocTreeLoad() {
+
+    var zOpenDocTreeObj;
+    var setting = {
+        data: {
+            simpleData: {
+                enable: true,
+                idKey: "id",
+                pIdKey: "pId",
+                rootPId: 0
+            }
+        },
+        view: {
+            dblClickExpand: true
+        },
+        callback: {
+
+            beforeClick: zOpenTreeDocBeforeClick
+        }
+    };
+
+    if ($('#documentId').length > 0) {
+
+        var documentId = document.getElementById('documentId').value;
+
+        $.ajax({
+
+            global: false,
+            url: '/api/requirements/document/opendocs/tree/' + documentId,
+            type: "GET",
+            dataType: "json",
+            cache: true,
+            success: function (data) {
+
+                $('#noOpenDocuments').hide();
+
+                zOpenDocTreeObj = $.fn.zTree.init($("#openDocumentsTree"), setting, data);
+                zOpenDocTreeObj.expandAll(false);
+            }
+        });
+
+    } else {
+
+        $.ajax({
+
+            global: false,
+            url: '/api/requirements/document/opendocs/tree/all',
+            type: "GET",
+            dataType: "json",
+            cache: true,
+            success: function (data) {
+
+                if (data.length > 0) {
+
+                    $('#noOpenDocuments').hide();
+
+                    zOpenDocTreeObj = $.fn.zTree.init($("#openDocumentsTree"), setting, data);
+                    zOpenDocTreeObj.expandAll(false);
+
+                } else {
+
+                    $('#noOpenDocuments').show();
+                }
+            }
+        });
+    }
+}
+
+function zTreeExpandMainDocByIdNode(nodeId) {
+    
+    var treeObj = $.fn.zTree.getZTreeObj("mainDocumentTree");
+    var treeNode = treeObj.getNodeByParam("id", nodeId, null);
+    
+    if (treeNode !== null && treeNode.length > 0) {
+    
+        treeObj.expandNode(treeNode, true, true, true);
     }
 }
 
@@ -74,20 +145,37 @@ function showIconForTree(treeId, treeNode) {
     
     return treeNode.id === 0;
 }
-                
-function zTreeDocBeforeClick(treeId, treeNode) {
+
+function zOpenTreeDocBeforeClick(treeId, treeNode) {
     
-    var zDocTreeObj = $.fn.zTree.getZTreeObj("secondaryFolderTree");
+    $.ajax({
+
+        global: false,
+        type: "GET",
+        contentType: "application/json",
+        url: "/api/documents/document/" + treeNode.linkId,
+        dataType: "json",
+        cache: false
+    })
+    .success(function (data) {
+
+        window.location.href = "/" + data.contentDescriptor.urlPathString + "/document/" + data.uuId;
+    });
+}
+                
+function zMainTreeDocBeforeClick(treeId, treeNode) {
+    
+    var zMainDocTreeObj = $.fn.zTree.getZTreeObj("mainDocumentTree");
     var documentId = document.getElementById('documentId').value;
 
     // Expand Table of Contents node (Node ID: 0)
-    var toc = zDocTreeObj.getNodeByParam("id", 0, null);
-    zDocTreeObj.expandNode(toc, true, false, true);
+    var toc = zMainDocTreeObj.getNodeByParam("id", 0, null);
+    zMainDocTreeObj.expandNode(toc, true, false, true);
     
     // Handle the selected node
     if (treeNode.isParent) {
         
-        zDocTreeObj.expandNode(treeNode, true, null, null);
+        zMainDocTreeObj.expandNode(treeNode, true, null, null);
         $('#documentNodeId').prop('value', treeNode.id);
         $('#sectionId').prop('value', treeNode.id);
         
@@ -789,6 +877,84 @@ function OpenDocument() {
     });
 }
 
+function CloseDocument(documentId) {
+
+    $.ajax({
+
+        global: false,
+        type: "GET",
+        contentType: "application/json",
+        url: "/api/documents/document/close/" + documentId,
+        dataType: "json",
+        cache: false
+    })
+    .success(function (data) {
+
+        window.location.href = "/projects/" + data.uuId;
+    });
+}
+
+function DocumentTemplates() {
+    
+    $.ajax({
+        
+        global: false,
+        type: "GET",
+        url: '/modals/document/document-document-templates.html',
+        success: function (data) {
+            
+            var box = bootbox.confirm({
+
+                closeButton: false,
+                title: 'Open Template',
+                message: data,
+                buttons: {
+                    cancel: {
+                        label: "Cancel",
+                        className: "btn-danger btn-fixed-width-100"
+                    },
+                    confirm: {
+                        label: "Open",
+                        className: "btn-success btn-fixed-width-100"
+                    }
+                },
+                callback: function (result) {
+                    
+                    if (result) {
+                        
+                        notYetImplemented();
+                    }
+                }
+            });
+            
+            box.on("shown.bs.modal", function(e) {
+                
+                $.ajax({
+
+                    type: "GET",
+                    contentType: "application/json",
+                    url: "/api/documents/types/list",
+                    dataType: "json",
+                    cache: false
+                })
+                .done(function (data) {
+                    
+                    $(e.currentTarget).find('select[name="templateTypeId"]').empty();
+
+                    $.each(data, function (key, index) {
+
+                        $(e.currentTarget).find('select[name="templateTypeId"]').append('<option value="' + index.id + '">' + index.entityTypeName + ' (' + index.entityTypeCode + ')</option>');
+                    });
+                    
+                    onTemplateDocumentTypeChange();
+                });
+            });
+            
+            box.modal('show');
+        }
+    });
+}
+
 function onSelectedProjectChange() {
     
     var projectId = document.getElementById('selectedProjectId').value;
@@ -1017,6 +1183,8 @@ function ImportFromTemplate(documentId, documentTypeId) {
                     
                     if (result) {
                         
+                        $('#modalBusyControl').prop('value', 'ON');
+                        
                         var data = {};
                         
                         data['documentId'] = documentId;
@@ -1024,7 +1192,6 @@ function ImportFromTemplate(documentId, documentTypeId) {
                         
                         $.ajax({
                             
-                            global: false,
                             type: "POST",
                             contentType: "application/json",
                             url: "/api/requirements/import/items/from/template/",
@@ -1041,7 +1208,7 @@ function ImportFromTemplate(documentId, documentTypeId) {
                                 },
                                 function() {
                                    
-                                    window.location.reload();
+                                    window.location.href = "/" + data.contentDescriptor.urlPathString + "/document/" + data.uuId;
                                 });
                             }
                         });
@@ -1098,9 +1265,16 @@ function onTemplateDocumentTypeChange() {
         
         $('#templateId').empty();
 
-        $.each(data, function (key, index) {
+        if (data.length > 0) {
+            
+            $.each(data, function (key, index) {
 
-            $('#templateId').append('<option value="' + index.id + '">' + index.documentType.entityTypeCode + ' - ' + index.templateName + '</option>');
-        });
+                $('#templateId').append('<option value="' + index.id + '">' + index.documentType.entityTypeCode + ' - ' + index.templateName + '</option>');
+            });
+            
+        } else {
+            
+            $('#templateId').append('<option value="0">No templates found for document type.</option>');
+        }
     });
 }

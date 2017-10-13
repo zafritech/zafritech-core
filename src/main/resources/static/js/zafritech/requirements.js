@@ -102,11 +102,10 @@ function RequirementItemCreateItem(documentId, parentId, itemLevel) {
                             timeout: 60000,
                             success: function (data) {
                     
-//                                var section = data.item > 1 ? data.parent.id : 0;
                                 var section = document.getElementById('sectionId').value;
                                 
-                                if (section === 0) { zDocTreeLoad(); }
                                 loadRequirementsItems(data.document.id, section);
+                                if (itemClass === "HEADER") { zMainDocTreeLoad(); }
                                 
                                 swal({
                                     
@@ -357,7 +356,7 @@ function RequirementItemEditItem(itemId) {
 //                                    var section = data.item > 1 ? data.parent.id : 0;
                                     var section = document.getElementById('sectionId').value;
                                     
-                                    if (section === 0) { zDocTreeLoad(); }
+                                    if (section === 0) { zMainDocTreeLoad(); }
                                     loadRequirementsItems(data.document.id, section);
                                     
                                     swal({

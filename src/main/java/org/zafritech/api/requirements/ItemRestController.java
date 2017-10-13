@@ -46,7 +46,6 @@ import org.zafritech.requirements.data.repositories.ItemRepository;
 import org.zafritech.requirements.data.repositories.TemplateRepository;
 import org.zafritech.requirements.enums.ItemClass;
 import org.zafritech.requirements.services.ItemService;
-import org.zafritech.requirements.services.TemplateItemService;
 
 /**
  *
@@ -252,6 +251,23 @@ public class ItemRestController {
         
         Document document = documentRepository.findOne(id);
         List<ItemTreeDao> headersTree = itemService.getTableOfContents(document); 
+        
+        return new ResponseEntity<List<ItemTreeDao>>(headersTree, HttpStatus.OK);
+    }
+    
+    @RequestMapping(value = "/api/requirements/document/opendocs/tree/{id}", method = RequestMethod.GET)
+    public ResponseEntity<List<ItemTreeDao>> getOpenDocumentsItemTree(@PathVariable(value = "id") Long id) {
+        
+        Document document = documentRepository.findOne(id);
+        List<ItemTreeDao> headersTree = itemService.getOpenDocumentTitlesTreeExcluding(document);  
+        
+        return new ResponseEntity<List<ItemTreeDao>>(headersTree, HttpStatus.OK);
+    }
+    
+    @RequestMapping(value = "/api/requirements/document/opendocs/tree/all", method = RequestMethod.GET)
+    public ResponseEntity<List<ItemTreeDao>> getOpenDocumentsItemTreeAll() {
+        
+        List<ItemTreeDao> headersTree = itemService.getOpenDocumentTitlesTreeAll();  
         
         return new ResponseEntity<List<ItemTreeDao>>(headersTree, HttpStatus.OK);
     }

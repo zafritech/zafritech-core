@@ -120,8 +120,20 @@ public class DocumentRestController {
     public ResponseEntity<Document> getDocument(@PathVariable(value = "id") Long id) {
         
         Document document = documentRepository.findOne(id); 
+        stateService.updateOpenDocument(document); 
 
         return new ResponseEntity<Document>(document, HttpStatus.OK);
+    }
+    
+    @RequestMapping(value = "/api/documents/document/close/{id}", method = GET)
+    public ResponseEntity<Project> closeDocument(@PathVariable(value = "id") Long id) {
+        
+        Document document = documentRepository.findOne(id); 
+        stateService.updateCloseDocument(document); 
+        
+        Project project = document.getProject();
+
+        return new ResponseEntity<Project>(project, HttpStatus.OK);
     }
     
     @RequestMapping(value = "/api/documents/recent/documents/list", method = GET)

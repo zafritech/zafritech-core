@@ -52,6 +52,18 @@ public class ItemTreeDao {
         this.linkId = linkId;
     }
 
+    public ItemTreeDao(Long id, Long pId, String name, boolean open, boolean isParent, boolean click, String icon, Long linkId) {
+        
+        this.id = id;
+        this.pId = pId;
+        this.name = name;
+        this.open = open;
+        this.isParent = isParent;
+        this.click = click;
+        this.icon = icon;
+        this.linkId = linkId;
+    }
+
     @Override
     public String toString() {
         

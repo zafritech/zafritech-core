@@ -48,7 +48,7 @@
                                                 <li style="border-bottom: 1px solid #ddd;"><a href="javascript:void(0);" th:onclick="'javascript:OpenDocument();'"><em class="fa fa-file-text-o fa-fw"></em>Open Document</a></li>
                                                 <li style="border-bottom: 1px solid #ddd;"><a href="javascript:void(0);" th:onclick="'javascript:RecentDocuments();'"><em class="fa fa-history fa-fw"></em>Recent Documents</a></li>
                                                 <li style="border-bottom: 1px solid #ddd;"><a href="javascript:void(0);" th:onclick="'javascript:notYetImplemented();'"><em class="ion-close-round icon-fw"></em>Close All Documents</a></li>
-                                                <li><a href="javascript:void(0);" th:onclick="'javascript:notYetImplemented();'"><em class="fa fa-file-text fa-fw"></em>Templates</a></li>
+                                                <li><a href="javascript:void(0);" th:onclick="'javascript:DocumentTemplates();'"><em class="fa fa-file-text fa-fw"></em>Templates</a></li>
                                             </ul>
                                         </div>
                                         <div style="padding: 8px 0;"><em class="ion-ios-copy icon-fw"></em> Documents</div>
@@ -112,7 +112,7 @@
                                 <div class="panel-body">
                                     
                                     <div>
-                                        <ul id="mainFolderTree" class="ztree"></ul>
+                                        <ul id="mainProjectTree" class="ztree"></ul>
                                         <div id="noOpenProjects" style="padding: 0 0 6px 0; text-align: center; color: red;">No open projects</div>
                                     </div>
 
@@ -124,7 +124,7 @@
                                 <h4 class="panel-title">
                                     <a data-toggle="collapse" data-parent="#accordion" href="#collapseDocument">
                                         <span class="glyphicon glyphicon-file"></span>
-                                        <span id="subTreeHeaderLabel">Document</span>
+                                        <span id="docTreeHeaderLabel">Document</span>
                                     </a>
                                 </h4>
                             </div>
@@ -132,7 +132,10 @@
                                 <div class="panel-body">
                                     
                                     <div>
-                                        <ul id="secondaryFolderTree" class="ztree"></ul>
+                                        <ul id="mainDocumentTree" class="ztree"></ul>
+                                    </div>
+                                    <div>
+                                        <ul id="openDocumentsTree" class="ztree"></ul>
                                         <div id="noOpenDocuments" style="padding: 0 0 6px 0; text-align: center; color: red;">No open documents</div>
                                     </div>
                                     

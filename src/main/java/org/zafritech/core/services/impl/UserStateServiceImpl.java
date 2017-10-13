@@ -71,6 +71,37 @@ public class UserStateServiceImpl implements UserStateService {
             stateRepository.delete(state); 
         }
     }
+    
+    @Override
+    public void updateOpenDocument(Document document) {
+        
+        UserEntityStateKey pk = new UserEntityStateKey(userService.loggedInUser().getId(), 
+                                                       UserEntityTypes.ENTITY_DOCUMENT_OPEN, 
+                                                       document.getId());
+        
+        UserEntityState state = stateRepository.findByStateKey(pk);
+        
+        if (state == null) {
+            
+            UserEntityState newState = new UserEntityState(pk);
+            stateRepository.save(newState);
+        }
+    }
+   
+    @Override
+    public void updateCloseDocument(Document document) {
+        
+        UserEntityStateKey pk = new UserEntityStateKey(userService.loggedInUser().getId(), 
+                                                       UserEntityTypes.ENTITY_DOCUMENT_OPEN, 
+                                                       document.getId());
+        
+        UserEntityState state = stateRepository.findByStateKey(pk);
+        
+        if (state != null) {
+            
+            stateRepository.delete(state); 
+        }
+    }
 
     @Override
     public void updateRecentDocument(Document document) {
@@ -126,6 +157,22 @@ public class UserStateServiceImpl implements UserStateService {
         }
         
         return projects;
+    }
+    
+    @Override
+    public List<Document> getOpenDocuments() {
+        
+        List<UserEntityState> states = stateRepository.findByStateKeyUserIdAndStateKeyEntityType(userService.loggedInUser().getId(), 
+                                                                                                 UserEntityTypes.ENTITY_DOCUMENT_OPEN);
+        
+        List<Document> documents = new ArrayList<>();
+        
+        for (UserEntityState state : states) {
+            
+            documents.add(documentRepository.findOne(state.getStateKey().getEntityId())); 
+        }
+         
+        return documents;
     }
 
     @Override

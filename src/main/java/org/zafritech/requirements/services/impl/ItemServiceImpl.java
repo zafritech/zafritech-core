@@ -27,6 +27,7 @@ import org.zafritech.core.data.repositories.EntityTypeRepository;
 import org.zafritech.core.data.repositories.SystemVariableRepository;
 import org.zafritech.core.enums.SystemVariableTypes;
 import org.zafritech.core.services.FileUploadService;
+import org.zafritech.core.services.UserStateService;
 import org.zafritech.requirements.data.converters.DaoToRefItemConverter;
 import org.zafritech.requirements.data.dao.ItemDao;
 import org.zafritech.requirements.data.dao.ItemRefDao;
@@ -68,6 +69,9 @@ public class ItemServiceImpl implements ItemService {
         
     @Autowired
     private FileUploadService fileUploadService;
+    
+    @Autowired
+    private UserStateService stateService;
     
     @Override
     public ItemRefDao getDaoForItemCreation(Long id) {
@@ -412,6 +416,8 @@ public class ItemServiceImpl implements ItemService {
         toc.setIcon("/images/icons/write-icon.png");
         headersTree.add(toc);
         
+        if (headers.isEmpty()) { headersTree.add(new ItemTreeDao(1L, 0L, "This document is empty.", false, false, true, 0L)); } 
+        
         for (Item item : headers) {
             
             ItemTreeDao treeDao = new ItemTreeDao(item.getId(),
@@ -422,9 +428,44 @@ public class ItemServiceImpl implements ItemService {
                                                   true,
                                                   item.getId());
              
-            treeDao.setIcon("/images/icons/title-icon.png");
+//            treeDao.setIcon("/images/icons/file-icon.png");
             
             headersTree.add(treeDao);
+        }
+        
+        return headersTree;
+    }
+   
+    @Override
+    public List<ItemTreeDao> getOpenDocumentTitlesTreeAll() {
+        
+        List<ItemTreeDao> headersTree = new ArrayList<>();
+        
+        List<Document> documents = stateService.getOpenDocuments();
+        
+        for (Document document : documents) {
+
+            ItemTreeDao title = new ItemTreeDao(document.getId(), null, document.getIdentifier(), true, true, true, "/images/icons/page-icon.png", document.getId());
+            headersTree.add(title);
+        }
+        
+        return headersTree;
+    }
+    
+    @Override
+    public List<ItemTreeDao> getOpenDocumentTitlesTreeExcluding(Document openDocument) {
+        
+        List<ItemTreeDao> headersTree = new ArrayList<>();
+        
+        List<Document> documents = stateService.getOpenDocuments();
+        
+        for (Document document : documents) {
+            
+            if (document != openDocument) {
+                
+                ItemTreeDao title = new ItemTreeDao(document.getId(), null, document.getIdentifier(), true, true, true, "/images/icons/title-icon.png", document.getId());
+                headersTree.add(title);
+            }
         }
         
         return headersTree;
