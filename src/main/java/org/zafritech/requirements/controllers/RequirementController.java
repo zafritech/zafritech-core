@@ -51,6 +51,6 @@ public class RequirementController {
         model.addAttribute("document", document);
         model.addAttribute("descriptor", document.getContentDescriptor().getDescriptorCode());
 
-        return "views/documents/zid-document-fragment";
+        return "views/documents/document";
     }
 }

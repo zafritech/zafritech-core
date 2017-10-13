@@ -5,7 +5,6 @@
  */
 package org.zafritech.requirements.services.impl;
 
-import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -52,9 +51,16 @@ public class TemplateItemServiceImpl implements TemplateItemService {
                                                                  dao.getTemplateLongName(),
                                                                  dao.getTemplateDescription(),
                                                                  document.getContentDescriptor(),
-                                                                 entityTypeRepository.findOne(dao.getDocumentTypeId())));
+                                                                 entityTypeRepository.findOne(dao.getDocumentTypeId()))
+        );
         
         return addTemplateItems(document, template);
+    }
+    
+    @Override
+    public void createJsonFromTemplate(Template template) {
+        
+        
     }
 
     private Template addTemplateItems(Document document, Template template) {

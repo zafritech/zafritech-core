@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.zafritech.core.api;
+package org.zafritech.api.requirements;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -79,9 +79,6 @@ public class ItemRestController {
     @Autowired
     private TemplateRepository templateRepository;
     
-    @Autowired
-    private TemplateItemService templateItemService;
-  
     @RequestMapping(value = "/api/requirements/document/items/item/{id}", method = RequestMethod.GET)
     public Item getItemById(@PathVariable(value = "id") Long itemId) {
 
@@ -118,7 +115,7 @@ public class ItemRestController {
         List<DocumentReference> applicable = docReferenceRepository.findByDocumentAndReferenceTypeOrderByReferenceRefTitleAsc(document, ReferenceTypes.REFERENCE_APPLICABLE);
         List<DocumentReference> referenced = docReferenceRepository.findByDocumentAndReferenceTypeOrderByReferenceRefTitleAsc(document, ReferenceTypes.REFERENCE_REFERENCED);
         
-        ModelAndView modelView = new ModelAndView("views/items/document-items-fragmant");
+        ModelAndView modelView = new ModelAndView("views/items/document-items");
         modelView.addObject("document", document);
         modelView.addObject("items", items);
         modelView.addObject("applicables", applicable);

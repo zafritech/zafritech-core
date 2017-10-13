@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.zafritech.core.api;
+package org.zafritech.api.core;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
