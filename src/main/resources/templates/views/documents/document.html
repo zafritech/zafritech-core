@@ -72,7 +72,10 @@
                                                     <li><a href="javascript:void(0);" th:onclick="'javascript:EditDocumentProperties(\'' + ${document.id} + '\');'"><em class="ion-edit icon-fw"></em> Edit Properties</a></li>
                                                     <li><a href="javascript:void(0);" th:onclick="'javascript:notYetImplemented();'"><em class="fa fa-tags fa-fw"></em> Release a Baseline</a></li>
                                                     <li><a th:href="'/requirements/document/pdf/' + ${document.uuId}"><em class="fa fa-file-pdf-o fa-fw"></em> Download PDF</a></li>
-                                                    <li><a href="javascript:void(0);" th:onclick="'javascript:SaveAsTemplate(\'' + ${document.id} + '\', \'' + ${document.documentType.Id} + '\');'"><em class="fa fa-save fa-fw"></em> Save As Template ...</a></li>
+                                                    <li><a href="javascript:void(0);" th:onclick="'javascript:SaveAsTemplate(\'' + ${document.id} + '\', \'' + ${document.documentType.Id} + '\', \'DB\');'"><em class="fa fa-save fa-fw"></em> Save As Template ...</a></li>
+                                                    <li sec:authorize="hasRole('ROLE_ADMIN')">
+                                                        <a href="javascript:void(0);" th:onclick="'javascript:SaveAsTemplate(\'' + ${document.id} + '\', \'' + ${document.documentType.Id} + '\', \'JSON\');'"><em class="fa fa-file-code-o fa-fw"></em> Create Json Template ...</a>
+                                                    </li>
                                                     <li role="presentation" class="divider"></li>
                                                     <li><a href="javascript:void(0);" th:onclick="'javascript:CloseDocument(\'' + ${document.id} + '\');'"><em class="ion-close icon-fw"></em> Close</a></li>
                                                   </ul>

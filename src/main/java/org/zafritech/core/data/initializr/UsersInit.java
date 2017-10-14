@@ -38,6 +38,12 @@ public class UsersInit {
     @Value("${zafritech.paths.data-dir}")
     private String data_dir;
     
+    @Value("${zafritech.adminuser.email}")
+    private String admin_email;
+    
+    @Value("${zafritech.adminuser.firstname}")
+    private String admin_firstname;
+   
     @Autowired
     private RoleRepository roleRepository;
     
@@ -76,7 +82,15 @@ public class UsersInit {
                 add(roleRepository.findByRoleName("ROLE_USER"));
             }
         };
-          
+        
+        // Create Administrator user
+        User admin = new User(admin_email, admin_firstname, "", "System Administrator");
+        admin.setPassword(new BCryptPasswordEncoder().encode("admin"));
+        admin.setUserRoles(adminRoles); 
+        admin = userRepository.save(admin);
+        String msg = "Administrator data initialisation: " + admin.toString();
+        Logger.getLogger(UsersInit.class.getName()).log(Level.INFO, msg);
+                
         try {
             
             List<UserDao> jsonUsers = Arrays.asList(mapper.readValue(new File(file), UserDao[].class));
@@ -84,25 +98,30 @@ public class UsersInit {
             for (UserDao jsonUser : jsonUsers) {
             
                 User user = new User(jsonUser.getEmail(), jsonUser.getFirstName(), jsonUser.getLastName(), jsonUser.getMainRole());
+
+                Contact contact = null;
                 
-                Contact contact = new Contact(
+                if (jsonUser.getContact() != null) {
+                    
+                    contact = new Contact(
+
+                            jsonUser.getContact().getEmail(), 
+                            jsonUser.getContact().getFirstName(), 
+                            jsonUser.getContact().getLastName(), 
+                            jsonUser.getContact().getAddress(), 
+                            jsonUser.getContact().getCity(), 
+                            jsonUser.getContact().getState(), 
+                            countryRepository.findByIso3(jsonUser.getContact().getCountry()), 
+                            jsonUser.getContact().getPostCode(), 
+                            jsonUser.getContact().getPhone(), 
+                            jsonUser.getContact().getMobile(), 
+                            jsonUser.getContact().getWebsite()
+                    );
+                    
+                    contact = contactRepository.save(contact);
+                }
                 
-                        jsonUser.getContact().getEmail(), 
-                        jsonUser.getContact().getFirstName(), 
-                        jsonUser.getContact().getLastName(), 
-                        jsonUser.getContact().getAddress(), 
-                        jsonUser.getContact().getCity(), 
-                        jsonUser.getContact().getState(), 
-                        countryRepository.findByIso3(jsonUser.getContact().getCountry()), 
-                        jsonUser.getContact().getPostCode(), 
-                        jsonUser.getContact().getPhone(), 
-                        jsonUser.getContact().getMobile(), 
-                        jsonUser.getContact().getWebsite()
-                );
-                
-                contact = contactRepository.save(contact);
                 user.setContact(contact);
-                 
                 
                 switch(jsonUser.getEmail()) {
 
@@ -131,7 +150,7 @@ public class UsersInit {
               
                 user = userRepository.save(user);
                 
-                String msg = "User data initialisation: " + user.toString();
+                msg = "User data initialisation: " + user.toString();
                 Logger.getLogger(UsersInit.class.getName()).log(Level.INFO, msg);
             }
             

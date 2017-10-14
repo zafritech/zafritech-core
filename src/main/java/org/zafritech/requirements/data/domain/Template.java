@@ -14,6 +14,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import org.zafritech.core.data.domain.DocumentContentDescriptor;
 import org.zafritech.core.data.domain.EntityType;
+import org.zafritech.core.data.domain.User;
 
 @Entity(name = "REQUIREMENTS_TEMPLATES")
 public class Template implements Serializable {
@@ -39,6 +40,10 @@ public class Template implements Serializable {
     @JoinColumn(name = "documentTypeId")
     private EntityType documentType;
     
+    @ManyToOne
+    @JoinColumn(name = "ownerId")
+    private User owner;
+    
     @Temporal(TemporalType.TIMESTAMP)
     private Date modifiedDate;
 
@@ -48,12 +53,14 @@ public class Template implements Serializable {
 
     public Template(String templateName, 
                     DocumentContentDescriptor contentDescriptor, 
-                    EntityType documentType) {
+                    EntityType documentType,
+                    User owner) {
         
         this.uuId = UUID.randomUUID().toString();
         this.templateName = templateName;
         this.contentDescriptor = contentDescriptor;
         this.documentType = documentType;
+        this.owner = owner;
         this.modifiedDate = new Timestamp(System.currentTimeMillis());
     }
 
@@ -61,7 +68,8 @@ public class Template implements Serializable {
                     String templateLongName, 
                     String templateDescription, 
                     DocumentContentDescriptor contentDescriptor, 
-                    EntityType documentType) {
+                    EntityType documentType,
+                    User owner) {
         
         this.uuId = UUID.randomUUID().toString();
         this.templateName = templateName;
@@ -69,6 +77,7 @@ public class Template implements Serializable {
         this.templateDescription = templateDescription;
         this.contentDescriptor = contentDescriptor;
         this.documentType = documentType;
+        this.owner = owner;
         this.modifiedDate = new Timestamp(System.currentTimeMillis());
     }
 
@@ -132,6 +141,14 @@ public class Template implements Serializable {
 
     public void setDocumentType(EntityType documentType) {
         this.documentType = documentType;
+    }
+
+    public User getOwner() {
+        return owner;
+    }
+
+    public void setOwner(User owner) {
+        this.owner = owner;
     }
 
     public Date getModifiedDate() {

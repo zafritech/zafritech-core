@@ -35,6 +35,7 @@ public class StartupCLR implements CommandLineRunner {
         initService.initCompanies();
         initService.initDocumentContentDescriptors();
         initService.initProjects();
+        initService.initDocumentTemplates();
         initService.initFolders();
         initService.initDocuments();
         initService.initLibrary();

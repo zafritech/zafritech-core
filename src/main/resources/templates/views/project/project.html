@@ -141,7 +141,7 @@
                                                 <div class="row" style="padding: 3px 0; border-bottom: 1px solid #e0e0e0;">
                                                     <div class="col-sm-4"><strong>Contact:</strong></div>
                                                     <div class="col-sm-8">
-                                                        <a th:href="'/admin/contacts/' + ${project.projectContact.uuId}">
+                                                        <a th:if="${project.projectContact != null}" th:href="'/admin/contacts/' + ${project.projectContact.uuId}">
                                                             <span th:text="${project.projectContact.city}"></span>
                                                         </a>
                                                     </div>

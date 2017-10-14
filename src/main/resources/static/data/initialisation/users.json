@@ -1,63 +1,10 @@
 [
   {
-    "id": 1,
-    "firstName": "Administrator",
-    "lastName": "System",
-    "email": "admin@zidingo.org",
-    "mainRole": "System Administrator",
-    "contact": {
-      "email": "admin@zidingo.org",
-      "firstName": "Administrator",
-      "lastName": "System",
-      "address": "No. 3 Veronia crescent, Pomona Extension 2, Kemption Park",
-      "city": "Johannesburg",
-      "state": "Gauteng",
-      "country": "ZAF",
-      "postCode": "1619",
-      "phone": "+27 53 546 1298",
-      "mobile": "+27 52 454 8044",
-      "website": "www.zidingo.org"
-    }
-  },
-  {
-    "id": 2,
-    "firstName": "Superuser",
-    "lastName": "System",
-    "email": "superuser@zidingo.org",
-    "mainRole": "System Super User",
-    "contact": {
-      "email": "superuser@zidingo.org",
-      "firstName": "Superuser",
-      "lastName": "System",
-      "address": "No. 3 Veronia crescent, Pomona Extension 2, Kemption Park",
-      "city": "Johannesburg",
-      "state": "Gauteng",
-      "country": "ZAF",
-      "postCode": "2090",
-      "phone": "+27 53 546 1298",
-      "mobile": "+27 52 454 8044",
-      "website": "www.zidingo.org"
-    }
-  },
-  {
     "id": 3,
     "firstName": "Guest",
-    "lastName": "System",
+    "lastName": "",
     "email": "guest@zidingo.org",
-    "mainRole": "System Guest User",
-    "contact": {
-      "email": "guest@zidingo.org",
-      "firstName": "Guest",
-      "lastName": "System",
-      "address": "No. 3 Veronia crescent, Pomona Extension 2, Kemption Park",
-      "city": "Johannesburg",
-      "state": "Gauteng",
-      "country": "ZAF",
-      "postCode": "2090",
-      "phone": "+27 53 546 1298",
-      "mobile": "+27 52 454 8044",
-      "website": "www.zidingo.org"
-    }
+	"mainRole": "Guest"
   },
   {
     "id": 4,

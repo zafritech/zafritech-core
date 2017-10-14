@@ -39,6 +39,8 @@ public interface InitService {
     
     RunOnceTask initProjects();
     
+    RunOnceTask initDocumentTemplates();
+    
     RunOnceTask initDocuments();
     
     RunOnceTask initSystemVariable();

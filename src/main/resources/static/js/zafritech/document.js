@@ -1057,7 +1057,7 @@ function RecentDocuments() {
     });
 }
 
-function SaveAsTemplate(documentId, sourceDocumentType) {
+function SaveAsTemplate(documentId, sourceDocumentType, format) {
     
     $.ajax({
         
@@ -1085,6 +1085,8 @@ function SaveAsTemplate(documentId, sourceDocumentType) {
                     
                     if (result) {
                         
+                        $('#modalBusyControl').prop('value', 'ON');
+                        
                         var data = {};
                         
                         data['documentId'] = documentId;
@@ -1092,10 +1094,10 @@ function SaveAsTemplate(documentId, sourceDocumentType) {
                         data['templateName'] = document.getElementById('templateName').value;
                         data['templateLongName'] = document.getElementById('templateLongName').value;
                         data['templateDescription'] = document.getElementById('templateDescription').value;
+                        data['templateFormat'] = document.getElementById('templateFormat').value;
                         
                         $.ajax({
                             
-                            global: false,
                             type: "POST",
                             contentType: "application/json",
                             url: "/api/documents/template/create/new",
@@ -1128,6 +1130,7 @@ function SaveAsTemplate(documentId, sourceDocumentType) {
                  
                 $(e.currentTarget).find('input[name="documentId"]').prop('value', documentId);
                 $(e.currentTarget).find('input[name="sourceDocumentType"]').prop('value', sourceDocumentType);
+                $(e.currentTarget).find('input[name="templateFormat"]').prop('value', format);
                  
                 $.ajax({
 
@@ -1203,7 +1206,7 @@ function ImportFromTemplate(documentId, documentTypeId) {
                                 swal({
                                     
                                     title: "Template Saved",
-                                    text: "Template " + data.templateName + " successfully created!",
+                                    text: "Template " + data.templateName + " successfully imported!",
                                     type: "success"
                                 },
                                 function() {

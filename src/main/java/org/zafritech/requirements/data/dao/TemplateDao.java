@@ -20,6 +20,8 @@ public class TemplateDao {
     private String templateLongName;
     
     private String templateDescription;
+    
+    private String templateFormat;
 
     public TemplateDao() {
         
@@ -28,10 +30,10 @@ public class TemplateDao {
     @Override
     public String toString() {
         
-        return "TemplateDao{" + "documentId=" + getDocumentId() 
-                + ", documentTypeId=" + getDocumentTypeId() + ", templateName=" 
-                + getTemplateName() + ", templateLongName=" + getTemplateLongName() 
-                + ", templateDescription=" + getTemplateDescription() + '}';
+        return "TemplateDao{" + "documentId=" + getDocumentId() + ", documentTypeId=" 
+                + getDocumentTypeId() + ", templateName=" + getTemplateName() 
+                + ", templateLongName=" + getTemplateLongName() + ", templateDescription=" 
+                + getTemplateDescription() + ", templateFormat=" + getTemplateFormat() + '}';
     }
 
     public Long getDocumentId() {
@@ -72,5 +74,13 @@ public class TemplateDao {
 
     public void setTemplateDescription(String templateDescription) {
         this.templateDescription = templateDescription;
+    }
+
+    public String getTemplateFormat() {
+        return templateFormat;
+    }
+
+    public void setTemplateFormat(String templateFormat) {
+        this.templateFormat = templateFormat;
     }
 }

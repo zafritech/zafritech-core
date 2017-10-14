@@ -5,13 +5,25 @@
  */
 package org.zafritech.requirements.services.impl;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import java.io.File;
+import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.zafritech.core.data.domain.Document;
 import org.zafritech.core.data.repositories.DocumentRepository;
 import org.zafritech.core.data.repositories.EntityTypeRepository;
+import org.zafritech.core.services.UserService;
 import org.zafritech.requirements.data.dao.TemplateDao;
+import org.zafritech.requirements.data.dao.TemplateItemToJsonDao;
+import org.zafritech.requirements.data.dao.TemplateToJsonDao;
 import org.zafritech.requirements.data.domain.Item;
 import org.zafritech.requirements.data.domain.Template;
 import org.zafritech.requirements.data.domain.TemplateItem;
@@ -27,6 +39,9 @@ import org.zafritech.requirements.services.TemplateItemService;
 @Service
 public class TemplateItemServiceImpl implements TemplateItemService {
 
+    @Value("${zafritech.paths.data-dir}")
+    private String data_dir;
+    
     @Autowired
     private DocumentRepository documentRepository;
     
@@ -41,6 +56,9 @@ public class TemplateItemServiceImpl implements TemplateItemService {
     
     @Autowired
     private TemplateItemRepository templateItemRepository;
+    
+    @Autowired
+    private UserService userService;
             
     @Override
     public Template createTemplateFromDocument(TemplateDao dao) {
@@ -51,7 +69,8 @@ public class TemplateItemServiceImpl implements TemplateItemService {
                                                                  dao.getTemplateLongName(),
                                                                  dao.getTemplateDescription(),
                                                                  document.getContentDescriptor(),
-                                                                 entityTypeRepository.findOne(dao.getDocumentTypeId()))
+                                                                 entityTypeRepository.findOne(dao.getDocumentTypeId()),
+                                                                 userService.loggedInUser())
         );
         
         return addTemplateItems(document, template);
@@ -60,7 +79,46 @@ public class TemplateItemServiceImpl implements TemplateItemService {
     @Override
     public void createJsonFromTemplate(Template template) {
         
+        String templateDirectory = data_dir + "templates";
+        DateFormat timeFormat = new SimpleDateFormat("yyyy-MM-dd-HHmmss");
         
+        List<TemplateItemToJsonDao> jsomItems = new ArrayList<>();
+        
+        List<TemplateItem> templateItems = templateItemRepository.findByTemplateOrderBySystemIdAsc(template);
+        
+        for (TemplateItem templateItem : templateItems) {
+            
+            TemplateItemToJsonDao jsonItem = new TemplateItemToJsonDao(templateItem.getSystemId(),
+                                                                       templateItem.getItemClass(),
+                                                                       templateItem.getItemNumber() != null ? templateItem.getItemNumber() : "",
+                                                                       templateItem.getItemValue(),
+                                                                       templateItem.getItemType() != null ? templateItem.getItemType().getEntityTypeCode() : "",
+                                                                       templateItem.getMediaType().name(),
+                                                                       templateItem.getParentSysId() != null ? templateItem.getParentSysId() : "",
+                                                                       templateItem.getItemLevel(),
+                                                                       templateItem.getSortIndex());
+            
+            jsomItems.add(jsonItem);
+        }
+                
+        TemplateToJsonDao dao = new TemplateToJsonDao(template.getTemplateName(),
+                                                      template.getTemplateLongName(),
+                                                      template.getTemplateDescription(),
+                                                      template.getContentDescriptor().getDescriptorCode(),
+                                                      template.getDocumentType().getEntityTypeCode(),
+                                                      jsomItems);
+        
+        try {
+        
+            String timeStamp = timeFormat.format(System.currentTimeMillis());
+            
+            ObjectMapper mapper = new ObjectMapper();
+            mapper.writeValue(new File(templateDirectory + File.separator + template.getDocumentType().getEntityTypeCode() + "_" + timeStamp + ".json"), dao);
+            
+        } catch (IOException ex) {
+            
+            Logger.getLogger(TemplateItemServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     private Template addTemplateItems(Document document, Template template) {

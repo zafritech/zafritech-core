@@ -19,6 +19,7 @@ import org.zafritech.core.data.initializr.CompaniesInit;
 import org.zafritech.core.data.initializr.ContentDescriptorsInit;
 import org.zafritech.core.data.initializr.CountriesDataInit;
 import org.zafritech.core.data.initializr.DocumentInit;
+import org.zafritech.core.data.initializr.DocumentTemplatesInit;
 import org.zafritech.core.data.initializr.EntityTypesInit;
 import org.zafritech.core.data.initializr.FolderInit;
 import org.zafritech.core.data.initializr.InfoClassesInit;
@@ -74,6 +75,9 @@ public class InitServiceImpl implements InitService {
 
     @Autowired
     private ProjectsInit projectsInit;
+
+    @Autowired
+    private DocumentTemplatesInit documentTemplatesInit;
     
     @Autowired
     private FolderInit folderInit;
@@ -228,6 +232,18 @@ public class InitServiceImpl implements InitService {
         return null;
     }
  
+    @Override
+    public  RunOnceTask initDocumentTemplates() {
+         
+        if (!isInitComplete("DOCUMENT_TEMPLATES_INIT")) {
+        
+            documentTemplatesInit.init();
+            return completeTask("DOCUMENT_TEMPLATES_INIT");
+        }
+        
+        return null;
+    }
+    
     @Override
     public RunOnceTask initFolders() {
         

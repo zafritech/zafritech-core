@@ -18,6 +18,10 @@ public interface TemplateItemRepository extends CrudRepository<TemplateItem, Lon
     
     TemplateItem findFirstByTemplateOrderBySystemIdDesc(Template template);
     
+    List<TemplateItem> findByTemplateOrderBySystemIdAsc(Template template);
+    
+    List<TemplateItem> findByTemplateOrderBySystemIdDesc(Template template);
+    
     List<TemplateItem> findByTemplateAndItemLevelOrderBySortIndexAsc(Template template, Integer level);
     
     List<TemplateItem> findByParentSysIdOrderBySortIndexAsc(String systemId);
