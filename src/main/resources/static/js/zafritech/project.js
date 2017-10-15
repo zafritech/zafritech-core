@@ -591,9 +591,9 @@ function CreateFolder(folderId) {
                             
                             $.each(data, function (key, index) {
 
-                                $(e.currentTarget).find('select[name="folderTypeId"]').append('<option value="' + index.id + '">' + index.typeName + ' Folder</option>');
+                                $(e.currentTarget).find('select[name="folderTypeId"]').append('<option value="' + index.id + '">' + index.entityTypeName + ' Folder</option>');
                                 
-                                if (index.typeKey === "FOLDER_DOCUMENT") { selected = index.id; }
+                                if (index.entityTypeCode === "FOLDER_DOCUMENT") { selected = index.id; }
                             });
                             
                             $(e.currentTarget).find('select[name="folderTypeId"]').prop('value', selected);
@@ -647,8 +647,6 @@ function CreateDocument(treeNodeId) {
                         data['documentLongName'] = document.getElementById('documentLongName').value;
                         data['documentDescription'] = document.getElementById('documentDescription').value;
                        
-                        console.log(data);
-                        
                         $.ajax({
                             
                             global: false,
@@ -1267,6 +1265,8 @@ function ProjectCreateNew() {
                     
                     if (result) {
                         
+                        $('#modalBusyControl').prop('value', 'ON');
+                        
                         var data = {};
                         
                         data['projectName'] = document.getElementById('projectName').value;
@@ -1279,7 +1279,6 @@ function ProjectCreateNew() {
                         
                         $.ajax({
                             
-                            global: false,
                             type: "POST",
                             contentType: "application/json",
                             url: "/api/admin/projects/project/new",
@@ -1444,8 +1443,6 @@ function ProjectEditProperties(uuId) {
                         data['endDate'] = document.getElementById('endDate').value;
                         data['status'] = document.getElementById('status').value;
                         
-                        console.log(data);
-                        
                         $.ajax({
                             
                             global: false,
@@ -1465,7 +1462,7 @@ function ProjectEditProperties(uuId) {
                                 },
                                 function() {
                                    
-                                    window.location.reload();
+                                    window.location.href = "/projects/" + uuId;
                                 });
                             }
                         });

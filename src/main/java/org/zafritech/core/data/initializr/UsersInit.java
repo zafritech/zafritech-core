@@ -35,15 +35,36 @@ import org.zafritech.core.data.repositories.UserRepository;
 @Component
 public class UsersInit {
     
+    @Value("${zafritech.organisation.address}")
+    private String address;
+    
+    @Value("${zafritech.organisation.website}")
+    private String website;
+    
+    @Value("${zafritech.organisation.country-code}")
+    private String country_code;
+    
+    @Value("${zafritech.organisation.state}")
+    private String state;
+    
+    @Value("${zafritech.organisation.city}")
+    private String city;
+    
+    @Value("${zafritech.organisation.post-code}")
+    private String post_code;
+    
+    @Value("${zafritech.organisation.phone-number}")
+    private String phone_number;
+    
+    @Value("${zafritech.organisation.mobile-number}")
+    private String mobile_number;
+    
+    @Value("${zafritech.organisation.domain}")
+    private String domain;
+    
     @Value("${zafritech.paths.data-dir}")
     private String data_dir;
     
-    @Value("${zafritech.adminuser.email}")
-    private String admin_email;
-    
-    @Value("${zafritech.adminuser.firstname}")
-    private String admin_firstname;
-   
     @Autowired
     private RoleRepository roleRepository;
     
@@ -83,14 +104,15 @@ public class UsersInit {
             }
         };
         
+        // Create default Organisation contact
+        Contact contact = createOrganisationContact("info@" + domain, "Contacts", "");
+        
         // Create Administrator user
-        User admin = new User(admin_email, admin_firstname, "", "System Administrator");
-        admin.setPassword(new BCryptPasswordEncoder().encode("admin"));
-        admin.setUserRoles(adminRoles); 
-        admin = userRepository.save(admin);
-        String msg = "Administrator data initialisation: " + admin.toString();
-        Logger.getLogger(UsersInit.class.getName()).log(Level.INFO, msg);
-                
+        createAdminUser(adminRoles, contact);
+        
+        // Create Guest user
+        createGuestUser(guestRoles, contact);
+        
         try {
             
             List<UserDao> jsonUsers = Arrays.asList(mapper.readValue(new File(file), UserDao[].class));
@@ -99,8 +121,6 @@ public class UsersInit {
             
                 User user = new User(jsonUser.getEmail(), jsonUser.getFirstName(), jsonUser.getLastName(), jsonUser.getMainRole());
 
-                Contact contact = null;
-                
                 if (jsonUser.getContact() != null) {
                     
                     contact = new Contact(
@@ -150,7 +170,7 @@ public class UsersInit {
               
                 user = userRepository.save(user);
                 
-                msg = "User data initialisation: " + user.toString();
+                String msg = "User data initialisation: " + user.toString();
                 Logger.getLogger(UsersInit.class.getName()).log(Level.INFO, msg);
             }
             
@@ -158,5 +178,45 @@ public class UsersInit {
             
             Logger.getLogger(UsersInit.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+    
+    private void createAdminUser(Set<Role> roles, Contact contact) {
+        
+        User admin = new User("admin@" + domain, "Administrator", "", "System Administrator");
+        admin.setPassword(new BCryptPasswordEncoder().encode("admin"));
+        admin.setUserRoles(roles); 
+        admin.setContact(contact); 
+        admin = userRepository.save(admin);
+        String msg = "Administrator data initialisation: " + admin.toString();
+        Logger.getLogger(UsersInit.class.getName()).log(Level.INFO, msg);
+    }
+    
+    private void createGuestUser(Set<Role> roles, Contact contact) {
+        
+        User guest = new User("guest@" + domain, "Guest", "", "Guest User");
+        guest.setPassword(new BCryptPasswordEncoder().encode("guest"));
+        guest.setUserRoles(roles); 
+        guest.setContact(contact); 
+        guest = userRepository.save(guest);
+        String msg = "Administrator data initialisation: " + guest.toString();
+        Logger.getLogger(UsersInit.class.getName()).log(Level.INFO, msg);
+    }
+    
+    private Contact createOrganisationContact(String email, String firstName, String lastName) {
+        
+        Contact contact = contactRepository.save(new Contact(email,
+                                                             firstName, 
+                                                             lastName, 
+                                                             address, 
+                                                             city,
+                                                             state,
+                                                             countryRepository.findByIso3(country_code),
+                                                             post_code,
+                                                             phone_number,
+                                                             mobile_number,
+                                                             website)
+        );
+
+        return contact;
     }
 }

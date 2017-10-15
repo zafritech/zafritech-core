@@ -477,27 +477,28 @@ public class ItemServiceImpl implements ItemService {
         List<TemplateItem> firstLevelTemplateItems = templateItemRepository.findByTemplateAndItemLevelOrderBySortIndexAsc(template, 1);
         
         for (TemplateItem templateItem : firstLevelTemplateItems) {
-            
+
             Item item = saveTemplateItem(document, templateItem, null);
-            List<TemplateItem> childTemplateItems = templateItemRepository.findByParentSysIdOrderBySortIndexAsc(templateItem.getSystemId());
-            
-            for (TemplateItem childTemplateItem : childTemplateItems) {
-                
-                Item childItem = saveTemplateItem(document, childTemplateItem, item);
-                
-                getTemplateItemChildren(childTemplateItem).forEach(child->{
-                
-                    saveTemplateItem(document, child, childItem);
-                }); 
-            }
+            saveTemplateItemChildren(document, templateItem, item);
         }
-        
+
         return document;
     }
     
     /*********************************************************************************************************************
     * Private methods beyond this point
     **********************************************************************************************************************/
+    
+    private void saveTemplateItemChildren(Document document, TemplateItem templateItem, Item parent) {
+        
+        List<TemplateItem> templateItems = templateItemRepository.findByTemplateAndParentSysIdOrderBySortIndexAsc(templateItem.getTemplate(), templateItem.getSystemId());
+        
+        for (TemplateItem childTemplateItem : templateItems) {
+            
+            Item item = saveTemplateItem(document, childTemplateItem, parent);
+            saveTemplateItemChildren(document, childTemplateItem, item);
+        }
+    }
     
     private Item saveTemplateItem(Document document, TemplateItem templateItem, Item parent) {
 
@@ -511,7 +512,7 @@ public class ItemServiceImpl implements ItemService {
         item.setItemClass(templateItem.getItemClass());
         item.setItemLevel(templateItem.getItemLevel());
         item.setMediaType(templateItem.getMediaType());
-        
+        item.setSortIndex(templateItem.getSortIndex()); 
         
         item = itemRepository.save(item);
         
@@ -531,21 +532,7 @@ public class ItemServiceImpl implements ItemService {
         
         return children;
     }
-    
-    private List<TemplateItem> getTemplateItemChildren(TemplateItem templateItem) {
-        
-        List<TemplateItem> children = new ArrayList<>();
-        List<TemplateItem> childTemplateItems = templateItemRepository.findByParentSysIdOrderBySortIndexAsc(templateItem.getSystemId());  
-        
-        for (TemplateItem child : childTemplateItems) {
-
-            children.add(child);
-            getTemplateItemChildren(child).forEach(children::add); 
-        }
-        
-        return children;
-    }
-    
+  
     private String getSystemIDTemplate(Long id, String ownerType, String name) {
 
         List<SystemVariable> sysVar = sysvarRepository.findByOwnerIdAndOwnerTypeAndVariableName(id, ownerType, name);

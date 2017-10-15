@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.zafritech.core.data.domain.Claim;
 import org.zafritech.core.data.domain.ClaimType;
@@ -36,6 +37,9 @@ import org.zafritech.core.services.ProjectService;
  */
 @Component
 public class ProjectsInit {
+    
+    @Value("${zafritech.organisation.domain}")
+    private String domain;
     
     @Autowired
     private InformationClassRepository infoClassRepository;
@@ -119,9 +123,9 @@ public class ProjectsInit {
         
         for (Project project : projects) {
             
-            project.setCreatedBy(userRepository.findByEmail("admin@zidingo.org"));
-            project.setProjectManager(userRepository.findByEmail("admin@zidingo.org")); 
-            project.setProjectContact(contactRepository.findByEmail("admin@zidingo.org"));  
+            project.setCreatedBy(userRepository.findByEmail("admin@" + domain));
+            project.setProjectManager(userRepository.findByEmail("admin@" + domain)); 
+            project.setProjectContact(contactRepository.findByEmail("admin@" + domain));  
             project.setStatus(ProjectStatus.STATUS_ACTIVE); 
             projectRepository.save(project);
         }
@@ -156,8 +160,12 @@ public class ProjectsInit {
         
         for (Project project : projects) {
             
-            ProjectWbsPackage wbsPackage = new ProjectWbsPackage(project, "0101", "STL", "System Top Level");
-            wbsPackageRepository.save(wbsPackage);
+            wbsPackageRepository.save(new ProjectWbsPackage(project, "0101", "SLC", "System Level Concept"));
+            wbsPackageRepository.save(new ProjectWbsPackage(project, "0102", "SLP", "System Level Planning"));
+            wbsPackageRepository.save(new ProjectWbsPackage(project, "0103", "SLS", "System Level Specification"));
+            wbsPackageRepository.save(new ProjectWbsPackage(project, "0104", "SLD", "System Level Design"));
+            wbsPackageRepository.save(new ProjectWbsPackage(project, "0105", "SLI", "System Level Integration"));
+            wbsPackageRepository.save(new ProjectWbsPackage(project, "0106", "SLV", "System Level Verification and Validation"));
         }
     }
 }

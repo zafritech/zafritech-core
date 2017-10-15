@@ -85,9 +85,45 @@
 	},
 	{
 		"key" : "DOCUMENT_TYPE_ENTITY",
+		"name" : "System Engineering Management Plan",
+		"code" : "SEMP",
+		"description" : "The Systems Engineering Management Plan (SEMP) defines the plans and procedures of an enterprise for the management and conduct by that enterprise of a fully integrated technical program in conduct of the engineering element(s) of a project. The term \"SEMP\" is generic, and may be replaced with any meaningful name."
+	},
+	{
+		"key" : "DOCUMENT_TYPE_ENTITY",
 		"name" : "System Requirements Specification",
 		"code" : "SYS",
 		"description" : "A System Requirements Specification contains the next level of requirements after user requirements. The aim of system requirements is to set precise technical requirements for the system development. System requirements are derived from user requirements by considering existing technology, components and so on."
+	},
+	{
+		"key" : "DOCUMENT_TYPE_ENTITY",
+		"name" : "Operational Concept Description",
+		"code" : "OCD",
+		"description" : "The Operational Concept Description (OCD) is a system-centric description, for a system, subsystem, HWCI, CSCI, component or other item, herein referred to generically as the system, of who the users of \"the system\" are, what are their intended uses of the system, how and where the system is intended to be used, and a representative set of scenarios of use. These scenarios, each associated with a particular intended use (mission), are chosen to represent both typical and limit conditions of use. The OCD also describes the expected external conditions during use."
+	},
+	{
+		"key" : "DOCUMENT_TYPE_ENTITY",
+		"name" : "Concept of Operations",
+		"code" : "CONOPS",
+		"description" : "The Concept of Operations (CONOPS) describes the conceptual approach to achieving an enterprise outcome or capability, focussing on operations, as contrasted to the whole of the solution to the whole of the problem on a life cycle basis. The CONOPS also may contain a description of solution or solution element external behavior (how the solution/solution element will behave, from a user's point of view, in meeting its requirements, to the extent that the design defines behavior more detailed than, and consistent with, solution requirements, and ignoring internal implementation)"
+	},
+	{
+		"key" : "DOCUMENT_TYPE_ENTITY",
+		"name" : "Interface Design Description",
+		"code" : "IDD",
+		"description" : "The Interface Design Description (IDD) describes the interface characteristics of one or more items which may typically be referred to as systems, subsystems, Hardware Configuration Items (HWCIs), Computer Software Configuration Items (CSCIs), manual operations or other system components. An IDD may describe one or more interfaces."
+	},
+	{
+		"key" : "DOCUMENT_TYPE_ENTITY",
+		"name" : "Statement of Work",
+		"code" : "SOW",
+		"description" : "The Statement of Work (SOW) specifies the work tasks to be performed by a supplier, including an organisational entity internal to an organization. The SOW may specify the methods to be used to ensure that these tasks have been performed to the specified standard. Reference herein to a \"supplier\" should be interpreted to include reference to any entity tasked with providing a service."
+	},
+	{
+		"key" : "DOCUMENT_TYPE_ENTITY",
+		"name" : "Task Specification",
+		"code" : "TS",
+		"description" : "The Task Specification (TS) specifies one or more work tasks to be performed by a service provider, including an organisational entity internal to an organization. The TS may specify the methods to be used to ensure that these tasks have been performed to the specified standard. Reference herein to a \"service provider\" should be interpreted to include reference to any entity tasked with providing a service"
 	},
 	{
 		"key" : "DOCUMENT_TYPE_ENTITY",
@@ -142,6 +178,12 @@
 		"name" : "Software Design Description",
 		"code" : "SDD",
 		"description" : "A software design description (aka software design document or SDD) is a written description of a software product, that a software designer writes in order to give a software development team overall guidance to the architecture of the software project."
+	},
+	{
+		"key" : "DOCUMENT_TYPE_ENTITY",
+		"name" : "System/Subsystem Design Description",
+		"code" : "SSDD",
+		"description" : "The System/Subsystem Design Description (SSDD) describes the architectural (conceptual) design of the system or subsystem which is the subject of the SSDD. The SSDD also may contain a description of system/subsystem external behaviour (how the system/subsystem will behave, from a user's point of view, in meeting its requirements, to the extent that the design defines behavior more detailed than, and consistent with, system requirements, and ignoring internal implementation). The SSDD may be supplemented by Interface Design Descriptions (IDDs) (see PPA-ME04-001133) for descriptions of design decisions relating to external interfaces. The SSDD may be supplemented by Database Design Descriptions (DBDDs) (see PPA-ME04-001134), for externally input databases, externally output databases, and databases internal to the system/subsystem that are not to be engineered as configuration items."
 	},
 	{
 		"key" : "DOCUMENT_TYPE_ENTITY",

@@ -24,5 +24,5 @@ public interface TemplateItemRepository extends CrudRepository<TemplateItem, Lon
     
     List<TemplateItem> findByTemplateAndItemLevelOrderBySortIndexAsc(Template template, Integer level);
     
-    List<TemplateItem> findByParentSysIdOrderBySortIndexAsc(String systemId);
+    List<TemplateItem> findByTemplateAndParentSysIdOrderBySortIndexAsc(Template template, String systemId);
 }

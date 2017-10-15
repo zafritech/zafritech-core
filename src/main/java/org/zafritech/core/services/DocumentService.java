@@ -8,6 +8,8 @@ package org.zafritech.core.services;
 import org.zafritech.core.data.dao.DocDao;
 import org.zafritech.core.data.dao.DocEditDao;
 import org.zafritech.core.data.domain.Document;
+import org.zafritech.core.data.domain.Project;
+import org.zafritech.core.data.domain.User;
 
 /**
  *
@@ -20,4 +22,8 @@ public interface DocumentService {
     Document saveEditDao(DocEditDao docEditDao);
             
     Document duplicate(Long id); 
+    
+    void initialiseNewProjectDocuments(Project project, User user);
+    
+    void initDocumentSystemVariables(Project project);
 }

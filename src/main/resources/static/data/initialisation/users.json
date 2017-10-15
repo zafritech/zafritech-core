@@ -1,12 +1,5 @@
 [
   {
-    "id": 3,
-    "firstName": "Guest",
-    "lastName": "",
-    "email": "guest@zidingo.org",
-	"mainRole": "Guest"
-  },
-  {
     "id": 4,
     "firstName": "Dumisani",
     "lastName": "Khumalo",

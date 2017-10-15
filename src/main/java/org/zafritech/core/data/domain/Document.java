@@ -104,6 +104,7 @@ public class Document implements Serializable {
 
     public Document(String identifier, 
                     String documentName, 
+                    String documentLongName, 
                     EntityType documentType, 
                     DocumentContentDescriptor descriptor, 
                     Project project, 
@@ -115,6 +116,7 @@ public class Document implements Serializable {
         this.uuId = UUID.randomUUID().toString();
         this.identifier = identifier;
         this.documentName = documentName;
+        this.documentLongName = documentLongName;
         this.documentType = documentType;
         this.contentDescriptor = descriptor;
         this.project = project;

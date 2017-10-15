@@ -35,8 +35,8 @@ public class DocumentTemplatesInit {
     @Value("${zafritech.paths.data-dir}")
     private String data_dir;
     
-    @Value("${zafritech.adminuser.email}")
-    private String admin_email;
+    @Value("${zafritech.organisation.domain}")
+    private String domain;
     
     @Autowired
     private EntityTypeRepository entityTypeRepository;
@@ -73,7 +73,7 @@ public class DocumentTemplatesInit {
                                                  dao.getDescription(),
                                                  descriptorRepository.findByDescriptorCode(dao.getContent()),
                                                  entityTypeRepository.findByEntityTypeKeyAndEntityTypeCode("DOCUMENT_TYPE_ENTITY", dao.getType()),
-                                                 userService.findByEmail(admin_email)); 
+                                                 userService.findByEmail("admin@ + domain")); 
                 
                 template = templateRepository.save(template);
                 

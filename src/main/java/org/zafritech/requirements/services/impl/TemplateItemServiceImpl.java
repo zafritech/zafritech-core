@@ -73,7 +73,7 @@ public class TemplateItemServiceImpl implements TemplateItemService {
                                                                  userService.loggedInUser())
         );
         
-        return addTemplateItems(document, template);
+        return addDocumentItemsToTemplate(document, template);
     }
     
     @Override
@@ -113,7 +113,7 @@ public class TemplateItemServiceImpl implements TemplateItemService {
             String timeStamp = timeFormat.format(System.currentTimeMillis());
             
             ObjectMapper mapper = new ObjectMapper();
-            mapper.writeValue(new File(templateDirectory + File.separator + template.getDocumentType().getEntityTypeCode() + "_" + timeStamp + ".json"), dao);
+            mapper.writeValue(new File(templateDirectory + File.separator + template.getDocumentType().getEntityTypeCode() + "_" + timeStamp + "_template.json"), dao);
             
         } catch (IOException ex) {
             
@@ -121,7 +121,7 @@ public class TemplateItemServiceImpl implements TemplateItemService {
         }
     }
 
-    private Template addTemplateItems(Document document, Template template) {
+    private Template addDocumentItemsToTemplate(Document document, Template template) {
         
         List<Item> firstLevelItems = itemRepository.findByDocumentAndItemLevelOrderBySortIndexAsc(document, 1);
         

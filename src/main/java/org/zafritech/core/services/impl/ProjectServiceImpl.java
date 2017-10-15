@@ -22,6 +22,7 @@ import org.zafritech.core.data.domain.Document;
 import org.zafritech.core.data.domain.DocumentContentDescriptor;
 import org.zafritech.core.data.domain.EntityType;
 import org.zafritech.core.data.domain.Folder;
+import org.zafritech.core.data.domain.InformationClass;
 import org.zafritech.core.data.domain.Project;
 import org.zafritech.core.data.domain.ProjectWbsPackage;
 import org.zafritech.core.data.domain.User;
@@ -45,6 +46,7 @@ import org.zafritech.core.services.ClaimService;
 import org.zafritech.core.services.ProjectService;
 import org.zafritech.core.services.UserService;
 import org.zafritech.core.data.repositories.TemplateVariableRepository;
+import org.zafritech.core.services.DocumentService;
 
 /**
  *
@@ -101,6 +103,9 @@ public class ProjectServiceImpl implements ProjectService {
     @Autowired
     private TemplateVariableRepository configRepository;
     
+    @Autowired
+    private DocumentService documentService;
+    
     @Override
     public Project saveDao(ProjectDao dao) {
         
@@ -120,17 +125,15 @@ public class ProjectServiceImpl implements ProjectService {
             
         } else {
             
-            project = new Project(dao.getProjectName(), dao.getProjectShortName(), company);
+            project = new Project(entityTypeRepository.findOne(dao.getProjectTypeId()),
+                                  dao.getProjectNumber(),
+                                  dao.getProjectName(), 
+                                  dao.getProjectShortName(), 
+                                  company,
+                                  infoClassRepository.findOne(dao.getInfoClassId()));
         }
 
-        if (dao.getManagerId() != null) { 
-            
-            manager = userRepository.findOne(dao.getManagerId());
-            
-        } else {
-            
-            manager = userService.loggedInUser();
-        }
+        manager = (dao.getManagerId() != null) ? userRepository.findOne(dao.getManagerId()) : userService.loggedInUser();
        
         if (dao.getInfoClassId() != null) { project.setInfoClass(infoClassRepository.findOne(dao.getInfoClassId())); }
         if (dao.getProjectTypeId() != null) { project.setProjectType(entityTypeRepository.findOne(dao.getProjectTypeId())); }
@@ -145,31 +148,38 @@ public class ProjectServiceImpl implements ProjectService {
 
         project = projectRepository.save(project);
         
-        // Let's create a folder for the project - if this is a new project (no project folder exists)
-        List<Folder> folders = folderRepository.findByProject(project);
-        if (folders.isEmpty()) {
-        
+        // For new project
+        if (dao.getId() == null) {
+
+            // Create initial top level WBS packages
+            wbsPackageRepository.save(new ProjectWbsPackage(project, "0101", "SLC", "System Level Concept"));
+            wbsPackageRepository.save(new ProjectWbsPackage(project, "0102", "SLP", "System Level Planning"));
+            wbsPackageRepository.save(new ProjectWbsPackage(project, "0103", "SLS", "System Level Specification"));
+            wbsPackageRepository.save(new ProjectWbsPackage(project, "0104", "SLD", "System Level Design"));
+            wbsPackageRepository.save(new ProjectWbsPackage(project, "0105", "SLI", "System Level Integration"));
+            wbsPackageRepository.save(new ProjectWbsPackage(project, "0106", "SLV", "System Level Verification and Validation"));
+            
+            // Create initial folders
             Folder folder = folderRepository.save(new Folder(project.getProjectShortName(), entityTypeRepository.findByEntityTypeKeyAndEntityTypeCode("FOLDER_TYPE_ENTITY", "FOLDER_PROJECT"), null, project, 0));
-            Folder subfolder = folderRepository.save(new Folder("Planning", entityTypeRepository.findByEntityTypeKeyAndEntityTypeCode("FOLDER_TYPE_ENTITY", "FOLDER_DOCUMENT"), folder, project, 0));
-            
-            // Add dummy document
-            String ident = project.getProjectCode() + "-" + project.getProjectSponsor().getCompanyCode() + "-RLS-" + String.format("%04d", 1);
-            String name = subfolder.getFolderName() + " RLS " + String.format("%04d", 1);
-            DocumentContentDescriptor descriptor = descriptorRepository.findByDescriptorCode("CONTENT_TYPE_REQUIREMENTS");
-            ProjectWbsPackage wbs = wbsPackageRepository.findFirstByProjectAndWbsNumber(project, "0001");
-            
-            documentRepository.save(new Document(ident, name, null, descriptor, project, wbs, subfolder, infoClassRepository.findByClassCode("INFO_OFFICIAL"), "0A"));
+            folderRepository.save(new Folder("Concept", entityTypeRepository.findByEntityTypeKeyAndEntityTypeCode("FOLDER_TYPE_ENTITY", "FOLDER_DOCUMENT"), folder, project, 0));
+            folderRepository.save(new Folder("Planning", entityTypeRepository.findByEntityTypeKeyAndEntityTypeCode("FOLDER_TYPE_ENTITY", "FOLDER_DOCUMENT"), folder, project, 1));
+            folderRepository.save(new Folder("Specification", entityTypeRepository.findByEntityTypeKeyAndEntityTypeCode("FOLDER_TYPE_ENTITY", "FOLDER_DOCUMENT"), folder, project, 2));
+            folderRepository.save(new Folder("Design", entityTypeRepository.findByEntityTypeKeyAndEntityTypeCode("FOLDER_TYPE_ENTITY", "FOLDER_DOCUMENT"), folder, project, 3));
+            folderRepository.save(new Folder("Integration", entityTypeRepository.findByEntityTypeKeyAndEntityTypeCode("FOLDER_TYPE_ENTITY", "FOLDER_DOCUMENT"), folder, project, 4));
+            folderRepository.save(new Folder("Validation", entityTypeRepository.findByEntityTypeKeyAndEntityTypeCode("FOLDER_TYPE_ENTITY", "FOLDER_DOCUMENT"), folder, project, 5));
+
+            // Create project manager claim
+            ClaimType claimType = claimTypeRepository.findFirstByTypeName("PROJECT_MANAGER");
+            String description = claimType.getTypeDescription() + " - " + project.getProjectName() + " (" + project.getProjectNumber() + ")";
+            claimService.updateUserClaim(manager, claimType, project.getId(), description);
+
+            // Create project member claim
+            claimType = claimTypeRepository.findFirstByTypeName("PROJECT_MEMBER");
+            description = claimType.getTypeDescription() + " - " + project.getProjectName() + " (" + project.getProjectNumber() + ")";
+            claimService.updateUserClaim(manager, claimType, project.getId(), description);
+        
+            documentService.initialiseNewProjectDocuments(project, userService.loggedInUser());
         }
-        
-        // Create project manager claim
-        ClaimType claimType = claimTypeRepository.findFirstByTypeName("PROJECT_MANAGER");
-        String description = claimType.getTypeDescription() + " - " + project.getProjectName() + " (" + project.getProjectNumber() + ")";
-        claimService.updateUserClaim(manager, claimType, project.getId(), description);
-        
-        // Create project member claim
-        claimType = claimTypeRepository.findFirstByTypeName("PROJECT_MEMBER");
-        description = claimType.getTypeDescription() + " - " + project.getProjectName() + " (" + project.getProjectNumber() + ")";
-        claimService.updateUserClaim(manager, claimType, project.getId(), description);
         
         return project;
     }

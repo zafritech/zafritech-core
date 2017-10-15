@@ -18,7 +18,7 @@ public class ZafritechConfig {
     
     private Application application;
     
-    private Admin adminuser;
+    private Organisation organisation;
     
     private Paths paths;
     
@@ -47,36 +47,96 @@ public class ZafritechConfig {
         }
     }
     
-    public static class Admin {
+    public static class Organisation {
         
-        private String email;
+        private String address;
         
-        private String username;
+        private String website;
         
-        private String firstname;
+        private String countryCode; 
+        
+        private String state; 
+        
+        private String city; 
+        
+        private String postCode; 
+        
+        private String phoneNumber; 
+        
+        private String mobileNumber; 
+        
+        private String domain; 
 
-        public String getEmail() {
-            return email;
+        public String getAddress() {
+            return address;
         }
 
-        public void setEmail(String email) {
-            this.email = email;
+        public void setAddress(String address) {
+            this.address = address;
         }
 
-        public String getUsername() {
-            return username;
+        public String getWebsite() {
+            return website;
         }
 
-        public void setUsername(String username) {
-            this.username = username;
+        public void setWebsite(String website) {
+            this.website = website;
         }
 
-        public String getFirstname() {
-            return firstname;
+        public String getCountryCode() {
+            return countryCode;
         }
 
-        public void setFirstname(String firstname) {
-            this.firstname = firstname;
+        public void setCountryCode(String countryCode) {
+            this.countryCode = countryCode;
+        }
+
+        public String getState() {
+            return state;
+        }
+
+        public void setState(String state) {
+            this.state = state;
+        }
+
+        public String getCity() {
+            return city;
+        }
+
+        public String getPostCode() {
+            return postCode;
+        }
+
+        public void setPostCode(String postCode) {
+            this.postCode = postCode;
+        }
+
+        public void setCity(String city) {
+            this.city = city;
+        }
+
+        public String getPhoneNumber() {
+            return phoneNumber;
+        }
+
+        public void setPhoneNumber(String phoneNumber) {
+            this.phoneNumber = phoneNumber;
+        }
+
+        public String getMobileNumber() {
+            return mobileNumber;
+        }
+
+        public void setMobileNumber(String mobileNumber) {
+            this.mobileNumber = mobileNumber;
+        }
+
+        public String getDomain() {
+            return domain;
+        }
+
+        public void setDomain(String domain) {
+            this.domain = domain;
         }
     }
     
@@ -115,7 +175,7 @@ public class ZafritechConfig {
 
      public static class Snapshots {
          
-         private String cronExpression;
+        private String cronExpression;
 
         public String getCronExpression() {
             return cronExpression;
@@ -134,12 +194,12 @@ public class ZafritechConfig {
         this.application = application;
     }
 
-    public Admin getAdminuser() {
-        return adminuser;
+    public Organisation getOrganisation() {
+        return organisation;
     }
 
-    public void setAdminuser(Admin adminuser) {
-        this.adminuser = adminuser;
+    public void setOrganisation(Organisation organisation) {
+        this.organisation = organisation;
     }
 
     public Paths getPaths() {
