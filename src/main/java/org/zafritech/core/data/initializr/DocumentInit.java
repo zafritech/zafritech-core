@@ -40,22 +40,7 @@ public class DocumentInit {
     private ProjectRepository projectRepository;
     
     @Autowired
-    private FolderRepository folderRepository;
-    
-    @Autowired
-    private ProjectWbsPackageRepository wbsPackageRepository;
-    
-    @Autowired
-    private EntityTypeRepository entityTypeRepository;
-    
-    @Autowired
-    private DocumentContentDescriptorRepository descriptorRepository;
-    
-    @Autowired
     private DocumentRepository documentRepository;
-    
-    @Autowired
-    private InformationClassRepository infoClassRepository;
     
     @Autowired
     private ClaimTypeRepository claimTypeRepository;
@@ -77,7 +62,7 @@ public class DocumentInit {
         
         for (Project project : projects) {
             
-            documentService.initialiseNewProjectDocuments(project, owner);
+            documentService.initNewProjectDocuments(project, owner);
         }
         
         initDocumentOwner(owner);

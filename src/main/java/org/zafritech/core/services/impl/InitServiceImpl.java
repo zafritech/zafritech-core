@@ -28,7 +28,6 @@ import org.zafritech.core.data.initializr.LocalesDataInit;
 import org.zafritech.core.data.initializr.ProjectsInit;
 import org.zafritech.core.data.initializr.SIUnitsDataInit;
 import org.zafritech.core.data.initializr.SnaphotsInit;
-import org.zafritech.core.data.initializr.SystemVariableInit;
 import org.zafritech.core.data.initializr.TemplateVariablesInit;
 import org.zafritech.core.data.initializr.UserRolesInit;
 import org.zafritech.core.data.initializr.UsersInit;
@@ -84,9 +83,6 @@ public class InitServiceImpl implements InitService {
     
     @Autowired
     private DocumentInit documentInit;
-    
-    @Autowired
-    private SystemVariableInit sysvarInit;
     
     @Autowired
     private SnaphotsInit snaphotsInit;
@@ -287,18 +283,6 @@ public class InitServiceImpl implements InitService {
 
             documentInit.init();
             return completeTask("DOCUMENTS_INIT");
-        }
-        
-        return null;
-    }
-
-    @Override
-    public RunOnceTask initSystemVariable() {
-        
-        if (!isInitComplete("SYSTEM_VARIABLES_INIT")) {
-            
-            sysvarInit.init();
-            return completeTask("SYSTEM_VARIABLES_INIT");
         }
         
         return null;

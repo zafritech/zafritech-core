@@ -23,7 +23,7 @@ public interface DocumentService {
             
     Document duplicate(Long id); 
     
-    void initialiseNewProjectDocuments(Project project, User user);
+    void initNewProjectDocuments(Project project, User user);
     
     void initDocumentSystemVariables(Project project);
 }

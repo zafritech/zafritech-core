@@ -13,14 +13,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.zafritech.core.data.domain.Document;
 import org.zafritech.core.data.domain.Project;
-import org.zafritech.core.data.domain.UserEntityState;
-import org.zafritech.core.data.domain.UserEntityStateKey;
+import org.zafritech.core.data.domain.UserSessionEntity;
+import org.zafritech.core.data.domain.UserSessionEntityKey;
 import org.zafritech.core.data.repositories.DocumentRepository;
 import org.zafritech.core.data.repositories.ProjectRepository;
-import org.zafritech.core.data.repositories.UserEntityStateRepository;
 import org.zafritech.core.enums.UserEntityTypes;
 import org.zafritech.core.services.UserService;
 import org.zafritech.core.services.UserStateService;
+import org.zafritech.core.data.repositories.UserSessionEntityRepository;
 
 /**
  *
@@ -39,20 +39,20 @@ public class UserStateServiceImpl implements UserStateService {
     private UserService userService;
     
     @Autowired
-    private UserEntityStateRepository stateRepository;
+    private UserSessionEntityRepository stateRepository;
             
     @Override
     public void updateOpenProject(Project project) {
 
-        UserEntityStateKey pk = new UserEntityStateKey(userService.loggedInUser().getId(), 
+        UserSessionEntityKey pk = new UserSessionEntityKey(userService.loggedInUser().getId(), 
                                                      UserEntityTypes.ENTITY_PROJECT_OPEN, 
                                                      project.getId());
         
-        UserEntityState state = stateRepository.findByStateKey(pk);
+        UserSessionEntity state = stateRepository.findBySessionKey(pk);
         
         if (state == null) {
             
-            UserEntityState newState = new UserEntityState(pk);
+            UserSessionEntity newState = new UserSessionEntity(pk);
             stateRepository.save(newState);
         }
     }
@@ -60,11 +60,11 @@ public class UserStateServiceImpl implements UserStateService {
     @Override
     public void updateCloseProject(Project project) {
         
-        UserEntityStateKey pk = new UserEntityStateKey(userService.loggedInUser().getId(), 
+        UserSessionEntityKey pk = new UserSessionEntityKey(userService.loggedInUser().getId(), 
                                                        UserEntityTypes.ENTITY_PROJECT_OPEN, 
                                                        project.getId());
         
-        UserEntityState state = stateRepository.findByStateKey(pk);
+        UserSessionEntity state = stateRepository.findBySessionKey(pk);
         
         if (state != null) {
             
@@ -75,15 +75,15 @@ public class UserStateServiceImpl implements UserStateService {
     @Override
     public void updateOpenDocument(Document document) {
         
-        UserEntityStateKey pk = new UserEntityStateKey(userService.loggedInUser().getId(), 
+        UserSessionEntityKey pk = new UserSessionEntityKey(userService.loggedInUser().getId(), 
                                                        UserEntityTypes.ENTITY_DOCUMENT_OPEN, 
                                                        document.getId());
         
-        UserEntityState state = stateRepository.findByStateKey(pk);
+        UserSessionEntity state = stateRepository.findBySessionKey(pk);
         
         if (state == null) {
             
-            UserEntityState newState = new UserEntityState(pk);
+            UserSessionEntity newState = new UserSessionEntity(pk);
             stateRepository.save(newState);
         }
     }
@@ -91,11 +91,11 @@ public class UserStateServiceImpl implements UserStateService {
     @Override
     public void updateCloseDocument(Document document) {
         
-        UserEntityStateKey pk = new UserEntityStateKey(userService.loggedInUser().getId(), 
+        UserSessionEntityKey pk = new UserSessionEntityKey(userService.loggedInUser().getId(), 
                                                        UserEntityTypes.ENTITY_DOCUMENT_OPEN, 
                                                        document.getId());
         
-        UserEntityState state = stateRepository.findByStateKey(pk);
+        UserSessionEntity state = stateRepository.findBySessionKey(pk);
         
         if (state != null) {
             
@@ -106,15 +106,15 @@ public class UserStateServiceImpl implements UserStateService {
     @Override
     public void updateRecentDocument(Document document) {
         
-        UserEntityStateKey pk = new UserEntityStateKey(userService.loggedInUser().getId(), 
+        UserSessionEntityKey pk = new UserSessionEntityKey(userService.loggedInUser().getId(), 
                                                        UserEntityTypes.ENTITY_DOCUMENT_RECENT, 
                                                        document.getId());
         
-        UserEntityState state = stateRepository.findByStateKey(pk);
+        UserSessionEntity state = stateRepository.findBySessionKey(pk);
         
         if (state == null) {
             
-            UserEntityState newState = new UserEntityState(pk);
+            UserSessionEntity newState = new UserSessionEntity(pk);
             stateRepository.save(newState);
             
         } else {
@@ -123,7 +123,7 @@ public class UserStateServiceImpl implements UserStateService {
             stateRepository.save(state);
         }
         
-        List<UserEntityState> documents = stateRepository.findByStateKeyUserIdAndStateKeyEntityTypeOrderByUpdateDateDesc(userService.loggedInUser().getId(), 
+        List<UserSessionEntity> documents = stateRepository.findBySessionKeyUserIdAndSessionKeyEntityTypeOrderByUpdateDateDesc(userService.loggedInUser().getId(), 
                                                                                                                          UserEntityTypes.ENTITY_DOCUMENT_RECENT);
         
         Integer count = 0;
@@ -131,7 +131,7 @@ public class UserStateServiceImpl implements UserStateService {
         if (!documents.isEmpty()) {
             
             // Keep only 5 documents in the recent list
-            for(UserEntityState docState : documents) {
+            for(UserSessionEntity docState : documents) {
                 
                 count++;
                 
@@ -146,14 +146,14 @@ public class UserStateServiceImpl implements UserStateService {
     @Override
     public List<Project> getOpenProjects() {
         
-        List<UserEntityState> states = stateRepository.findByStateKeyUserIdAndStateKeyEntityType(userService.loggedInUser().getId(), 
+        List<UserSessionEntity> states = stateRepository.findBySessionKeyUserIdAndSessionKeyEntityType(userService.loggedInUser().getId(), 
                                                                                                  UserEntityTypes.ENTITY_PROJECT_OPEN);
         
         List<Project> projects = new ArrayList<>();
         
-        for (UserEntityState state : states) {
+        for (UserSessionEntity state : states) {
             
-            projects.add(projectRepository.findOne(state.getStateKey().getEntityId())); 
+            projects.add(projectRepository.findOne(state.getSessionKey().getEntityId())); 
         }
         
         return projects;
@@ -162,14 +162,14 @@ public class UserStateServiceImpl implements UserStateService {
     @Override
     public List<Document> getOpenDocuments() {
         
-        List<UserEntityState> states = stateRepository.findByStateKeyUserIdAndStateKeyEntityType(userService.loggedInUser().getId(), 
+        List<UserSessionEntity> states = stateRepository.findBySessionKeyUserIdAndSessionKeyEntityType(userService.loggedInUser().getId(), 
                                                                                                  UserEntityTypes.ENTITY_DOCUMENT_OPEN);
         
         List<Document> documents = new ArrayList<>();
         
-        for (UserEntityState state : states) {
+        for (UserSessionEntity state : states) {
             
-            documents.add(documentRepository.findOne(state.getStateKey().getEntityId())); 
+            documents.add(documentRepository.findOne(state.getSessionKey().getEntityId())); 
         }
          
         return documents;
@@ -178,14 +178,14 @@ public class UserStateServiceImpl implements UserStateService {
     @Override
     public List<Document> getRecentDocuments() {
         
-        List<UserEntityState> states = stateRepository.findByStateKeyUserIdAndStateKeyEntityTypeOrderByUpdateDateDesc(userService.loggedInUser().getId(), 
+        List<UserSessionEntity> states = stateRepository.findBySessionKeyUserIdAndSessionKeyEntityTypeOrderByUpdateDateDesc(userService.loggedInUser().getId(), 
                                                                                                                       UserEntityTypes.ENTITY_DOCUMENT_RECENT);
         
         List<Document> documents = new ArrayList<>();
         
-        for (UserEntityState state : states) {
+        for (UserSessionEntity state : states) {
             
-            documents.add(documentRepository.findOne(state.getStateKey().getEntityId())); 
+            documents.add(documentRepository.findOne(state.getSessionKey().getEntityId())); 
         }
         
         return documents;
@@ -196,12 +196,12 @@ public class UserStateServiceImpl implements UserStateService {
         
         boolean open = false;
         
-        List<UserEntityState> states = stateRepository.findByStateKeyUserIdAndStateKeyEntityType(userService.loggedInUser().getId(), 
+        List<UserSessionEntity> states = stateRepository.findBySessionKeyUserIdAndSessionKeyEntityType(userService.loggedInUser().getId(), 
                                                                                                  UserEntityTypes.ENTITY_PROJECT_OPEN);
         
-        for (UserEntityState state : states) {
+        for (UserSessionEntity state : states) {
             
-            if (Objects.equals(state.getStateKey().getEntityId(), project.getId())) {
+            if (Objects.equals(state.getSessionKey().getEntityId(), project.getId())) {
                 
                 open = true;
             }
@@ -215,10 +215,10 @@ public class UserStateServiceImpl implements UserStateService {
         
         Integer closed = 0;
         
-        List<UserEntityState> states = stateRepository.findByStateKeyUserIdAndStateKeyEntityType(userService.loggedInUser().getId(), 
+        List<UserSessionEntity> states = stateRepository.findBySessionKeyUserIdAndSessionKeyEntityType(userService.loggedInUser().getId(), 
                                                                                                  UserEntityTypes.ENTITY_PROJECT_OPEN);
         
-        for (UserEntityState state : states) {
+        for (UserSessionEntity state : states) {
             
             stateRepository.delete(state);
             closed++;

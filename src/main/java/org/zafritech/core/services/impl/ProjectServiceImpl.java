@@ -178,7 +178,7 @@ public class ProjectServiceImpl implements ProjectService {
             description = claimType.getTypeDescription() + " - " + project.getProjectName() + " (" + project.getProjectNumber() + ")";
             claimService.updateUserClaim(manager, claimType, project.getId(), description);
         
-            documentService.initialiseNewProjectDocuments(project, userService.loggedInUser());
+            documentService.initNewProjectDocuments(project, userService.loggedInUser());
         }
         
         return project;

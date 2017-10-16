@@ -70,12 +70,7 @@
                                                         </a>
                                                     </li>
                                                     <li><a href="javascript:void(0);" th:onclick="'javascript:EditDocumentProperties(\'' + ${document.id} + '\');'"><em class="ion-edit icon-fw"></em> Edit Properties</a></li>
-                                                    <li><a href="javascript:void(0);" th:onclick="'javascript:notYetImplemented();'"><em class="fa fa-tags fa-fw"></em> Release a Baseline</a></li>
-                                                    <li><a th:href="'/requirements/document/pdf/' + ${document.uuId}"><em class="fa fa-file-pdf-o fa-fw"></em> Download PDF</a></li>
-                                                    <li><a href="javascript:void(0);" th:onclick="'javascript:SaveAsTemplate(\'' + ${document.id} + '\', \'' + ${document.documentType.Id} + '\', \'DB\');'"><em class="fa fa-save fa-fw"></em> Save As Template ...</a></li>
-                                                    <li sec:authorize="hasRole('ROLE_ADMIN')">
-                                                        <a href="javascript:void(0);" th:onclick="'javascript:SaveAsTemplate(\'' + ${document.id} + '\', \'' + ${document.documentType.Id} + '\', \'JSON\');'"><em class="fa fa-file-code-o fa-fw"></em> Create Json Template ...</a>
-                                                    </li>
+                                                    <li><a href="javascript:void(0);" th:onclick="'javascript:notYetImplemented();'"><em class="fa fa-tags fa-fw"></em> Create Baseline</a></li>
                                                     <li role="presentation" class="divider"></li>
                                                     <li><a href="javascript:void(0);" th:onclick="'javascript:CloseDocument(\'' + ${document.id} + '\');'"><em class="ion-close icon-fw"></em> Close</a></li>
                                                   </ul>
@@ -95,15 +90,17 @@
                                                 </li>
                                                 
                                                 <li class="dropdown" style="list-style-type: none; display: inline-block;">
-                                                  <button type="button" data-toggle="dropdown" class="btn btn-default btn-flat btn-flat-icon"><em class="fa fa-bar-chart fa-fw"></em></button>
+                                                  <button type="button" data-toggle="dropdown" class="btn btn-default btn-flat btn-flat-icon"><em class="fa fa-save fa-fw"></em></button>
                                                   <ul role="menu" class="dropdown-menu md-dropdown-menu dropdown-menu-right">
+                                                    <li><a th:href="'/requirements/document/pdf/' + ${document.uuId}"><em class="fa fa-file-pdf-o fa-fw"></em> Save As PDF</a></li>
+                                                    <li><a href="javascript:void(0);" th:onclick="'javascript:SaveAsTemplate(\'' + ${document.id} + '\', \'' + ${document.documentType.Id} + '\', \'DB\');'"><em class="fa fa-save fa-fw"></em> Save As Template ...</a></li>
                                                     <li sec:authorize="hasRole('ROLE_ADMIN')">
-                                                        <a href="javascript:void(0);" th:onclick="'javascript:UserAdminChangeDocumentOwner(\'' + ${document.project.uuId} + '\', \'' + ${document.uuId} + '\');'"><em class="ion-android-person icon-fw"></em> Change Author</a>
+                                                        <a href="javascript:void(0);" th:onclick="'javascript:SaveAsTemplate(\'' + ${document.id} + '\', \'' + ${document.documentType.Id} + '\', \'XML\');'"><em class="fa fa-file-code-o fa-fw"></em> Save XML Template ...</a>
                                                     </li>
-                                                    <li><a href="javascript:void(0);" th:onclick="'javascript:UserAddDocumentEditors(\'' + ${document.project.uuId} + '\', \'' + ${document.uuId} + '\');'"><em class="ion-edit icon-fw"></em> Add Editors</a></li>
-                                                    <li><a href="javascript:void(0);" th:onclick="'javascript:UserAddDocumentReviewers(\'' + ${document.project.uuId} + '\', \'' + ${document.uuId} + '\');'"><em class="ion-chatbox icon-fw"></em> Add Reviers</a></li>
-                                                    <li><a href="javascript:void(0);" th:onclick="'javascript:UserAddDocumentApprover(\'' + ${document.project.uuId} + '\', \'' + ${document.uuId} + '\');'"><em class="ion-checkmark icon-fw"></em> Add Approver</a></li>
-                                                    <li><a href="javascript:void(0);" th:onclick="'javascript:UserCreateDistributionList(\'' + ${document.project.uuId} + '\', \'' + ${document.uuId} + '\');'"><em class="ion-android-contacts icon-fw"></em> Distribution List</a></li>
+                                                    <li sec:authorize="hasRole('ROLE_ADMIN')">
+                                                        <a href="javascript:void(0);" th:onclick="'javascript:SaveAsTemplate(\'' + ${document.id} + '\', \'' + ${document.documentType.Id} + '\', \'JSON\');'"><em class="fa fa-file-code-o fa-fw"></em> Save JSON Template ...</a>
+                                                    </li>
+                                                    <li><a href="javascript:void(0);" th:onclick="'javascript:notYetImplemented();'"><em class="fa fa-registered fa-fw"></em> Save As ReqIF ...</a></li>
                                                   </ul>
                                                 </li>
                                                 

@@ -17,7 +17,7 @@ import org.zafritech.core.enums.UserEntityTypes;
  * @author LukeS
  */
 @Embeddable
-public class UserEntityStateKey implements Serializable {
+public class UserSessionEntityKey implements Serializable {
     
     @Column(name = "userId", nullable = false)
     private Long userId;
@@ -29,11 +29,11 @@ public class UserEntityStateKey implements Serializable {
     @Column(name = "entityId", nullable = false)
     private Long entityId;
 
-    public UserEntityStateKey() {
+    public UserSessionEntityKey() {
         
     }
 
-    public UserEntityStateKey(Long userId, UserEntityTypes entityType, Long entityId) {
+    public UserSessionEntityKey(Long userId, UserEntityTypes entityType, Long entityId) {
         this.userId = userId;
         this.entityType = entityType;
         this.entityId = entityId;
@@ -42,8 +42,8 @@ public class UserEntityStateKey implements Serializable {
     @Override
     public String toString() {
         
-        return "UserEntityStateKey{" + "userId=" + userId + ", entityType=" 
-                + entityType + ", entityId=" + entityId + '}';
+        return "UserEntityStateKey{" + "userId=" + getUserId() + ", entityType=" 
+                + getEntityType() + ", entityId=" + getEntityId() + '}';
     }
 
     public Long getUserId() {

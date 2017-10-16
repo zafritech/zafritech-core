@@ -181,7 +181,7 @@ public class DocumentServiceImpl implements DocumentService {
     }
 
     @Override
-    public void initialiseNewProjectDocuments(Project project, User user) {
+    public void initNewProjectDocuments(Project project, User user) {
 
         Folder root = folderRepository.findFirstByProjectAndFolderType(project, entityTypeRepository.findByEntityTypeKeyAndEntityTypeCode("FOLDER_TYPE_ENTITY", "FOLDER_PROJECT"));
         List<Folder> folders = folderRepository.findByParent(root);

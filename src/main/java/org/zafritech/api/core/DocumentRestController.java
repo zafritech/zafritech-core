@@ -221,9 +221,9 @@ public class DocumentRestController {
         
         Template template = templateItemService.createTemplateFromDocument(daos); 
         
-        if (daos.getTemplateFormat().equals("JSON") && template != null) { 
+        if (daos.getTemplateFormat().equals("XML") || daos.getTemplateFormat().equals("JSON") && template != null) { 
             
-            templateItemService.createJsonFromTemplate(template);
+            templateItemService.createFileFromTemplate(template, daos.getTemplateFormat());
         }
         
         return new ResponseEntity<Template>(template, HttpStatus.OK);

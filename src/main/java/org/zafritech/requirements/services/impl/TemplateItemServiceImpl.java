@@ -6,6 +6,8 @@
 package org.zafritech.requirements.services.impl;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import java.io.File;
 import java.io.IOException;
 import java.text.DateFormat;
@@ -77,7 +79,7 @@ public class TemplateItemServiceImpl implements TemplateItemService {
     }
     
     @Override
-    public void createJsonFromTemplate(Template template) {
+    public void createFileFromTemplate(Template template, String templateFormat) {
         
         String templateDirectory = data_dir + "templates";
         DateFormat timeFormat = new SimpleDateFormat("yyyy-MM-dd-HHmmss");
@@ -111,9 +113,20 @@ public class TemplateItemServiceImpl implements TemplateItemService {
         try {
         
             String timeStamp = timeFormat.format(System.currentTimeMillis());
-            
-            ObjectMapper mapper = new ObjectMapper();
-            mapper.writeValue(new File(templateDirectory + File.separator + template.getDocumentType().getEntityTypeCode() + "_" + timeStamp + "_template.json"), dao);
+            ObjectMapper mapper;
+
+            if (templateFormat.equalsIgnoreCase("XML")) {
+                
+                mapper= new XmlMapper();
+                mapper.enable(SerializationFeature.INDENT_OUTPUT);
+                mapper.writeValue(new File(templateDirectory + File.separator + template.getDocumentType().getEntityTypeCode() + "_" + timeStamp + "_template.xml"), dao);
+
+            } else if (templateFormat.equalsIgnoreCase("JSON")) {
+
+                mapper= new ObjectMapper();
+                mapper.enable(SerializationFeature.INDENT_OUTPUT);
+                mapper.writeValue(new File(templateDirectory + File.separator + template.getDocumentType().getEntityTypeCode() + "_" + timeStamp + "_template.json"), dao);
+            }
             
         } catch (IOException ex) {
             

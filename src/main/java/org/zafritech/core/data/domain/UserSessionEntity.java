@@ -8,28 +8,28 @@ import javax.persistence.Entity;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-@Entity(name = "CORE_USER_ENTITY_STATES")
-public class UserEntityState implements Serializable {
+@Entity(name = "CORE_USER_SESSION_ENTITIES")
+public class UserSessionEntity implements Serializable {
     
     @EmbeddedId
-    private UserEntityStateKey stateKey;
+    private UserSessionEntityKey sessionKey;
     
     @Temporal(TemporalType.TIMESTAMP)
     private Date updateDate;
 
-    public UserEntityState() {
+    public UserSessionEntity() {
         
     }
 
-    public UserEntityState(UserEntityStateKey stateKey) {
+    public UserSessionEntity(UserSessionEntityKey sessionKey) {
         
-        this.stateKey = stateKey;
+        this.sessionKey = sessionKey;
         this.updateDate = new Timestamp(System.currentTimeMillis());
     }
 
-    public UserEntityState(UserEntityStateKey stateKey, Date updateDate) {
+    public UserSessionEntity(UserSessionEntityKey sessionKey, Date updateDate) {
         
-        this.stateKey = stateKey;
+        this.sessionKey = sessionKey;
         this.updateDate = updateDate;
         this.updateDate = new Timestamp(System.currentTimeMillis());
     }
@@ -37,15 +37,15 @@ public class UserEntityState implements Serializable {
     @Override
     public String toString() {
         
-        return "UserEntityState{" + "stateKey=" + stateKey + ", updateDate=" + updateDate + '}';
+        return "UserSessionEntity {" + "sessionKey=" + getSessionKey() + ", updateDate=" + getUpdateDate() + '}';
     }
 
-    public UserEntityStateKey getStateKey() {
-        return stateKey;
+    public UserSessionEntityKey getSessionKey() {
+        return sessionKey;
     }
 
-    public void setStateKey(UserEntityStateKey stateKey) {
-        this.stateKey = stateKey;
+    public void setSessionKey(UserSessionEntityKey sessionKey) {
+        this.sessionKey = sessionKey;
     }
 
     public Date getUpdateDate() {
@@ -55,5 +55,6 @@ public class UserEntityState implements Serializable {
     public void setUpdateDate(Date updateDate) {
         this.updateDate = updateDate;
     }
+
 }
 

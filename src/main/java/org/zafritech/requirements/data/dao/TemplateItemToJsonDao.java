@@ -5,10 +5,14 @@
  */
 package org.zafritech.requirements.data.dao;
 
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+
 /**
  *
  * @author LukeS
  */
+@JsonPropertyOrder({"systemId", "itemClass", "itemNumber", "itemValue",
+    "itemType", "mediaType", "parentSystemId", "itemLevel", "sortIndex"})
 public class TemplateItemToJsonDao {
     
     private String systemId;

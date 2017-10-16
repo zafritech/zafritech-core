@@ -5,12 +5,16 @@
  */
 package org.zafritech.requirements.data.dao;
 
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
 import java.util.List;
 
 /**
  *
  * @author LukeS
  */
+@JsonPropertyOrder({"name", "longName", "type", "content", "description"})
+@JacksonXmlRootElement(localName = "Template")
 public class TemplateToJsonDao {
     
     private String name;

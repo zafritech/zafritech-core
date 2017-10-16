@@ -16,5 +16,5 @@ public interface TemplateItemService {
     
     Template createTemplateFromDocument(TemplateDao templateDao);
     
-    void createJsonFromTemplate(Template template);
+    void createFileFromTemplate(Template template, String templateFormat);
 }
