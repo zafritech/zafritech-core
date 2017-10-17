@@ -13,7 +13,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
  */
 @JsonPropertyOrder({"systemId", "itemClass", "itemNumber", "itemValue",
     "itemType", "mediaType", "parentSystemId", "itemLevel", "sortIndex"})
-public class TemplateItemToJsonDao {
+public class JsonTemplateItem {
     
     private String systemId;
 
@@ -33,11 +33,11 @@ public class TemplateItemToJsonDao {
 
     private int sortIndex;
 
-    public TemplateItemToJsonDao() {
+    public JsonTemplateItem() {
         
     }
 
-    public TemplateItemToJsonDao(String systemId, 
+    public JsonTemplateItem(String systemId, 
                                  String itemClass, 
                                  String itemNumber, 
                                  String itemValue, 

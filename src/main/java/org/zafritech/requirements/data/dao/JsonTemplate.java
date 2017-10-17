@@ -6,16 +6,24 @@
 package org.zafritech.requirements.data.dao;
 
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
 import java.util.List;
+import java.util.UUID;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
  * @author LukeS
  */
 @JsonPropertyOrder({"name", "longName", "type", "content", "description"})
-@JacksonXmlRootElement(localName = "Template")
-public class TemplateToJsonDao {
+@JacksonXmlRootElement(localName = "template")
+public class JsonTemplate {
+    
+    @JacksonXmlProperty(localName="id", isAttribute=true)
+    private String uuId;
     
     private String name;
     
@@ -27,19 +35,21 @@ public class TemplateToJsonDao {
     
     private String type;
     
-    private List<TemplateItemToJsonDao> items;
+    private List<JsonTemplateItem> items;
 
-    public TemplateToJsonDao() {
+    public JsonTemplate() {
         
+        this.uuId = UUID.randomUUID().toString().toUpperCase();
     }
 
-    public TemplateToJsonDao(String name, 
+    public JsonTemplate(String name, 
                              String longName, 
                              String description, 
                              String content, 
                              String type, 
-                             List<TemplateItemToJsonDao> items) {
+                             List<JsonTemplateItem> items) {
         
+        this.uuId = UUID.randomUUID().toString().toUpperCase();
         this.name = name;
         this.longName = longName;
         this.description = description;
@@ -55,6 +65,14 @@ public class TemplateToJsonDao {
                 + getLongName() + ", description=" + getDescription() 
                 + ", content=" + getContent() + ", type=" + getType() 
                 + ", items=" + getItems() + '}';
+    }
+
+    public String getUuId() {
+        return uuId;
+    }
+
+    public void setUuId(String uuId) {
+        this.uuId = uuId;
     }
 
     public String getName() {
@@ -97,11 +115,11 @@ public class TemplateToJsonDao {
         this.type = type;
     }
 
-    public List<TemplateItemToJsonDao> getItems() {
+    public List<JsonTemplateItem> getItems() {
         return items;
     }
 
-    public void setItems(List<TemplateItemToJsonDao> items) {
+    public void setItems(List<JsonTemplateItem> items) {
         this.items = items;
     }
 }

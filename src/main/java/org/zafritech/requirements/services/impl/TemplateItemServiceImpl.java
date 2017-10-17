@@ -9,13 +9,18 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.StringWriter;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.xml.stream.XMLOutputFactory;
+import javax.xml.stream.XMLStreamException;
+import javax.xml.stream.XMLStreamWriter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -24,8 +29,8 @@ import org.zafritech.core.data.repositories.DocumentRepository;
 import org.zafritech.core.data.repositories.EntityTypeRepository;
 import org.zafritech.core.services.UserService;
 import org.zafritech.requirements.data.dao.TemplateDao;
-import org.zafritech.requirements.data.dao.TemplateItemToJsonDao;
-import org.zafritech.requirements.data.dao.TemplateToJsonDao;
+import org.zafritech.requirements.data.dao.JsonTemplateItem;
+import org.zafritech.requirements.data.dao.JsonTemplate;
 import org.zafritech.requirements.data.domain.Item;
 import org.zafritech.requirements.data.domain.Template;
 import org.zafritech.requirements.data.domain.TemplateItem;
@@ -83,49 +88,50 @@ public class TemplateItemServiceImpl implements TemplateItemService {
         
         String templateDirectory = data_dir + "templates";
         DateFormat timeFormat = new SimpleDateFormat("yyyy-MM-dd-HHmmss");
+        String timeStamp = timeFormat.format(System.currentTimeMillis());
+        String templateFullPathName = templateDirectory + File.separator + template.getDocumentType().getEntityTypeCode() + "_" + timeStamp + "_template." + templateFormat.toLowerCase();
         
-        List<TemplateItemToJsonDao> jsomItems = new ArrayList<>();
+        List<JsonTemplateItem> jsomItems = new ArrayList<>();
         
         List<TemplateItem> templateItems = templateItemRepository.findByTemplateOrderBySystemIdAsc(template);
         
         for (TemplateItem templateItem : templateItems) {
             
-            TemplateItemToJsonDao jsonItem = new TemplateItemToJsonDao(templateItem.getSystemId(),
-                                                                       templateItem.getItemClass(),
-                                                                       templateItem.getItemNumber() != null ? templateItem.getItemNumber() : "",
-                                                                       templateItem.getItemValue(),
-                                                                       templateItem.getItemType() != null ? templateItem.getItemType().getEntityTypeCode() : "",
-                                                                       templateItem.getMediaType().name(),
-                                                                       templateItem.getParentSysId() != null ? templateItem.getParentSysId() : "",
-                                                                       templateItem.getItemLevel(),
-                                                                       templateItem.getSortIndex());
+            JsonTemplateItem jsonItem = new JsonTemplateItem(templateItem.getSystemId(),
+                                                             templateItem.getItemClass(),
+                                                             templateItem.getItemNumber() != null ? templateItem.getItemNumber() : "",
+                                                             templateItem.getItemValue(),
+                                                             templateItem.getItemType() != null ? templateItem.getItemType().getEntityTypeCode() : "",
+                                                             templateItem.getMediaType().name(),
+                                                             templateItem.getParentSysId() != null ? templateItem.getParentSysId() : "",
+                                                             templateItem.getItemLevel(),
+                                                             templateItem.getSortIndex());
             
             jsomItems.add(jsonItem);
         }
                 
-        TemplateToJsonDao dao = new TemplateToJsonDao(template.getTemplateName(),
-                                                      template.getTemplateLongName(),
-                                                      template.getTemplateDescription(),
-                                                      template.getContentDescriptor().getDescriptorCode(),
-                                                      template.getDocumentType().getEntityTypeCode(),
-                                                      jsomItems);
+        JsonTemplate dao = new JsonTemplate(template.getTemplateName(),
+                                            template.getTemplateLongName(),
+                                            template.getTemplateDescription(),
+                                            template.getContentDescriptor().getDescriptorCode(),
+                                            template.getDocumentType().getEntityTypeCode(),
+                                            jsomItems);
+        
+        dao.setUuId(template.getUuId().toUpperCase()); 
         
         try {
         
-            String timeStamp = timeFormat.format(System.currentTimeMillis());
-            ObjectMapper mapper;
-
             if (templateFormat.equalsIgnoreCase("XML")) {
                 
-                mapper= new XmlMapper();
+                XmlMapper mapper= new XmlMapper();
                 mapper.enable(SerializationFeature.INDENT_OUTPUT);
-                mapper.writeValue(new File(templateDirectory + File.separator + template.getDocumentType().getEntityTypeCode() + "_" + timeStamp + "_template.xml"), dao);
+                mapper.writeValue(new File(templateFullPathName), dao);
 
             } else if (templateFormat.equalsIgnoreCase("JSON")) {
 
-                mapper= new ObjectMapper();
+                ObjectMapper mapper = new ObjectMapper();
                 mapper.enable(SerializationFeature.INDENT_OUTPUT);
-                mapper.writeValue(new File(templateDirectory + File.separator + template.getDocumentType().getEntityTypeCode() + "_" + timeStamp + "_template.json"), dao);
+                mapper.writeValue(new File(templateFullPathName), dao);
             }
             
         } catch (IOException ex) {

@@ -17,8 +17,8 @@ import org.springframework.stereotype.Component;
 import org.zafritech.core.data.repositories.DocumentContentDescriptorRepository;
 import org.zafritech.core.data.repositories.EntityTypeRepository;
 import org.zafritech.core.services.UserService;
-import org.zafritech.requirements.data.dao.TemplateItemToJsonDao;
-import org.zafritech.requirements.data.dao.TemplateToJsonDao;
+import org.zafritech.requirements.data.dao.JsonTemplateItem;
+import org.zafritech.requirements.data.dao.JsonTemplate;
 import org.zafritech.requirements.data.domain.Template;
 import org.zafritech.requirements.data.domain.TemplateItem;
 import org.zafritech.requirements.data.repositories.TemplateItemRepository;
@@ -66,7 +66,7 @@ public class DocumentTemplatesInit {
             
             try {
                 
-                TemplateToJsonDao dao = mapper.readValue(file, TemplateToJsonDao.class);
+                JsonTemplate dao = mapper.readValue(file, JsonTemplate.class);
                 
                 Template template = new Template(dao.getLongName(),
                                                  dao.getLongName(),
@@ -77,7 +77,7 @@ public class DocumentTemplatesInit {
                 
                 template = templateRepository.save(template);
                 
-                for (TemplateItemToJsonDao templateItemnDao : dao.getItems()) {
+                for (JsonTemplateItem templateItemnDao : dao.getItems()) {
                     
                     templateItemRepository.save(new TemplateItem(templateItemnDao.getSystemId(),
                                                                  templateItemnDao.getItemClass(),
