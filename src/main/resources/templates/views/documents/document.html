@@ -70,7 +70,7 @@
                                                         </a>
                                                     </li>
                                                     <li><a href="javascript:void(0);" th:onclick="'javascript:EditDocumentProperties(\'' + ${document.id} + '\');'"><em class="ion-edit icon-fw"></em> Edit Properties</a></li>
-                                                    <li><a href="javascript:void(0);" th:onclick="'javascript:notYetImplemented();'"><em class="fa fa-tags fa-fw"></em> Create Baseline</a></li>
+                                                    <li><a href="javascript:void(0);" th:onclick="'javascript:CreateDocumentBaseLine(\'' + ${document.id} + '\');'"><em class="fa fa-tags fa-fw"></em> Create Baseline</a></li>
                                                     <li role="presentation" class="divider"></li>
                                                     <li><a href="javascript:void(0);" th:onclick="'javascript:CloseDocument(\'' + ${document.id} + '\');'"><em class="ion-close icon-fw"></em> Close</a></li>
                                                   </ul>

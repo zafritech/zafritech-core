@@ -877,6 +877,117 @@ function OpenDocument() {
     });
 }
 
+function CreateDocumentBaseLine(documentId) {
+    
+    $.ajax({
+        
+        global: false,
+        type: "GET",
+        url: '/modals/document/document-baseline-create.html',
+        success: function (data) {
+            
+            var box = bootbox.confirm({
+
+                closeButton: false,
+                title: 'Create Document Baseline',
+                message: data,
+                buttons: {
+                    cancel: {
+                        label: "Cancel",
+                        className: "btn-danger btn-fixed-width-100"
+                    },
+                    confirm: {
+                        label: "Create",
+                        className: "btn-success btn-fixed-width-100"
+                    }
+                },
+                callback: function (result) {
+                    
+                    if (result) {
+                        
+                        $('#modalBusyControl').prop('value', 'ON');
+                        
+                        var data = {};
+                        
+                        data['documentId'] = documentId;
+                        data['entityTypeId'] = document.getElementById('baseLineTypeId').value;
+                        data['baseLineName'] = document.getElementById('baseLineName').value;
+                        data['baseLineDescription'] = document.getElementById('baseLineDescription').value;
+                        
+                        $.ajax({
+                            
+                            type: "POST",
+                            contentType: "application/json",
+                            url: "/api/documents/baselines/create/one",
+                            data: JSON.stringify(data),
+                            dataType: "json",
+                            timeout: 60000,
+                            success: function (data) {
+                                
+                                var id = data.id;
+                                var uuId = data.uuId;
+                                var ident = data.identifier;
+                                var baseUrl = data.contentDescriptor.urlPathString;
+                                
+                                $.ajax({
+
+                                    type: "GET",
+                                    contentType: "application/json",
+                                    url: "/api/" + baseUrl + "/baseline/items/" + id,
+                                    dataType: "json",
+                                    cache: false
+                                })
+                                .done(function (data) {
+
+                                    swal({
+
+                                        title: "Baseline Created",
+                                        text: "Baseline has been successfully created for document " + ident + ".",
+                                        type: "success"
+                                    },
+                                    function() {
+
+                                        window.location.href = "/" + data.contentDescriptor.urlPathString + "/document/" + uuId;
+                                    });
+                                });
+                            }
+                        });
+                    }
+                }
+            });
+            
+            box.on("shown.bs.modal", function(e) {
+                
+                $.ajax({
+
+                    global: false,
+                    type: "GET",
+                    contentType: "application/json",
+                    url: "/api/documents/baselines/list/types",
+                    dataType: "json",
+                    cache: false
+                })
+                .done(function (data) {
+
+                    var baseLineId = '';
+            
+                    $(e.currentTarget).find('select[name="baseLineTypeId"]').empty();
+            
+                    $.each(data, function (key, index) {
+
+                        $(e.currentTarget).find('select[name="baseLineTypeId"]').append('<option value="' + index.id + '">' + index.entityTypeName + '</option>');
+                        if (index.entityTypeCode === "BASELINE_MILESTONE") { baseLineId = index.id; }
+                    });
+
+                    $(e.currentTarget).find('select[name="baseLineTypeId"]').prop('value', baseLineId);
+                });
+            });
+            
+            box.modal('show');
+        }
+    });
+}
+
 function CloseDocument(documentId) {
 
     $.ajax({
@@ -1206,7 +1317,7 @@ function ImportFromTemplate(documentId, documentTypeId) {
                                 swal({
                                     
                                     title: "Template Saved",
-                                    text: "Template " + data.templateName + " successfully imported!",
+                                    text: "Template successfully imported to document!",
                                     type: "success"
                                 },
                                 function() {

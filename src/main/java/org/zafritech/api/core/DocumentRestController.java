@@ -17,9 +17,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 import org.springframework.web.bind.annotation.RestController;
+import org.zafritech.core.data.dao.BaseLineDao;
 import org.zafritech.core.data.dao.DocDao;
 import org.zafritech.core.data.dao.DocEditDao;
 import org.zafritech.core.data.dao.ValuePairDao;
+import org.zafritech.core.data.domain.BaseLine;
 import org.zafritech.core.data.domain.Claim;
 import org.zafritech.core.data.domain.ClaimType;
 import org.zafritech.core.data.domain.Document;
@@ -230,13 +232,29 @@ public class DocumentRestController {
     }
     
     @RequestMapping(value = "/api/documents/template/list/doctype/{id}", method = GET)
-    public ResponseEntity<List<Template>> gettemplatesListByDoumentType(@PathVariable(value = "id") Long id) {
+    public ResponseEntity<List<Template>> getTemplatesListByDoumentType(@PathVariable(value = "id") Long id) {
         
         EntityType documentType = entityTypeRepository.findOne(id);
         
         List<Template> templates = templateRepository.findByDocumentTypeOrderByTemplateName(documentType);
         
         return new ResponseEntity<List<Template>>(templates, HttpStatus.OK);
+    }
+    
+    @RequestMapping(value = "/api/documents/baselines/list/types", method = GET)
+    public ResponseEntity<List<EntityType>> getBaseLinesTypes() {
+        
+        List<EntityType> baseLineTypes = entityTypeRepository.findByEntityTypeKeyOrderByEntityTypeNameAsc("BASELINE_TYPE_ENTITY"); 
+        
+        return new ResponseEntity<List<EntityType>>(baseLineTypes, HttpStatus.OK);
+    }
+    
+    @RequestMapping(value = "/api/documents/baselines/create/one", method = POST)
+    public ResponseEntity<Document> createDocumentBaseLine(@RequestBody BaseLineDao dao) {
+        
+        Document document = documentService.createBaseLine(dao);  
+        
+        return new ResponseEntity<Document>(document, HttpStatus.OK);
     }
     
     @RequestMapping(value = "/api/projects/project/members/list/{uuid}", method = GET)

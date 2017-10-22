@@ -8,10 +8,11 @@ package org.zafritech.core.services.impl;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.zafritech.core.data.dao.BaseLineDao;
 import org.zafritech.core.data.dao.DocDao;
 import org.zafritech.core.data.dao.DocEditDao;
+import org.zafritech.core.data.domain.BaseLine;
 import org.zafritech.core.data.domain.Claim;
 import org.zafritech.core.data.domain.ClaimType;
 import org.zafritech.core.data.domain.Document;
@@ -24,6 +25,7 @@ import org.zafritech.core.data.domain.ProjectWbsPackage;
 import org.zafritech.core.data.domain.SystemVariable;
 import org.zafritech.core.data.domain.User;
 import org.zafritech.core.data.domain.UserClaim;
+import org.zafritech.core.data.repositories.BaseLineRepository;
 import org.zafritech.core.data.repositories.ClaimRepository;
 import org.zafritech.core.data.repositories.ClaimTypeRepository;
 import org.zafritech.core.data.repositories.DocumentContentDescriptorRepository;
@@ -93,6 +95,9 @@ public class DocumentServiceImpl implements DocumentService {
     
     @Autowired
     private SystemVariableRepository sysvarRepository;
+    
+    @Autowired
+    private BaseLineRepository baseLineRepository;
     
     @Override
     public Document saveDao(DocDao docDao) {
@@ -336,5 +341,21 @@ public class DocumentServiceImpl implements DocumentService {
                 sysvarRepository.save(new SystemVariable(SystemVariableTypes.REQUIREMENT_ID_TEMPLATE.name(), reqIdTemplate + type.getEntityTypeCode() + "-", "DOCUMENT", document.getId()));
             }
         }
+    }
+
+    @Override
+    public Document createBaseLine(BaseLineDao dao) {
+        
+        BaseLine baseLine = new BaseLine(entityTypeRepository.findOne(dao.getEntityTypeId()),
+                                         dao.getBaseLineName(),
+                                         dao.getBaseLineDescription());
+        
+        baseLine = baseLineRepository.save(baseLine);
+        
+        Document document = documentRepository.findOne(dao.getDocumentId());
+        document.setBaseLine(baseLine); 
+        documentRepository.save(document);
+        
+        return document;
     }
 }

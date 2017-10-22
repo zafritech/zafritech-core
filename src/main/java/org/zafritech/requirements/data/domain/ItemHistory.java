@@ -12,6 +12,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import org.zafritech.core.data.domain.BaseLine;
 
 @Entity(name = "REQUIREMENTS_ITEM_HISTORY")
 public class ItemHistory implements Serializable {
@@ -28,7 +29,11 @@ public class ItemHistory implements Serializable {
 
     @Column(columnDefinition = "TEXT")
     private String itemValue;
-        
+   
+    @ManyToOne
+    @JoinColumn(name = "baseLineId")
+    private BaseLine baseLine;
+    
     private int itemVersion;
     
     private String uuId;
@@ -40,12 +45,17 @@ public class ItemHistory implements Serializable {
         
     }
 
-    public ItemHistory(Item item, String sysId, String itemValue, int itemVersion) {
+    public ItemHistory(Item item, 
+                       String sysId, 
+                       String itemValue, 
+                       BaseLine baseLine, 
+                       int itemVersion) {
         
         this.item = item;
         this.systemId = sysId;
         this.itemValue = itemValue;
         this.itemVersion = itemVersion;
+        this.baseLine = baseLine;
         this.uuId = UUID.randomUUID().toString();
         this.creationDate = new Timestamp(System.currentTimeMillis());
     }
@@ -53,10 +63,11 @@ public class ItemHistory implements Serializable {
     @Override
     public String toString() {
         
-        return "ItemHistory{" + "id=" + getId() + ", item=" + 
-                getItem() + ", sysId=" + getSystemId() + ", itemValue=" + 
-                getItemValue() + ", itemVersion=" + getItemVersion() + ", uuId=" + 
-                getUuId() + ", creationDate=" + getCreationDate() + '}';
+        return "ItemHistory{" + "id=" + getId() + ", item=" + getItem() 
+                + ", systemId=" + getSystemId() + ", itemValue=" 
+                + getItemValue() + ", baseLine=" + getBaseLine() 
+                + ", itemVersion=" + getItemVersion() + ", uuId=" 
+                + getUuId() + ", creationDate=" + getCreationDate() + '}';
     }
 
     public Long getId() {
@@ -85,6 +96,14 @@ public class ItemHistory implements Serializable {
 
     public void setItemValue(String itemValue) {
         this.itemValue = itemValue;
+    }
+
+    public BaseLine getBaseLine() {
+        return baseLine;
+    }
+
+    public void setBaseLine(BaseLine baseLine) {
+        this.baseLine = baseLine;
     }
 
     public int getItemVersion() {

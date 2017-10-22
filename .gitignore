@@ -27,3 +27,6 @@ nbdist/
 /src/main/resources/static/images/documents/
 /src/main/resources/static/images/library/
 /src/main/resources/static/data/library/
+
+### Other Excludes ###
+/src/main/resources/static/js/vendor/easyui/

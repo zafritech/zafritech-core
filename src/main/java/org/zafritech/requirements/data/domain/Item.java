@@ -30,6 +30,7 @@ import org.hibernate.search.annotations.Indexed;
 import org.hibernate.search.annotations.Store;
 import org.hibernate.search.annotations.TokenFilterDef;
 import org.hibernate.search.annotations.TokenizerDef;
+import org.zafritech.core.data.domain.BaseLine;
 import org.zafritech.core.data.domain.Document;
 import org.zafritech.core.data.domain.EntityType;
 import org.zafritech.requirements.enums.MediaType;
@@ -114,6 +115,10 @@ public class Item implements Serializable {
 
     private int itemVersion;
     
+    @ManyToOne
+    @JoinColumn(name = "baseLineId")
+    private BaseLine baseLine;
+    
     @Enumerated(EnumType.STRING)
     private ItemStatus itemStatus;
 
@@ -140,7 +145,7 @@ public class Item implements Serializable {
         this.mediaType = MediaType.TEXT;
         this.document = document;
         this.parent = parent;
-        this.itemVersion = 1;
+        this.itemVersion = 0;
         this.itemStatus = ItemStatus.ITEM_STATUS_CREATED;
         this.creationDate = new Timestamp(System.currentTimeMillis());
         this.modifiedDate = new Timestamp(System.currentTimeMillis());
@@ -162,7 +167,7 @@ public class Item implements Serializable {
         this.mediaType = mediaType;
         this.document = document;
         this.parent = parent;
-        this.itemVersion = 1;
+        this.itemVersion = 0;
         this.itemStatus = ItemStatus.ITEM_STATUS_CREATED;
         this.creationDate = new Timestamp(System.currentTimeMillis());
         this.modifiedDate = new Timestamp(System.currentTimeMillis());
@@ -336,6 +341,14 @@ public class Item implements Serializable {
 
     public void setItemVersion(int itemVersion) {
         this.itemVersion = itemVersion;
+    }
+
+    public BaseLine getBaseLine() {
+        return baseLine;
+    }
+
+    public void setBaseLine(BaseLine baseLine) {
+        this.baseLine = baseLine;
     }
 
     public ItemStatus getItemStatus() {

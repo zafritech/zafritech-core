@@ -60,4 +60,6 @@ public interface ItemService {
     List<ItemTreeDao> getOpenDocumentTitlesTreeExcluding(Document document);
     
     Document importTemplateToDocument(Document document, Template template);
+    
+    Document baseLineRequirementsItems(Document document);
 }

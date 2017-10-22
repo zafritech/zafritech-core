@@ -55,6 +55,10 @@ public class Document implements Serializable {
     private String documentIssue;
     
     @ManyToOne
+    @JoinColumn(name = "baseLineId")
+    private BaseLine baseLine;
+    
+    @ManyToOne
     @JoinColumn(name = "projectId")
     private Project project;
     
@@ -244,6 +248,14 @@ public class Document implements Serializable {
 
     public void setDocumentIssue(String documentIssue) {
         this.documentIssue = documentIssue;
+    }
+
+    public BaseLine getBaseLine() {
+        return baseLine;
+    }
+
+    public void setBaseLine(BaseLine baseLine) {
+        this.baseLine = baseLine;
     }
 
     public Project getProject() {

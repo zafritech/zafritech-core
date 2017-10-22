@@ -20,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import org.zafritech.core.data.domain.BaseLine;
 import org.zafritech.core.data.domain.Document;
 import org.zafritech.core.data.domain.SystemVariable;
 import org.zafritech.core.data.repositories.DocumentRepository;
@@ -483,6 +484,25 @@ public class ItemServiceImpl implements ItemService {
         }
 
         return document;
+    }
+
+    @Override
+    public Document baseLineRequirementsItems(Document document) {
+        
+        BaseLine baseLine = document.getBaseLine();
+        
+        if (baseLine != null) {
+
+            List<Item> items = itemRepository.findByDocumentId(document.getId());
+
+            for (Item item : items) {
+
+                item.setBaseLine(baseLine);
+                item.setItemVersion(item.getItemVersion() + 1); 
+                itemRepository.save(item);
+            }
+        }
+        return null;
     }
     
     /*********************************************************************************************************************

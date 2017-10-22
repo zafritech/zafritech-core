@@ -279,4 +279,12 @@ public class ItemRestController {
 
         return new ResponseEntity<Reference>(reference, HttpStatus.OK);
     }
+      
+    @RequestMapping(value = "/api/requirements/baseline/items/{id}", method = RequestMethod.GET)
+    public ResponseEntity<Document> baseLineRequirementsItems(@PathVariable(value = "id") Long id) {
+        
+        Document document = itemService.baseLineRequirementsItems(documentRepository.findOne(id));
+
+        return new ResponseEntity<Document>(document, HttpStatus.OK);
+    }
 }

@@ -5,6 +5,7 @@
  */
 package org.zafritech.core.services;
 
+import org.zafritech.core.data.dao.BaseLineDao;
 import org.zafritech.core.data.dao.DocDao;
 import org.zafritech.core.data.dao.DocEditDao;
 import org.zafritech.core.data.domain.Document;
@@ -26,4 +27,6 @@ public interface DocumentService {
     void initNewProjectDocuments(Project project, User user);
     
     void initDocumentSystemVariables(Project project);
+    
+    Document createBaseLine(BaseLineDao dao);
 }
