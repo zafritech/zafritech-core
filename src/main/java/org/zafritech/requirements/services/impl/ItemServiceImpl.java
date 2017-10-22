@@ -27,7 +27,6 @@ import org.zafritech.core.data.repositories.EntityTypeRepository;
 import org.zafritech.core.data.repositories.SystemVariableRepository;
 import org.zafritech.core.enums.SystemVariableTypes;
 import org.zafritech.core.services.FileUploadService;
-import org.zafritech.core.services.UserStateService;
 import org.zafritech.requirements.data.converters.DaoToRefItemConverter;
 import org.zafritech.requirements.data.dao.ItemDao;
 import org.zafritech.requirements.data.dao.ItemRefDao;
@@ -41,6 +40,7 @@ import org.zafritech.requirements.data.repositories.TemplateItemRepository;
 import org.zafritech.requirements.enums.ItemClass;
 import org.zafritech.requirements.enums.MediaType;
 import org.zafritech.requirements.services.ItemService;
+import org.zafritech.core.services.UserSessionService;
 
 /**
  *
@@ -71,7 +71,7 @@ public class ItemServiceImpl implements ItemService {
     private FileUploadService fileUploadService;
     
     @Autowired
-    private UserStateService stateService;
+    private UserSessionService stateService;
     
     @Override
     public ItemRefDao getDaoForItemCreation(Long id) {

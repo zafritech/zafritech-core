@@ -36,7 +36,7 @@ import org.zafritech.core.enums.ProjectStatus;
 import org.zafritech.core.services.ClaimService;
 import org.zafritech.core.services.ProjectService;
 import org.zafritech.core.services.UserService;
-import org.zafritech.core.services.UserStateService;
+import org.zafritech.core.services.UserSessionService;
 
 
 /**
@@ -74,7 +74,7 @@ public class ProjectRestController {
     private UserService userService;
     
     @Autowired
-    private UserStateService stateService;
+    private UserSessionService stateService;
     
     @RequestMapping(value = "/api/admin/projects/list", method = GET)
     public ResponseEntity<List<Project>> listProjects() {

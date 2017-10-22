@@ -13,9 +13,11 @@ import org.zafritech.core.data.domain.Project;
  *
  * @author LukeS
  */
-public interface UserStateService {
+public interface UserSessionService {
    
     void updateOpenProject(Project project);
+   
+    Project getLastOpenProject();
    
     void updateCloseProject(Project project);
    

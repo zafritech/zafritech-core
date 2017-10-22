@@ -16,6 +16,7 @@ import org.zafritech.core.data.domain.ClaimType;
 import org.zafritech.core.data.domain.InformationClass;
 import org.zafritech.core.data.domain.Project;
 import org.zafritech.core.data.domain.ProjectWbsPackage;
+import org.zafritech.core.data.domain.User;
 import org.zafritech.core.data.domain.UserClaim;
 import org.zafritech.core.data.repositories.ClaimRepository;
 import org.zafritech.core.data.repositories.ClaimTypeRepository;
@@ -123,9 +124,12 @@ public class ProjectsInit {
         
         for (Project project : projects) {
             
-            project.setCreatedBy(userRepository.findByEmail("admin@" + domain));
-            project.setProjectManager(userRepository.findByEmail("admin@" + domain)); 
-            project.setProjectContact(contactRepository.findByEmail("admin@" + domain));  
+            User defaultUser = userRepository.findByEmail("admin@" + domain);
+            
+            project.setCreatedBy(defaultUser);
+            project.setProjectManager(defaultUser); 
+            project.setProjectContact(defaultUser.getContact());
+            project.setProjectDescription("System generated seed project."); 
             project.setStatus(ProjectStatus.STATUS_ACTIVE); 
             projectRepository.save(project);
         }

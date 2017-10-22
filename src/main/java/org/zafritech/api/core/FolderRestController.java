@@ -29,7 +29,7 @@ import org.zafritech.core.data.repositories.EntityTypeRepository;
 import org.zafritech.core.data.repositories.FolderRepository;
 import org.zafritech.core.data.repositories.ProjectRepository;
 import org.zafritech.core.services.FolderService;
-import org.zafritech.core.services.UserStateService;
+import org.zafritech.core.services.UserSessionService;
 
 /**
  *
@@ -54,7 +54,7 @@ public class FolderRestController {
     private FolderService folderService;
      
     @Autowired
-    private UserStateService stateService;
+    private UserSessionService stateService;
     
     @RequestMapping(value = "/api/admin/folders/create/new", method = POST)
     public ResponseEntity<Folder> folderCreateNew(@RequestBody FolderDao folderDao) {

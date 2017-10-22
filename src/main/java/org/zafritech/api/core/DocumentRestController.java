@@ -40,11 +40,11 @@ import org.zafritech.core.data.repositories.UserRepository;
 import org.zafritech.core.enums.DocumentStatus;
 import org.zafritech.core.services.ClaimService;
 import org.zafritech.core.services.DocumentService;
-import org.zafritech.core.services.UserStateService;
 import org.zafritech.requirements.data.dao.TemplateDao;
 import org.zafritech.requirements.data.domain.Template;
 import org.zafritech.requirements.data.repositories.TemplateRepository;
 import org.zafritech.requirements.services.TemplateItemService;
+import org.zafritech.core.services.UserSessionService;
 
 /**
  *
@@ -84,7 +84,7 @@ public class DocumentRestController {
     private UserRepository userRepository;
     
     @Autowired
-    private UserStateService stateService;
+    private UserSessionService stateService;
     
     @Autowired
     private TemplateRepository templateRepository;

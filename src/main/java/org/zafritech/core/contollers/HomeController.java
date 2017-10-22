@@ -5,9 +5,12 @@
  */
 package org.zafritech.core.contollers;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.zafritech.core.data.domain.Project;
+import org.zafritech.core.services.UserSessionService;
 
 /**
  *
@@ -16,10 +19,22 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class HomeController {
     
+    @Autowired
+    private UserSessionService userSessionService;
+    
     @RequestMapping(value={"/", "/index"})
     public String homePage(Model model) {
+         
+        Project project = userSessionService.getLastOpenProject();
         
-        return "views/index";
+        if (project != null) {
+            
+            return "redirect:/projects/" + project.getUuId(); 
+            
+        } else {
+        
+            return "views/index";
+        }
     }
     
     @RequestMapping("/docs/references/help")

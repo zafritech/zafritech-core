@@ -10,7 +10,7 @@ import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import org.zafritech.core.enums.UserEntityTypes;
+import org.zafritech.core.enums.UserSessionEntityTypes;
 
 /**
  *
@@ -24,7 +24,7 @@ public class UserSessionEntityKey implements Serializable {
     
     @Column(name = "entityType", nullable = false)
     @Enumerated(EnumType.STRING)
-    private UserEntityTypes entityType;
+    private UserSessionEntityTypes entityType;
 
     @Column(name = "entityId", nullable = false)
     private Long entityId;
@@ -33,7 +33,7 @@ public class UserSessionEntityKey implements Serializable {
         
     }
 
-    public UserSessionEntityKey(Long userId, UserEntityTypes entityType, Long entityId) {
+    public UserSessionEntityKey(Long userId, UserSessionEntityTypes entityType, Long entityId) {
         this.userId = userId;
         this.entityType = entityType;
         this.entityId = entityId;
@@ -54,11 +54,11 @@ public class UserSessionEntityKey implements Serializable {
         this.userId = userId;
     }
 
-    public UserEntityTypes getEntityType() {
+    public UserSessionEntityTypes getEntityType() {
         return entityType;
     }
 
-    public void setEntityType(UserEntityTypes entityType) {
+    public void setEntityType(UserSessionEntityTypes entityType) {
         this.entityType = entityType;
     }
 

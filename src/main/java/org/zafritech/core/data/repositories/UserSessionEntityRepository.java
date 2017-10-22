@@ -9,7 +9,7 @@ import java.util.List;
 import org.springframework.data.repository.CrudRepository;
 import org.zafritech.core.data.domain.UserSessionEntity;
 import org.zafritech.core.data.domain.UserSessionEntityKey;
-import org.zafritech.core.enums.UserEntityTypes;
+import org.zafritech.core.enums.UserSessionEntityTypes;
 
 /**
  *
@@ -19,7 +19,9 @@ public interface UserSessionEntityRepository extends CrudRepository<UserSessionE
     
     UserSessionEntity findBySessionKey(UserSessionEntityKey sessionKey);
     
-    List<UserSessionEntity> findBySessionKeyUserIdAndSessionKeyEntityType(Long userId, UserEntityTypes entityType);
+    List<UserSessionEntity> findBySessionKeyUserIdAndSessionKeyEntityType(Long userId, UserSessionEntityTypes entityType);
     
-    List<UserSessionEntity> findBySessionKeyUserIdAndSessionKeyEntityTypeOrderByUpdateDateDesc(Long userId, UserEntityTypes entityType);
+    UserSessionEntity findFirstBySessionKeyUserIdAndSessionKeyEntityTypeOrderByUpdateDateDesc(Long userId, UserSessionEntityTypes entityType);
+    
+    List<UserSessionEntity> findBySessionKeyUserIdAndSessionKeyEntityTypeOrderByUpdateDateDesc(Long userId, UserSessionEntityTypes entityType);
 }

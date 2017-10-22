@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.zafritech.core.data.domain.Document;
 import org.zafritech.core.data.repositories.DocumentRepository;
-import org.zafritech.core.services.UserStateService;
+import org.zafritech.core.services.UserSessionService;
 
 /**
  *
@@ -26,7 +26,7 @@ public class RequirementController {
     private DocumentRepository documentRepository;
       
     @Autowired
-    private UserStateService stateService;
+    private UserSessionService stateService;
     
     @RequestMapping("/requirements")
     public String page(Model model) {

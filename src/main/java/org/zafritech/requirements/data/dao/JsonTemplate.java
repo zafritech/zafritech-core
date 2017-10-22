@@ -10,9 +10,6 @@ import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
 import java.util.List;
 import java.util.UUID;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
@@ -43,11 +40,11 @@ public class JsonTemplate {
     }
 
     public JsonTemplate(String name, 
-                             String longName, 
-                             String description, 
-                             String content, 
-                             String type, 
-                             List<JsonTemplateItem> items) {
+                        String longName, 
+                        String description, 
+                        String content, 
+                        String type, 
+                        List<JsonTemplateItem> items) {
         
         this.uuId = UUID.randomUUID().toString().toUpperCase();
         this.name = name;

@@ -20,7 +20,7 @@ import org.zafritech.core.data.repositories.FolderRepository;
 import org.zafritech.core.data.repositories.ProjectRepository;
 import org.zafritech.core.services.ClaimService;
 import org.zafritech.core.services.UserService;
-import org.zafritech.core.services.UserStateService;
+import org.zafritech.core.services.UserSessionService;
 
 /**
  *
@@ -46,7 +46,7 @@ public class ProjectController {
     private ClaimService claimService;
     
     @Autowired
-    private UserStateService stateService;
+    private UserSessionService stateService;
     
     @RequestMapping(value = {"/projects", "/projects/list"})
     public String getProjectsList(Model model) {
