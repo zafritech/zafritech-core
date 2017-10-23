@@ -42,6 +42,7 @@ import org.zafritech.requirements.enums.ItemClass;
 import org.zafritech.requirements.enums.MediaType;
 import org.zafritech.requirements.services.ItemService;
 import org.zafritech.core.services.UserSessionService;
+import org.zafritech.requirements.enums.ItemStatus;
 
 /**
  *
@@ -499,10 +500,17 @@ public class ItemServiceImpl implements ItemService {
 
                 item.setBaseLine(baseLine);
                 item.setItemVersion(item.getItemVersion() + 1); 
+                
+                if (item.getItemClass().equals(ItemClass.REQUIREMENT.name())) { 
+                    
+                    item.setItemStatus(ItemStatus.ITEM_STATUS_BASELINED); 
+                }
+                
                 itemRepository.save(item);
             }
         }
-        return null;
+        
+        return document;
     }
     
     /*********************************************************************************************************************

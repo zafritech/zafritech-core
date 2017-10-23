@@ -132,6 +132,8 @@ function RequirementItemCreateItem(documentId, parentId, itemLevel) {
                 })
                 .done(function (data) {
                     
+                    console.log(data);
+                    
                     var refItem = data;
             
                     // Clear INPUT and TEXTAREA controls
@@ -156,7 +158,7 @@ function RequirementItemCreateItem(documentId, parentId, itemLevel) {
                     // Populate Requirement Types SELECT
                     $.each(refItem.itemTypes, function (key, index) {
 
-                        $(e.currentTarget).find('select[name="itemTypeId"]').append('<option value="' + index.id + '">' + index.itemTypeLongName + '</option>');
+                        $(e.currentTarget).find('select[name="itemTypeId"]').append('<option value="' + index.id + '">' + index.entityTypeName + '</option>');
                     });
                     
                     // Populate Requirement Ident Templates SELECT
@@ -408,7 +410,7 @@ function RequirementItemEditItem(itemId) {
                         // Populate Requirement Types SELECT
                         $.each(refItem.itemTypes, function (key, index) {
 
-                            $(e.currentTarget).find('select[name="itemTypeId"]').append('<option value="' + index.id + '">' + index.itemTypeLongName + '</option>');
+                            $(e.currentTarget).find('select[name="itemTypeId"]').append('<option value="' + index.id + '">' + index.entityTypeName + '</option>');
                         });
 
                         // Populate Requirement Ident Templates SELECT
@@ -575,7 +577,7 @@ function RequirementItemEditRequirement(data) {
                         // Populate Requirement Types SELECT
                         $.each(data, function (key, index) {
 
-                            $(e.currentTarget).find('select[name="itemTypeId"]').append('<option value="' + index.id + '">' + index.itemTypeLongName + '</option>');
+                            $(e.currentTarget).find('select[name="itemTypeId"]').append('<option value="' + index.id + '">' + index.entityTypeName + '</option>');
                         });
                         
                         $(e.currentTarget).find('select[name="itemTypeId"]').prop('value', item.itemType.id);
@@ -603,6 +605,28 @@ function RequirementItemMoveItem(itemId, direction) {
     .done(function () {
         
         window.location.reload();
+    });
+}
+
+function onRequirementTypeChange() {
+   
+    $.ajax({
+
+        global: false,
+        type: "GET",
+        contentType: "application/json",
+        url: "/api/requirements/document/items/item/template",
+        data: {
+            id: document.getElementById('documentId').value, 
+            typeId: document.getElementById('itemTypeId').value
+        },
+        dataType: "text",
+        timeout: 60000,
+        success: function (responseText) {
+
+            document.getElementById('identTemplate').value = responseText;
+            onRequirementIdentTemplateChange();
+        }
     });
 }
 
@@ -679,7 +703,10 @@ function onRequirementClassChange() {
                 global: false,
                 type: "GET",
                 url: "/api/requirements/document/items/identifier/next",
-                data: {id: document.getElementById('documentId').value, template: document.getElementById('identTemplate').value},
+                data: {
+                    id: document.getElementById('documentId').value, 
+                    template: document.getElementById('identTemplate').value
+                },
                 dataType: "text",
                 timeout: 60000,
                 success: function (responseText) {

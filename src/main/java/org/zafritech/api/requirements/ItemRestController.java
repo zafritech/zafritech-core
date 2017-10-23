@@ -31,9 +31,11 @@ import org.zafritech.core.data.domain.Document;
 import org.zafritech.core.data.domain.DocumentReference;
 import org.zafritech.core.data.domain.EntityType;
 import org.zafritech.core.data.domain.Reference;
+import org.zafritech.core.data.domain.SystemVariable;
 import org.zafritech.core.data.repositories.DocumentReferenceRepository;
 import org.zafritech.core.data.repositories.DocumentRepository;
 import org.zafritech.core.data.repositories.EntityTypeRepository;
+import org.zafritech.core.data.repositories.SystemVariableRepository;
 import org.zafritech.core.enums.ReferenceTypes;
 import org.zafritech.core.services.ReferenceService;
 import org.zafritech.requirements.data.dao.DocumentTemplateIdsDao;
@@ -77,6 +79,9 @@ public class ItemRestController {
     
     @Autowired
     private TemplateRepository templateRepository;
+    
+    @Autowired
+    private SystemVariableRepository variableRepository;
     
     @RequestMapping(value = "/api/requirements/document/items/item/{id}", method = RequestMethod.GET)
     public Item getItemById(@PathVariable(value = "id") Long itemId) {
@@ -169,6 +174,27 @@ public class ItemRestController {
         String reqIdentifier = itemService.getNextRequirementIdentifier(id, template);
 
         return new ResponseEntity<String>(reqIdentifier, HttpStatus.OK);
+    }
+      
+    @RequestMapping(value = "/api/requirements/document/items/item/template", method = RequestMethod.GET)
+    public ResponseEntity<String> getItemIentifierTemplate(@RequestParam(value = "id", required = true) Long id,
+                                                           @RequestParam(value = "typeId", required = true) Long typeId) {
+
+        String typeCode = entityTypeRepository.findOne(typeId).getEntityTypeCode();
+        List<SystemVariable> variables = variableRepository.findByOwnerIdAndOwnerTypeAndVariableName(id, "DOCUMENT", "REQUIREMENT_ID_TEMPLATE");
+        String identTemplate = "";
+        
+        for (SystemVariable variable : variables) {
+            
+            String value = variable.getVariableValue();
+            
+            if (value.lastIndexOf(typeCode) > -1) {
+                
+                identTemplate = variable.getVariableValue();
+            }
+        }
+
+        return new ResponseEntity<String>(identTemplate, HttpStatus.OK);
     }
  
     @RequestMapping(value = "/api/requirements/document/items/item/save", method = RequestMethod.POST)

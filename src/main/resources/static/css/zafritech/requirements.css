@@ -31,7 +31,8 @@
 .plain-text-nonumber { display: inline-block; margin-left: 87px; display: block; }
 .requirement-container { margin-left: 89px; border-left: 8px solid #2ECC71; }
 .requirement-container-created { margin-left: 89px; border-left: 8px solid #FFC107; }
-.requirement-container-approved { margin-left: 89px; border-left: 8px solid #2ECC71; }
+.requirement-container-approved { margin-left: 89px; border-left: 8px solid #03A9F4; }
+.requirement-container-baselined { margin-left: 89px; border-left: 8px solid #2ECC71; }
 .requirement-container-changed { margin-left: 89px; border-left: 8px solid #F44336; }
 .requirement-text { display: inline-block; margin-left: 10px; }
 .requirement-comments { display: inline-block; margin-left: 40px; }

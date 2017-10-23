@@ -42,7 +42,7 @@
                             
                             <input type="hidden" id="contentDescriptorCode" th:value="${descriptor}" />
                             
-                            <div class="card-heading bg-white" style="border-bottom: 2px solid #607d8b;">
+                            <div class="card-heading" th:classappend="${document.baseLine != null} ? bg-green-500 : bg-white" style="border-bottom: 2px solid #607d8b;">
                                 <div class="card-title">
                                     <div class="row">
                                         <div class="col-md-3">
