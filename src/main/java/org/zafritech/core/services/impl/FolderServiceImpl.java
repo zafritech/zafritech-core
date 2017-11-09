@@ -9,7 +9,9 @@ import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.zafritech.core.data.dao.FolderDao;
 import org.zafritech.core.data.dao.FolderTreeDao;
+import org.zafritech.core.data.dao.ValuePairDao;
 import org.zafritech.core.data.domain.Document;
 import org.zafritech.core.data.domain.EntityType;
 import org.zafritech.core.data.domain.Folder;
@@ -18,8 +20,10 @@ import org.zafritech.core.data.repositories.DocumentRepository;
 import org.zafritech.core.data.repositories.EntityTypeRepository;
 import org.zafritech.core.data.repositories.FolderRepository;
 import org.zafritech.core.data.repositories.InformationClassRepository;
+import org.zafritech.core.data.repositories.ProjectRepository;
 import org.zafritech.core.services.FolderService;
 import org.zafritech.core.services.UserService;
+import org.zafritech.core.services.UserSessionService;
 
 /**
  *
@@ -38,11 +42,39 @@ public class FolderServiceImpl implements FolderService {
     private DocumentRepository documentRepository;
      
     @Autowired
+    private ProjectRepository projectRepository;
+   
+    @Autowired
     private InformationClassRepository infoClassRepository;
    
     @Autowired
     private UserService userService;
      
+    @Autowired
+    private UserSessionService stateService;
+    
+    @Override
+    public Folder createFolder(FolderDao folderDao) {
+        
+        Folder folder = folderRepository.save(new Folder(
+                folderDao.getFolderName(),
+                entityTypeRepository.findOne(folderDao.getFolderTypeId()),
+                folderRepository.findOne(folderDao.getParentId()),
+                projectRepository.findOne(folderDao.getProjectId()) 
+        )); 
+        
+        return folder;
+    }
+    
+    @Override
+    public Folder renameFolder(ValuePairDao vpDao, Long id) {
+        
+        Folder folder = folderRepository.findOne(id); 
+        folder.setFolderName(vpDao.getItemName()); 
+        
+        return folderRepository.save(folder);
+    }
+    
     @Override
     public List<FolderTreeDao> getProjectFolders(Project project) {
         
@@ -129,6 +161,39 @@ public class FolderServiceImpl implements FolderService {
         return nFolder;
     }
     
+    @Override
+    public List<FolderTreeDao> getProjectFoldersTree(Long projectId) {
+        
+        List<FolderTreeDao> foldersTree = new ArrayList<>();
+        Project project = projectRepository.findOne(projectId);
+        
+        List<FolderTreeDao> folders = getProjectFolders(project);
+        List<FolderTreeDao> docs = getProjectDocuments(project);
+        
+        foldersTree.addAll(folders);
+        foldersTree.addAll(docs);
+        
+        return foldersTree;
+    }
+    
+    @Override
+    public List<FolderTreeDao> getOpenProjectFoldersTree() {
+      List<FolderTreeDao> foldersTree = new ArrayList<>();
+        
+        List<Project> openProjects = stateService.getOpenProjects();
+        
+        for (Project project : openProjects) {
+            
+            List<FolderTreeDao> folders = getProjectFolders(project);
+            List<FolderTreeDao> docs = getProjectDocuments(project);
+
+            foldersTree.addAll(folders);
+            foldersTree.addAll(docs);
+        }
+        
+        return foldersTree;
+    }
+    
     private Folder saveCopiedFolder(Folder oFolder, Folder parentFolder, List<Document> documents) {
         
         Folder folder = folderRepository.save(new Folder(
@@ -203,5 +268,15 @@ public class FolderServiceImpl implements FolderService {
         }
        
         return foldersTree;
+    }
+
+    @Override
+    public Integer getFolderContentsCount(Long folderId) {
+        
+        Folder parent =  folderRepository.findOne(folderId);
+        List<Folder> folders = folderRepository.findByParent(parent);
+        List<Document> documents = documentRepository.findByFolder(parent);
+        
+        return folders.size() + documents.size();
     }
 }

@@ -91,12 +91,12 @@ public class LibraryRestController {
         
         if (libDao.getItemFile().isEmpty()) {
             
-            return new ResponseEntity("please select a reference file!", HttpStatus.OK);
+            return new ResponseEntity("Please select a reference file!", HttpStatus.OK);
         }
         
         if (libDao.getImageFile().isEmpty()) {
             
-            return new ResponseEntity("please select a image file!", HttpStatus.OK);
+            return new ResponseEntity("Please select a image file!", HttpStatus.OK);
         }
         
         LibraryItem libraryItem = libraryService.createLibraryItem(libDao);

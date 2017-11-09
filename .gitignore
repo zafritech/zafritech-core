@@ -24,6 +24,7 @@ nbdist/
 .nb-gradle/
 
 ### Dynamically cahnging ###
+uploads/
 /src/main/resources/static/images/documents/
 /src/main/resources/static/images/library/
 /src/main/resources/static/data/library/
