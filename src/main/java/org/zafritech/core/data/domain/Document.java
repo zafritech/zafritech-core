@@ -337,6 +337,5 @@ public class Document implements Serializable {
     public void setDistributions(List<User> distributions) {
         this.distributions = distributions;
     }
-
 }
 

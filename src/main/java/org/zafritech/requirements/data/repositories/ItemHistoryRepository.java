@@ -16,4 +16,6 @@ import org.zafritech.requirements.data.domain.ItemHistory;
 public interface ItemHistoryRepository extends CrudRepository<ItemHistory, Long> {
     
     List<ItemHistory> findAllByItemId(Long id);
+    
+    List<ItemHistory> findAllByItemIdOrderByCreationDateDesc(Long id);
 }

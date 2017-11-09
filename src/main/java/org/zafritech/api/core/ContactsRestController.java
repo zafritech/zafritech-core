@@ -29,9 +29,7 @@ public class ContactsRestController {
  
     @RequestMapping(value = "/api/contacts/countries/list", method = GET)
     public ResponseEntity<List<Country>> getCountriesList(Model model) {
-        
-        List<Country> countries = countryRepository.findAllByOrderByCountryNameAsc();
-                 
-        return new ResponseEntity<List<Country>>(countries, HttpStatus.OK);
+             
+        return new ResponseEntity<List<Country>>(countryRepository.findAllByOrderByCountryNameAsc(), HttpStatus.OK);
     }
 }

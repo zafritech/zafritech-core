@@ -4,7 +4,7 @@
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 
     <head>
-        <title>Zidingo PMS - Document</title>
+        <title>Zidingo PMS - Document Items</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta charset="UTF-8" />
     </head>
@@ -21,6 +21,7 @@
                   <ul role="menu" class="dropdown-menu md-dropdown-menu dropdown-menu-right">
                     <li><a href="javascript:void(0);" th:onclick="'javascript:RequirementItemCreateItem(\'' + ${document.id} + '\',\'\',\'1\');'"><em class="ion-plus icon-fw"></em>New Item</a></li>
                     <li><a href="javascript:void(0);" th:onclick="'javascript:ImportFromTemplate(\'' + ${document.id} + '\',\'' + ${document.documentType.id} + '\');'"><em class="ion-android-list icon-fw"></em>Import Template</a></li>
+                    <li><a href="javascript:void(0);" th:onclick="'javascript:ImportFromExcel(\'' + ${document.id} + '\');'"><em class="ion-ios-grid-view-outline icon-fw"></em>Import Excel</a></li>
                   </ul>
                 </div>
                 <!-- END dropdown-->
@@ -44,10 +45,11 @@
 
                     <div th:if="${item.itemClass == 'REQUIREMENT'}" class="col-md-11">
                         <div th:classappend="'requirement-container-' + ${#strings.toLowerCase(#strings.replace(item.itemStatus, 'ITEM_STATUS_', ''))}">
-                            <div th:attr="id=${'identifier' + item.id}" th:utext="${item.identifier}" class="requirement-identifier"></div>
+                            <div th:attr="id=${'identifier' + item.id}" th:utext="${item.identifier}" class="requirement-identifier" style="width:100%"></div>
                             <div class="requirement-notices">
                                 <em th:if="${!item.inLinks.isEmpty()}" class="ion-arrow-left-b icon-fw incoming-link"></em>
                                 <em th:if="${!item.outLinks.isEmpty()}" class="ion-arrow-right-b icon-fw outgoing-link"></em>
+                                <em th:if="${item.itemVersion > 1}" class="ion-android-alarm-clock icon-fw item-history"></em>
                                 <em th:if="${!item.comments.isEmpty()}" class="ion-android-chat icon-fw chat-box"></em>
                             </div>
                             <div th:attr="id=${'requirement' + item.id}" class="requirement-text" th:utext="${item.itemValue}"></div>
@@ -116,8 +118,8 @@
                             <tbody th:if="${!document.definitions.isEmpty()}">
                                 <tr th:each="definition : ${document.definitions}" 
                                     th:if="${definition.definitionType.name() == 'ABBREVIATION'} or ${definition.definitionType.name() == 'ACRONYM'}">
-                                    <td><span th:text="${definition.term}">Abbreviation/Acronym</span></td>
-                                    <td><span th:text="${definition.termDefinition}">Description</span></td>
+                                    <td style="vertical-align: top;"><span th:text="${definition.term}">Abbreviation/Acronym</span></td>
+                                    <td style="vertical-align: top;"><span th:text="${definition.termDefinition}">Description</span></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -131,8 +133,8 @@
                             </thead>
                             <tbody th:if="${!document.definitions.isEmpty()}">
                                 <tr th:each="abbreviation : ${document.definitions}" th:if="${abbreviation.definitionType.name() == 'ABBREVIATION'}">
-                                    <td><span th:text="${abbreviation.term}">Abbreviation</span></td>
-                                    <td><span th:text="${abbreviation.termDefinition}">Description</span></td>
+                                    <td style="vertical-align: top;"><span th:text="${abbreviation.term}">Abbreviation</span></td>
+                                    <td style="vertical-align: top;"><span th:text="${abbreviation.termDefinition}">Description</span></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -145,9 +147,10 @@
                                 </tr>
                             </thead>
                             <tbody th:if="${!document.definitions.isEmpty()}">
-                                <tr th:each="acronym : ${document.definitions}" th:if="${acronym.definitionType.name() == 'ACRONYM'}">
-                                    <td><span th:text="${acronym.term}">Acronym</span></td>
-                                    <td><span th:text="${acronym.termDefinition}">Description</span></td>
+                                <tr th:each="acronym : ${document.definitions}" 
+                                    th:if="${acronym.definitionType.name() == 'ACRONYM'}">
+                                    <td style="vertical-align: top;"><span th:text="${acronym.term}">Acronym</span></td>
+                                    <td style="vertical-align: top;"><span th:text="${acronym.termDefinition}">Description</span></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -160,9 +163,10 @@
                                 </tr>
                             </thead>
                             <tbody th:if="${!document.definitions.isEmpty()}">
-                                <tr th:each="definition : ${document.definitions}" th:if="${definition.definitionType.name() == 'DEFINITION'}">
-                                    <td><span th:text="${definition.term}">Definition</span></td>
-                                    <td><span th:text="${definition.termDefinition}">Description</span></td>
+                                <tr th:each="definition : ${document.definitions}" 
+                                    th:if="${definition.definitionType.name() == 'DEFINITION'}">
+                                    <td style="vertical-align: top;"><span th:text="${definition.term}" style="font-weight:bold;">Definition</span></td>
+                                    <td style="vertical-align: top;"><span th:text="${definition.termDefinition}">Description</span></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -192,14 +196,19 @@
                         <div class="pull-right dropdown">
                           <button type="button" data-toggle="dropdown" class="btn btn-default btn-flat btn-flat-icon"><em class="ion-android-more-vertical"></em></button>
                           <ul role="menu" class="dropdown-menu md-dropdown-menu dropdown-menu-right">
-                            <li th:if="${item.itemClass} == 'HEADER'">
+                            <li th:if="${item.itemClass == 'HEADER'}">
                                 <a href="javascript:void(0);" th:onclick="'javascript:RequirementItemCreateItem(\'' + ${item.document.id} + '\',\'' + ${item.parent != null ? item.parent.id : ''} + '\',\'' + ${item.itemLevel} + '\');'">
                                     <em class="ion-plus icon-fw"></em>Insert Sibling Item
                                 </a>
                             </li>
-                            <li th:if="${item.itemClass} == 'HEADER'">
+                            <li th:if="${item.itemClass == 'HEADER'}">
                                 <a href="javascript:void(0);" th:onclick="'javascript:RequirementItemCreateItem(\'' + ${item.document.id} + '\',\'' + ${item.id} + '\',\'' + ${item.itemLevel + 1} + '\');'">
                                     <em class="ion-plus icon-fw"></em>Insert Child Item
+                                </a>
+                            </li>
+                            <li sec:authorize="hasRole('ROLE_ADMIN')" th:if="${item.itemClass == 'HEADER'}">
+                                <a href="javascript:void(0);" th:onclick="'javascript:RequirementGenerateLoremIpsum(\'' + ${item.document.id} + '\',\'' + ${item.id} + '\',\'' + ${item.itemLevel + 1} + '\');'">
+                                    <em class="ion-ios-list icon-fw"></em>Lorem Ipsum
                                 </a>
                             </li>
                             <li th:if="${item.mediaType.name()} == 'REFERENCES'">
@@ -232,7 +241,12 @@
                                     <em class="ion-plus icon-fw"></em>Add Caption
                                 </a>
                             </li>
-                            <li><a href="javascript:void(0);" th:onclick="'javascript:RequirementItemEditItem(\'' + ${item.id} + '\');'"><em class="ion-edit icon-fw"></em>Edit Item</a></li>
+                            <li th:if="${item.itemClass} == 'REQUIREMENT'">
+                                <a href="javascript:void(0);" th:onclick="'javascript:loadRequirementsSingleItem(\'' + ${item.id} + '\');'">
+                                    <em class="ion-android-list icon-fw"></em>Item Details
+                                </a>
+                            </li>
+                            <li><a href="javascript:void(0);" th:onclick="'javascript:RequirementBaselinedEditCheck(\'' + ${item.id} + '\');'"><em class="ion-edit icon-fw"></em>Edit Item</a></li>
                             <li th:if="${item.itemLevel} > 1">
                                 <a href="javascript:void(0);" th:onclick="'javascript:notYetImplemented();'">
                                     <em class="ion-arrow-return-left icon-fw"></em>Move to Parent

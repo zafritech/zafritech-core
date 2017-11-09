@@ -18,6 +18,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
@@ -77,7 +78,11 @@ public class Item implements Serializable {
 
     @Enumerated(EnumType.STRING)
     private MediaType mediaType;
-    
+     
+    @ManyToOne
+    @JoinColumn(name = "vvMethodId")
+    private EntityType verificationMethod;
+
     private String itemCaption;
 
     @ManyToOne
@@ -107,6 +112,7 @@ public class Item implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "itemId")
     @JsonManagedReference
+    @OrderBy("creationDate DESC")
     private List<ItemComment> comments = new ArrayList<>();
 
     private int itemLevel;
@@ -176,15 +182,17 @@ public class Item implements Serializable {
     @Override
     public String toString() {
         
-        return "Item{" + "id=" + getId() + ", uuId=" + getUuId() + ", systemId=" + 
-                getSystemId() + ", itemClass=" + getItemClass() + ", identifier=" + 
-                getIdentifier() + ", itemNumber=" + getItemNumber() + ", itemValue=" + 
-                getItemValue() + ", itemType=" + getItemType() + ", mediaType=" + 
-                getMediaType() + ", document=" + getDocument() + ", parent=" + 
-                getParent() + ", itemCategory=" + getItemCategory() + ", linkCount=" + 
-                getSortIndex() + ", itemVersion=" + getItemVersion() + ", itemStatus=" + 
-                getItemStatus() + ", creationDate=" + getCreationDate() + ", modifiedDate=" + 
-                getModifiedDate() + '}';
+        return "Item{" + "id=" + id + ", uuId=" + uuId + ", systemId=" + systemId + 
+                ", itemClass=" + itemClass + ", identifier=" + identifier + 
+                ", itemNumber=" + itemNumber + ", itemValue=" + itemValue + ", itemType=" + 
+                itemType + ", mediaType=" + mediaType + ", verificationMethod=" +
+                verificationMethod + ", itemCaption=" + itemCaption + ", document=" + 
+                document + ", parent=" + parent + ", itemCategory=" + itemCategory + 
+                ", inLinks=" + inLinks + ", outLinks=" + outLinks + ", linkChanged=" + 
+                linkChanged + ", comments=" + comments + ", itemLevel=" + itemLevel + 
+                ", sortIndex=" + sortIndex + ", itemVersion=" + itemVersion + ", baseLine=" + 
+                baseLine + ", itemStatus=" + itemStatus + ", creationDate=" + creationDate + 
+                ", modifiedDate=" + modifiedDate + '}';
     }
 
     public Long getId() {
@@ -245,6 +253,14 @@ public class Item implements Serializable {
 
     public void setItemType(EntityType itemType) {
         this.itemType = itemType;
+    }
+
+    public EntityType getVerificationMethod() {
+        return verificationMethod;
+    }
+
+    public void setVerificationMethod(EntityType verificationMethod) {
+        this.verificationMethod = verificationMethod;
     }
 
     public MediaType getMediaType() {

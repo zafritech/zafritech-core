@@ -22,7 +22,7 @@ import org.zafritech.core.data.domain.LibraryItem;
 import org.zafritech.core.data.repositories.FolderRepository;
 import org.zafritech.core.data.repositories.LibraryItemRepository;
 import org.zafritech.core.enums.LibraryItemTypes;
-import org.zafritech.core.services.FileUploadService;
+import org.zafritech.core.services.FileIOService;
 import org.zafritech.core.services.LibraryService;
 
 /**
@@ -45,7 +45,7 @@ public class LibraryServiceImpl implements LibraryService {
     private LibraryItemRepository libraryItemRepository;
     
     @Autowired
-    private FileUploadService fileUploadService;
+    private FileIOService fileIOService;
     
     @Override
     public LibraryItem createLibraryItem(LibraryItemDao dao) throws IOException, ParseException {
@@ -58,14 +58,14 @@ public class LibraryServiceImpl implements LibraryService {
         String itemFileExtension = FilenameUtils.getExtension(dao.getItemFile().getOriginalFilename());
         String itemRelPath = refDataFolderPath + "/lib_" + identifier + "." + itemFileExtension;
         String itemFullPath = data_dir + itemRelPath;
-        List<String> itemFiles = fileUploadService.saveUploadedFiles(Arrays.asList(dao.getItemFile()));
+        List<String> itemFiles = fileIOService.saveUploadedFiles(Arrays.asList(dao.getItemFile()));
         FileUtils.moveFile(FileUtils.getFile(itemFiles.get(0)), FileUtils.getFile(itemFullPath)); 
         
         // Upload and move Reference Image file
         String imageFileExtension = FilenameUtils.getExtension(dao.getImageFile().getOriginalFilename());
         String imageRelPath = "library/img_" + identifier + "." + imageFileExtension;
         String imageFullPath = images_dir + imageRelPath;
-        List<String> imageFiles = fileUploadService.saveUploadedFiles(Arrays.asList(dao.getImageFile()));
+        List<String> imageFiles = fileIOService.saveUploadedFiles(Arrays.asList(dao.getImageFile()));
         FileUtils.moveFile(FileUtils.getFile(imageFiles.get(0)), FileUtils.getFile(imageFullPath)); 
         
         LibraryItem libraryItem = new LibraryItem(folderRepository.findOne(dao.getFolderId()),  

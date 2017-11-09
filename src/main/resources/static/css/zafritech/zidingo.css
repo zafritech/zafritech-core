@@ -8230,3 +8230,8 @@ ul.mailbox-list li a:hover, ul.h-list li a:hover {
 .panel-body { padding:0px; }
 .panel-body table tr td { padding-left: 15px }
 .panel-body .table {margin-bottom: 0px; }
+
+.document-draft { border-bottom: 4px solid #FFC107; }
+.document-review { border-bottom: 4px solid #337ab7; }
+.document-issued { border-bottom: 4px solid #2ECC71; }
+.document-changed { border-bottom: 4px solid #03A9F4; }

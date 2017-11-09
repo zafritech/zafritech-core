@@ -5,9 +5,12 @@
  */
 package org.zafritech.core.services;
 
+import java.util.List;
 import org.zafritech.core.data.dao.BaseLineDao;
+import org.zafritech.core.data.dao.DefinitionDao;
 import org.zafritech.core.data.dao.DocDao;
 import org.zafritech.core.data.dao.DocEditDao;
+import org.zafritech.core.data.domain.Definition;
 import org.zafritech.core.data.domain.Document;
 import org.zafritech.core.data.domain.Project;
 import org.zafritech.core.data.domain.User;
@@ -27,6 +30,8 @@ public interface DocumentService {
     void initNewProjectDocuments(Project project, User user);
     
     void initDocumentSystemVariables(Project project);
+    
+    List<Definition> addDefinition(DefinitionDao dao);
     
     Document createBaseLine(BaseLineDao dao);
 }

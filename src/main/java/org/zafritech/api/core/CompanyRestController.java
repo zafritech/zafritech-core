@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RestController;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import org.zafritech.core.data.domain.Company;
 import org.zafritech.core.data.repositories.CompanyRepository;
-import org.zafritech.core.services.InitService;
 
 /**
  *
@@ -33,16 +32,12 @@ public class CompanyRestController {
     @RequestMapping("/api/admin/companies/list")
     public ResponseEntity<List<Company>> getCompaniesList(Model model) {
         
-        List<Company> companies = companyRepository.findAllByOrderByCompanyNameAsc();
-        
-        return new ResponseEntity<List<Company>>(companies, HttpStatus.OK);
+        return new ResponseEntity<List<Company>>(companyRepository.findAllByOrderByCompanyNameAsc(), HttpStatus.OK);
     }
     
     @RequestMapping(value = "/api/admin/companies/contacts/{uuid}", method = GET)
     public ResponseEntity<Company> getCompanyByUuId(@PathVariable(value = "uuid") String uuid) {
         
-        Company company = companyRepository.getByUuId(uuid); 
-        
-        return new ResponseEntity<Company>(company, HttpStatus.OK);
+        return new ResponseEntity<Company>(companyRepository.getByUuId(uuid), HttpStatus.OK);
     }
 }

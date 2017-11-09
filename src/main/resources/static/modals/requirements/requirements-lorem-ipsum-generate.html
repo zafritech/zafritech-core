@@ -1,0 +1,67 @@
+<form id="createItem" action="/api/items/save" method="post">
+
+    <input type="hidden" name="documentId" id="documentId" value="" />
+    <input type="hidden" name="parentId" id="parentId" value="" />
+    <input type="hidden" name="itemLevel" id="itemLevel" value="" />
+
+    <div class="row">
+        <div class="col-sm-4">
+            <div class="form-group">
+                <label for="itemCount">No. of Requirements</label>
+                <div class="input-group spinner" style="display: table;">
+                    <input type="text" class="form-control" id="itemCount" name="itemCount" value="5" />
+                    <div class="input-group-btn-vertical">
+                        <button class="btn btn-default" type="button" onclick="onNumberClickUp('itemCount', 20);">
+                            <i class="fa fa-caret-up"></i>
+                        </button>
+                        <button class="btn btn-default" type="button" onclick="onNumberClickDown('itemCount', 1);">
+                            <i class="fa fa-caret-down"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="form-group">
+                <label for="minWords">Min No. of Words</label>
+                <div class="input-group spinner" style="display: table;">
+                    <input type="text" class="form-control" id="minWords" name="minWords" value="25" />
+                    <div class="input-group-btn-vertical">
+                        <button class="btn btn-default" type="button" onclick="onNumberClickUp('minWords', 100);">
+                            <i class="fa fa-caret-up"></i>
+                        </button>
+                        <button class="btn btn-default" type="button" onclick="onNumberClickDown('minWords', 10);">
+                            <i class="fa fa-caret-down"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="form-group">
+                <label for="maxWords">Max No. of Words</label>
+                <div class="input-group spinner" style="display: table;">
+                    <input type="text" class="form-control" id="maxWords" name="maxWords" value="100" />
+                    <div class="input-group-btn-vertical">
+                        <button class="btn btn-default" type="button" onclick="onNumberClickUp('maxWords', 200);">
+                            <i class="fa fa-caret-up"></i>
+                        </button>
+                        <button class="btn btn-default" type="button" onclick="onNumberClickDown('maxWords', 25);">
+                            <i class="fa fa-caret-down"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="form-group">
+                <label for="itemTypeId">Requirements Type</label>
+                <select class="form-control" id="itemTypeId" name="itemTypeId"></select>
+            </div>
+        </div>
+    </div>
+
+</form>

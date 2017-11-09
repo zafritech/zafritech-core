@@ -5,6 +5,8 @@
  */
 package org.zafritech.requirements.services.impl;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -16,18 +18,23 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.zafritech.core.data.domain.BaseLine;
 import org.zafritech.core.data.domain.Document;
+import org.zafritech.core.data.domain.EntityType;
 import org.zafritech.core.data.domain.SystemVariable;
 import org.zafritech.core.data.repositories.DocumentRepository;
 import org.zafritech.core.data.repositories.EntityTypeRepository;
 import org.zafritech.core.data.repositories.SystemVariableRepository;
 import org.zafritech.core.enums.SystemVariableTypes;
-import org.zafritech.core.services.FileUploadService;
+import org.zafritech.core.services.ExcelService;
+import org.zafritech.core.services.FileIOService;
 import org.zafritech.requirements.data.converters.DaoToRefItemConverter;
 import org.zafritech.requirements.data.dao.ItemDao;
 import org.zafritech.requirements.data.dao.ItemRefDao;
@@ -42,6 +49,8 @@ import org.zafritech.requirements.enums.ItemClass;
 import org.zafritech.requirements.enums.MediaType;
 import org.zafritech.requirements.services.ItemService;
 import org.zafritech.core.services.UserSessionService;
+import org.zafritech.requirements.data.domain.ItemHistory;
+import org.zafritech.requirements.data.repositories.ItemHistoryRepository;
 import org.zafritech.requirements.enums.ItemStatus;
 
 /**
@@ -61,6 +70,9 @@ public class ItemServiceImpl implements ItemService {
     private ItemRepository itemRepository;
 
     @Autowired
+    private ItemHistoryRepository historyRepository;
+    
+    @Autowired
     private EntityTypeRepository entityTypeRepository;
 
     @Autowired
@@ -70,10 +82,16 @@ public class ItemServiceImpl implements ItemService {
     private TemplateItemRepository templateItemRepository;
         
     @Autowired
-    private FileUploadService fileUploadService;
+    private FileIOService fileIOService;
     
     @Autowired
     private UserSessionService stateService;
+    
+    @Autowired
+    private ExcelService excelService;
+    
+    @Autowired
+    private SystemVariableRepository variableRepository;
     
     @Override
     public ItemRefDao getDaoForItemCreation(Long id) {
@@ -183,11 +201,11 @@ public class ItemServiceImpl implements ItemService {
 
         if (!list.isEmpty()) {
 
-            return template + "-" + String.format(format, Integer.parseInt(list.get(list.size() - 1)) + 1);
+            return template + String.format(format, Integer.parseInt(list.get(list.size() - 1)) + 1);
 
         } else {
 
-            return template + "-" + String.format(format, 1);
+            return template + String.format(format, 1);
         }
     }
 
@@ -215,7 +233,7 @@ public class ItemServiceImpl implements ItemService {
             String imageFullPath = images_dir + imageRelPath;
 
             // Upload and move file
-            List<String> files = fileUploadService.saveUploadedFiles(Arrays.asList(upLoadedFile));
+            List<String> files = fileIOService.saveUploadedFiles(Arrays.asList(upLoadedFile));
             FileUtils.moveFile(FileUtils.getFile(files.get(0)), FileUtils.getFile(imageFullPath)); 
 
             imageItem  =    new Item(getNextSystemIdentifier(documentId),
@@ -302,17 +320,28 @@ public class ItemServiceImpl implements ItemService {
     @Override
     public Item saveEditedItemDao(ItemDao itemDao) {
         
-        String itemValue = itemDao.getItemValue().replace("<p><br></p>", "");
         Item item = itemRepository.findOne(itemDao.getId());
-        item.setItemValue(itemValue); 
+        String oldItemValue = item.getItemValue();
+        String newItemValue = itemDao.getItemValue().replace("<p><br></p>", "");
         
         if (!itemDao.getItemClass().equalsIgnoreCase("HEADER")) {
             
+            item.setItemValue(newItemValue); 
             item.setMediaType(itemDao.getMediaType()); 
         }
         
         if (itemDao.getItemClass().equalsIgnoreCase("REQUIREMENT")) {
             
+            if (item.getBaseLine() != null) {
+                
+                ItemHistory history = new ItemHistory(item, item.getSystemId(), oldItemValue, item.getBaseLine(), item.getItemVersion());
+                historyRepository.save(history);
+                
+                item.setBaseLine(null);
+                item.setItemStatus(ItemStatus.ITEM_STATUS_CHANGED); 
+            }
+            
+            item.setItemValue(newItemValue); 
             item.setIdentifier(itemDao.getIdentifier());
             item.setItemType(entityTypeRepository.findOne(itemDao.getItemTypeId())); 
         }
@@ -512,7 +541,69 @@ public class ItemServiceImpl implements ItemService {
         
         return document;
     }
-    
+   
+    @Override
+    public Integer importFromExcelFile(String filePath, Long documentId) {
+        
+        Item parent = null;
+        Integer headerSortIndex = 0;
+        Integer childSortIndex = 0;
+        Integer itemCount = -1;
+        
+        EntityType entityType = entityTypeRepository.findByEntityTypeKeyAndEntityTypeCode("ITEM_TYPE_ENTITY", "UNC");
+        
+        try {
+            
+            FileInputStream inputStream = new FileInputStream(new File(filePath));
+            Workbook workbook = excelService.getExcelWorkbook(inputStream, filePath);
+            Sheet worksheet = workbook.getSheetAt(0);
+            
+            int i = 1;      // Skip header row, i = 0
+            
+            while(i <= worksheet.getLastRowNum()) {
+                
+                Row row = worksheet.getRow(i++);
+                
+                String identifier = getNextRequirementIdentifier(documentId, getItemIentifierTemplate(documentId, entityType));
+                
+                String itemClass = (String)excelService.getExcelCellValue(row.getCell(3));
+                Integer level = (int) (double)excelService.getExcelCellValue(row.getCell(2));
+                
+                ItemDao itemDao = new ItemDao();
+                
+                if (parent != null && parent.getItemLevel() >= level) {
+                    
+                    parent = parent.getParent();
+                }
+                
+                itemDao.setDocumentId(documentId); 
+                itemDao.setItemClass(itemClass);
+                itemDao.setIdentifier(identifier); 
+                itemDao.setItemValue((String)excelService.getExcelCellValue(row.getCell(1))); 
+                itemDao.setItemLevel(level); 
+                itemDao.setMediaType(MediaType.TEXT); 
+                itemDao.setItemTypeId(entityType.getId());  
+                itemDao.setParentId(parent != null ? parent.getId() : null); 
+                itemDao.setSortIndex((itemClass.equalsIgnoreCase(ItemClass.HEADER.name())) ? headerSortIndex++ : childSortIndex++); 
+                
+                Item item = saveRquirementItem(itemDao);
+                itemCount++;
+                
+                if (itemClass.equalsIgnoreCase(ItemClass.HEADER.name())) {
+                    
+                    parent = item;
+                    childSortIndex = 0;
+                }
+            }
+            
+        } catch (IOException e) {
+            
+            
+        }
+        
+        return itemCount;
+    }
+     
     /*********************************************************************************************************************
     * Private methods beyond this point
     **********************************************************************************************************************/
@@ -566,6 +657,24 @@ public class ItemServiceImpl implements ItemService {
         List<SystemVariable> sysVar = sysvarRepository.findByOwnerIdAndOwnerTypeAndVariableName(id, ownerType, name);
 
         return sysVar.get(0).getVariableValue();
+    }
+
+    private String getItemIentifierTemplate(Long documentId, EntityType entityType) {
+        
+        String identTemplate = "";
+        List<SystemVariable> variables = variableRepository.findByOwnerIdAndOwnerTypeAndVariableName(documentId, "DOCUMENT", "REQUIREMENT_ID_TEMPLATE");
+        
+        for (SystemVariable variable : variables) {
+            
+            String value = variable.getVariableValue();
+            
+            if (value.lastIndexOf(entityType.getEntityTypeCode()) > -1) {
+                
+                identTemplate = variable.getVariableValue();
+            }
+        }
+        
+        return identTemplate;
     }
 
     private void updateHeaderItemNumbers(Document document) {

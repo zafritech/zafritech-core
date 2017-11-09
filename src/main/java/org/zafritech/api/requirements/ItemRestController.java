@@ -9,9 +9,12 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
@@ -37,16 +40,22 @@ import org.zafritech.core.data.repositories.DocumentRepository;
 import org.zafritech.core.data.repositories.EntityTypeRepository;
 import org.zafritech.core.data.repositories.SystemVariableRepository;
 import org.zafritech.core.enums.ReferenceTypes;
+import org.zafritech.core.services.FileIOService;
 import org.zafritech.core.services.ReferenceService;
 import org.zafritech.requirements.data.dao.DocumentTemplateIdsDao;
+import org.zafritech.requirements.data.dao.DummyItemDao;
+import org.zafritech.requirements.data.dao.ExcelItemsDao;
 import org.zafritech.requirements.data.dao.ItemDao;
 import org.zafritech.requirements.data.dao.ItemRefDao;
 import org.zafritech.requirements.data.dao.ItemTreeDao;
 import org.zafritech.requirements.data.domain.Item;
+import org.zafritech.requirements.data.domain.ItemHistory;
 import org.zafritech.requirements.data.domain.Template;
+import org.zafritech.requirements.data.repositories.ItemHistoryRepository;
 import org.zafritech.requirements.data.repositories.ItemRepository;
 import org.zafritech.requirements.data.repositories.TemplateRepository;
 import org.zafritech.requirements.enums.ItemClass;
+import org.zafritech.requirements.services.DummyItemsService;
 import org.zafritech.requirements.services.ItemService;
 
 /**
@@ -72,6 +81,9 @@ public class ItemRestController {
     private ItemRepository itemRepository;
     
     @Autowired
+    private ItemHistoryRepository historyRepository;
+    
+    @Autowired
     private ItemService itemService;
     
     @Autowired
@@ -82,6 +94,12 @@ public class ItemRestController {
     
     @Autowired
     private SystemVariableRepository variableRepository;
+    
+    @Autowired
+    private DummyItemsService dummyItemsService;
+    
+    @Autowired
+    private FileIOService fileIOService;
     
     @RequestMapping(value = "/api/requirements/document/items/item/{id}", method = RequestMethod.GET)
     public Item getItemById(@PathVariable(value = "id") Long itemId) {
@@ -128,10 +146,33 @@ public class ItemRestController {
         return modelView;
     }
     
+    @RequestMapping(value = "/api/requirements/document/items/item/details/{id}", method = RequestMethod.GET)
+    public ModelAndView showRequirementsItemDetails(@PathVariable(value = "id") Long id) {
+        
+        Item item = itemRepository.findOne(id);
+        Document document = documentRepository.findOne(item.getDocument().getId()); 
+        List<ItemHistory> history = historyRepository.findAllByItemIdOrderByCreationDateDesc(id);
+        
+        ModelAndView modelView = new ModelAndView("views/items/item-details");
+        modelView.addObject("document", document);
+        modelView.addObject("item", item);
+        modelView.addObject("history", history);
+        
+        return modelView;
+    }
+    
     @RequestMapping(value = "/api/requirements/document/item/types/list", method = RequestMethod.GET)
     public ResponseEntity<List<EntityType>> getItemTypes() {
 
         List<EntityType> itemTypes = entityTypeRepository.findByEntityTypeKeyOrderByEntityTypeNameAsc("ITEM_TYPE_ENTITY");
+        
+        return new ResponseEntity<List<EntityType>>(itemTypes, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/api/requirements/document/items/verification/methods", method = RequestMethod.GET)
+    public ResponseEntity<List<EntityType>> getRerificationMethods() {
+
+        List<EntityType> itemTypes = entityTypeRepository.findByEntityTypeKeyOrderByEntityTypeNameAsc("VERIFICATION_VALIDATION_METHOD_TYPE_ENTITY");
         
         return new ResponseEntity<List<EntityType>>(itemTypes, HttpStatus.OK);
     }
@@ -175,7 +216,20 @@ public class ItemRestController {
 
         return new ResponseEntity<String>(reqIdentifier, HttpStatus.OK);
     }
-      
+   
+    @RequestMapping(value = "/api/requirements/document/items/item/verification/method/update", method = RequestMethod.GET)
+    public ResponseEntity<String> updateItemVerificationMethod(@RequestParam(value = "itemId", required = true) Long itemId,
+                                                               @RequestParam(value = "entityTypeId", required = true) Long entityTypeId) {
+
+        EntityType method = entityTypeRepository.findOne(entityTypeId);
+        Item item = itemRepository.findOne(itemId);
+        item.setVerificationMethod(method);
+        itemRepository.save(item);
+        
+
+        return new ResponseEntity<String>(method.getEntityTypeName(), HttpStatus.OK);
+    }
+           
     @RequestMapping(value = "/api/requirements/document/items/item/template", method = RequestMethod.GET)
     public ResponseEntity<String> getItemIentifierTemplate(@RequestParam(value = "id", required = true) Long id,
                                                            @RequestParam(value = "typeId", required = true) Long typeId) {
@@ -203,6 +257,14 @@ public class ItemRestController {
         Item item = itemService.saveRquirementItem(itemDao);
 
         return new ResponseEntity<Item>(item, HttpStatus.OK);
+    }
+ 
+    @RequestMapping(value = "/api/requirements/document/items/dummy/items/save", method = RequestMethod.POST)
+    public ResponseEntity<List<Item>> saveDummyRequirementItems(@RequestBody DummyItemDao dummyDao) {
+        
+        List<Item> items = dummyItemsService.createDummyItems(dummyDao); 
+
+        return new ResponseEntity<List<Item>>(items, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/api/requirements/document/items/edit/save", method = RequestMethod.POST)
@@ -312,5 +374,35 @@ public class ItemRestController {
         Document document = itemService.baseLineRequirementsItems(documentRepository.findOne(id));
 
         return new ResponseEntity<Document>(document, HttpStatus.OK);
+    }
+    
+    @RequestMapping(value = "/api/requirements/import/items/from/excel", method = RequestMethod.POST)
+    public ResponseEntity<?> importItemsFromExcel(ExcelItemsDao excelDao) throws IOException, ParseException {
+        
+        if (excelDao.getExcelFile().isEmpty()) {
+            
+            return new ResponseEntity("Please select a an excel file!", HttpStatus.BAD_REQUEST);
+        }
+        
+        String fileName = excelDao.getExcelFile().getOriginalFilename();
+        
+        if (!FilenameUtils.isExtension(fileName,"xls") && !FilenameUtils.isExtension(fileName,"xlsx")) {
+            
+            return new ResponseEntity("The selected file is not a MS Excel file.", HttpStatus.BAD_REQUEST);
+        }
+        
+        List<MultipartFile> files = new ArrayList<>();
+        files.add(excelDao.getExcelFile());
+        List<String> filePaths = fileIOService.saveUploadedFiles(files);
+        String filePath = filePaths.get(0);
+        
+        Integer itemCount = itemService.importFromExcelFile(filePath, excelDao.getDocumentId());
+        
+        if (itemCount < 0) {
+            
+            return new ResponseEntity("There was an error process the Excel file. Please check that the file meets the required format specification.", HttpStatus.BAD_REQUEST);
+        }
+        
+        return new ResponseEntity("Successfully imported " + itemCount + " requirements from Excel", new HttpHeaders(), HttpStatus.OK);
     }
 }

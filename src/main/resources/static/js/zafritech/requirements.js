@@ -23,6 +23,14 @@ function loadRequirementsItems(documentId, sectionId) {
     $('#collapseProjects').collapse('hide');
 }
 
+function loadRequirementsSingleItem(itemId) {
+    
+    var url = "/api/requirements/document/items/item/details/" + itemId;
+    
+    $('#documentDetails').load(url);
+    $('#collapseProjects').collapse('hide');
+}
+
 function RequirementItemCreateItem(documentId, parentId, itemLevel) {
     
     $.ajax({
@@ -132,8 +140,6 @@ function RequirementItemCreateItem(documentId, parentId, itemLevel) {
                 })
                 .done(function (data) {
                     
-                    console.log(data);
-                    
                     var refItem = data;
             
                     // Clear INPUT and TEXTAREA controls
@@ -193,6 +199,99 @@ function RequirementItemCreateItem(documentId, parentId, itemLevel) {
                 });
             });
              
+            box.modal('show');
+        }
+    });
+}
+
+// For demostrations only
+function RequirementGenerateLoremIpsum(documentId, parentId, itemLevel) {
+    
+    $.ajax({
+            
+        global: false,
+        type: "GET",
+        url: '/modals/requirements/requirements-lorem-ipsum-generate.html',
+        success: function (data) {
+            
+            var box = bootbox.confirm({
+
+                closeButton: false,
+                message: data,
+                title: "Lorem Ipsum Dummy Requirements",
+                buttons: {
+                    cancel: {
+                        label: "Cancel",
+                        className: "btn-danger btn-fixed-width-100"
+                    },
+                    confirm: {
+                        label: "Create",
+                        className: "btn-success btn-fixed-width-100"
+                    }
+                },
+                callback: function (result) {
+                    
+                    if (result) {
+                       
+                        var data = {};
+
+                        data['documentId'] = document.getElementById('documentId').value;
+                        data['parentId'] = document.getElementById('parentId').value;
+                        data['itemLevel'] = document.getElementById('itemLevel').value;
+                        data['itemCount'] = document.getElementById('itemCount').value;
+                        data['minWords'] = document.getElementById('minWords').value;
+                        data['maxWords'] = document.getElementById('maxWords').value;
+                        data['itemTypeId'] = document.getElementById('itemTypeId').value;
+                        
+                        $.ajax({
+
+                            type: "POST",
+                            contentType: "application/json",
+                            url: "/api/requirements/document/items/dummy/items/save",
+                            data: JSON.stringify(data),
+                            dataType: "json",
+                            timeout: 60000,
+                            success: function (data) {
+                    
+                                loadRequirementsItems(documentId, parentId);
+                                
+                                swal({
+                                    
+                                    title: "Success!",
+                                    text: "New item has been successfully created.",
+                                    type: "success"
+                                });
+                            }
+                        });
+                    }
+                }
+            });
+            
+            box.on("shown.bs.modal", function(e) {
+                
+                $(e.currentTarget).find('input[name="documentId"]').prop('value', documentId);
+                $(e.currentTarget).find('input[name="parentId"]').prop('value', parentId);
+                $(e.currentTarget).find('input[name="itemLevel"]').prop('value', itemLevel);
+                
+                $.ajax({
+
+                    global: false,
+                    type: "GET",
+                    contentType: "application/json",
+                    url: "/api/requirements/document/item/types/list",
+                    dataType: "json",
+                    cache: false
+                })
+                .done(function (data) {
+                    
+                    // Populate Requirement Types SELECT
+                    $.each(data, function (key, index) {
+
+                        $(e.currentTarget).find('select[name="itemTypeId"]').append('<option value="' + index.id + '">' + index.entityTypeName + '</option>');
+                    });
+                });
+            });
+            
             box.modal('show');
         }
     });
@@ -274,6 +373,57 @@ function RequirementItemImageInsert(documentId, parentId, itemLevel) {
             });
             
             box.modal('show');
+        }
+    });
+}
+
+function RequirementBaselinedEditCheck(itemId) {
+    
+    $.ajax({
+
+        global: false,
+        type: "GET",
+        contentType: "application/json",
+        url: "/api/requirements/document/items/item/" + itemId,
+        dataType: "json",
+        cache: false
+    })
+    .done(function (data) {
+        
+        if (data.baseLine !== null && data.itemStatus === "ITEM_STATUS_BASELINED") {
+            
+            swal({
+
+                title: "The Requirement is Baselined!",
+                text: "This requirement is baselined. Do you really want to edit it.",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "Yes, Edit",
+                cancelButtonText: "No, cancel",
+                closeOnConfirm: false,
+                closeOnCancel: false},
+                function (isConfirm) {
+
+                    if (isConfirm) {
+
+                        swal("Edit OK!", "Launch edit dialog box.", "success");
+
+                        setTimeout(function () {
+
+                            RequirementItemEditItem(itemId);
+                            
+                        }, 2000);
+                        
+                    } else {
+
+                        swal("Cancelled", "Edit cancelled.", "info");
+                    }
+                });
+            
+        } else {
+            
+            RequirementItemEditItem(itemId);
         }
     });
 }
@@ -582,6 +732,96 @@ function RequirementItemEditRequirement(data) {
                         
                         $(e.currentTarget).find('select[name="itemTypeId"]').prop('value', item.itemType.id);
                     }
+                });
+            });
+            
+            box.modal('show');
+        }
+    });
+}
+
+function RequirementVerificationMethod(itemId) {
+
+    $.ajax({
+        
+        global: false,
+        type: "GET",
+        url: '/modals/requirements/requirements-verification-method.html',
+        success: function (data) {
+            
+            var box = bootbox.confirm({
+
+                closeButton: false,
+                title: 'Add/Change Verification Method',
+                message: data,
+                buttons: {
+                    cancel: {
+                        label: "Cancel",
+                        className: "btn-danger btn-fixed-width-100"
+                    },
+                    confirm: {
+                        label: "Save",
+                        className: "btn-success btn-fixed-width-100"
+                    }
+                },
+                callback: function (result) {
+                    
+                    if (result) {
+                        
+                        $.ajax({
+
+                            global: false,
+                            type: "GET",
+                            contentType: "application/json",
+                            url: "/api/requirements/document/items/item/verification/method/update",
+                            data: {
+                                itemId: itemId, 
+                                entityTypeId: document.getElementById('verificationMethodId').value
+                            },
+                            dataType: "text",
+                            timeout: 60000,
+                            success: function (responseText) {
+
+                                loadRequirementsSingleItem(itemId);
+                            }
+                        });
+                    }
+                }
+            });
+            
+            box.on("shown.bs.modal", function(e) {
+                
+                $.ajax({
+
+                    global: false,
+                    type: "GET",
+                    contentType: "application/json",
+                    url: "/api/requirements/document/items/item/" + itemId,
+                    dataType: "json",
+                    cache: false
+                })
+                .done(function (data) {
+                    
+                    var item = data;
+            
+                    $.ajax({
+
+                        global: false,
+                        type: "GET",
+                        url: "/api/requirements/document/items/verification/methods",
+                        dataType: "json",
+                        timeout: 60000,
+                        success: function (data) {
+
+                            // Populate LinkTypes SELECT
+                            $.each(data, function (key, index) {
+
+                                $(e.currentTarget).find('select[name="verificationMethodId"]').append('<option value="' + index.id + '">' + index.entityTypeName + '</option>');
+                            });
+                            
+                            $(e.currentTarget).find('select[name="verificationMethodId"]').prop('value', item.verificationMethod.id);
+                        }
+                    });
                 });
             });
             
@@ -939,8 +1179,8 @@ function RequirementItemLinkCreate(itemId) {
                     // Populate LinkTypes SELECT
                     $.each(linkDao.linkTypes, function (key, index) {
 
-                        $(e.currentTarget).find('select[name="linkTypeId"]').append('<option value="' + index.id + '">' + index.linkTypeName + '</option>');
-                        if (index.defaultType === true) { defaultLinkType = index.id; }
+                        $(e.currentTarget).find('select[name="linkTypeId"]').append('<option value="' + index.id + '">' + index.entityTypeName + '</option>');
+                        if (index.entityTypeCode === "DRV") { defaultLinkType = index.id; }
                     });
                     
                     $(e.currentTarget).find('select[name="linkTypeId"]').prop('value', defaultLinkType);
@@ -1503,4 +1743,22 @@ function zTreeReferencesOnClick(event, treeId, treeNode, clickFlag) {
             $('#libraryReferenceId').append(selectReferences);
         }
     });
+}
+
+function onNumberClickUp(variable, limit) {
+    
+    var value = $('#' + variable).val();
+    if (value < limit) {
+    
+        $('#' + variable).prop('value', parseInt(value) + 1);
+    }
+}
+
+function onNumberClickDown(variable, limit) {
+    
+    var value = $('#' + variable).val();
+    if (value > limit) {
+    
+        $('#' + variable).prop('value', parseInt(value) - 1);
+    }
 }

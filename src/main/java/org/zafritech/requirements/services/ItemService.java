@@ -62,4 +62,6 @@ public interface ItemService {
     Document importTemplateToDocument(Document document, Template template);
     
     Document baseLineRequirementsItems(Document document);
+    
+    Integer importFromExcelFile(String filePath, Long documentId);
 }

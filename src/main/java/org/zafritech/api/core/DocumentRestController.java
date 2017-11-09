@@ -21,7 +21,6 @@ import org.zafritech.core.data.dao.BaseLineDao;
 import org.zafritech.core.data.dao.DocDao;
 import org.zafritech.core.data.dao.DocEditDao;
 import org.zafritech.core.data.dao.ValuePairDao;
-import org.zafritech.core.data.domain.BaseLine;
 import org.zafritech.core.data.domain.Claim;
 import org.zafritech.core.data.domain.ClaimType;
 import org.zafritech.core.data.domain.Document;

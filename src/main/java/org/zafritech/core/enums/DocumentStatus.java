@@ -11,14 +11,8 @@ package org.zafritech.core.enums;
  */
 public enum DocumentStatus {
     
-    APPROVED,
-    CHECKED,
+    CHANGED,
     DRAFT,
     ISSUED,
-    NONE,
-    REJECTED,
-    REVIEW,
-    REVIEWED,
-    SUPERCEDED,
-    WITHDRAWN
+    REVIEW
 }

@@ -6,7 +6,7 @@
                 <packaging>jar</packaging>
             </packagings>
             <goals>
-                <goal>org.springframework.boot:spring-boot-maven-plugin:1.5.7.RELEASE:run</goal>
+                <goal>org.springframework.boot:spring-boot-maven-plugin:1.5.8.RELEASE:run</goal>
             </goals>
             <properties>
                 <exec.args>-classpath %classpath org.zafritech.ZafritechApplication</exec.args>

@@ -20,6 +20,8 @@ public interface UserService {
     User loggedInUser();
     
     boolean hasRole(String roleName);
+    
+    boolean hasRole(String roleName, User user);
        
     List<User> allUser();
     

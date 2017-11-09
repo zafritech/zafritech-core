@@ -15,11 +15,13 @@ import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.Phrase;
 import com.itextpdf.text.Rectangle;
 import com.itextpdf.text.TabSettings;
+import com.itextpdf.text.pdf.ColumnText;
 import com.itextpdf.text.pdf.GrayColor;
 import com.itextpdf.text.pdf.PdfContentByte;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfPageEventHelper;
+import com.itextpdf.text.pdf.PdfTemplate;
 import com.itextpdf.text.pdf.PdfWriter;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -89,6 +91,7 @@ public class ItemPDFServiceImpl implements ItemPDFService {
                                                                         PdfConstants.MARGIN_RIGHT_DEFAULT,
                                                                         PdfConstants.MARGIN_TOP_FIRST_PAGE,
                                                                         PdfConstants.MARGIN_BOTTOM_DEFAULT);
+        
         PdfWriter writer = PdfWriter.getInstance(doc, os);
 
         // Document Header Event
@@ -619,10 +622,18 @@ public class ItemPDFServiceImpl implements ItemPDFService {
 
     public class HeaderTable extends PdfPageEventHelper {
 
+        PdfTemplate numberOfPages;
+        
         protected PdfPTable header;
         protected float tableHeight;
         protected Document document;
-
+        
+        @Override
+        public void onOpenDocument(PdfWriter writer, com.itextpdf.text.Document document) {
+            
+            numberOfPages = writer.getDirectContent().createTemplate(30, 16);
+        }
+        
         public HeaderTable(Document document) {
 
             this.document = document;
@@ -815,7 +826,7 @@ public class ItemPDFServiceImpl implements ItemPDFService {
 
             DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
-            float[] colWidths = {2, 2, 2, 1, 1};
+            float[] colWidths = {2, 2, 2, 1, 1, 1};
             header = new PdfPTable(colWidths);
             header.setTotalWidth(555);
             header.setLockedWidth(true);
@@ -845,7 +856,7 @@ public class ItemPDFServiceImpl implements ItemPDFService {
             phrase.add(Chunk.NEWLINE);
             phrase.add(new Chunk(document.getIdentifier(), PdfConstants.TABLE_CELL));
             cell = new PdfPCell(phrase);
-            cell.setColspan(2);
+            cell.setColspan(3);
             cell.setBorder(Rectangle.NO_BORDER);
             header.addCell(cell);
 
@@ -855,7 +866,7 @@ public class ItemPDFServiceImpl implements ItemPDFService {
             phrase.add(Chunk.NEWLINE);
             phrase.add(new Chunk(document.getOwner().getFirstName() + " " + document.getOwner().getLastName(), PdfConstants.TABLE_CELL));
             header.addCell(phrase);
-
+            
             // Information Classification Cell
             phrase = new Phrase();
             phrase.add(new Chunk("Information Class:", PdfConstants.HEADER_LABEL));
@@ -881,8 +892,10 @@ public class ItemPDFServiceImpl implements ItemPDFService {
             phrase = new Phrase();
             phrase.add(new Chunk("Page:", PdfConstants.HEADER_LABEL));
             phrase.add(Chunk.NEWLINE);
-            phrase.add(new Chunk(String.format("%d", writer.getPageNumber()), PdfConstants.TABLE_CELL));
+            phrase.add(new Chunk(String.format("Page %d of ", writer.getPageNumber()), PdfConstants.TABLE_CELL)); 
             header.addCell(phrase);
+
+            header.addCell(new PdfPCell(Image.getInstance(numberOfPages)));
 
             tableHeight = header.getTotalHeight();
 
@@ -892,6 +905,13 @@ public class ItemPDFServiceImpl implements ItemPDFService {
             canvas.moveTo(20, doc.top() + 10);
             canvas.lineTo(575, doc.top() + 10);
         }
+        
+        @Override
+        public void onCloseDocument(PdfWriter writer, com.itextpdf.text.Document document) {
+            
+            ColumnText.showTextAligned(numberOfPages, Element.ALIGN_LEFT, new Phrase(String.valueOf(writer.getPageNumber() -1)), 2, 2, 0);
+        }
+        
     }
 
     public class FooterTable extends PdfPageEventHelper {
@@ -905,7 +925,7 @@ public class ItemPDFServiceImpl implements ItemPDFService {
 
             this.document = document;
         }
-
+        
         @Override
         public void onEndPage(PdfWriter writer, com.itextpdf.text.Document document) {
 

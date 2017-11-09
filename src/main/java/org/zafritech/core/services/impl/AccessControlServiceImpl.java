@@ -18,6 +18,12 @@ import org.zafritech.core.services.AccessControlService;
 public class AccessControlServiceImpl implements AccessControlService {
 
     @Override
+    public boolean hasRole(User user, String roleName) {
+        
+        return true;
+    }
+
+    @Override
     public boolean isAuthorized(String permission) {
 
         return false;

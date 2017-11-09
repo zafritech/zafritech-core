@@ -16,6 +16,8 @@ public interface AccessControlService {
     
     boolean isAuthorized(String permission);
     
+    boolean hasRole(User user, String roleName);
+    
     boolean hasClaim(User user, Claim claim);
     
     boolean hasClaims(User user, Claim[] claims);

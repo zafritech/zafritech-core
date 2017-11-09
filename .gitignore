@@ -30,3 +30,4 @@ nbdist/
 
 ### Other Excludes ###
 ### /src/main/resources/static/js/vendor/easyui/ ###
+/nbproject/

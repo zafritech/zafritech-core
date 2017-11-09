@@ -1363,6 +1363,81 @@ function ImportFromTemplate(documentId, documentTypeId) {
     });
 }
 
+function ImportFromExcel(documentId) {
+    
+    $.ajax({
+        
+        global: false,
+        type: "GET",
+        url: '/modals/document/document-import-from-excel.html',
+        success: function (data) {
+            
+            var box = bootbox.confirm({
+
+                closeButton: false,
+                title: 'Import from Excel',
+                message: data,
+                buttons: {
+                    cancel: {
+                        label: "Cancel",
+                        className: "btn-danger btn-fixed-width-100"
+                    },
+                    confirm: {
+                        label: "Import",
+                        className: "btn-success btn-fixed-width-100"
+                    }
+                },
+                callback: function (result) {
+                    
+                    if (result) {
+                     
+                        var form = $('#excelUploadForm')[0];
+                        var data = new FormData(form);
+                        
+                        $.ajax({
+                            type: "POST",
+                            enctype: 'multipart/form-data',
+                            url: "/api/requirements/import/items/from/excel",
+                            data: data,
+                            processData: false,
+                            contentType: false,
+                            cache: false,
+                            timeout: 600000,
+                            success: function (data) {
+                                
+                                 swal({
+
+                                    title: "Success!",
+                                    text: "Excel file has been successfuly imported.",
+                                    type: "success"
+                                });
+                                
+                                setTimeout(function() { loadRequirementsItems(documentId, 0); }, 2000);
+                            },
+                            error: function (e) {
+
+                                swal({
+
+                                    title: "Error importing file!",
+                                    text: e.responseText,
+                                    type: "error"
+                                });
+                            }
+                        });
+                    }
+                }
+            });
+            
+            box.on("shown.bs.modal", function(e) {
+                
+                $(e.currentTarget).find('input[name="documentId"]').prop('value', documentId);
+            });
+            
+            box.modal('show');
+        }
+    });
+}
+
 function onTemplateDocumentTypeChange() {
     
     var documentTypeId = document.getElementById('templateTypeId').value;

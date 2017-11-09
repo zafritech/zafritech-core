@@ -10,16 +10,19 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.zafritech.core.data.dao.BaseLineDao;
+import org.zafritech.core.data.dao.DefinitionDao;
 import org.zafritech.core.data.dao.DocDao;
 import org.zafritech.core.data.dao.DocEditDao;
 import org.zafritech.core.data.domain.BaseLine;
 import org.zafritech.core.data.domain.Claim;
 import org.zafritech.core.data.domain.ClaimType;
+import org.zafritech.core.data.domain.Definition;
 import org.zafritech.core.data.domain.Document;
 import org.zafritech.core.data.domain.DocumentContentDescriptor;
 import org.zafritech.core.data.domain.EntityType;
 import org.zafritech.core.data.domain.Folder;
 import org.zafritech.core.data.domain.InformationClass;
+import org.zafritech.core.data.domain.Locale;
 import org.zafritech.core.data.domain.Project;
 import org.zafritech.core.data.domain.ProjectWbsPackage;
 import org.zafritech.core.data.domain.SystemVariable;
@@ -28,16 +31,19 @@ import org.zafritech.core.data.domain.UserClaim;
 import org.zafritech.core.data.repositories.BaseLineRepository;
 import org.zafritech.core.data.repositories.ClaimRepository;
 import org.zafritech.core.data.repositories.ClaimTypeRepository;
+import org.zafritech.core.data.repositories.DefinitionRepository;
 import org.zafritech.core.data.repositories.DocumentContentDescriptorRepository;
 import org.zafritech.core.data.repositories.DocumentRepository;
 import org.zafritech.core.data.repositories.EntityTypeRepository;
 import org.zafritech.core.data.repositories.FolderRepository;
 import org.zafritech.core.data.repositories.InformationClassRepository;
+import org.zafritech.core.data.repositories.LocaleRepository;
 import org.zafritech.core.data.repositories.ProjectRepository;
 import org.zafritech.core.data.repositories.ProjectWbsPackageRepository;
 import org.zafritech.core.data.repositories.SystemVariableRepository;
 import org.zafritech.core.data.repositories.UserClaimRepository;
 import org.zafritech.core.data.repositories.UserRepository;
+import org.zafritech.core.enums.DefinitionTypes;
 import org.zafritech.core.enums.DocumentStatus;
 import org.zafritech.core.enums.SystemVariableTypes;
 import org.zafritech.core.services.ClaimService;
@@ -51,6 +57,9 @@ import org.zafritech.core.services.UserService;
 @Service
 public class DocumentServiceImpl implements DocumentService {
 
+    @Autowired
+    private LocaleRepository localeRepository;
+    
     @Autowired
     private DocumentRepository documentRepository;
     
@@ -81,6 +90,9 @@ public class DocumentServiceImpl implements DocumentService {
     @Autowired
     private UserRepository userRepository;
     
+    @Autowired
+    private DefinitionRepository definitionRepository;
+          
     @Autowired
     private UserService userService;
     
@@ -341,6 +353,37 @@ public class DocumentServiceImpl implements DocumentService {
                 sysvarRepository.save(new SystemVariable(SystemVariableTypes.REQUIREMENT_ID_TEMPLATE.name(), reqIdTemplate + type.getEntityTypeCode() + "-", "DOCUMENT", document.getId()));
             }
         }
+    }
+
+    @Override
+    public List<Definition> addDefinition(DefinitionDao dao) {
+        
+        Definition def;
+        Locale language = localeRepository.findByCode("en_GB");
+        
+        Document document = documentRepository.findOne(dao.getDocumentId());
+        
+        if (!dao.getNewTerm().isEmpty()) {
+            
+            def = new Definition(dao.getNewTerm(), 
+                                    dao.getNewTermDefinition(), 
+                                    DefinitionTypes.valueOf(dao.getDefinitionType()), 
+                                    language); 
+            
+            def = definitionRepository.save(def);
+            
+        } else {
+            
+            def = definitionRepository.findOne(dao.getDefinitionId());
+        }
+        
+        List<Definition> definitions = document.getDefinitions();
+        definitions.add(def);
+        
+        document.setDefinitions(new ArrayList(definitions)); 
+        documentRepository.save(document);
+        
+        return definitions;
     }
 
     @Override

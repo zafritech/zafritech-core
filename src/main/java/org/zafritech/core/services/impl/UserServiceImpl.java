@@ -89,6 +89,20 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         
         return false;
     }
+ 
+    @Override
+    public boolean hasRole(String roleName, User user) {
+       
+        for (Role role : user.getUserRoles()) {
+            
+            if (role.getRoleName().equalsIgnoreCase(roleName)) {
+                
+                return true;
+            }
+        }
+        
+        return false;
+    }
     
     @Override
     public List<User> findAll() {
