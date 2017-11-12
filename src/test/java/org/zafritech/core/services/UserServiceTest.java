@@ -9,7 +9,6 @@ import java.util.HashSet;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-//import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.*;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
@@ -58,7 +57,7 @@ public class UserServiceTest {
     @Before
     public void setUp() {
         
-        HashSet<Role> roles = new HashSet<Role>() {
+        HashSet<Role> adminRoles = new HashSet<Role>() {
             {
                 add(new Role("ROLE_ADMIN"));
                 add(new Role("ROLE_MANAGER"));
@@ -66,9 +65,13 @@ public class UserServiceTest {
             }
         };
         
-        User user = new User("foo@domain.org", "Password@123", roles);
+        HashSet<Role> userRoles = new HashSet<Role>() {{ add(new Role("ROLE_USER")); }};
         
-        Mockito.when(userRepository.findByEmail("foo@domain.org")).thenReturn(user); 
+        User admin = new User("admin@domain.org", "Password@123", adminRoles);
+        User user = new User("user@domain.org", "Password@123", userRoles);
+        
+        Mockito.when(userRepository.findByEmail("admin@domain.org")).thenReturn(admin); 
+        Mockito.when(userRepository.findByEmail("user@domain.org")).thenReturn(user); 
     }
     
     @After
@@ -79,17 +82,24 @@ public class UserServiceTest {
     @Test
     public void whenValidUserThenUserShouldBeFound() {
         
-        String email = "foo@domain.org";
+        String email = "admin@domain.org";
         
         User foundUser = userService.findByEmail(email);
         assertEquals(foundUser.getEmail(), email);
     }
             
     @Test
-    public void whenValidForUserRoleThenUserHasRole() {
+    public void whenUserWithValidRolesThenUserRoleShouldBeFound() {
     
-        User foundUser = userService.findByEmail("foo@domain.org");
-        assertTrue(userService.hasRole("ROLE_ADMIN", foundUser)); 
+        User adminUser = userService.findByEmail("admin@domain.org");
+        assertTrue(userService.hasRole("ROLE_ADMIN", adminUser)); 
+    }
+            
+    @Test
+    public void whenUserWithInvalidRoleThenUserRoleNotFound() {
+    
+        User normalUser = userService.findByEmail("user@domain.org");
+        assertFalse(userService.hasRole("ROLE_ADMIN", normalUser)); 
     }
     
 }

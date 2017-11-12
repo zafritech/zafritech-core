@@ -25,7 +25,7 @@ import org.zafritech.core.data.repositories.InformationClassRepository;
  * @author LukeS
  */
 @RestController
-public class ObjectTypeRestController {
+public class EntityTypesRestController {
     
     @Autowired
     private ClaimTypeRepository claimTypeRepository;

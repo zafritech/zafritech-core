@@ -117,7 +117,7 @@ public class UserRestController {
     @RequestMapping(value = "/api/user/byuuid/{uuid}", method = GET)
     public ResponseEntity<User> getUserByUuId(@PathVariable(value = "uuid") String uuid) {
         
-        User user = userService.getByUuId(uuid); 
+        User user = userService.findByUuId(uuid); 
         user.setPassword(null); 
         
         return new ResponseEntity<User>(user, HttpStatus.OK);
@@ -127,7 +127,7 @@ public class UserRestController {
     public ResponseEntity<User> getUserUpdate(@RequestBody UserEditDao userDao, 
                                               @PathVariable(value = "uuid") String uuid) {
         
-        User user = userService.getByUuId(uuid); 
+        User user = userService.findByUuId(uuid); 
         
         if (userDao.getFirstName() != null && !userDao.getFirstName().isEmpty()) { user.setFirstName(userDao.getFirstName()); }
         if (userDao.getLastName() != null && !userDao.getLastName().isEmpty()) { user.setLastName(userDao.getLastName()); }
@@ -148,7 +148,7 @@ public class UserRestController {
     @RequestMapping(value = "/api/user/roles/{uuid}", method = GET)
     public ResponseEntity<List<Role>> getUserRoles(@PathVariable(value = "uuid") String uuid) {
         
-        User user = userService.getByUuId(uuid); 
+        User user = userService.findByUuId(uuid); 
         List<Role> roles = new ArrayList(user.getUserRoles());
         
         return new ResponseEntity<List<Role>>(roles, HttpStatus.OK);
@@ -174,7 +174,7 @@ public class UserRestController {
             newRoles.add(roleRepository.findByRoleName(roleDao.getRoleName()));
         }
         
-        User user = userService.getByUuId(uuid); 
+        User user = userService.findByUuId(uuid); 
         user.setUserRoles(new HashSet(newRoles)); 
         userRepository.save(user);
 

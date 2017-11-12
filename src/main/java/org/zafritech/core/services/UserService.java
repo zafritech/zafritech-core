@@ -37,7 +37,7 @@ public interface UserService {
     
     List<User> findOrderByFirstName(int pageSize, int pageNumber);
 
-    User getByUuId(String uuid);
+    User findByUuId(String uuid);
 
     User saveUser(User user);
 

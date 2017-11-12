@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+
+    <head>
+        <title>Zidingo PMS - Entity Types</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="UTF-8" />
+    </head>
+
+    <body>
+
+        <div th:fragment="entity-types">
+
+            <!-- START Entity Type detailed data-->
+            <div th:if="${types.isEmpty()}">
+                <div style="width: 100%; text-align: center; font-weight: bold;">No items found.</div>
+            </div>
+            
+            <div th:if="${!types.isEmpty()}">
+                <div class="row">
+                    <div th:each="type : ${types}" class="col-md-6">
+                        <div class="row" style="margin: 5px; padding: 4px; border: 1px solid #cfd8dc;">
+                            <div class="col-md-9">
+                                <a th:if="${!#strings.isEmpty(type.entityTypeDescription)}" 
+                                   href="javascript:void(0);" 
+                                   th:onclick="'javascript:showEntityTypeDescription(\'' + ${type.id} + '\');'">
+                                    <span th:text="${type.entityTypeName} + ' (' + ${type.entityTypeCode} + ')'">EntityType</span>
+                                </a>
+                                <span th:if="${#strings.isEmpty(type.entityTypeDescription)}" th:text="${type.entityTypeName} + ' (' + ${type.entityTypeCode} + ')'">EntityType</span>
+                            </div>
+                            <div class="col-md-3" style="text-align: right;">
+                                <a href="javascript:void(0);" th:onclick="'javascript:configEntityTypeEdit(\'' + ${type.id} + '\');'">
+                                    <em class="ion-edit"></em> Edit
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="row" style="margin: 5px; padding: 4px;">
+                            <div class="col-md-12">
+                                <a href="javascript:void(0);"  th:onclick="'javascript:configEntityTypeCreate(\'' + ${typeKey} + '\');'"><em class="ion-plus"></em> Add New</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+
+    </body>
+</html>

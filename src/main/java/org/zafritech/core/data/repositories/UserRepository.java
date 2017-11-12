@@ -33,7 +33,7 @@ public interface UserRepository extends PagingAndSortingRepository<User, Long> {
     
     Set<User> findByUserRoles(Role role);
 
-    User getByUuId(String uuid);
+    User findByUuId(String uuid);
     
     // Projection Views
     UserView findUserViewByEmail(String email);
@@ -42,5 +42,5 @@ public interface UserRepository extends PagingAndSortingRepository<User, Long> {
     
     Set<UserView> findUserViewByUserRoles(Role role);
 
-    UserView getUserViewByUuId(String uuid);
+    UserView findUserViewByUuId(String uuid);
 }

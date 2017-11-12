@@ -199,7 +199,7 @@ public class ProjectRestController {
     public ResponseEntity<UserClaim> addProjectMembersByUuId(@RequestBody Long projectId,
                                                              @PathVariable(value = "uuid") String uuid) {
        
-        User user = userRepository.getByUuId(uuid);
+        User user = userRepository.findByUuId(uuid);
         ClaimType type = claimTypeRepository.findFirstByTypeName("PROJECT_MEMBER");
         
         UserClaim claim = claimService.updateUserClaim(user, type, projectId);

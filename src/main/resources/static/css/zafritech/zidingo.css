@@ -8167,16 +8167,16 @@ ul.mailbox-list li a:hover, ul.h-list li a:hover {
     border-color: rgba(162, 162, 162, 0.26);
 }
 
+.panel-grey > .panel-heading {
+    color: #4F5256;;
+    background-color: #cfd8dc;
+    border-color: #4F5256;;
+}
+
 .panel .panel-heading {
     font-weight: 500;
     padding: 4px 8px;
     border-bottom: 1px solid rgba(162, 162, 162, 0.16);
-}
-
-.panel-default>.panel-heading {
-    color: #fff;
-    background-color: #517496;
-    border-color: #fff;
 }
 
 .panel-group .panel-heading {
@@ -8211,6 +8211,10 @@ ul.mailbox-list li a:hover, ul.h-list li a:hover {
     margin-bottom: 0;
     font-size: 16px;
     color: #fff;
+}
+
+.panel-grey > .panel-heading > .panel-title a {
+    color: #4F5256;
 }
 
 .panel-group .panel+.panel {

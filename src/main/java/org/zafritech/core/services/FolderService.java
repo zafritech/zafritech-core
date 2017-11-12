@@ -6,7 +6,6 @@
 package org.zafritech.core.services;
 
 import java.util.List;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.zafritech.core.data.dao.FolderDao;
 import org.zafritech.core.data.dao.FolderTreeDao;
 import org.zafritech.core.data.dao.ValuePairDao;

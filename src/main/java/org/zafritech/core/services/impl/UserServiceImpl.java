@@ -195,9 +195,9 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
-    public User getByUuId(String uuid) {
+    public User findByUuId(String uuid) {
 
-        return userRepository.getByUuId(uuid);
+        return userRepository.findByUuId(uuid);
     }
 
     @Override
@@ -267,7 +267,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Override
     public UserClaim createClaim(ClaimDao claimDao) {
         
-        User user = userRepository.getByUuId(claimDao.getUserUuId());
+        User user = userRepository.findByUuId(claimDao.getUserUuId());
         ClaimType claimType = claimTypeRepository.findByTypeName(claimDao.getUserClaimType());
         
         return claimService.updateUserClaim(user, claimType, claimDao.getUserClaimValue());

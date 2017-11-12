@@ -63,11 +63,11 @@ public class AdminUserController {
     @RequestMapping("/admin/users/{uuid}")
     public String getUser(@PathVariable String uuid, Model model) {
 
-        User user = userService.getByUuId(uuid);
+        User user = userService.findByUuId(uuid);
         List<UserClaim> claims = userService.findUserClaims(user, "PROJECT");
         List<Project> projects = claimService.findProjectMemberships(user);
          
-        model.addAttribute("user", userService.getByUuId(uuid));
+        model.addAttribute("user", userService.findByUuId(uuid));
         model.addAttribute("claims", claims); 
         model.addAttribute("projects", projects); 
 

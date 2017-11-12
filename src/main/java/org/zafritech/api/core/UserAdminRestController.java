@@ -70,7 +70,7 @@ public class UserAdminRestController {
     @RequestMapping(value = "/api/admin/user/password/reset", method = POST)
     public ResponseEntity<UserView> getUserAdminRestPwd(@RequestBody PwdDao pwdDao) {
         
-        User user = userService.getByUuId(pwdDao.getUuId()); 
+        User user = userService.findByUuId(pwdDao.getUuId()); 
 
         if (user != null && pwdDao.getNewPassword().equals(pwdDao.getNewPasswordConfirm())) {
             
@@ -89,7 +89,7 @@ public class UserAdminRestController {
     @RequestMapping(value = "/api/admin/users/delete/{uuid}", method = GET)
     public ResponseEntity<Long> deleteUser(@PathVariable(value = "uuid") String uuid) {
         
-        User user = userService.getByUuId(uuid);
+        User user = userService.findByUuId(uuid);
         Long userId = user.getId();
         userRepository.delete(user); 
 
@@ -107,7 +107,7 @@ public class UserAdminRestController {
     @RequestMapping(value = "/api/admin/users/contact/{uuid}", method = GET)
     public ResponseEntity<Contact> getUserContacts(@PathVariable(value = "uuid") String uuid) {
         
-        User user = userService.getByUuId(uuid); 
+        User user = userService.findByUuId(uuid); 
         Contact contact = user.getContact();
         
         if (contact == null) {
@@ -122,7 +122,7 @@ public class UserAdminRestController {
     public ResponseEntity<Contact> updateCountriesData(@PathVariable(value = "uuid") String uuid,
                                                        @RequestBody ContactDao dao) {
 
-        User user = userService.getByUuId(uuid);
+        User user = userService.findByUuId(uuid);
         Contact contact = contactService.getUserContactFromDao(user, dao);
                 
         return new ResponseEntity<Contact>(contact, HttpStatus.OK);

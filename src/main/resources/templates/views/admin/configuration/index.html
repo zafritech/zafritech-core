@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+      layout:decorator="layouts/master">
+
+    <head>
+        <title>Zidingo PMS - Settings</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="UTF-8" />
+    </head>
+
+    <body>
+
+        <div layout:fragment="content">
+            
+            <div class="row content">
+                
+                <div class="container container-lg">
+                   
+                    <div class="col-md-12">
+
+                        <div class="card">
+                        
+                            <!-- Modal Boxes Control -->
+                            <input type="hidden" id="modalBusyControl" th:value="OFF" />
+
+                            <div class="card-heading bg-blue-grey-500">
+                                <div class="card-title">Application Configuration</div>
+                            </div>
+                            
+                            <div class="card-body">
+                                
+                                <div class="panel-group" id="accordion-master">
+                                    <div class="panel panel-grey">
+                                        <div class="panel-heading">
+                                            <h4 class="panel-title">
+                                                <a data-toggle="collapse" data-parent="#accordion-master" href="#collapseProjectTypes">
+                                                    <div style="width: 100%;">
+                                                        <span class="glyphicon glyphicon-folder-close"></span>
+                                                        <span id="projectTypesPanelLabel">Project Types</span>
+                                                    </div>
+                                                </a>
+                                            </h4>
+                                        </div>
+                                        <div id="collapseProjectTypes" class="panel-collapse collapse">
+                                            <div layout:fragment="entity-types" id="projectEntityTypes" style="margin: 10px 0;">
+                                                <!--Entity Type details here-->
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="panel panel-grey">
+                                        <div class="panel-heading">
+                                            <h4 class="panel-title">
+                                                <a data-toggle="collapse" data-parent="#accordion-master" href="#collapseFolderTypes">
+                                                    <div style="width: 100%;">
+                                                        <span class="glyphicon glyphicon-folder-open"></span>
+                                                        <span id="folderTypesPanelLabel">Folder Types</span>
+                                                    </div>
+                                                </a>
+                                            </h4>
+                                        </div>
+                                        <div id="collapseFolderTypes" class="panel-collapse collapse">
+                                            <div layout:fragment="entity-types" id="folderEntityTypes" style="margin: 10px 0;">
+                                                <!--Entity Type details here-->
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="panel panel-grey">
+                                        <div class="panel-heading">
+                                            <h4 class="panel-title">
+                                                <a data-toggle="collapse" data-parent="#accordion-master" href="#collapseDocumentTypes">
+                                                    <div style="width: 100%;">
+                                                        <span class="glyphicon glyphicon-file"></span>
+                                                        <span id="documentTypesPanelLabel">Document Types</span>
+                                                    </div>
+                                                </a>
+                                            </h4>
+                                        </div>
+                                        <div id="collapseDocumentTypes" class="panel-collapse collapse">
+                                            <div layout:fragment="entity-types" id="documentEntityTypes" style="margin: 10px 0;">
+                                                <!--Entity Type details here-->
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="panel panel-grey">
+                                        <div class="panel-heading">
+                                            <h4 class="panel-title">
+                                                <a data-toggle="collapse" data-parent="#accordion-master" href="#collapseRequirementTypes">
+                                                    <div style="width: 100%;">
+                                                        <span class="glyphicon glyphicon-screenshot"></span>
+                                                        <span id="requirementTypesPanelLabel">Requirement Types</span>
+                                                    </div>
+                                                </a>
+                                            </h4>
+                                        </div>
+                                        <div id="collapseRequirementTypes" class="panel-collapse collapse">
+                                            <div layout:fragment="entity-types" id="itemEntityTypes" style="margin: 10px 0;">
+                                                <!--Entity Type details here-->
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="panel panel-grey">
+                                        <div class="panel-heading">
+                                            <h4 class="panel-title">
+                                                <a data-toggle="collapse" data-parent="#accordion-master" href="#collapseLinkTypes">
+                                                    <div style="width: 100%;">
+                                                        <span class="glyphicon glyphicon-link"></span>
+                                                        <span id="linkTypesPanelLabel">Link Types</span>
+                                                    </div>
+                                                </a>
+                                            </h4>
+                                        </div>
+                                        <div id="collapseLinkTypes" class="panel-collapse collapse">
+                                            <div layout:fragment="entity-types" id="linkEntityTypes" style="margin: 10px 0;">
+                                                <!--Entity Type details here-->
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="panel panel-grey">
+                                        <div class="panel-heading">
+                                            <h4 class="panel-title">
+                                                <a data-toggle="collapse" data-parent="#accordion-master" href="#collapseVerificationMethodTypes">
+                                                    <div style="width: 100%;">
+                                                        <span class="glyphicon glyphicon-check"></span>
+                                                        <span id="verificationMethodTypesPanelLabel">Verification Method Types</span>
+                                                    </div>
+                                                </a>
+                                            </h4>
+                                        </div>
+                                        <div id="collapseVerificationMethodTypes" class="panel-collapse collapse">
+                                            <div layout:fragment="entity-types" id="verificationEntityTypes" style="margin: 10px 0;">
+                                                <!--Entity Type details here-->
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="panel panel-grey">
+                                        <div class="panel-heading">
+                                            <h4 class="panel-title">
+                                                <a data-toggle="collapse" data-parent="#accordion-master" href="#collapseBaselineTypes">
+                                                    <div style="width: 100%;">
+                                                        <span class="glyphicon glyphicon-tags"></span>
+                                                        <span id="baselineTypesPanelLabel">Baseline Types</span>
+                                                    </div>
+                                                </a>
+                                            </h4>
+                                        </div>
+                                        <div id="collapseBaselineTypes" class="panel-collapse collapse">
+                                            <div layout:fragment="entity-types" id="baselineEntityTypes" style="margin: 10px 0;">
+                                                <!--Entity Type details here-->
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>  
+                                
+                            </div>
+                            
+                        </div>
+
+                    </div>
+                    
+                </div>
+                
+            </div>
+            
+        </div>
+
+    </body>
+
+    <th:block layout:fragment="scripts">
+        <script src="/js/zafritech/configuration.js"></script>
+    </th:block>
+
+</html>

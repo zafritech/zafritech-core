@@ -5,7 +5,6 @@
  */
 package org.zafritech.core.services;
 
-import java.util.List;
 import org.springframework.stereotype.Service;
 import org.zafritech.core.data.dao.PageNavigationDao;
 
