@@ -1391,6 +1391,8 @@ function ImportFromExcel(documentId) {
                     
                     if (result) {
                      
+                        $('#modalBusyControl').prop('value', 'ON');
+                        
                         var form = $('#excelUploadForm')[0];
                         var data = new FormData(form);
                         

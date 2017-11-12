@@ -11,7 +11,9 @@ import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -545,7 +547,9 @@ public class ItemServiceImpl implements ItemService {
     @Override
     public Integer importFromExcelFile(String filePath, Long documentId) {
         
-        Item parent = null;
+        Map<Integer, Item> parentsMap = new HashMap<Integer, Item>();
+        
+        parentsMap.put(1, null);
         Integer headerSortIndex = 0;
         Integer childSortIndex = 0;
         Integer itemCount = -1;
@@ -566,40 +570,36 @@ public class ItemServiceImpl implements ItemService {
                 
                 String identifier = getNextRequirementIdentifier(documentId, getItemIentifierTemplate(documentId, entityType));
                 
-                String itemClass = (String)excelService.getExcelCellValue(row.getCell(3));
-                Integer level = (int) (double)excelService.getExcelCellValue(row.getCell(2));
+                String itemClass = row.getCell(3) != null ? (String)excelService.getExcelCellValue(row.getCell(3)) : null;
+                Integer level = row.getCell(2) != null ? (int) (double)excelService.getExcelCellValue(row.getCell(2)) : null; 
                 
-                ItemDao itemDao = new ItemDao();
-                
-                if (parent != null && parent.getItemLevel() >= level) {
+                if (itemClass != null && level != null) {
                     
-                    parent = parent.getParent();
-                }
-                
-                itemDao.setDocumentId(documentId); 
-                itemDao.setItemClass(itemClass);
-                itemDao.setIdentifier(identifier); 
-                itemDao.setItemValue((String)excelService.getExcelCellValue(row.getCell(1))); 
-                itemDao.setItemLevel(level); 
-                itemDao.setMediaType(MediaType.TEXT); 
-                itemDao.setItemTypeId(entityType.getId());  
-                itemDao.setParentId(parent != null ? parent.getId() : null); 
-                itemDao.setSortIndex((itemClass.equalsIgnoreCase(ItemClass.HEADER.name())) ? headerSortIndex++ : childSortIndex++); 
-                
-                Item item = saveRquirementItem(itemDao);
-                itemCount++;
-                
-                if (itemClass.equalsIgnoreCase(ItemClass.HEADER.name())) {
+                    Integer parentLevel = level - 1;
                     
-                    parent = item;
-                    childSortIndex = 0;
+                    ItemDao itemDao = new ItemDao();
+
+                    itemDao.setDocumentId(documentId); 
+                    itemDao.setItemClass(itemClass);
+                    itemDao.setIdentifier(identifier); 
+                    itemDao.setItemValue((String)excelService.getExcelCellValue(row.getCell(1))); 
+                    itemDao.setItemLevel(level); 
+                    itemDao.setMediaType(MediaType.TEXT); 
+                    itemDao.setItemTypeId(entityType.getId());  
+                    itemDao.setParentId(parentsMap.get(parentLevel) != null ? parentsMap.get(parentLevel).getId() : null); 
+                    itemDao.setSortIndex((itemClass.equalsIgnoreCase(ItemClass.HEADER.name())) ? headerSortIndex++ : childSortIndex++); 
+
+                    Item item = saveRquirementItem(itemDao);
+                    itemCount++; 
+
+                    if (itemClass.equalsIgnoreCase(ItemClass.HEADER.name())) {
+
+                        parentsMap.put(level, item);
+                    }
                 }
             }
             
-        } catch (IOException e) {
-            
-            
-        }
+        } catch (IOException e) { }
         
         return itemCount;
     }
