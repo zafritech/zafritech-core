@@ -25,6 +25,8 @@ public interface ItemRepository extends CrudRepository<Item, Long> {
 
     List<Item> findByDocumentId(Long id);
 
+    List<Item> findByDocumentIdOrderByIdDesc(Long id);
+
     Item findFirstByOrderBySystemIdDesc();
 
     Item findFirstByIdentifierContainingOrderByIdentifierDesc(String identTemplate);

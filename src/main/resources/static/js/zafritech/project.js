@@ -50,7 +50,6 @@ function zTreeProjectLoad() {
 
             $('#noOpenProjects').hide();
             $('#mainTreeHeaderLabel').text("Projects");
-//            $('#collapseProjects').collapse('show');
             
             // Expand current zTree node
             if (($('#nodeId').length > 0 && $('#nodeId').val().length !== 0) &&
@@ -81,7 +80,6 @@ function zTreeExpandByIdNode(nodeId) {
     }
 }
 
-// Toggle open/close on clicking a parent node
 function zTreeProjectBeforeClick(treeId, treeNode) {
     
     var treeObj = $.fn.zTree.getZTreeObj("mainProjectTree");
@@ -92,7 +90,6 @@ function zTreeProjectBeforeClick(treeId, treeNode) {
     }
 }
 
-// Toggle open/close on clicking a parent node
 function zTreeProjectBeforeRightClick(treeId, treeNode) {
     
     var treeObj = $.fn.zTree.getZTreeObj("mainProjectTree");
@@ -107,7 +104,6 @@ function zTreeProjectBeforeRightClick(treeId, treeNode) {
     }
 }
 
-// Toggle open/close on clicking a parent node
 function zTreeProjectOnRightClick(event, treeId, treeNode, clickFlag) {
     
     var treeObj = $.fn.zTree.getZTreeObj("mainProjectTree");
@@ -118,7 +114,6 @@ function zTreeProjectOnRightClick(event, treeId, treeNode, clickFlag) {
     }
 }
 
-// Toggle open/close on clicking a parent node
 function zTreeProjectOnDblClick(event, treeId, treeNode, clickFlag) {
     
     if (treeNode.isParent) {

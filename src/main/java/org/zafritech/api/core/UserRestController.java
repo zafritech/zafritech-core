@@ -54,9 +54,6 @@ public class UserRestController {
     @Autowired
     private CountryRepository countryRepository;
     
-    @Autowired
-    private InitService initService;
-    
     @RequestMapping("/api/login/check")
     public ResponseEntity<String> checkUserLogin(Model model) {
         

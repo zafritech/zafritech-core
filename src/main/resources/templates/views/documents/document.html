@@ -74,6 +74,11 @@
                                                             <em class="ion-edit icon-fw"></em> Edit Properties
                                                         </a>
                                                     </li>
+                                                    <li sec:authorize="hasRole('ROLE_ADMIN')">
+                                                        <a href="javascript:void(0);" th:onclick="'javascript:ClearDocumentContents(\'' + ${document.id} + '\');'">
+                                                            <em class="ion-trash-b icon-fw"></em> Clear Contents
+                                                        </a>
+                                                    </li>
                                                     <li th:if="${document.baseLine == null}">
                                                         <a href="javascript:void(0);" th:onclick="'javascript:CreateDocumentBaseLine(\'' + ${document.id} + '\');'">
                                                             <em class="fa fa-tags fa-fw"></em> Create Baseline

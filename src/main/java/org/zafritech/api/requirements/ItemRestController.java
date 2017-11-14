@@ -42,6 +42,7 @@ import org.zafritech.core.data.repositories.SystemVariableRepository;
 import org.zafritech.core.enums.ReferenceTypes;
 import org.zafritech.core.services.FileIOService;
 import org.zafritech.core.services.ReferenceService;
+import org.zafritech.core.services.UserService;
 import org.zafritech.requirements.data.dao.DocumentTemplateIdsDao;
 import org.zafritech.requirements.data.dao.DummyItemDao;
 import org.zafritech.requirements.data.dao.ExcelItemsDao;
@@ -100,6 +101,9 @@ public class ItemRestController {
     
     @Autowired
     private FileIOService fileIOService;
+    
+    @Autowired
+    private UserService userService;
     
     @RequestMapping(value = "/api/requirements/document/items/item/{id}", method = RequestMethod.GET)
     public Item getItemById(@PathVariable(value = "id") Long itemId) {
@@ -321,6 +325,21 @@ public class ItemRestController {
         }
         
         return new ResponseEntity<Item>(item, HttpStatus.OK);
+    }
+    
+    @RequestMapping(value = "/api/requirements/document/empty/contents/{id}", method = RequestMethod.GET)
+    public ResponseEntity<Document> clearAllDocumentItems(@PathVariable(value = "id") Long id) {
+       
+        if (userService.hasRole("ROLE_ADMIN")) { 
+        
+            itemRepository.delete(itemRepository.findByDocumentId(id));
+       
+        } else {
+            
+            return new ResponseEntity("Not authorised to clear document.", HttpStatus.BAD_REQUEST);
+        }
+        
+        return new ResponseEntity<Document>(documentRepository.findOne(id), HttpStatus.OK);
     }
     
     @RequestMapping(value = "/api/requirements/import/items/from/template", method = POST)
